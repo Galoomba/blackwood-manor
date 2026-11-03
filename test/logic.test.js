@@ -25,3 +25,68 @@ test('riddleFor picks the target station riddle variant by target stage mod 3', 
   const r4 = logic.riddleFor(data, finch, 4); // station (0+4)%6 = Lamp, variant 4%3 = 1
   assert.equal(r4, data.riddles.Lamp[1]);
 });
+
+function selectionWithout(...ids) {
+  return { presentIds: data.characters.map((c) => c.id).filter((id) => !ids.includes(id)) };
+}
+
+test('buildRoster splits present and missing and reports missing killers', () => {
+  const r = logic.buildRoster(data, selectionWithout('khamun', 'luna'));
+  assert.equal(r.present.length, 11);
+  assert.deepEqual(r.missing.map((c) => c.id), ['khamun', 'luna']);
+  assert.deepEqual(r.errors, []);
+  const bad = logic.buildRoster(data, selectionWithout('zora'));
+  assert.equal(bad.errors.length, 1);
+  assert.match(bad.errors[0], /Zora/);
+});
+
+test('buildRoster groups teams from present characters only', () => {
+  const r = logic.buildRoster(data, selectionWithout('khamun'));
+  assert.ok(r.teams.delilah.every((c) => c.team === 'delilah'));
+  assert.ok(!r.teams.delilah.some((c) => c.id === 'khamun'));
+  assert.equal(r.teams.victor.length, 6);
+});
+
+test('orphanedClues moves an absent witness card to the ghost at 3.2', () => {
+  const r = logic.buildRoster(data, selectionWithout('khamun'));
+  const o = logic.orphanedClues(data, r, '3.2');
+  const witness = o.find((x) => x.kind === 'witness');
+  assert.ok(witness);
+  assert.equal(witness.reader, "Delilah's ghost");
+  assert.match(witness.text, /Decor does not lie/);
+  const word = o.find((x) => x.kind === 'word');
+  assert.equal(word.text, 'HAVE');
+});
+
+test('orphanedClues returns observation at 1.3, ledger at 2.3, alibi at 3.3', () => {
+  const r = logic.buildRoster(data, selectionWithout('agnes'));
+  assert.equal(logic.orphanedClues(data, r, '1.3')[0].kind, 'observation');
+  const ledger = logic.orphanedClues(data, r, '2.3')[0];
+  assert.equal(ledger.kind, 'ledger');
+  assert.equal(ledger.number, 8);
+  assert.equal(logic.orphanedClues(data, r, '3.3')[0].kind, 'alibi');
+  assert.deepEqual(logic.orphanedClues(data, r, '1.1'), []);
+});
+
+test('teamSentence orders words and flags missing holders', () => {
+  const r = logic.buildRoster(data, selectionWithout('luna'));
+  const s = logic.teamSentence(data, r, 'delilah', '3.1');
+  assert.equal(s.sentence, 'LOOK WHERE GREEN GROWS BUT NEVER WALKS');
+  assert.equal(s.station, 'Plant');
+  assert.deepEqual(s.missing.map((w) => w.text), ['GROWS']);
+});
+
+test('tally counts votes and the house wins only when both killers are the clear top two', () => {
+  const win = logic.tally({ a: ['zora', 'krank'], b: ['zora', 'krank'], c: ['zora', 'graves'] }, ['zora', 'krank']);
+  assert.equal(win.counts.zora, 3);
+  assert.equal(win.houseWins, true);
+  const tie = logic.tally({ a: ['zora', 'krank'], b: ['zora', 'graves'] }, ['zora', 'krank']);
+  assert.equal(tie.houseWins, false);
+  const miss = logic.tally({ a: ['zora', 'graves'], b: ['zora', 'graves'] }, ['zora', 'krank']);
+  assert.equal(miss.houseWins, false);
+});
+
+test('cardsAtStation lists every card routed to a station for a stage', () => {
+  const cards = logic.cardsAtStation(data, 'Sofa', 0);
+  assert.deepEqual(cards.map((c) => c.id).sort(), ['corvus', 'finch']);
+});
