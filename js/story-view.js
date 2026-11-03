@@ -41,6 +41,21 @@
   }
   if (synth && synth.addEventListener) synth.addEventListener('voiceschanged', () => {});
 
+  /* Phones (iOS Safari, Chrome on Android) only allow speech that starts inside a tap. Speaking a
+     silent utterance during the tap unlocks the page; later sentences may then start on a timer. */
+  let unlocked = false;
+  function unlockSpeech() {
+    if (!synth) return;
+    try {
+      if (synth.paused) synth.resume();
+      if (unlocked) return;
+      const u = new SpeechSynthesisUtterance(' ');
+      u.volume = 0;
+      synth.speak(u);
+      unlocked = true;
+    } catch (e) { /* speech not available */ }
+  }
+
   /* ---------- drawing ---------- */
   function portrait(id, killer, i) {
     const c = charById(id);
@@ -100,7 +115,8 @@
     function stopNarration() {
       token++;
       clearTimers();
-      if (synth) synth.cancel();
+      /* Only clear our own sentences, so a tap's silent unlock utterance is not cancelled with them. */
+      if (synth && utterances.length) synth.cancel();
       utterances = [];
       speaking = false;
     }
@@ -146,29 +162,33 @@
         sentences.forEach((s, i) => { if (i < from) return; timers.push(setTimeout(() => { if (my === token) light(i); }, t)); t += story.estimateMs(s); });
         timers.push(setTimeout(finish, t));
       };
-      const voice = st.voice && synth ? voiceFor(slide.voice || 'narrator') : null;
-      if (!voice) { timed(0, lead); return; }
+      if (!st.voice || !synth) { timed(0, lead); return; }
+      /* May be null while a phone is still loading its voices: the browser's default voice is used. */
+      const voice = voiceFor(slide.voice || 'narrator');
       const role = ROLE[slide.voice || 'narrator'];
       let ended = false;
       let fellBack = false;
+      let started = false;
+      const fallBack = (from) => { fellBack = true; ended = true; synth.cancel(); timed(from, 0); };
       const total = sentences.reduce((a, s) => a + story.estimateMs(s), 0);
       timers.push(setTimeout(() => {
         if (my !== token) return;
         sentences.forEach((s, i) => {
           const u = new SpeechSynthesisUtterance(s);
-          u.voice = voice; u.lang = voice.lang; u.rate = role.rate; u.pitch = role.pitch;
-          u.onstart = () => { if (my === token) light(i); };
+          if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'en-GB';
+          u.rate = role.rate; u.pitch = role.pitch;
+          u.onstart = () => { started = true; if (my === token) light(i); };
           if (i === sentences.length - 1) u.onend = () => { if (!ended && !fellBack) { ended = true; finish(); } };
           u.onerror = (e) => {
             if (my !== token || fellBack || ended || e.error === 'interrupted' || e.error === 'canceled') return;
             /* Speech refused (for example a window nobody has clicked yet): carry on with captions. */
-            fellBack = true; ended = true;
-            synth.cancel();
-            timed(i, 0);
+            fallBack(i);
           };
           utterances.push(u);
           synth.speak(u);
         });
+        /* Some phones refuse speech without reporting an error: if nothing starts, show captions. */
+        timers.push(setTimeout(() => { if (my === token && !started && !fellBack && !ended) fallBack(0); }, 5000));
       }, lead));
       /* Safety net: if the browser never reports the end, move on anyway. */
       timers.push(setTimeout(() => { if (!ended && my === token) { ended = true; finish(); } }, lead + total * 1.8 + 4000));
@@ -193,11 +213,11 @@
         chapters.map((c) => el('option', { value: c.index }, c.title)));
       const btn = (cls, label, title, fn) => el('button', { class: 'small ' + cls, title, onclick: fn }, label);
       controlsNode = el('div', { class: 'story-controls' },
-        btn('prev', '◀', 'Previous (left arrow)', () => { write({ index: read().index - 1 }); sync(); }),
-        btn('play primary', '▶ Play', 'Play or pause (space)', () => { const st = read(); write({ playing: !st.playing, index: !st.playing && st.index === story.slides.length - 1 ? 0 : st.index }); sync(); }),
-        btn('next', '▶▶', 'Next (right arrow)', () => { write({ index: read().index + 1 }); sync(); }),
+        btn('prev', '◀', 'Previous (left arrow)', () => { unlockSpeech(); write({ index: read().index - 1 }); sync(); }),
+        btn('play primary', '▶ Play', 'Play or pause (space)', () => { unlockSpeech(); const st = read(); write({ playing: !st.playing, index: !st.playing && st.index === story.slides.length - 1 ? 0 : st.index }); sync(); }),
+        btn('next', '▶▶', 'Next (right arrow)', () => { unlockSpeech(); write({ index: read().index + 1 }); sync(); }),
         select,
-        btn('voice', 'Voice: on', 'Narration voice', () => { write({ voice: !read().voice }); stopNarration(); sync(); }),
+        btn('voice', 'Voice: on', 'Narration voice', () => { unlockSpeech(); write({ voice: !read().voice }); stopNarration(); sync(); }),
         btn('tv', 'Show on TV', 'Mirror the story on the TV screen', () => {
           const st = read();
           if (!st.onTv && opts.confirmTv && !opts.confirmTv()) return;
@@ -254,7 +274,7 @@
       updateControls(st, speaker);
     }
 
-    function openLocal() { open = true; sync(); }
+    function openLocal() { unlockSpeech(); open = true; sync(); }
     function close() {
       open = false;
       write({ playing: false, onTv: false });
@@ -270,10 +290,13 @@
         if (!shown || e.target.tagName === 'SELECT') return;
         if (e.key === 'ArrowRight') { write({ index: read().index + 1 }); sync(); }
         else if (e.key === 'ArrowLeft') { write({ index: read().index - 1 }); sync(); }
-        else if (e.key === ' ') { e.preventDefault(); write({ playing: !read().playing }); sync(); }
+        else if (e.key === ' ') { e.preventDefault(); unlockSpeech(); write({ playing: !read().playing }); sync(); }
         else if (e.key === 'Escape') close();
       });
     }
+
+    /* The TV page: any tap on it (the 'click once' hint) unlocks its voice too. */
+    document.addEventListener('pointerdown', unlockSpeech);
 
     return { sync, open: openLocal, close, isOpen, isShown: () => shown };
   }
