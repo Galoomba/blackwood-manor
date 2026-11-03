@@ -73,13 +73,18 @@ test('sentenceStarts maps character timings to the start of each sentence', () =
   assert.deepEqual(story.sentenceStarts(text, sentences, { characters, character_start_times_seconds: starts }), [0, 1.9]);
 });
 
-test('every recorded clip belongs to a slide and its audio file exists', () => {
+test('every slide and ghost line is recorded, and every clip file exists', () => {
   const voice = require('../js/voice-manifest.js');
-  const slideIds = new Set(story.slides.map((s) => s.id));
+  const logic = require('../js/logic.js');
+  const texts = new Map(story.slides.map((s) => [s.id, s.text]));
+  for (const l of logic.voiceLines(data)) {
+    if (l.voice === 'both') { texts.set(`${l.id}.delilah`, l.text); texts.set(`${l.id}.victor`, l.text); } else texts.set(l.id, l.text);
+  }
+  for (const id of texts.keys()) assert.ok(voice.clips[id], `${id} is recorded`);
   for (const [id, clip] of Object.entries(voice.clips)) {
-    assert.ok(slideIds.has(id), `clip ${id} has a slide`);
+    assert.ok(texts.has(id), `clip ${id} belongs to a slide or a ghost line`);
     assert.ok(fs.existsSync(path.join(__dirname, '..', clip.src)), `file ${clip.src}`);
-    const n = story.splitSentences(story.slides.find((s) => s.id === id).text).length;
+    const n = story.splitSentences(texts.get(id)).length;
     assert.equal(clip.starts.length, n, `${id} has a start time per sentence`);
     for (let i = 1; i < n; i++) assert.ok(clip.starts[i] >= clip.starts[i - 1], `${id} starts ascend`);
   }

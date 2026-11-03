@@ -97,7 +97,33 @@
     return list.find((t) => !t.about || present.has(t.about)) || null;
   }
 
-  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining, talkFor };
+  /* Which recorded voice reads a line: the ghosts are voiced, stage directions and living Victor
+     (played by the host in person) are not. 'both' is the two ghosts speaking together. */
+  function voiceForSpeaker(speaker) {
+    if (/^Stage direction/.test(speaker)) return null;
+    if (/^Both/.test(speaker)) return 'both';
+    if (/^Delilah's ghost/.test(speaker)) return 'delilah';
+    if (/^Victor's ghost/.test(speaker)) return 'victor';
+    return null;
+  }
+
+  /* Every game line that has a voice-over, grouped by when it plays: 'stage-<id>' with the stage
+     narration, 'set-<key>' with a set piece, 'reveal' with the final reveal. */
+  function voiceLines(data) {
+    const out = [];
+    const add = (group, lines) => lines.forEach((line, i) => {
+      const voice = voiceForSpeaker(line.speaker);
+      if (voice) out.push({ id: `${group}-${i}`, group, voice, speaker: line.speaker, text: line.text });
+    });
+    data.stages.forEach((st) => add(`stage-${st.id.replace('.', '-')}`, st.narration));
+    Object.keys(data.setPieces).forEach((key) => add(`set-${key}`, data.setPieces[key].lines));
+    add('reveal', data.reveal.lines);
+    return out;
+  }
+
+  function voiceGroup(data, group) { return voiceLines(data).filter((l) => l.group === group); }
+
+  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining, talkFor, voiceLines, voiceGroup };
 
   root.BM = root.BM || {};
   root.BM.logic = logic;

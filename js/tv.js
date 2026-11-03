@@ -11,12 +11,17 @@
   function displayName(c) { const n = game.get().names[c.id]; return n ? `${c.short} (${n})` : c.name; }
   function sfx(name) { if (game.get().sound) audio.play(name); }
 
+  /* The recorded ghost voice-over plays on the TV, unless the hosts muted it to tell it themselves. */
+  const voice = root.BM.voicePlayer;
+  function voiceOn() { const s = game.get(); return s.sound && s.voiceOver; }
+  function playVoice(group) { if (voiceOn()) voice.play(group); }
+
   /* ---------- rendering ---------- */
   let renderedKey = null;
   let typedStage = null;
 
   function viewKey(s) {
-    return [s.screen, s.stageIndex, s.phase, s.screen === 'vote' ? JSON.stringify(s.votes) : '', s.sound].join('|');
+    return [s.screen, s.stageIndex, s.phase, s.screen === 'vote' ? JSON.stringify(s.votes) : '', s.sound, s.voiceOver].join('|');
   }
 
   function render(force) {
@@ -27,6 +32,8 @@
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
     if (s.sound && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience();
+    const speaking = voice.playing();
+    if (speaking && (!voiceOn() || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     clear(rootNode);
     if (s.screen === 'game') renderGame(s);
     else if (s.screen === 'vote') renderVote(s);
@@ -62,7 +69,13 @@
         el('div', { class: 'timer-label' }, s.phase === 'search' ? 'Search' : s.phase === 'discussion' ? 'Discussion' : '')
       )
     );
-    if (!alreadyTyped) { typedStage = stage.id; typewrite(narr, 28, () => clue.classList.add('shown')); }
+    if (!alreadyTyped) {
+      typedStage = stage.id;
+      const group = voice.stageGroup(stage.id);
+      const seconds = voiceOn() ? voice.duration(group) : 0;
+      typewrite(narr, seconds ? voice.typingSpeed(narr, seconds) : 28, () => clue.classList.add('shown'));
+      if (seconds) voice.play(group);
+    }
   }
 
   function renderVote(s) {
@@ -114,12 +127,16 @@
   let shownSetPiece = null;
   let shownReveal = null;
   let shownSfx = null;
+  let shownCue = null;
 
   function syncOverlays() {
     const s = game.get();
     const sp = s.setPiece;
     if (sp && sp.at !== shownSetPiece) { shownSetPiece = sp.at; showSetPiece(sp.key); }
     if (!sp && !s.revealAt && !ov.classList.contains('hidden')) { ov.classList.add('hidden'); clear(ov); }
+    const speaking = voice.playing();
+    if (speaking && ((speaking.startsWith('set-') && !sp) || (speaking === 'reveal' && !s.revealAt))) voice.stop();
+    if (s.voiceCue && s.voiceCue.at !== shownCue) { shownCue = s.voiceCue.at; if (Date.now() - s.voiceCue.at < 5000) playVoice(s.voiceCue.group); }
     if (!sp) shownSetPiece = null;
     if (s.revealAt && s.revealAt !== shownReveal) { shownReveal = s.revealAt; playReveal(); }
     if (!s.revealAt) shownReveal = null;
@@ -145,6 +162,7 @@
       ov.classList.add('ghostly');
       sfx('ghost');
       ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines);
+      setTimeout(() => { if (shownSetPiece) playVoice('set-victorReturns'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');
@@ -169,6 +187,7 @@
       data.killerIds.forEach((id) => portraits.append(el('img', { src: charById(id).image, alt: charById(id).name })));
       ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines));
       sfx('ghost');
+      setTimeout(() => { if (shownReveal) playVoice('reveal'); }, 1200);
     }, 8600);
   }
 
@@ -183,7 +202,7 @@
 
   /* ---------- fullscreen and audio unlock ---------- */
   const hint = document.getElementById('tv-hint');
-  const unlock = () => { audio.init(); audio.setEnabled(game.get().sound); hint.classList.add('fade'); render(true); };
+  const unlock = () => { voice.unlock(); audio.init(); audio.setEnabled(game.get().sound); hint.classList.add('fade'); render(true); };
   document.addEventListener('pointerdown', unlock, { once: true });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'f' || e.key === 'F') {

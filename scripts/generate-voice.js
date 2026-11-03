@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-/* Records the full-story voice-over with ElevenLabs, one MP3 per slide, and writes
+/* Records the voice-over with ElevenLabs, one MP3 per full-story slide and per ghost line in the
+   game (stage narration, Victor's return, the reveal; lines the ghosts say together get one clip
+   per ghost, played at once), and writes
    js/voice-manifest.js with each clip's length and sentence start times so the player can light
    each sentence as it is spoken. Slides whose text and voice have not changed are skipped.
 
@@ -12,6 +14,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const data = require('../js/data.js');
+const logic = require('../js/logic.js');
 const story = require('../js/story.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -75,9 +79,9 @@ async function record(key, slide) {
     if ((res.status === 429 || res.status >= 500) && attempt < 4) { await sleep(2000 * attempt); continue; }
     let detail = body;
     try { detail = JSON.parse(body).detail; detail = detail.message || JSON.stringify(detail); } catch (e) { /* plain text */ }
-    throw new Error(`ElevenLabs ${res.status} on slide "${slide.id}": ${detail}`);
+    throw new Error(`ElevenLabs ${res.status} on clip "${slide.id}": ${detail}`);
   }
-  throw new Error(`ElevenLabs kept failing on slide "${slide.id}"`);
+  throw new Error(`ElevenLabs kept failing on clip "${slide.id}"`);
 }
 
 async function main() {
@@ -89,13 +93,19 @@ async function main() {
 
   const manifest = readManifest();
   manifest.model = MODEL;
-  const todo = story.slides.filter((s) => {
+  const items = [
+    ...story.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
+    ...logic.voiceLines(data).flatMap((l) => (l.voice === 'both'
+      ? ['delilah', 'victor'].map((v) => ({ id: `${l.id}.${v}`, voice: v, text: l.text }))
+      : [{ id: l.id, voice: l.voice, text: l.text }]))
+  ];
+  const todo = items.filter((s) => {
     if (only && !only.has(s.id)) return false;
     const have = manifest.clips[s.id];
     return force || !have || have.hash !== hashFor(s) || !fs.existsSync(path.join(ROOT, have.src));
   });
   const chars = todo.reduce((a, s) => a + s.text.length, 0);
-  console.log(`${todo.length} of ${story.slides.length} slides to record, ${chars} characters.`);
+  console.log(`${todo.length} of ${items.length} clips to record, ${chars} characters.`);
   todo.forEach((s) => console.log(`  ${s.id.padEnd(16)} ${VOICES[s.voice].name.padEnd(7)} ${s.text.length} chars`));
   if (dry || !todo.length) return;
 

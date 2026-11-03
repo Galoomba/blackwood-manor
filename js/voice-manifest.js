@@ -453,6 +453,262 @@
         6.165,
         7.872
       ]
+    },
+    "stage-1-1-0": {
+      "src": "assets/voice/stage-1-1-0.mp3",
+      "voice": "Lily",
+      "hash": "3d8f26ef5736",
+      "duration": 22.709,
+      "starts": [
+        0,
+        4.923,
+        7.964,
+        11.61,
+        13.618,
+        19.145,
+        20.979
+      ]
+    },
+    "stage-1-2-0": {
+      "src": "assets/voice/stage-1-2-0.mp3",
+      "voice": "Lily",
+      "hash": "0fed3799f747",
+      "duration": 22.988,
+      "starts": [
+        0,
+        2.368,
+        7.152,
+        11.668,
+        18.204,
+        20.434
+      ]
+    },
+    "stage-1-3-0": {
+      "src": "assets/voice/stage-1-3-0.mp3",
+      "voice": "Lily",
+      "hash": "347eca29f0c2",
+      "duration": 17.786,
+      "starts": [
+        0,
+        1.997,
+        3.947,
+        9.172,
+        13.108,
+        14.745,
+        16.73
+      ]
+    },
+    "stage-2-1-0": {
+      "src": "assets/voice/stage-2-1-0.mp3",
+      "voice": "Lily",
+      "hash": "8f2591f65b17",
+      "duration": 21.084,
+      "starts": [
+        0,
+        1.37,
+        2.519,
+        5.492,
+        8.719,
+        10.147,
+        11.865,
+        15.093,
+        17.345,
+        19.4
+      ]
+    },
+    "stage-2-2-0": {
+      "src": "assets/voice/stage-2-2-0.mp3",
+      "voice": "Lily",
+      "hash": "50548e000b18",
+      "duration": 15.604,
+      "starts": [
+        0,
+        2.566,
+        5.84,
+        9.625,
+        10.971,
+        12.399
+      ]
+    },
+    "stage-2-3-0": {
+      "src": "assets/voice/stage-2-3-0.mp3",
+      "voice": "Lily",
+      "hash": "b9951324ad7a",
+      "duration": 31.115,
+      "starts": [
+        0,
+        4.714,
+        8.696,
+        10.414,
+        12.225,
+        19.447,
+        24.137,
+        27.969
+      ]
+    },
+    "stage-3-1-0.delilah": {
+      "src": "assets/voice/stage-3-1-0.delilah.mp3",
+      "voice": "Lily",
+      "hash": "34d103c60d81",
+      "duration": 7.941,
+      "starts": [
+        0,
+        1.533,
+        3.239,
+        5.364
+      ]
+    },
+    "stage-3-1-0.victor": {
+      "src": "assets/voice/stage-3-1-0.victor.mp3",
+      "voice": "Daniel",
+      "hash": "8e9db44408b1",
+      "duration": 8.731,
+      "starts": [
+        0,
+        1.672,
+        3.437,
+        5.805
+      ]
+    },
+    "stage-3-2-0.delilah": {
+      "src": "assets/voice/stage-3-2-0.delilah.mp3",
+      "voice": "Lily",
+      "hash": "a1d87f7f4978",
+      "duration": 13.189,
+      "starts": [
+        0,
+        1.846,
+        3.982,
+        5.909,
+        8.057
+      ]
+    },
+    "stage-3-2-0.victor": {
+      "src": "assets/voice/stage-3-2-0.victor.mp3",
+      "voice": "Daniel",
+      "hash": "082525c2af37",
+      "duration": 12.167,
+      "starts": [
+        0,
+        1.382,
+        3.077,
+        5.306,
+        7.755
+      ]
+    },
+    "stage-3-3-0.delilah": {
+      "src": "assets/voice/stage-3-3-0.delilah.mp3",
+      "voice": "Lily",
+      "hash": "7fbf09795783",
+      "duration": 14.536,
+      "starts": [
+        0,
+        1.451,
+        8.429,
+        11.517
+      ]
+    },
+    "stage-3-3-0.victor": {
+      "src": "assets/voice/stage-3-3-0.victor.mp3",
+      "voice": "Daniel",
+      "hash": "5ca972e2f463",
+      "duration": 14.396,
+      "starts": [
+        0,
+        1.265,
+        8.092,
+        11.378
+      ]
+    },
+    "set-victorReturns-0": {
+      "src": "assets/voice/set-victorReturns-0.mp3",
+      "voice": "Daniel",
+      "hash": "7c1663b843fa",
+      "duration": 23.823,
+      "starts": [
+        0,
+        0.244,
+        1.858,
+        8.069,
+        10.379,
+        13.386,
+        16.649,
+        19.04,
+        21.525
+      ]
+    },
+    "set-victorReturns-1": {
+      "src": "assets/voice/set-victorReturns-1.mp3",
+      "voice": "Lily",
+      "hash": "bbd670c306d4",
+      "duration": 6.13,
+      "starts": [
+        0,
+        5.271
+      ]
+    },
+    "set-victorReturns-2": {
+      "src": "assets/voice/set-victorReturns-2.mp3",
+      "voice": "Daniel",
+      "hash": "755e0703fa23",
+      "duration": 8.499,
+      "starts": [
+        0,
+        6.165,
+        7.14
+      ]
+    },
+    "reveal-0": {
+      "src": "assets/voice/reveal-0.mp3",
+      "voice": "Lily",
+      "hash": "744575139477",
+      "duration": 24.799,
+      "starts": [
+        0,
+        2.136,
+        9.985,
+        12.585
+      ]
+    },
+    "reveal-1": {
+      "src": "assets/voice/reveal-1.mp3",
+      "voice": "Daniel",
+      "hash": "cc7345c8aff7",
+      "duration": 23.684,
+      "starts": [
+        0,
+        1.533,
+        7.082,
+        10.019,
+        20.201,
+        21.618
+      ]
+    },
+    "reveal-2.delilah": {
+      "src": "assets/voice/reveal-2.delilah.mp3",
+      "voice": "Lily",
+      "hash": "c65acf6e1a9e",
+      "duration": 8.173,
+      "starts": [
+        0,
+        1.184,
+        3.297,
+        5.224,
+        6.687
+      ]
+    },
+    "reveal-2.victor": {
+      "src": "assets/voice/reveal-2.victor.mp3",
+      "voice": "Daniel",
+      "hash": "a9abc6f69c6f",
+      "duration": 8.731,
+      "starts": [
+        0,
+        1.37,
+        3.878,
+        5.735,
+        7.384
+      ]
     }
   }
 }/* END */;

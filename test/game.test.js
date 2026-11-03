@@ -73,3 +73,11 @@ test('defaults carry no set piece and no reveal', () => {
   assert.equal(g.get().setPiece, null);
   assert.equal(g.get().revealAt, null);
 });
+
+test('the ghost voice-over is on by default and stays muted after a reload', () => {
+  const storage = memoryStorage();
+  const g = createGame(data, logic, storage);
+  assert.equal(g.get().voiceOver, true);
+  g.set({ voiceOver: false });
+  assert.equal(createGame(data, logic, storage).get().voiceOver, false);
+});

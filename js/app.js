@@ -14,6 +14,31 @@
   function localSoundOn() { return game.get().sound && !game.tvConnected(); }
   function sfx(name) { if (localSoundOn()) audio.play(name); }
 
+  /* ---------- ghost voice-over (recorded; plays on the TV window when one is open) ---------- */
+  const voice = root.BM.voicePlayer;
+  function hostVoiceOn() { return localSoundOn() && game.get().voiceOver; }
+  function toggleVoice() {
+    const on = !game.get().voiceOver;
+    game.set({ voiceOver: on });
+    if (!on) voice.stop();
+    render();
+  }
+  /* Replay is sent through the state so the TV plays it; here only when no TV is open. */
+  function cueVoice(group) {
+    voice.unlock();
+    game.set({ voiceCue: { group, at: Date.now() } });
+    if (hostVoiceOn()) voice.play(group);
+  }
+  function voiceControls(group) {
+    const on = game.get().voiceOver;
+    const recorded = voice.duration(group) > 0;
+    const row = el('div', { class: 'row voice-row' },
+      el('button', { class: 'small voice-toggle' + (on ? '' : ' muted'), title: 'Mute the recorded ghost voices to tell the story yourselves', onclick: () => { toggleVoice(); if (row.isConnected) row.replaceWith(voiceControls(group)); } },
+        on ? '🔊 Ghost voice-over: on' : '🔇 Ghost voice-over: muted'),
+      on && recorded ? el('button', { class: 'small', onclick: () => cueVoice(group) }, '↻ Replay voice-over') : null);
+    return row;
+  }
+
   /* ---------- the full story theatre ---------- */
   const story = root.BM.storyView.createPlayer({
     layer: document.getElementById('story-layer'),
@@ -36,6 +61,8 @@
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
     if (!story.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
+    const speaking = voice.playing();
+    if (speaking && (!hostVoiceOn() || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
     window.scrollTo(0, 0);
   }
@@ -93,7 +120,8 @@
         el('div', { class: 'row' },
           el('label', { class: 'grow' }, 'Search minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 5 }) })),
           el('label', { class: 'grow' }, 'Discussion minutes', el('input', { type: 'number', min: 1, max: 30, value: s.discussMin, onchange: (e) => game.set({ discussMin: Number(e.target.value) || 7 }) })),
-          el('label', {}, el('input', { type: 'checkbox', checked: s.sound ? 'checked' : null, onchange: (e) => { game.set({ sound: e.target.checked }); audio.setEnabled(e.target.checked); } }), ' Sound on')
+          el('label', {}, el('input', { type: 'checkbox', checked: s.sound ? 'checked' : null, onchange: (e) => { game.set({ sound: e.target.checked }); audio.setEnabled(e.target.checked); } }), ' Sound on'),
+          el('label', { title: 'Recorded ghost voices read the narration. Turn off to tell the story yourselves.' }, el('input', { type: 'checkbox', checked: s.voiceOver ? 'checked' : null, onchange: (e) => { game.set({ voiceOver: e.target.checked }); if (!e.target.checked) voice.stop(); } }), ' Ghost voice-over')
         ),
         el('p', { class: 'dim', style: 'margin-top:12px' }, 'Two screens: press "Open TV screen", drag that window onto the TV and press F for fullscreen. It shows only what the room may see and follows this window automatically.'),
         tvBar()
@@ -158,6 +186,7 @@
     const narr = narrationNode(stage.narration);
     const header = el('div', { class: 'panel' },
       tvBar(),
+      voiceControls(voice.stageGroup(stage.id)),
       el('div', { class: 'scene-label' }, `Scene ${scene.number}: ${scene.title}`),
       el('h2', {}, `${stage.id} ${stage.title}`, el('span', { class: 'kind' }, stage.kind === 'team' ? 'Team' : stage.kind === 'group' ? 'Find alone, solve together' : 'Individual')),
       stage.setPieceBefore ? el('div', { class: 'row', style: 'margin-bottom:12px' }, el('button', { class: 'ghostly', onclick: () => showSetPiece(stage.setPieceBefore, () => render()) }, '▶ Play: Victor returns')) : null,
@@ -177,7 +206,13 @@
       )
     );
 
-    if (typedKey !== stage.id) { typedKey = stage.id; typewrite(narr); }
+    if (typedKey !== stage.id) {
+      typedKey = stage.id;
+      const group = voice.stageGroup(stage.id);
+      const seconds = hostVoiceOn() ? voice.duration(group) : 0;
+      typewrite(narr, seconds ? voice.typingSpeed(narr, seconds) : undefined);
+      if (seconds) voice.play(group);
+    }
     else narr.querySelectorAll('.typed').forEach((p) => p.classList.add('finished'));
     resumeTimerIfRunning();
   }
@@ -189,7 +224,7 @@
     const bar = el('div', { class: 'phase-bar' });
 
     if (s.phase === 'narration') {
-      label.textContent = 'Read the narration aloud, then send them searching';
+      label.textContent = s.voiceOver ? 'Let the ghost speak, then send them searching' : 'Read the narration aloud, then send them searching';
       bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `Start search (${s.searchMin} min)`));
     } else if (s.phase === 'search') {
       label.textContent = 'Searching';
@@ -330,7 +365,7 @@
     ov.className = 'overlay';
     game.set({ setPiece: { key, at: Date.now() } });
     const lines = linesNode(sp.lines);
-    const done = () => { ov.classList.add('hidden'); clear(ov); game.set({ setPiece: null }); if (onDone) onDone(); };
+    const done = () => { if ((voice.playing() || '').startsWith('set-')) voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ setPiece: null }); if (onDone) onDone(); };
     const continueBtn = (label) => el('button', { class: 'primary', style: 'margin-top:24px', onclick: done }, label || 'Continue');
 
     if (key === 'lightsOut') {
@@ -341,7 +376,8 @@
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines, continueBtn('Form the teams'));
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines, voiceControls('set-victorReturns'), continueBtn('Form the teams'));
+      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');
@@ -410,9 +446,10 @@
       clear(ov);
       const portraits = el('div', { class: 'reveal-portraits' });
       data.killerIds.forEach((id) => portraits.append(el('img', { src: charById(id).image, alt: charById(id).name })));
-      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines),
-        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
+      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines), voiceControls('reveal'),
+        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
       sfx('ghost');
+      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('reveal'); }, 1200);
     }, 8600);
   }
 
@@ -434,7 +471,7 @@
 
   /* ---------- boot ---------- */
   audio.setEnabled(game.get().sound);
-  document.addEventListener('pointerdown', () => audio.init(), { once: true });
+  document.addEventListener('pointerdown', () => { audio.init(); voice.unlock(); }, { once: true });
   /* Keep the TV indicator fresh and hand ambience over when a TV window appears or disappears. */
   let tvWas = game.tvConnected();
   setInterval(() => {

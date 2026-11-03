@@ -111,3 +111,15 @@ test('every card has a table-talk line for any roster that keeps the required gu
   const presentIds = data.characters.filter((c) => !c.optional).map((c) => c.id);
   for (const c of data.characters) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(c.cards[sid], presentIds), `${c.id} ${sid}`);
 });
+
+test('voiceLines voices only the ghosts, and lines for both ghosts are marked both', () => {
+  const lines = logic.voiceLines(data);
+  assert.ok(lines.length > 0);
+  for (const l of lines) {
+    assert.ok(['delilah', 'victor', 'both'].includes(l.voice), l.id);
+    assert.ok(!/^Victor \(|^Stage direction/.test(l.speaker), `${l.id} is not a living or stage line`);
+  }
+  assert.equal(new Set(lines.map((l) => l.id)).size, lines.length, 'ids are unique');
+  for (const st of data.stages) assert.ok(logic.voiceGroup(data, `stage-${st.id.replace('.', '-')}`).length, `stage ${st.id} is voiced`);
+  assert.ok(logic.voiceGroup(data, 'reveal').some((l) => l.voice === 'both'));
+});

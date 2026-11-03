@@ -121,6 +121,9 @@ label { display: block; }
 .narration .typed::after { content: '▌'; animation: caret 0.8s steps(1) infinite; color: var(--accent); }
 .narration .typed.finished::after { content: ''; }
 @keyframes caret { 50% { opacity: 0 } }
+.voice-row { margin: 8px 0 12px; }
+.voice-row .voice-toggle.muted { border-color: var(--ink-dim); color: var(--ink-dim); }
+.overlay .voice-row { justify-content: center; margin-top: 18px; }
 .clue { border-left: 3px solid var(--blood); padding: 10px 16px; background: rgba(143,29,44,0.15); font-style: italic; font-size: 20px; margin-top: 16px; }
 .phase-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; justify-content: center; }
 .timer { font-family: var(--font-display); font-size: clamp(56px, 12vw, 120px); text-align: center; color: var(--ink); line-height: 1; margin: 10px 0; letter-spacing: 0.05em; }

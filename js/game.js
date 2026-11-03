@@ -11,6 +11,8 @@
       searchMin: 5,
       discussMin: 7,
       sound: true,
+      voiceOver: true,
+      voiceCue: null,
       stageIndex: 0,
       phase: 'narration',
       timerEnd: null,
