@@ -63,7 +63,7 @@
       const on = s.presentIds.includes(c.id);
       const locked = data.requiredIds.includes(c.id);
       const toggle = () => { if (!locked) { game.togglePresent(c.id); renderSetup(); } };
-      grid.append(el('div', { class: 'char-card' + (on ? ' on' : '') + (locked ? ' locked' : '') },
+      grid.append(el('div', { class: 'char-card' + (on ? ' on' : '') },
         el('span', { class: 'sym' }, c.symbol),
         el('img', { src: c.image, alt: c.name, onclick: toggle }),
         el('div', { class: 'cname', onclick: toggle }, c.name),
@@ -73,7 +73,7 @@
     }
     node.append(
       el('h2', {}, 'Who is in the house tonight?'),
-      el('p', { class: 'dim' }, 'Tap a portrait to add or remove a guest. Madame Zora and Dr. Krank must be present; the story needs them. Type the real name of the player under each portrait if you want it on the vote screen.'),
+      el('p', { class: 'dim' }, 'Tap a portrait to add or remove a guest. A few characters are essential to the story and stay on. Type the real name of the player under each portrait if you want it on the vote screen.'),
       el('div', { class: 'panel' }, grid),
       el('div', { class: 'panel' },
         el('h3', {}, 'Timers, sound and the TV'),

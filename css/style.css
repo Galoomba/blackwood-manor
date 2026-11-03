@@ -106,7 +106,6 @@ label { display: block; }
 .char-card.on { border-color: var(--accent); }
 .char-card .cname { padding: 8px; font-size: 14px; text-align: center; }
 .char-card .sym { position: absolute; top: 6px; left: 8px; font-size: 20px; text-shadow: 0 0 6px #000; }
-.char-card.locked::after { content: 'required'; position: absolute; top: 6px; right: 8px; font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; }
 .char-card input { margin: 0 8px 8px; width: calc(100% - 16px); font-size: 13px; padding: 5px; }
 .error { color: #ff8a8a; }
 

@@ -22,7 +22,7 @@
     const missing = data.characters.filter((c) => !presentIds.has(c.id));
     const errors = (data.requiredIds || []).filter((id) => !presentIds.has(id)).map((id) => {
       const c = data.characters.find((x) => x.id === id);
-      return `${c ? c.name : id} must be present: the story needs this killer.`;
+      return `${c ? c.name : id} is essential to the story and must be present.`;
     });
     return {
       present, missing, errors,
