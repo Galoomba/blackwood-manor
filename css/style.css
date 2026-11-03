@@ -164,36 +164,38 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 /* Print pack (hidden on screen) */
 .print-root { display: none; }
 @media print {
+  html, body { margin: 0 !important; padding: 0 !important; }
   body { background: #fff !important; color: #000; font-size: 12pt; }
   .fog, .lightning, #app, #overlay { display: none !important; }
   .print-root { display: block; }
   @page { size: A4; margin: 12mm; }
-  .sheet { page-break-after: always; font-family: Georgia, serif; }
-  .sheet:last-child { page-break-after: auto; }
+  .sheet { break-after: page; page-break-after: always; font-family: Georgia, serif; }
+  .sheet:last-child { break-after: auto; page-break-after: auto; }
   .sheet h1 { font-family: Georgia, serif; font-size: 26pt; color: #000; text-shadow: none; margin-bottom: 4pt; }
   .sheet h2 { font-family: Georgia, serif; font-size: 16pt; color: #000; margin: 12pt 0 4pt; }
   .sheet .portrait { float: right; width: 45mm; aspect-ratio: 3/4; object-fit: cover; border: 1px solid #000; margin: 0 0 6mm 6mm; }
   .sheet .boxed { border: 1px solid #000; padding: 6pt 8pt; margin: 8pt 0; }
-  .card-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0; height: 270mm; }
-  .card { border: 1px dashed #666; padding: 6mm; font-size: 10.5pt; line-height: 1.35; display: flex; flex-direction: column; overflow: hidden; }
+  /* Fixed-size grid: fits A4 and Letter with any sane printer margin, rows can never grow. */
+  .card-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 0; height: 250mm; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  .card { border: 1px dashed #666; padding: 5mm 6mm; font-size: 10.5pt; line-height: 1.35; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
   .card .head { display: flex; justify-content: space-between; font-size: 9pt; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid #000; padding-bottom: 3pt; margin-bottom: 5pt; }
   .card .word { font-size: 20pt; font-weight: bold; text-align: center; margin: 4pt 0; letter-spacing: 0.1em; }
   .card .sab { border: 2px solid #000; padding: 4pt 6pt; margin-top: 5pt; font-size: 9.5pt; }
   .card .sab::before { content: 'SECRET ORDERS: '; font-weight: bold; }
   .card .riddle { margin-top: auto; border-top: 1px solid #000; padding-top: 4pt; font-style: italic; font-size: 9.5pt; }
-  .label { height: 130mm; border: 2px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 8mm; page-break-inside: avoid; }
+  .label { height: 120mm; border: 2px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 8mm; page-break-inside: avoid; }
   .label .big { font-size: 40pt; font-weight: bold; }
   .label .sym { font-size: 14pt; margin-top: 8pt; }
   .strip { border: 1px solid #000; border-style: dashed solid; display: grid; grid-template-columns: 14mm 1fr; min-height: 18mm; margin-bottom: 2mm; page-break-inside: avoid; font-family: 'Courier New', monospace; font-size: 10pt; }
   .strip .margin { border-right: 1px solid #000; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2mm; }
   .strip .candle-ink { width: 5mm; background: #000; }
   .strip .body { padding: 3mm 4mm; }
-  .pocket-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(6, 1fr); gap: 3mm; height: 270mm; }
-  .pocket { border: 1px solid #000; padding: 3mm 4mm; font-size: 9pt; line-height: 1.25; display: flex; flex-direction: column; page-break-inside: avoid; }
+  .pocket-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 3mm; height: 250mm; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  .pocket { border: 1px solid #000; padding: 2mm 3.5mm; font-size: 9pt; line-height: 1.2; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
   .pocket .pk-stage { font-size: 18pt; font-weight: bold; line-height: 1; }
   .pocket .pk-title { font-size: 9pt; text-transform: uppercase; letter-spacing: 0.08em; }
-  .pocket .pk-station { font-size: 12pt; font-weight: bold; margin: 2mm 0 1.5mm; border-top: 1px solid #000; padding-top: 1.5mm; }
-  .pocket .pk-inside { font-size: 8.5pt; }
+  .pocket .pk-station { font-size: 12pt; font-weight: bold; margin: 1.5mm 0 1mm; border-top: 1px solid #000; padding-top: 1mm; }
+  .pocket .pk-inside { font-size: 8pt; line-height: 1.2; }
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }
 }
