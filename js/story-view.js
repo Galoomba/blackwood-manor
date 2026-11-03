@@ -107,6 +107,10 @@
       visual = el('div', { class: 'story-visual ghosts' },
         ghosts.includes('delilah') ? el('div', { class: 'ghost-figure' }, el('div', { class: 'ghost-shape' }), el('span', {}, 'Delilah')) : null,
         ghosts.includes('victor') ? el('div', { class: 'ghost-figure' }, el('div', { class: 'ghost-shape violet' }), el('span', {}, 'Victor')) : null);
+    } else if (slide.layout === 'memorial') {
+      visual = el('div', { class: 'story-visual memorial-visual' }, root.BM.interlude.memorial());
+    } else if (slide.layout === 'risen') {
+      visual = el('div', { class: 'story-visual risen' }, root.BM.interlude.ghostPair(true));
     } else if (slide.layout === 'evidence') {
       visual = el('div', { class: 'story-visual evidence' },
         people.length ? el('div', { class: 'evidence-face' }, people.map((id, i) => portrait(id, killers.has(id), i))) : null,

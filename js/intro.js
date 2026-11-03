@@ -4,7 +4,7 @@
      Spoiler-free: no victims, killers, ghosts' names or clue content. Ids start with "intro-" so
      their recorded clips never clash with the full story's. */
 
-  const ALL = ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'ambrose', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'];
+  const ALL = ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'silas', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'];
 
   const slides = [
     {

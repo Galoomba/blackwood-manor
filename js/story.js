@@ -45,9 +45,9 @@
       text: 'A century later, Victor Blackwood\'s accountant, Edgar Mills, died of a heart attack at his desk. Victor could not bear it. He paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, and she brought Edgar back with a green serum called K-7. It worked. Mostly.'
     },
     {
-      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['ambrose'],
+      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['silas'],
       title: "Delilah's ledger",
-      text: "Delilah found her grandfather's ledger and asked the butler, Ambrose, whether he knew. Ambrose had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote thirteen letters."
+      text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote thirteen letters."
     },
     {
       id: 'midnight', chapter: 'II. The grandchildren', layout: 'ghosts', scene: 2, sfx: 'heartbeat', voice: 'narrator',
@@ -58,7 +58,7 @@
     /* ---------- III. The guests ---------- */
     {
       id: 'guests', chapter: 'III. The guests', layout: 'gallery', scene: 1, sfx: 'bell', voice: 'narrator',
-      title: 'Thirteen letters', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'ambrose', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
+      title: 'Thirteen letters', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'silas', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
       text: 'They came in costume, and every one of them was lying about something. Here is who they really were, and the piece of the truth each one carried.'
     },
     {
@@ -92,9 +92,9 @@
       text: 'Grand Hierophant of an Order with three members, one of whom has stopped answering letters. He hired the cat burglar with gold he did not have, and somebody stole his spare hood. In the end his loneliness solved a murder: when Krank swore she was in the garden with him, his alibi said he was alone. Nobody is ever with him.'
     },
     {
-      id: 'g-ambrose', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['ambrose'],
-      title: 'Ambrose Thorne, the Butler',
-      text: "Ambrose set thirteen glasses and counted every one. He is Ezekiel's grandson through Nurse Ashgrove, and the true heir to the manor, which he never wanted. After the toast he watched Madame Zora wipe her rings with a handkerchief and tuck it into her sleeve."
+      id: 'g-silas', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['silas'],
+      title: 'Silas Thorne, the Butler',
+      text: "Silas set thirteen glasses and counted every one. He is Ezekiel's grandson through Nurse Ashgrove, and the true heir to the manor, which he never wanted. After the toast he watched Madame Zora wipe her rings with a handkerchief and tuck it into her sleeve."
     },
     {
       id: 'g-corvus', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['corvus'],
@@ -161,6 +161,11 @@
       text: "Then the lights went out. Krank crossed the room in four quick steps, found Victor by the smell of his cologne, and emptied K-7 into his neck. Victor said one word: Wilhelmina? Then nothing. And in the dark, a soft and pleased little laugh, like a kettle coming to the boil."
     },
     {
+      id: 'master-falls', chapter: 'V. The lights go out', layout: 'memorial', scene: 2, sfx: 'toll', voice: 'narrator',
+      title: 'The Master Falls', kicker: 'In memory of Victor Blackwood',
+      text: "When the light crept back, Victor Blackwood lay still on the floor of his own house. The master of Blackwood Manor had followed his sister within the hour. And now, for the first time that night, every guest in the room could hear her."
+    },
+    {
       id: 'needle', chapter: 'V. The lights go out', layout: 'portrait', scene: 2, voice: 'narrator', people: ['graves'],
       title: 'Not a fang',
       text: 'The whole room blamed the vampire. But there was one puncture on Victor\'s neck, not two, with a smear of green at the edge. A needle, not a fang. Mr. Graves said so. Nobody believed him. He said it anyway.'
@@ -173,8 +178,13 @@
       text: 'Neither killer knew the other. Each learned only that someone else in the room had killed the other Blackwood. They found each other with a sign: two taps on the table, and the words, the candles burn low. And the answer: and the wax remembers. From then on, they lied for each other.'
     },
     {
+      id: 'second-ghost', chapter: 'VI. Strangers by candlelight', layout: 'risen', scene: 3, effect: 'ghost', sfx: 'ghost', voice: 'narrator',
+      title: 'Two Ghosts', kicker: 'Scene 3',
+      text: "When the torn pages lay together on the table, the room grew colder. Then the cold took a second shape. Beside the lady in white stood her brother, pale as candle smoke, still straightening his coat. Two Blackwoods. Two murders. Two ghosts. And neither of them would rest until it was finished."
+    },
+    {
       id: 'victor-returns', chapter: 'VI. Strangers by candlelight', layout: 'ghosts', scene: 3, effect: 'ghost', sfx: 'ghost', voice: 'victor',
-      title: 'Two ghosts',
+      title: 'Victor returns',
       text: 'Well. That was unpleasant. My sister was right, I was sorry, and I was also dead, so we split the room in two. Those who came for her stood with her. Those who came for me stood with me. One word each. Together, a place.'
     },
 
@@ -185,7 +195,7 @@
       chips: [
         { text: 'Jasmine in the glass · Corvus' },
         { text: 'At the wine table a full minute · Finch' },
-        { text: 'Rings wiped on a handkerchief · Ambrose' },
+        { text: 'Rings wiped on a handkerchief · Silas' },
         { text: 'Purple-stained handkerchief · Selene' },
         { text: 'Brown vial in the plant · Team Delilah' },
         { text: 'Five rings over the glass · Khamun' },
@@ -219,9 +229,9 @@
       text: 'I paid you to bring Edgar back and you brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you.'
     },
     {
-      id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['ambrose', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],
+      id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['silas', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],
       title: 'What became of them',
-      text: 'Ambrose inherited the manor and fired nobody. Morgana got her apology, from a ghost, which counts. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
+      text: 'Silas inherited the manor and fired nobody. Morgana got her apology, from a ghost, which counts. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
     },
     {
       id: 'end', chapter: 'VIII. The reveal', layout: 'title', scene: 0, sfx: 'toll', voice: 'narrator',

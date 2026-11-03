@@ -165,7 +165,7 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 .overlay.mourning { animation: heartglow 1.4s ease-in-out 4 both; }
 @keyframes heartglow { 0%, 100% { box-shadow: inset 0 0 0 rgba(143,29,44,0) } 30% { box-shadow: inset 0 0 160px rgba(143,29,44,0.75) } }
 .memorial { position: relative; margin-bottom: 18px; animation: fade 2.5s ease both; }
-.memorial-frame { position: relative; width: 220px; height: 290px; border-radius: 50%; border: 10px double #8a6d3b; box-shadow: 0 0 0 3px #3b2a14, 0 0 50px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.9); background: radial-gradient(ellipse at 50% 35%, #2a2024, #0b0709 75%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; overflow: hidden; transform-origin: 50% -40px; animation: swing 4.5s cubic-bezier(.3,.1,.3,1) 1.2s both; }
+.memorial-frame { position: relative; text-align: center; width: 220px; height: 290px; border-radius: 50%; border: 10px double #8a6d3b; box-shadow: 0 0 0 3px #3b2a14, 0 0 50px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.9); background: radial-gradient(ellipse at 50% 35%, #2a2024, #0b0709 75%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; overflow: hidden; transform-origin: 50% -40px; animation: swing 4.5s cubic-bezier(.3,.1,.3,1) 1.2s both; }
 .memorial-frame::before { content: ''; position: absolute; top: -12px; left: 50%; width: 2px; height: 14px; background: #8a6d3b; }
 .memorial-frame::after { content: ''; position: absolute; top: 0; left: 58%; width: 5px; height: 0; border-radius: 0 0 4px 4px; background: linear-gradient(#8f1d2c, #5a0f19); animation: drip 5s ease-in 2.5s forwards; }
 @keyframes drip { to { height: 46% } }

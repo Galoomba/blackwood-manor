@@ -100,13 +100,13 @@
     "ledger": {
       "src": "assets/voice/ledger.mp3",
       "voice": "Lyla",
-      "hash": "f6fbee3d8c61",
-      "duration": 23.684,
+      "hash": "7d1acce111ae",
+      "duration": 21.177,
       "starts": [
         0,
-        6.803,
-        9.323,
-        20.283
+        6.432,
+        8.696,
+        17.903
       ]
     },
     "midnight": {
@@ -417,18 +417,18 @@
     "fates": {
       "src": "assets/voice/fates.mp3",
       "voice": "George",
-      "hash": "2b39f8c118f6",
-      "duration": 27.12,
+      "hash": "af807c213dcd",
+      "duration": 27.028,
       "starts": [
         0,
-        3.541,
-        7.21,
-        11.633,
-        16.95,
-        18.448,
-        20.619,
-        22.987,
-        26.145
+        3.181,
+        6.943,
+        11.25,
+        16.498,
+        18.135,
+        20.48,
+        22.733,
+        26.018
       ]
     },
     "end": {
@@ -446,16 +446,16 @@
     "stage-1-1-0": {
       "src": "assets/voice/stage-1-1-0.mp3",
       "voice": "Lance",
-      "hash": "31c09739cc5f",
+      "hash": "28a79db198b0",
       "duration": 23.684,
       "starts": [
         0,
-        4.447,
-        7.187,
-        11.389,
-        13.293,
-        19.737,
-        21.827
+        4.795,
+        8.057,
+        12.272,
+        14.35,
+        20.283,
+        21.78
       ]
     },
     "stage-1-2-0": {
@@ -629,11 +629,11 @@
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
       "voice": "Lyla",
-      "hash": "7defecb5d18c",
-      "duration": 8.591,
+      "hash": "1c9568686e67",
+      "duration": 9.009,
       "starts": [
         0,
-        7.663
+        8.022
       ]
     },
     "set-victorReturns-2": {
@@ -861,17 +861,6 @@
         7.372
       ]
     },
-    "g-ambrose": {
-      "src": "assets/voice/g-ambrose.mp3",
-      "voice": "George",
-      "hash": "047635ef03e7",
-      "duration": 17.183,
-      "starts": [
-        0,
-        4.075,
-        11.122
-      ]
-    },
     "set-lightsOut-1": {
       "src": "assets/voice/set-lightsOut-1.mp3",
       "voice": "George",
@@ -898,6 +887,43 @@
         13.502,
         14.93,
         16.428
+      ]
+    },
+    "g-silas": {
+      "src": "assets/voice/g-silas.mp3",
+      "voice": "George",
+      "hash": "c3ef0037ee77",
+      "duration": 16.533,
+      "starts": [
+        0,
+        3.587,
+        10.391
+      ]
+    },
+    "master-falls": {
+      "src": "assets/voice/master-falls.mp3",
+      "voice": "George",
+      "hash": "b10b27a506a2",
+      "duration": 13.189,
+      "starts": [
+        0,
+        5.248,
+        8.673
+      ]
+    },
+    "second-ghost": {
+      "src": "assets/voice/second-ghost.mp3",
+      "voice": "George",
+      "hash": "8326c719b583",
+      "duration": 20.108,
+      "starts": [
+        0,
+        4.632,
+        7.338,
+        13.479,
+        14.872,
+        15.952,
+        17.194
       ]
     }
   }

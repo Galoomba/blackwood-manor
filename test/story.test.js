@@ -7,7 +7,7 @@ const story = require('../js/story.js');
 const intro = require('../js/intro.js');
 
 const ids = new Set(data.characters.map((c) => c.id));
-const LAYOUTS = new Set(['title', 'portrait', 'duo', 'gallery', 'evidence', 'ghosts']);
+const LAYOUTS = new Set(['title', 'portrait', 'duo', 'gallery', 'evidence', 'ghosts', 'memorial', 'risen']);
 const VOICES = new Set(['narrator', 'delilah', 'victor']);
 const audioSrc = fs.readFileSync(path.join(__dirname, '../js/audio.js'), 'utf8');
 const SOUNDS = new Set([...audioSrc.slice(audioSrc.indexOf('const sounds = {')).matchAll(/^\s{4}(\w+):/gm)].map((m) => m[1]));
@@ -105,4 +105,14 @@ test('the introduction gives nothing away', () => {
 test('the introduction ends on its own closing step', () => {
   assert.equal(intro.slides[intro.slides.length - 1].id, 'intro-begin');
   assert.equal(intro.chapters()[0].index, 0);
+});
+
+test('the full story carries both scene interludes: the memorial after Victor dies, the second ghost before he speaks', () => {
+  const at = (id) => story.slides.findIndex((s) => s.id === id);
+  const memorial = story.slides.find((s) => s.layout === 'memorial');
+  const risen = story.slides.find((s) => s.layout === 'risen');
+  assert.ok(memorial && risen, 'both interlude slides exist');
+  assert.equal(at(memorial.id), at('dark') + 1, 'the memorial follows the murder in the dark');
+  assert.equal(at(risen.id) + 1, at('victor-returns'), 'the second ghost rises just before Victor speaks');
+  assert.notEqual(story.slides[at('victor-returns')].title, risen.title, 'no two slides share a title');
 });
