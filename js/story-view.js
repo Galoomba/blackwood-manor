@@ -45,6 +45,7 @@
      silent utterance during the tap unlocks the page; later sentences may then start on a timer. */
   let unlocked = false;
   function unlockSpeech() {
+    unlockClip();
     if (!synth) return;
     try {
       if (synth.paused) synth.resume();
@@ -54,6 +55,26 @@
       synth.speak(u);
       unlocked = true;
     } catch (e) { /* speech not available */ }
+  }
+
+  /* ---------- recorded voice-over (scripts/generate-voice.js) ---------- */
+  const voiceClips = (root.BM.voice && root.BM.voice.clips) || {};
+  const clipEl = typeof root.Audio === 'function' ? new root.Audio() : null;
+  if (clipEl) clipEl.preload = 'auto';
+  let clipUnlocked = false;
+  /* Phones also only start audio from a tap: play one clip muted during the tap so that the same
+     audio element may play later clips on a timer. */
+  function unlockClip() {
+    if (!clipEl || clipUnlocked) return;
+    const first = Object.values(voiceClips)[0];
+    if (!first) return;
+    clipUnlocked = true;
+    clipEl.unlocking = true;
+    clipEl.muted = true;
+    clipEl.src = first.src;
+    const p = clipEl.play();
+    const done = () => { if (clipEl.unlocking) clipEl.pause(); clipEl.unlocking = false; clipEl.muted = false; };
+    if (p && p.then) p.then(done, () => { clipUnlocked = false; done(); }); else done();
   }
 
   /* ---------- drawing ---------- */
@@ -111,10 +132,12 @@
     let open = false;   // host: opened from the panel; the TV passes isVisible instead
     const visible = (st) => (opts.isVisible ? opts.isVisible(st) : open);
 
-    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+    let clipTick = null;
+    function clearTimers() { timers.forEach(clearTimeout); timers = []; if (clipTick) { clearInterval(clipTick); clipTick = null; } }
     function stopNarration() {
       token++;
       clearTimers();
+      if (clipEl) { clipEl.onended = null; clipEl.onerror = null; if (!clipEl.unlocking && !clipEl.paused) clipEl.pause(); }
       /* Only clear our own sentences, so a tap's silent unlock utterance is not cancelled with them. */
       if (synth && utterances.length) synth.cancel();
       utterances = [];
@@ -162,6 +185,38 @@
         sentences.forEach((s, i) => { if (i < from) return; timers.push(setTimeout(() => { if (my === token) light(i); }, t)); t += story.estimateMs(s); });
         timers.push(setTimeout(finish, t));
       };
+      const speak = (delay) => speakWith(st, my, slide, sentences, finish, timed, delay);
+      /* 1. A recorded ElevenLabs clip, with sentences lit from its timings. */
+      const clip = st.voice && clipEl ? voiceClips[slide.id] : null;
+      if (clip) {
+        timers.push(setTimeout(() => {
+          if (my !== token) return;
+          let done = false;
+          const fail = () => { if (my === token && !done) { done = true; clipEl.onended = clipEl.onerror = null; speak(0); } };
+          clipEl.unlocking = false;
+          clipEl.muted = false;
+          clipEl.onended = () => { if (my === token && !done) { done = true; finish(); } };
+          clipEl.onerror = fail;
+          if (!clipEl.src.endsWith(clip.src)) clipEl.src = clip.src;
+          try { clipEl.currentTime = 0; } catch (e) { /* not loaded yet */ }
+          const p = clipEl.play();
+          if (p && p.catch) p.catch(fail);
+          clipTick = setInterval(() => {
+            if (my !== token || done) return;
+            const t = clipEl.currentTime;
+            let i = -1;
+            clip.starts.forEach((start, n) => { if (t >= start - 0.05) i = n; });
+            light(i);
+          }, 120);
+          timers.push(setTimeout(() => { if (my === token && !done) { done = true; finish(); } }, (clip.duration + 10) * 1000));
+        }, lead));
+        return;
+      }
+      speak(lead);
+    }
+
+    /* 2. The browser's own voices; 3. captions on a clock when speech is unavailable or refused. */
+    function speakWith(st, my, slide, sentences, finish, timed, lead) {
       if (!st.voice || !synth) { timed(0, lead); return; }
       /* May be null while a phone is still loading its voices: the browser's default voice is used. */
       const voice = voiceFor(slide.voice || 'narrator');

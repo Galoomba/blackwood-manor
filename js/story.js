@@ -252,7 +252,22 @@
     return out;
   }
 
-  const story = { slides, splitSentences, estimateMs, chapters };
+  /* Start time in seconds of each sentence in a recorded clip, from the character timings that
+     ElevenLabs returns (alignment.characters and alignment.character_start_times_seconds). */
+  function sentenceStarts(text, sentences, alignment) {
+    const chars = alignment.characters.join('');
+    const times = alignment.character_start_times_seconds;
+    let cursor = 0;
+    return sentences.map((sentence) => {
+      let at = chars.indexOf(sentence, cursor);
+      if (at < 0) at = chars.indexOf(sentence.slice(0, 12), cursor);
+      if (at < 0) at = cursor;
+      cursor = at + 1;
+      return Math.round((times[Math.min(at, times.length - 1)] || 0) * 1000) / 1000;
+    });
+  }
+
+  const story = { slides, splitSentences, estimateMs, chapters, sentenceStarts };
   root.BM = root.BM || {};
   root.BM.story = story;
   if (typeof module !== 'undefined' && module.exports) module.exports = story;

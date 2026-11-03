@@ -64,3 +64,23 @@ test('chapters start at the first slide and appear in story order', () => {
   for (let i = 1; i < ch.length; i++) assert.ok(ch[i].index > ch[i - 1].index);
   assert.equal(new Set(ch.map((c) => c.title)).size, ch.length, 'no chapter appears twice');
 });
+
+test('sentenceStarts maps character timings to the start of each sentence', () => {
+  const text = 'Dr. Krank laughed. Then nothing.';
+  const sentences = story.splitSentences(text);
+  const characters = text.split('');
+  const starts = characters.map((_, i) => i * 0.1);
+  assert.deepEqual(story.sentenceStarts(text, sentences, { characters, character_start_times_seconds: starts }), [0, 1.9]);
+});
+
+test('every recorded clip belongs to a slide and its audio file exists', () => {
+  const voice = require('../js/voice-manifest.js');
+  const slideIds = new Set(story.slides.map((s) => s.id));
+  for (const [id, clip] of Object.entries(voice.clips)) {
+    assert.ok(slideIds.has(id), `clip ${id} has a slide`);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', clip.src)), `file ${clip.src}`);
+    const n = story.splitSentences(story.slides.find((s) => s.id === id).text).length;
+    assert.equal(clip.starts.length, n, `${id} has a start time per sentence`);
+    for (let i = 1; i < n; i++) assert.ok(clip.starts[i] >= clip.starts[i - 1], `${id} starts ascend`);
+  }
+});
