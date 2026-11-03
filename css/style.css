@@ -189,6 +189,12 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
   .strip .margin { border-right: 1px solid #000; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2mm; }
   .strip .candle-ink { width: 5mm; background: #000; }
   .strip .body { padding: 3mm 4mm; }
+  .pocket-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(6, 1fr); gap: 3mm; height: 270mm; }
+  .pocket { border: 1px solid #000; padding: 3mm 4mm; font-size: 9pt; line-height: 1.25; display: flex; flex-direction: column; page-break-inside: avoid; }
+  .pocket .pk-stage { font-size: 18pt; font-weight: bold; line-height: 1; }
+  .pocket .pk-title { font-size: 9pt; text-transform: uppercase; letter-spacing: 0.08em; }
+  .pocket .pk-station { font-size: 12pt; font-weight: bold; margin: 2mm 0 1.5mm; border-top: 1px solid #000; padding-top: 1.5mm; }
+  .pocket .pk-inside { font-size: 8.5pt; }
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }
 }

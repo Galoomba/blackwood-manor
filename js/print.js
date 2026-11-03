@@ -59,6 +59,26 @@
     return pages.join('');
   }
 
+  /* 54 small labels: one pocket per station per stage, listing what goes inside. */
+  function pockets() {
+    const labels = [];
+    for (const st of data.STATIONS) {
+      data.STAGE_IDS.forEach((sid, i) => {
+        const inside = logic.cardsAtStation(data, st, i).map((c) => `${c.symbol} ${esc(c.short)}`);
+        for (const team of ['delilah', 'victor']) {
+          const env = data.teamEnvelopes[team][sid];
+          if (env && env.station === st) inside.push(`<strong>${teamLabel(team)} envelope</strong>`);
+          if (sid === '3.2' && env && env.station === st) inside.push(`<strong>${teamLabel(team)} witness card</strong>`);
+        }
+        if (sid === '2.3') inside.push('<em>+ ledger strips of these holders</em>');
+        labels.push(`<div class="pocket"><div class="pk-stage">${sid}</div><div class="pk-title">${esc(data.stages[i].title)}</div><div class="pk-station">${esc(st)}</div><div class="pk-inside">${inside.join('<br>')}</div></div>`);
+      });
+    }
+    const pages = [];
+    for (let i = 0; i < labels.length; i += 18) pages.push(`<div class="sheet"><div class="pocket-grid">${labels.slice(i, i + 18).join('')}</div></div>`);
+    return pages.join('');
+  }
+
   function envelopes() {
     const out = [];
     for (const team of ['delilah', 'victor']) {
@@ -102,7 +122,7 @@
       <h1>Host guide</h1>
       <h2>Night-of checklist</h2>
       <ol>
-        <li>Print all packs. Cut cards. Sort every card into its station envelope using the table below. Put the four team envelopes and the two witness cards at their stations. Put each ledger strip inside its holder's 2.3 envelope.</li>
+        <li>Print all packs. Cut cards. Sort every card into its station envelope using the table below, or, to stop peeking ahead, into nine small pockets per station using the pocket labels (each label lists what goes inside). Put the four team envelopes and the two witness cards at their stations. Put each ledger strip inside its holder's 2.3 envelope or pocket.</li>
         <li>Label the six stations. Hide envelopes behind or under the object, not in plain sight.</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
@@ -121,6 +141,7 @@
     if (kind === 'all') return data.characters.map(characterPack).join('');
     if (kind === 'character') return characterPack(charById(id));
     if (kind === 'stations') return stations();
+    if (kind === 'pockets') return pockets();
     if (kind === 'envelopes') return envelopes();
     if (kind === 'ledger') return ledger();
     if (kind === 'guide') return guide(roster);
@@ -136,5 +157,5 @@
   }
 
   root.BM = root.BM || {};
-  root.BM.print = { open, build, characterPack, stations, envelopes, ledger, guide };
+  root.BM.print = { open, build, characterPack, stations, pockets, envelopes, ledger, guide };
 })(window);

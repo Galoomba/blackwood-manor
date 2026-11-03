@@ -109,11 +109,12 @@
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id) }, `${c.symbol} ${c.short}`));
     node.append(
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Pocket labels are optional: stick one on each of nine small envelopes per station so players can only open the current stage.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
           el('button', { class: 'primary', onclick: () => root.BM.print.open('all') }, 'All character packs'),
           el('button', { onclick: () => root.BM.print.open('stations') }, 'Station labels'),
+          el('button', { onclick: () => root.BM.print.open('pockets') }, 'Pocket labels (one per stage per station)'),
           el('button', { onclick: () => root.BM.print.open('envelopes') }, 'Team envelopes and witness cards'),
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
