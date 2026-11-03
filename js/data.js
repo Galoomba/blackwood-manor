@@ -292,7 +292,7 @@
     },
     {
       id: 'agnes', index: 5, symbol: '🗝', name: 'Agnes Thorne, the Housekeeper', short: 'Agnes',
-      costume: 'Maid', image: 'assets/characters/agnes.svg',
+      costume: 'Maid', image: 'assets/characters/agnes.jpg',
       team: 'delilah', optional: true, killer: false, witness: false,
       intro: {
         text: 'You are Agnes Thorne, housekeeper of Blackwood Manor for thirty years.',
