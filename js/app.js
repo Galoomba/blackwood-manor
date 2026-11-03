@@ -49,6 +49,20 @@
     onHide: () => render()
   });
   function openStory() { audio.init(); story.open(); }
+
+  /* ---------- introduce the game to the group (spoiler-free; goes to the TV when one is open) ---------- */
+  const intro = root.BM.storyView.createPlayer({
+    deck: root.BM.intro,
+    key: 'blackwood-manor-intro-v1',
+    layer: document.getElementById('intro-layer'),
+    controls: true,
+    isSpeaker: (st) => !(st.onTv && game.tvConnected()),
+    soundOn: () => game.get().sound,
+    onHide: () => render(),
+    finalAction: { label: 'Go to the home screen', run: () => show('title') }
+  });
+  function openIntro() { audio.init(); intro.open({ index: 0, playing: false, onTv: game.tvConnected() }); }
+  function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Walk the group through how the night works, step by step, on the TV' }, 'Introduce the game'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
   /* ---------- navigation ---------- */
@@ -60,7 +74,7 @@
     $('#screen-' + s.screen).classList.add('active');
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
-    if (!story.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
+    if (!story.isShown() && !intro.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
     const speaking = voice.playing();
     if (speaking && (!hostVoiceOn() || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
@@ -87,6 +101,7 @@
       candles(),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { class: 'primary', onclick: () => { audio.init(); show('setup'); } }, 'Enter the manor'),
+        introButton('ghostly'),
         (s.prologueDone || s.stageIndex > 0) && el('button', { class: 'ghostly', onclick: () => { audio.init(); show('game'); } }, 'Resume the night'),
         storyButton('ghostly', 'The full story (spoilers)')
       )
@@ -130,6 +145,7 @@
       roster.present.length < 6 ? el('p', { class: 'error' }, 'Fewer than six guests: the mystery will be thin. Consider adding characters.') : null,
       el('div', { class: 'row' },
         el('button', { onclick: () => show('print') }, 'Print pack'),
+        introButton(''),
         storyButton('', 'The full story'),
         el('button', { class: 'primary', disabled: roster.errors.length ? 'disabled' : null, onclick: () => beginNight() }, s.prologueDone ? 'Return to the game' : 'Begin the night'),
         el('button', { class: 'small', onclick: () => { if (confirm('Forget this night and start over?')) { game.reset(); show('title'); } } }, 'Reset everything')

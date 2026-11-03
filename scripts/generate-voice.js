@@ -17,6 +17,7 @@ const crypto = require('node:crypto');
 const data = require('../js/data.js');
 const logic = require('../js/logic.js');
 const story = require('../js/story.js');
+const intro = require('../js/intro.js');
 
 const ROOT = path.join(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'assets', 'voice');
@@ -95,6 +96,7 @@ async function main() {
   manifest.model = MODEL;
   const items = [
     ...story.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
+    ...intro.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
     ...logic.voiceLines(data).flatMap((l) => (l.voice === 'both'
       ? ['delilah', 'victor'].map((v) => ({ id: `${l.id}.${v}`, voice: v, text: l.text }))
       : [{ id: l.id, voice: l.voice, text: l.text }]))

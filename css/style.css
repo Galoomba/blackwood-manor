@@ -226,6 +226,8 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 .story-slide.fx-flicker .story-body { animation: fade 1.2s ease 2.4s both; }
 .story-slide.fx-ghost .story-body { animation: hover 6s ease-in-out infinite; }
 .story-slide.fx-ghost .story-title { color: #bcd8ff; text-shadow: 0 0 30px rgba(159,211,255,0.6); }
+.story-final { margin-top: 3vh; animation: fade 1.2s ease 1.5s both; }
+.story-final button { font-size: clamp(16px, 1.6vw, 22px); padding: 14px 28px; }
 .story-progress { height: 4px; background: rgba(255,255,255,0.08); }
 .story-progress > div { height: 100%; width: 0; background: linear-gradient(90deg, var(--blood), var(--gold)); transition: width 0.8s ease; }
 .story-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; padding: 10px 16px; background: rgba(10,6,8,0.95); border-top: 1px solid rgba(201,162,74,0.25); }

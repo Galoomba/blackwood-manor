@@ -1,5 +1,5 @@
 (function (root) {
-  /* The "Full story" theatre: draws a slide from BM.story, speaks it with the browser's own voices,
+  /* The theatre for the "Full story" and the "Introduce the game" decks: draws a slide, speaks it with the browser's own voices,
      lights each sentence as it is spoken and moves on by itself. Host and TV share one small state
      under its own storage key, so the story never disturbs the game state. Exactly one window is
      the speaker: the TV while the story is shown there, otherwise the host. */
@@ -11,15 +11,18 @@
   const PAUSE_AFTER_SLIDE = 1400;
 
   function defaults() { return { onTv: false, index: 0, playing: false, voice: true, at: 0 }; }
-  function read() {
-    try { return Object.assign(defaults(), JSON.parse(root.localStorage.getItem(KEY) || '{}')); } catch (e) { return defaults(); }
+  /* Each deck (the full story, the introduction) keeps its own small state under its own key. */
+  function readKey(key) {
+    try { return Object.assign(defaults(), JSON.parse(root.localStorage.getItem(key) || '{}')); } catch (e) { return defaults(); }
   }
-  function write(patch) {
-    const next = Object.assign(read(), patch, { at: Date.now() });
-    next.index = Math.max(0, Math.min(story.slides.length - 1, next.index));
-    try { root.localStorage.setItem(KEY, JSON.stringify(next)); } catch (e) { /* ignore */ }
+  function writeKey(key, deck, patch) {
+    const next = Object.assign(readKey(key), patch, { at: Date.now() });
+    next.index = Math.max(0, Math.min(deck.slides.length - 1, next.index));
+    try { root.localStorage.setItem(key, JSON.stringify(next)); } catch (e) { /* ignore */ }
     return next;
   }
+  const read = () => readKey(KEY);
+  const write = (patch) => writeKey(KEY, story, patch);
 
   function charById(id) { return data.characters.find((c) => c.id === id); }
 
@@ -117,7 +120,13 @@
 
   /* ---------- the player ---------- */
   /* opts: layer (element), controls (bool), isVisible(state), isSpeaker(state), soundOn(), onHide(), tvConnected() */
+  /* opts.deck: { slides, chapters() } (default the full story); opts.key: its storage key;
+     opts.finalAction: { label, run } shows a button on the last slide (host only). */
   function createPlayer(opts) {
+    const deck = opts.deck || story;
+    const key = opts.key || KEY;
+    const read = () => readKey(key);
+    const write = (patch) => writeKey(key, deck, patch);
     const layer = opts.layer;
     let shown = false;
     let current = -1;
@@ -156,7 +165,7 @@
     function advance() {
       const st = read();
       if (!st.playing) return;
-      if (st.index < story.slides.length - 1) write({ index: st.index + 1 });
+      if (st.index < deck.slides.length - 1) write({ index: st.index + 1 });
       else write({ playing: false });
       sync();
     }
@@ -165,7 +174,7 @@
       stopNarration();
       const my = ++token;
       speaking = true;
-      const slide = story.slides[st.index];
+      const slide = deck.slides[st.index];
       drawn.text.classList.remove('all');
       light(-1);
       if (opts.soundOn()) {
@@ -250,12 +259,16 @@
     }
 
     function draw(st) {
-      const slide = story.slides[st.index];
+      const slide = deck.slides[st.index];
       const stage = layer.querySelector('.story-stage');
       drawn = drawSlide(slide, st.index);
       clear(stage).append(drawn.node);
+      if (opts.finalAction && st.index === deck.slides.length - 1) {
+        drawn.node.querySelector('.story-words').append(el('div', { class: 'story-final' },
+          el('button', { class: 'primary', onclick: () => { close(); opts.finalAction.run(); } }, opts.finalAction.label)));
+      }
       lightAll();
-      if (progressFill) progressFill.style.width = `${((st.index + 1) / story.slides.length) * 100}%`;
+      if (progressFill) progressFill.style.width = `${((st.index + 1) / deck.slides.length) * 100}%`;
       if (slide.effect === 'flash' || slide.effect === 'flicker') {
         const f = drawn.node.querySelector('.story-flash');
         void f.offsetWidth; f.classList.add('go');
@@ -263,13 +276,13 @@
     }
 
     function buildControls() {
-      const chapters = story.chapters();
+      const chapters = deck.chapters();
       const select = el('select', { class: 'story-chapter-select', onchange: (e) => { write({ index: Number(e.target.value) }); sync(); } },
         chapters.map((c) => el('option', { value: c.index }, c.title)));
       const btn = (cls, label, title, fn) => el('button', { class: 'small ' + cls, title, onclick: fn }, label);
       controlsNode = el('div', { class: 'story-controls' },
         btn('prev', '◀', 'Previous (left arrow)', () => { unlockSpeech(); write({ index: read().index - 1 }); sync(); }),
-        btn('play primary', '▶ Play', 'Play or pause (space)', () => { unlockSpeech(); const st = read(); write({ playing: !st.playing, index: !st.playing && st.index === story.slides.length - 1 ? 0 : st.index }); sync(); }),
+        btn('play primary', '▶ Play', 'Play or pause (space)', () => { unlockSpeech(); const st = read(); write({ playing: !st.playing, index: !st.playing && st.index === deck.slides.length - 1 ? 0 : st.index }); sync(); }),
         btn('next', '▶▶', 'Next (right arrow)', () => { unlockSpeech(); write({ index: read().index + 1 }); sync(); }),
         select,
         btn('voice', 'Voice: on', 'Narration voice', () => { unlockSpeech(); write({ voice: !read().voice }); stopNarration(); sync(); }),
@@ -292,10 +305,10 @@
       controlsNode.querySelector('.voice').textContent = st.voice ? 'Voice: on' : 'Voice: off';
       controlsNode.querySelector('.tv').textContent = st.onTv ? 'Stop showing on TV' : 'Show on TV';
       controlsNode.querySelector('.tv').classList.toggle('on', st.onTv);
-      const chapters = story.chapters();
+      const chapters = deck.chapters();
       const ch = chapters.filter((c) => c.index <= st.index).pop();
       controlsNode.querySelector('select').value = String(ch.index);
-      controlsNode.querySelector('.story-where').textContent = `${st.index + 1} / ${story.slides.length}` +
+      controlsNode.querySelector('.story-where').textContent = `${st.index + 1} / ${deck.slides.length}` +
         (st.onTv ? (speaker ? ' · TV not connected, playing here' : ' · playing on the TV') : '');
     }
 
@@ -329,7 +342,7 @@
       updateControls(st, speaker);
     }
 
-    function openLocal() { unlockSpeech(); open = true; sync(); }
+    function openLocal(patch) { unlockSpeech(); if (patch) write(patch); open = true; sync(); }
     function close() {
       open = false;
       write({ playing: false, onTv: false });
@@ -337,7 +350,7 @@
     }
     function isOpen() { return open; }
 
-    root.addEventListener('storage', (e) => { if (e.key === KEY) sync(); });
+    root.addEventListener('storage', (e) => { if (e.key === key) sync(); });
     setInterval(sync, 400);
 
     if (opts.controls) {

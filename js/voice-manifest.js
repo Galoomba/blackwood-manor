@@ -709,6 +709,168 @@
         5.735,
         7.384
       ]
+    },
+    "intro-welcome": {
+      "src": "assets/voice/intro-welcome.mp3",
+      "voice": "George",
+      "hash": "40a0beae53c2",
+      "duration": 11.285,
+      "starts": [
+        0,
+        2.287,
+        8.034
+      ]
+    },
+    "intro-characters": {
+      "src": "assets/voice/intro-characters.mp3",
+      "voice": "George",
+      "hash": "f7d9784f3a2f",
+      "duration": 12.539,
+      "starts": [
+        0,
+        2.125,
+        8.475,
+        10.031
+      ]
+    },
+    "intro-death": {
+      "src": "assets/voice/intro-death.mp3",
+      "voice": "George",
+      "hash": "27a5a030b1b0",
+      "duration": 9.474,
+      "starts": [
+        0,
+        3.46,
+        6.177
+      ]
+    },
+    "intro-scenes": {
+      "src": "assets/voice/intro-scenes.mp3",
+      "voice": "George",
+      "hash": "2f1685ed848e",
+      "duration": 11.796,
+      "starts": [
+        0,
+        3.518,
+        5.77,
+        9.369
+      ]
+    },
+    "intro-stations": {
+      "src": "assets/voice/intro-stations.mp3",
+      "voice": "George",
+      "hash": "084c04d04942",
+      "duration": 12.632,
+      "starts": [
+        0,
+        7.814
+      ]
+    },
+    "intro-riddles": {
+      "src": "assets/voice/intro-riddles.mp3",
+      "voice": "George",
+      "hash": "d17f47f61bf1",
+      "duration": 13.746,
+      "starts": [
+        0,
+        2.287,
+        4.679,
+        11.134
+      ]
+    },
+    "intro-search-rules": {
+      "src": "assets/voice/intro-search-rules.mp3",
+      "voice": "George",
+      "hash": "001e4fede8c1",
+      "duration": 11.796,
+      "starts": [
+        0,
+        1.695,
+        8.429
+      ]
+    },
+    "intro-cards": {
+      "src": "assets/voice/intro-cards.mp3",
+      "voice": "George",
+      "hash": "9e7cf02fdd6d",
+      "duration": 13.978,
+      "starts": [
+        0,
+        1.927,
+        6.258,
+        9.915
+      ]
+    },
+    "intro-talk": {
+      "src": "assets/voice/intro-talk.mp3",
+      "voice": "George",
+      "hash": "545a0bb8f80d",
+      "duration": 13.096,
+      "starts": [
+        0,
+        3.599,
+        7.477,
+        11.192,
+        11.958
+      ]
+    },
+    "intro-secrets": {
+      "src": "assets/voice/intro-secrets.mp3",
+      "voice": "George",
+      "hash": "3380267ab7d1",
+      "duration": 12.585,
+      "starts": [
+        0,
+        1.974,
+        4.481,
+        8.324
+      ]
+    },
+    "intro-together": {
+      "src": "assets/voice/intro-together.mp3",
+      "voice": "George",
+      "hash": "2ca5c3c983e0",
+      "duration": 12.028,
+      "starts": [
+        0,
+        2.902,
+        9.718
+      ]
+    },
+    "intro-vote": {
+      "src": "assets/voice/intro-vote.mp3",
+      "voice": "George",
+      "hash": "2729a0ea6bf9",
+      "duration": 12.957,
+      "starts": [
+        0,
+        3.727,
+        7.488,
+        12.121
+      ]
+    },
+    "intro-house-rules": {
+      "src": "assets/voice/intro-house-rules.mp3",
+      "voice": "George",
+      "hash": "fbf4bdf57ceb",
+      "duration": 10.031,
+      "starts": [
+        0,
+        5.259,
+        7.872
+      ]
+    },
+    "intro-begin": {
+      "src": "assets/voice/intro-begin.mp3",
+      "voice": "George",
+      "hash": "fba8fe7eaae5",
+      "duration": 8.452,
+      "starts": [
+        0,
+        3.518,
+        6.676,
+        7.372
+      ]
     }
   }
 }/* END */;

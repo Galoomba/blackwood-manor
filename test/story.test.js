@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const data = require('../js/data.js');
 const story = require('../js/story.js');
+const intro = require('../js/intro.js');
 
 const ids = new Set(data.characters.map((c) => c.id));
 const LAYOUTS = new Set(['title', 'portrait', 'duo', 'gallery', 'evidence', 'ghosts']);
@@ -11,9 +12,9 @@ const VOICES = new Set(['narrator', 'delilah', 'victor']);
 const audioSrc = fs.readFileSync(path.join(__dirname, '../js/audio.js'), 'utf8');
 const SOUNDS = new Set([...audioSrc.slice(audioSrc.indexOf('const sounds = {')).matchAll(/^\s{4}(\w+):/gm)].map((m) => m[1]));
 
-test('every slide is complete and uses known layouts, voices, sounds and guests', () => {
+test('every slide of both decks is complete and uses known layouts, voices, sounds and guests', () => {
   const seen = new Set();
-  for (const s of story.slides) {
+  for (const s of [...story.slides, ...intro.slides]) {
     assert.ok(s.id && !seen.has(s.id), `unique id ${s.id}`);
     seen.add(s.id);
     assert.ok(s.chapter && s.title && s.text, `${s.id} has chapter, title and text`);
@@ -76,7 +77,7 @@ test('sentenceStarts maps character timings to the start of each sentence', () =
 test('every slide and ghost line is recorded, and every clip file exists', () => {
   const voice = require('../js/voice-manifest.js');
   const logic = require('../js/logic.js');
-  const texts = new Map(story.slides.map((s) => [s.id, s.text]));
+  const texts = new Map([...story.slides, ...intro.slides].map((s) => [s.id, s.text]));
   for (const l of logic.voiceLines(data)) {
     if (l.voice === 'both') { texts.set(`${l.id}.delilah`, l.text); texts.set(`${l.id}.victor`, l.text); } else texts.set(l.id, l.text);
   }
@@ -88,4 +89,20 @@ test('every slide and ghost line is recorded, and every clip file exists', () =>
     assert.equal(clip.starts.length, n, `${id} has a start time per sentence`);
     for (let i = 1; i < n; i++) assert.ok(clip.starts[i] >= clip.starts[i - 1], `${id} starts ascend`);
   }
+});
+
+test('the introduction gives nothing away', () => {
+  const killerWords = data.characters.filter((c) => c.killer).flatMap((c) => [c.short, c.name]);
+  const spoilers = [...killerWords, 'Victor', 'nightshade', 'jasmine', 'K-7', 'syringe', 'vial', 'ledger', 'needle', 'kettle'];
+  for (const s of intro.slides) {
+    const all = [s.title, s.kicker || '', s.text, ...(s.chips || []).map((c) => c.text)].join(' ');
+    for (const w of spoilers) assert.ok(!all.includes(w), `${s.id} mentions "${w}"`);
+    assert.ok(s.id.startsWith('intro-'), `${s.id} is prefixed so its clip cannot clash with the story`);
+    assert.ok(!(s.killers || []).length, `${s.id} marks no killer`);
+  }
+});
+
+test('the introduction ends on its own closing step', () => {
+  assert.equal(intro.slides[intro.slides.length - 1].id, 'intro-begin');
+  assert.equal(intro.chapters()[0].index, 0);
 });

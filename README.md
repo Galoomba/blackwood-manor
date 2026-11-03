@@ -23,6 +23,10 @@ Setup → Begin the night → read the prologue → "She is dead" → nine stage
 
 The browser remembers the current stage, so a refresh or accidental close does not lose the game. "Reset everything" on the setup screen starts fresh.
 
+## Introduce the game
+
+"Introduce the game" on the home and setup screens walks the group through how the night works, in 14 spoiler-free steps: characters, the three scenes, the six hiding places, following riddles, search rules, secret cards, discussion and table talk, secrets, team puzzles, the vote and the house rules. If the TV window is open it goes straight to the TV, and the laptop becomes the remote. Step through it with the arrows while you explain, or press Play to let the recorded narrator read it. The last step has "Go to the home screen", ready to start the game.
+
 ## Ghost voice-over
 
 The ghosts' lines are recorded too: every stage narration (Delilah, then both ghosts together in Scene 3), Victor's return and the reveal. They play on the TV window when it is open, otherwise on the laptop, and the TV types the narration in time with the voice. Victor's lines while he is still alive (the toast, "She is dead" and the midnight announcement) are left for the host to perform.
@@ -41,4 +45,4 @@ It contains every spoiler, so it stays on the laptop until you press "Show on TV
 
 ## Develop
 
-`npm test` runs the logic tests and the content integrity check. Story and card text live in `js/data.js`, the narrated full story in `js/story.js` (drawn by `js/story-view.js`); the design is in `docs/superpowers/specs/`.
+`npm test` runs the logic tests and the content integrity check. Story and card text live in `js/data.js`, the narrated full story in `js/story.js` and the introduction in `js/intro.js` (both drawn by `js/story-view.js`); the design is in `docs/superpowers/specs/`.

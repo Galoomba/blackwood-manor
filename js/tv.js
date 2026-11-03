@@ -221,8 +221,20 @@
     onHide: () => render(true)
   });
 
+  const intro = root.BM.storyView.createPlayer({
+    deck: root.BM.intro,
+    key: 'blackwood-manor-intro-v1',
+    layer: document.getElementById('intro-layer'),
+    controls: false,
+    isVisible: (st) => st.onTv,
+    isSpeaker: (st) => st.onTv,
+    soundOn: () => game.get().sound,
+    onHide: () => render(true)
+  });
+
   audio.setEnabled(game.get().sound);
   render(true);
   syncOverlays();
   story.sync();
+  intro.sync();
 })(window);
