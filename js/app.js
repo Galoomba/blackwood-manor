@@ -2,7 +2,7 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
-  const { el, clear, typewrite, narrationNode, linesNode, candles, flashLightning } = root.BM.ui;
+  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
 
   const $ = (sel) => document.querySelector(sel);
@@ -14,6 +14,18 @@
   function localSoundOn() { return game.get().sound && !game.tvConnected(); }
   function sfx(name) { if (localSoundOn()) audio.play(name); }
 
+  /* ---------- the full story theatre ---------- */
+  const story = root.BM.storyView.createPlayer({
+    layer: document.getElementById('story-layer'),
+    controls: true,
+    isSpeaker: (st) => !(st.onTv && game.tvConnected()),
+    soundOn: () => game.get().sound,
+    confirmTv: () => game.get().screen === 'result' || confirm('This shows the whole solution, both killers included, on the TV. Show it now?'),
+    onHide: () => render()
+  });
+  function openStory() { audio.init(); story.open(); }
+  function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
+
   /* ---------- navigation ---------- */
   function show(screen) { game.set({ screen }); render(); }
 
@@ -23,7 +35,7 @@
     $('#screen-' + s.screen).classList.add('active');
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
-    if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience();
+    if (!story.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
     window.scrollTo(0, 0);
   }
@@ -41,14 +53,15 @@
   function renderTitle() {
     const s = game.get();
     const node = clear($('#screen-title'));
-    node.append(
+    append(node, 
       el('div', { class: 'manor' }, "All Hallows' Eve"),
       el('h1', {}, 'Blackwood Manor'),
       el('p', { class: 'dim' }, 'A murder night in three scenes'),
       candles(),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { class: 'primary', onclick: () => { audio.init(); show('setup'); } }, 'Enter the manor'),
-        (s.prologueDone || s.stageIndex > 0) && el('button', { class: 'ghostly', onclick: () => { audio.init(); show('game'); } }, 'Resume the night')
+        (s.prologueDone || s.stageIndex > 0) && el('button', { class: 'ghostly', onclick: () => { audio.init(); show('game'); } }, 'Resume the night'),
+        storyButton('ghostly', 'The full story (spoilers)')
       )
     );
   }
@@ -71,7 +84,7 @@
           oninput: (e) => { const names = Object.assign({}, game.get().names, { [c.id]: e.target.value }); game.set({ names }); } })
       ));
     }
-    node.append(
+    append(node, 
       el('h2', {}, 'Who is in the house tonight?'),
       el('p', { class: 'dim' }, 'Tap a portrait to add or remove a guest. A few characters are essential to the story and stay on. Type the real name of the player under each portrait if you want it on the vote screen.'),
       el('div', { class: 'panel' }, grid),
@@ -89,6 +102,7 @@
       roster.present.length < 6 ? el('p', { class: 'error' }, 'Fewer than six guests: the mystery will be thin. Consider adding characters.') : null,
       el('div', { class: 'row' },
         el('button', { onclick: () => show('print') }, 'Print pack'),
+        storyButton('', 'The full story'),
         el('button', { class: 'primary', disabled: roster.errors.length ? 'disabled' : null, onclick: () => beginNight() }, s.prologueDone ? 'Return to the game' : 'Begin the night'),
         el('button', { class: 'small', onclick: () => { if (confirm('Forget this night and start over?')) { game.reset(); show('title'); } } }, 'Reset everything')
       )
@@ -107,7 +121,7 @@
     const node = clear($('#screen-print'));
     const list = el('div', { class: 'row' });
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id) }, `${c.symbol} ${c.short}`));
-    node.append(
+    append(node, 
       el('h2', {}, 'Print pack'),
       el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Pocket labels are optional: stick one on each of nine small envelopes per station so players can only open the current stage.'),
       el('div', { class: 'panel' },
@@ -154,11 +168,12 @@
     const phasePanel = el('div', { class: 'panel' });
     buildPhasePanel(phasePanel, stage, s);
 
-    node.append(progress, header, phasePanel, buildHostPanel(stage, s, roster), buildSoundboard(),
+    append(node, progress, header, phasePanel, buildHostPanel(stage, s, roster), buildSoundboard(),
       el('div', { class: 'row' },
         el('button', { class: 'small', onclick: () => { stopTimer(); game.prevStage(); render(); } }, '◀ Previous stage'),
         el('button', { class: 'small', onclick: () => show('setup') }, 'Setup'),
-        el('button', { class: 'small', onclick: () => show('vote') }, 'Go to vote')
+        el('button', { class: 'small', onclick: () => show('vote') }, 'Go to vote'),
+        storyButton('small', 'Full story')
       )
     );
 
@@ -355,7 +370,7 @@
       s1.addEventListener('change', save); s2.addEventListener('change', save);
       grid.append(el('div', { class: 'voter' }, el('strong', {}, `${v.symbol} ${displayName(v)}`), el('div', { class: 'dim' }, 'accuses'), s1, s2));
     });
-    node.append(
+    append(node, 
       tvBar(),
       el('h2', {}, 'The accusation'),
       el('p', { class: 'dim' }, 'Every guest names two suspects. The house wins only if both killers are the two most accused. The TV shows the tally as you enter it.'),
@@ -404,13 +419,14 @@
   function renderResult() {
     const result = logic.tally(game.get().votes, data.killerIds);
     const node = clear($('#screen-result'));
-    node.append(
+    append(node, 
       el('h1', { class: 'result-title center' }, result.houseWins ? data.reveal.houseWins : data.reveal.killersWin),
       el('div', { class: 'panel' }, el('h3', {}, 'Final tally'), el('div', { class: 'tally', id: 'tally' })),
       el('p', { class: 'center dim' }, data.reveal.farewell),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { onclick: () => show('vote') }, 'Back to the vote'),
-        el('button', { class: 'primary', onclick: () => { if (confirm('Start a brand new night? This clears the roster and votes.')) { game.reset(); show('title'); } } }, 'New night')
+        storyButton('primary', 'Tell the whole story'),
+        el('button', { onclick: () => { if (confirm('Start a brand new night? This clears the roster and votes.')) { game.reset(); show('title'); } } }, 'New night')
       )
     );
     renderTally();

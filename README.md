@@ -23,6 +23,12 @@ Setup → Begin the night → read the prologue → "She is dead" → nine stage
 
 The browser remembers the current stage, so a refresh or accidental close does not lose the game. "Reset everything" on the setup screen starts fresh.
 
+## The full story
+
+"The full story" on the title, setup and game screens, and "Tell the whole story" after the reveal, open a narrated walkthrough of the whole mystery: the 1916 cellar, every guest's secret and clue, both murders, how the evidence fits, and what became of everyone. It has animated portraits, sound effects and a spoken voice-over using the browser's built-in voices, with each sentence lit as it is read. It plays by itself, or use the arrow keys, space to pause and Esc to close.
+
+It contains every spoiler, so it stays on the laptop until you press "Show on TV". The TV then shows it full screen and speaks it, and the laptop becomes the remote. Click the TV window once beforehand so the browser allows it to speak. Without a voice it still plays with timed captions.
+
 ## Develop
 
-`npm test` runs the logic tests and the content integrity check. Story and card text live in `js/data.js`; the design is in `docs/superpowers/specs/`.
+`npm test` runs the logic tests and the content integrity check. Story and card text live in `js/data.js`, the narrated full story in `js/story.js` (drawn by `js/story-view.js`); the design is in `docs/superpowers/specs/`.

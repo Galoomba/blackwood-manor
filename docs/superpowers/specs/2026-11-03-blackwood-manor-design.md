@@ -495,3 +495,12 @@ Web Audio API only, no files: ambient wind and low drone per scene; thunder (fil
 Every stage card carries one **table talk** line: a rumour, observation or pointed question about *another* guest, ending in an instruction to raise it aloud in the discussion round. The lines mix real leads (jasmine, rings, the kettle laugh, K-7, the hallway argument) with red herrings (the vampire, the mask, the burglar, the cultist, the bribed inspector) so the killers are not exposed before stage 3. Killers' lines steer the room away from themselves.
 
 Content lives in `tableTalk` in `js/data.js`, keyed by character id and stage id, and is attached to each card as `card.talk`: an array of `{ about, text }` alternatives. `logic.talkFor(card, presentIds)` returns the first entry whose subject is present, so a line about an optional guest (Agnes, Khamun, Edgar, Luna) always has a fallback. The print pack is built from the current roster, so the right line is printed; the host panel lists the lines in play for the stage.
+
+## Addendum: the full story theatre (added 3 Nov 2026)
+
+A host tab that tells the whole mystery as 37 narrated slides in nine chapters (cellar 1916, the grandchildren, each of the 13 guests, both murders, the killers' secret sign, the evidence against each killer, the ghosts' reveal, epilogue). Content is in `js/story.js` (`slides`, `splitSentences`, `estimateMs`, `chapters`); the player is `js/story-view.js`.
+
+- Visuals: layouts title, portrait, duo, gallery, evidence (chips that pop in, broken alibis struck), ghosts. Ken Burns portraits, killer frames glow red, lightning flash and lights-out flicker, scene-tinted backdrops, progress bar.
+- Voice: Web Speech API, sentence by sentence, the current sentence highlighted. Narrator, Delilah and Victor get different voices and pitch. If speech is unavailable or refused, captions run on a timer.
+- Sound: per-slide effects and scene ambience from `BM.audio`.
+- Sync: own storage key `blackwood-manor-story-v1` (`onTv`, `index`, `playing`, `voice`), so it never touches the game state. Exactly one window speaks and advances: the TV while `onTv` is set, otherwise the host. Opening the story never changes the TV; "Show on TV" asks for confirmation unless the result screen is showing.

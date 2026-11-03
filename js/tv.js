@@ -192,7 +192,18 @@
   });
   document.addEventListener('dblclick', () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); });
 
+  /* ---------- the full story, when the host shows it on the TV ---------- */
+  const story = root.BM.storyView.createPlayer({
+    layer: document.getElementById('story-layer'),
+    controls: false,
+    isVisible: (st) => st.onTv,
+    isSpeaker: (st) => st.onTv,
+    soundOn: () => game.get().sound,
+    onHide: () => render(true)
+  });
+
   audio.setEnabled(game.get().sound);
   render(true);
   syncOverlays();
+  story.sync();
 })(window);
