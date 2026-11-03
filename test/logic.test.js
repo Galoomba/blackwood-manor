@@ -97,3 +97,17 @@ test('formatRemaining renders mm:ss, flags urgency and overrun', () => {
   assert.deepEqual(logic.formatRemaining(0), { text: '00:00', urgent: false, over: true });
   assert.deepEqual(logic.formatRemaining(-65), { text: '-01:05', urgent: false, over: true });
 });
+
+test('talkFor picks the first table-talk line whose subject is present', () => {
+  const card = { talk: [{ about: 'edgar', text: 'ask edgar' }, { about: 'corvus', text: 'ask corvus' }] };
+  assert.equal(logic.talkFor(card, ['edgar', 'corvus']).text, 'ask edgar');
+  assert.equal(logic.talkFor(card, ['corvus']).text, 'ask corvus');
+  assert.equal(logic.talkFor(card, []), null);
+  assert.equal(logic.talkFor({ talk: [{ text: 'no subject' }] }, []).text, 'no subject');
+  assert.equal(logic.talkFor({}, ['edgar']), null);
+});
+
+test('every card has a table-talk line for any roster that keeps the required guests', () => {
+  const presentIds = data.characters.filter((c) => !c.optional).map((c) => c.id);
+  for (const c of data.characters) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(c.cards[sid], presentIds), `${c.id} ${sid}`);
+});

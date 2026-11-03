@@ -278,6 +278,13 @@
       details.append(el('h3', {}, 'Alibis'), ul);
     }
 
+    const talkList = el('ul', {});
+    roster.present.forEach((c) => {
+      const t = logic.talkFor(c.cards[stage.id], roster.present.map((p) => p.id));
+      if (t) talkList.append(el('li', {}, el('strong', {}, c.short + ': '), t.text));
+    });
+    details.append(el('details', {}, el('summary', {}, 'Table talk on the cards this stage (nudge anyone who stays quiet)'), talkList));
+
     const orphans = logic.orphanedClues(data, roster, stage.id);
     if (orphans.length) {
       details.append(el('h3', {}, 'Absent guests: the ghost delivers these'));

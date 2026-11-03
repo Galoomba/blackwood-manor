@@ -182,6 +182,8 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
   .card .word { font-size: 20pt; font-weight: bold; text-align: center; margin: 4pt 0; letter-spacing: 0.1em; }
   .card .sab { border: 2px solid #000; padding: 4pt 6pt; margin-top: 5pt; font-size: 9.5pt; }
   .card .sab::before { content: 'SECRET ORDERS: '; font-weight: bold; }
+  .card .talk { border-left: 3px solid #000; padding: 2pt 0 2pt 6pt; margin-top: 5pt; font-size: 9.5pt; }
+  .card .talk::before { content: 'TABLE TALK: '; font-weight: bold; letter-spacing: 0.05em; }
   .card .riddle { margin-top: auto; border-top: 1px solid #000; padding-top: 4pt; font-style: italic; font-size: 9.5pt; }
   .label { height: 120mm; border: 2px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 8mm; page-break-inside: avoid; }
   .label .big { font-size: 40pt; font-weight: bold; }

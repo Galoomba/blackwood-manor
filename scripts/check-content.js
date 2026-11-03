@@ -86,6 +86,21 @@ for (const team of ['delilah', 'victor']) {
   if (!w || !w.text || !ids.has(w.reader)) fail(`witness card for ${team} incomplete`);
 }
 
+// Table talk: every card carries at least one line about another guest, with a fallback whose subject is always present
+const optional = new Set(chars.filter((c) => c.optional).map((c) => c.id));
+chars.forEach((c) => {
+  for (const sid of data.STAGE_IDS) {
+    const talk = c.cards && c.cards[sid] && c.cards[sid].talk;
+    if (!Array.isArray(talk) || !talk.length) { fail(`${c.id} ${sid} has no table talk`); continue; }
+    talk.forEach((t) => {
+      if (!t.text) fail(`${c.id} ${sid} table talk without text`);
+      if (t.about && !ids.has(t.about)) fail(`${c.id} ${sid} table talk about unknown ${t.about}`);
+      if (t.about === c.id) fail(`${c.id} ${sid} table talk about self`);
+    });
+    if (!talk.some((t) => !t.about || !optional.has(t.about))) fail(`${c.id} ${sid} table talk has no fallback for an absent guest`);
+  }
+});
+
 // Killers
 const killers = chars.filter((c) => c.killer).map((c) => c.id);
 if (killers.length !== 2) fail(`expected 2 killers, got ${killers.join(',')}`);

@@ -468,7 +468,156 @@
     }
   ];
 
-  const data = { STATIONS, STAGE_IDS, riddles, scenes, stages, ledger, teamEnvelopes, witnessCards, setPieces, reveal, characters, SIGN, requiredIds: ['zora', 'krank'], killerIds: ['zora', 'krank'] };
+  /* Table talk: one rumour or question per card about another guest, to be raised aloud in the
+     discussion round. Each entry lists alternatives; the first whose subject is present is printed. */
+  const tableTalk = {
+    finch: {
+      '1.1': [{ about: 'graves', text: "There is an undertaker's cart in the drive and nobody has died yet, officially. Ask Mr. Graves what it is for." }],
+      '1.2': [{ about: 'selene', text: "The pantry window is open and there is a glove print on the sill. Ask the cat woman, loudly, which door she came in by." }],
+      '1.3': [{ about: 'corvus', text: "The plague doctor pronounced her dead in under three seconds. Nobody is that fast. Ask him how he knew." }],
+      '2.1': [{ about: 'malachi', text: "The hood that bribed you looked a great deal like the Cultist's. You took the money, so do not accuse him. Ask instead whether the Order owns more than one hood." }],
+      '2.2': [{ about: 'krank', text: "The scientist has kept one hand on her coat pocket all night. Ask her, in front of everyone, what is in it." }],
+      '2.3': [{ about: 'zora', text: "Strip 11 says Z. is still paid. One guest begins with Z and foresees things after they happen. Ask her when the last cheque arrived." }],
+      '3.1': [{ about: 'edgar', text: "Edgar has a scar on his arm shaped like a letter. Ask him to roll up his sleeve." }, { about: 'corvus', text: "Corvus says he has seen that green before. Ask him on whom." }],
+      '3.2': [{ about: 'vane', text: "The Hunter has watched Graves all night, which means she has watched nobody else. Ask her what she missed." }],
+      '3.3': [{ about: 'zora', text: "You saw Madame Zora leave the fireplace. If her alibi says she never moved, say so out loud, immediately." }]
+    },
+    vane: {
+      '1.1': [{ about: 'graves', text: "He cast no reflection in the silver tray. Hold the tray up to him in front of everyone and see who flinches." }],
+      '1.2': [{ about: 'corvus', text: "The plague doctor has not taken his mask off to drink. Neither has the undertaker. Ask them both which one is the vampire and enjoy the silence." }],
+      '1.3': [{ about: 'agnes', text: "The housekeeper set thirteen glasses for twelve guests and one lady. Ask her who the thirteenth was for." }, { about: 'khamun', text: "The mummy stood in the corner the whole time and nobody spoke to him. Be the first: ask him what he saw." }, { about: 'corvus', text: "The plague doctor reached the lady before anyone, and nobody watched his hands. Ask him what they did." }],
+      '2.1': [{ about: 'morgana', text: "The Witch has been green for three days; it is paint. Ask her whether her herbs are as real as her skin." }],
+      '2.2': [{ about: 'zora', text: "Someone brushed past you after the toast smelling of jasmine. The fortune teller dabs jasmine on her wrists; she says so herself. Ask her where she stood when the lady fell." }],
+      '2.3': [{ about: 'graves', text: "Strip 2 has a note in the margin: 'I stopped.' Ask Mr. Graves what, exactly, he stopped, and whether he would say it to the ghost's face." }],
+      '3.1': [{ about: 'corvus', text: "Corvus poured the lady's glass into the plant; Graves saw it. Ask the plague doctor whether 'preserving a sample' usually involves soil." }],
+      '3.2': [{ about: 'khamun', text: "The mummy has been staring at one person for an hour. Follow his eyes and ask him why." }, { about: 'selene', text: "The cat keeps touching something in her glove. Ask her to turn it out." }],
+      '3.3': [{ about: 'krank', text: "Listen to Dr. Krank's alibi, then to the Cultist's. If they do not match, say so before anyone else does." }]
+    },
+    selene: {
+      '1.1': [{ about: 'malachi', text: "Somebody paid for you to be here, and the Cultist keeps looking at your coat as if it owes him money. Ask him, sweetly, how the Order is fixed for gold." }],
+      '1.2': [{ about: 'finch', text: "The Inspector's wallet is thin, but his pocket crinkled when he walked in: a fresh envelope. Ask him who pays retired policemen." }],
+      '1.3': [{ about: 'khamun', text: "The mummy saw you come through the window. Get in first: ask him, loudly, what else he saw from that corner." }, { about: 'luna', text: "Luna watched the hallway for an hour. Ask her, in front of everyone, who passed through it before the toast." }, { about: 'finch', text: "The Inspector was by the door all evening. Ask him who came in after you; he will not know you came in at all." }],
+      '2.1': [{ about: 'zora', text: "You know fingers. The fortune teller's rings are new and expensive, and she has wiped them all evening. Ask her what rings need wiping for." }],
+      '2.2': [{ about: 'edgar', text: "The accountant counts out loud. Ask him how much twenty gold is in shillings, and watch the Cultist's face." }, { about: 'graves', text: "The undertaker never eats. Ask him what he came for, if not the buffet." }],
+      '2.3': [{ about: 'agnes', text: "The housekeeper knew where the pages were hidden; she said so. Ask her who else she told." }, { about: 'krank', text: "Dr. Krank laughed when strip 12 was read. Ask her what is funny about two thousand pounds a month." }],
+      '3.1': [{ about: 'corvus', text: "Dr. Corvus is the only one who touched the glass after the lady fell. Ask him why a doctor pours evidence into a plant." }],
+      '3.2': [{ about: 'morgana', text: "The Witch smells of sage and burnt toast, not jasmine; the Cultist said so. Ask her who in this room does smell of jasmine. She will know." }],
+      '3.3': [{ about: 'zora', text: "Zora will say she held the Witch's hand in the dark. The Witch said she did not know whose hand it was. Ask both." }]
+    },
+    krank: {
+      '1.1': [{ about: 'edgar', text: "Edgar is 'recovering'. Tell the room, with a laugh, that he was a very interesting case, and ask him to recite a number for the guests." }, { about: 'corvus', text: "The plague doctor is no doctor; his diagnoses are nonsense. Ask him to name the bones of the hand." }],
+      '1.2': [{ about: 'graves', text: "Victor was frightened for two months, and the undertaker's cart has stood in the drive for two months too. Ask Mr. Graves why he arrives early." }],
+      '1.3': [{ about: 'malachi', text: "The Cultist was alone in the garden before the party. Ask him who he was talking to, and watch whether he says 'the hedge'." }],
+      '2.1': [{ about: 'vane', text: "You need the room looking at Graves. Ask the Hunter, loudly, whether a vampire could cross a dark room in four steps. She will say yes. Good." }],
+      '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why. Keep the room on poison and glasses, never on needles." }],
+      '2.3': [{ about: 'zora', text: "Strip 10 names a broker, Z. Ask Madame Zora what 'ten percent per soul' pays for these days. If she laughs, she may be more useful than she looks." }],
+      '3.1': [{ about: 'vane', text: "The Hunter is sure it was a vampire. Agree with her, loudly, and ask her to describe the bite she expects to find. The longer she talks, the better." }],
+      '3.2': [{ about: 'finch', text: "The Inspector took money to look the other way. Say so. A bribed policeman is a wonderful thing to discuss instead of a laugh." }],
+      '3.3': [{ about: 'malachi', text: "The Cultist's alibi comes after yours. Before he reads it, ask him warmly whether he enjoyed your company in the garden. Nod while he answers." }]
+    },
+    malachi: {
+      '1.1': [{ about: 'selene', text: "You know exactly who the cat woman is. Pretend you do not. Ask her, in front of everyone, whether she has ever stolen anything, and watch her lie." }],
+      '1.2': [{ about: 'khamun', text: "A three-thousand-year-old man has walked out of the attic and nobody has asked him a single question. Bow to him and ask what Ezekiel owed him." }, { about: 'graves', text: "The undertaker's firm is 'est. 1702' and he looks forty. Ask him how the business stays in a family with no sons." }],
+      '1.3': [{ about: 'morgana', text: "The Witch's herbs are sage. You smelled them. If anyone says they smelled of jasmine, say that is false, and ask them why they want it to be true." }],
+      '2.1': [{ about: 'finch', text: "The Inspector took an envelope at the gate last night; the fortune teller saw it. Ask him what was in it. He will not say. Ask again." }],
+      '2.2': [{ about: 'zora', text: "Your spare hood is missing. The hooded figure at the gate was short and jingled. Ask every guest who wears bangles to raise their arms." }],
+      '2.3': [{ about: 'graves', text: "Strip 7 says the buyer 'does not age'. Ask the undertaker his date of birth and whether he would like to see a mirror." }],
+      '3.1': [{ about: 'krank', text: "The scientist keeps a syringe 'for emergencies'. She said so at dinner. Ask her whether tonight counted." }],
+      '3.2': [{ about: 'edgar', text: "Edgar flinches every time Krank laughs. Ask him why, and ask her to stop laughing long enough for him to answer." }, { about: 'corvus', text: "Corvus says he has seen that green before. Ask him on whom, and ask Dr. Krank to keep quiet while he answers." }],
+      '3.3': [{ about: 'krank', text: "Dr. Krank will say she was in the garden with you. You were alone. When she says it, let the silence sit, then read your alibi slowly." }]
+    },
+    agnes: {
+      '1.1': [{ about: 'khamun', text: "The mummy has eaten the pantry. Ask him, in front of the guests, whether he was ever invited to anything in this house." }, { about: 'corvus', text: "Dr. Corvus has been the family physician for ten years and you have never seen his face. Ask him, as the housekeeper, whether he would like a towel." }],
+      '1.2': [{ about: 'selene', text: "The pantry window is open and there is a glove print on the sill. Ask the cat woman whether she prefers windows to doors." }],
+      '1.3': [{ about: 'morgana', text: "The Witch's name is Ashgrove. You know that name. Ask her where her grandmother worked, and watch what she does with her face." }],
+      '2.1': [{ about: 'graves', text: "Mr. Graves came every All Hallows' Eve with a cart until 1918; your mother told you. Ask him what was in the cart." }],
+      '2.2': [{ about: 'zora', text: "Madame Zora's handkerchief went into her sleeve after the toast. Ask her, in front of everyone, to show it. If the sleeve is empty, ask where it went." }],
+      '2.3': [{ about: 'finch', text: "Strip 11 says the retainer is still paid. Ask the Inspector, who is good with money, who signs cheques for a dead man." }],
+      '3.1': [{ about: 'corvus', text: "Ask Dr. Corvus why he poured the glass into the plant, and keep asking until he answers." }],
+      '3.2': [{ about: 'selene', text: "The cat bumped into Madame Zora after the toast. Ask the cat what she took; cats always take something." }],
+      '3.3': [{ about: 'zora', text: "Zora's alibi will say the fireplace. You cleared the wine tray and know who stood there before you. Say her name when she finishes." }]
+    },
+    corvus: {
+      '1.1': [{ about: 'vane', text: "The Hunter carries a stake. Diagnose her, aloud, with 'an excess of certainty', then ask her how many vampires she has actually killed." }],
+      '1.2': [{ about: 'zora', text: "Madame Zora foresaw a death 'at the door'. Ask her whose, and how she knew. A seer who guesses right deserves a second look." }],
+      '1.3': [{ about: 'morgana', text: "The Witch waved a herb bundle over the wine table before the toast. Ask her what was in it, and whether any went into the glasses." }],
+      '2.1': [{ about: 'finch', text: "The Inspector was hired to guard a book and has not once asked where it is. Ask him why a guard is so relaxed." }],
+      '2.2': [{ about: 'krank', text: "Dr. Krank's green serum: you have seen it. Ask her, as a colleague, what K-7 does to a heart that has stopped. Watch Edgar while she answers." }],
+      '2.3': [{ about: 'graves', text: "Strip 7 names the buyer: an undertaker from 1702. Ask Mr. Graves whether he is his own great-grandfather." }],
+      '3.1': [{ about: 'zora', text: "Team Delilah found a vial in the plant. It was not there before the toast. Ask the fortune teller, who stood at that table, whether she saw anyone drop something." }],
+      '3.2': [{ about: 'edgar', text: "Edgar is about to read the witness card. Before he does, ask Dr. Krank why she looks so nervous." }, { about: 'krank', text: "Dr. Krank wants nobody to mention the laugh. Mention the laugh. Ask her to do it again for the room." }],
+      '3.3': [{ about: 'krank', text: "Krank's alibi says the garden. The laugh you heard came from the study door. Say so the moment she finishes." }]
+    },
+    khamun: {
+      '1.1': [{ about: 'selene', text: "You saw the cat woman come in through the window. Ask her, with great dignity, whether she climbs into every house or only the ones with gold in them." }],
+      '1.2': [{ about: 'finch', text: "The Inspector has squinted through his glass at everyone except the fortune teller. Ask him why she is exempt." }],
+      '1.3': [{ about: 'agnes', text: "The housekeeper went down to the cellar crying at seven. Ask her what is down there. You know a crypt when you hear one." }, { about: 'graves', text: "The undertaker and you are the only guests who have been dead. Ask him how long, and watch him count." }],
+      '2.1': [{ about: 'edgar', text: "The accountant walks like you do. Ask him, kindly, how long he has been dead." }, { about: 'krank', text: "Dr. Krank's laugh sounds like a kettle. Ask her what a kettle has to be so pleased about." }],
+      '2.2': [{ about: 'morgana', text: "The Witch is green. You have seen green people before; they had been dead for a week. Ask her whether she is quite well." }],
+      '2.3': [{ about: 'zora', text: "Strip 9 says you were bought with cellar money. Strip 10 says a broker took ten percent. Ask Madame Zora whether her grandmother took ten percent of you." }],
+      '3.1': [{ about: 'zora', text: "You know who touched the glass. Do not say the name yet. Ask the room instead: 'Who here wears five rings?' Count the hands that go into pockets." }],
+      '3.2': [{ about: 'vane', text: "After you read the witness card, the Hunter will still want it to be the vampire. Ask her whether a vampire wears five rings." }],
+      '3.3': [{ about: 'zora', text: "Zora will say she never left the fireplace. You watched her for a full minute at the wine table. Say, slowly: 'Furniture remembers.'" }]
+    },
+    morgana: {
+      '1.1': [{ about: 'zora', text: "The fortune teller foretells things after they happen. Curse her mildly, then ask her to foretell something that has not happened yet." }],
+      '1.2': [{ about: 'agnes', text: "The housekeeper looks at you as if she knows your name. Ask her whether an Ashgrove ever worked in this house." }, { about: 'khamun', text: "The mummy was bought with 'cellar money'. Ask him what the cellar was for; someone may have told him." }, { about: 'finch', text: "The Inspector was hired to guard a book. Ask him, in front of everyone, whether he has read it. A man who guards what he has not read is guarding money." }],
+      '1.3': [{ about: 'krank', text: "Edgar flinched when Dr. Krank patted his head. Ask the scientist what kind of doctor pats a grown man like a dog." }],
+      '2.1': [{ about: 'malachi', text: "The Cultist's Order has three members. Ask him to name them, and count on your fingers." }],
+      '2.2': [{ about: 'zora', text: "Zora said your herbs smelled of jasmine. They are sage. Ask her why the only person in this room who smells of jasmine is so keen to put it on you." }],
+      '2.3': [{ about: 'graves', text: "Strip 3 is your grandmother's; she counted the ones he let die. Ask the undertaker whether he counted too." }],
+      '3.1': [{ about: 'corvus', text: "Ask the plague doctor why a man who poured poison into a plant is so quiet while the plant is searched." }],
+      '3.2': [{ about: 'selene', text: "The cat has a handkerchief that smells of jasmine. Ask the room to pass it round and name the scent. Everyone who says 'sage' is lying." }],
+      '3.3': [{ about: 'zora', text: "Zora will say she held your hand in the dark. The hand you held was ringed and shaking. Say so after she finishes." }]
+    },
+    edgar: {
+      '1.1': [{ about: 'krank', text: "Dr. Krank keeps calling you her finest work. Ask her, in front of everyone, what the work was. Then say 'I'm fine'." }],
+      '1.2': [{ about: 'graves', text: "The undertaker keeps looking at you as if measuring. Ask him whether he has a box in your size." }],
+      '1.3': [{ about: 'luna', text: "Victor and Krank argued in the hallway; the second cat saw it. Ask Luna what Victor said. You need it from someone whose memory works." }, { about: 'krank', text: "Victor signed two thousand pounds a month to 'W.K.' Ask the room who has those initials. Say the letters slowly and look at the scientist." }],
+      '2.1': [{ about: 'malachi', text: "The Cultist calls you 'the Risen'. Ask him what his Order would pay for a man who came back. Then ask the scientist what she was paid." }],
+      '2.2': [{ about: 'corvus', text: "Dr. Corvus looked at your arm when you arrived. Ask him what he saw; doctors notice green." }],
+      '2.3': [{ about: 'krank', text: "Strip 12 names the laboratory: W.K. Ask Dr. Krank her initials. Ask her twice." }],
+      '3.1': [{ about: 'graves', text: "Mr. Graves says the wound is a needle, not a bite. Ask him how many needle marks an undertaker sees, and how many bites." }],
+      '3.2': [{ about: 'krank', text: "Before you read the witness card, Krank will call your memory a ruin. Ask her to tell the room the date you died. You know it. See if she does." }],
+      '3.3': [{ about: 'krank', text: "Krank's alibi will say the garden. The laugh in the dark came from the study door, and you know that laugh. Say: 'I heard you.'" }]
+    },
+    zora: {
+      '1.1': [{ about: 'graves', text: "The undertaker cast no reflection in the tray; the Hunter has noticed. Help her. Ask Mr. Graves whether he has ever been seen in daylight." }],
+      '1.2': [{ about: 'finch', text: "The Inspector took an envelope at the gate from a hooded figure. You should know; it was you. Ask him, innocently, who he thinks it was. Enjoy the Cultist's face." }],
+      '1.3': [{ about: 'malachi', text: "The hooded figure wore a cultist's hood. Say so. Ask Brother Malachi how many hoods the Order owns." }],
+      '2.1': [{ about: 'morgana', text: "Keep the jasmine on the Witch. Ask her what else is in her grandmother's recipe book." }],
+      '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why a doctor hides evidence. If the plant is searched later, that was his doing." }],
+      '2.3': [{ about: 'krank', text: "Strip 12 names W.K. and a laboratory. Ask Dr. Krank, lightly, whether she laughs like that in the laboratory too. If she laughs, she may be more useful than she looks." }],
+      '3.1': [{ about: 'selene', text: "The cat was 'right behind' the lady when she fell. Say that is a confession. Ask her to turn out her gloves." }],
+      '3.2': [{ about: 'vane', text: "Ask the Hunter whether she trusts the testimony of a corpse. She wants a vampire; give her one." }],
+      '3.3': [{ about: 'finch', text: "The Inspector will say he was watching the window. Before your own alibi, ask him what the window showed. Keep him talking." }]
+    },
+    graves: {
+      '1.1': [{ about: 'vane', text: "The Hunter's stake is pine with a nail hole. Ask her, politely, which forest grows hawthorn with screws in it." }],
+      '1.2': [{ about: 'corvus', text: "Dr. Corvus has not removed his mask to drink either. Ask him, one professional to another, why not. Deflection is a courtesy." }],
+      '1.3': [{ about: 'selene', text: "The cat woman had her hand in the lady's bag during the toast. Ask her what she took. You have nothing to hide; let her squirm." }],
+      '2.1': [{ about: 'krank', text: "You smell blood, and there is none on Victor. You do smell something else, on the scientist: ether. Ask Dr. Krank what she keeps in her coat." }],
+      '2.2': [{ about: 'malachi', text: "The Cultist's grandfather dug the graves you filled. Ask him whether the Order knows what it was built on." }],
+      '2.3': [{ about: 'zora', text: "Strip 2 is your contract; strip 10 is the broker's. You met her grandmother. Ask Madame Zora whether she still wears her grandmother's rings." }],
+      '3.1': [{ about: 'krank', text: "Say the wound is a needle. When Dr. Krank says 'vitamin', ask her which vitamin leaves a scar in the shape of a K." }],
+      '3.2': [{ about: 'finch', text: "The Inspector was bribed to look away. Ask him what he thought he was being paid not to see. It was not you." }],
+      '3.3': [{ about: 'krank', text: "Krank says the garden; you heard four steps from the study door and a kettle laugh. Say so the moment she finishes, and look at Edgar." }]
+    },
+    luna: {
+      '1.1': [{ about: 'finch', text: "Ask the Inspector whether he has ever arrested two people at once. Watch who looks relieved that it is not them." }],
+      '1.2': [{ about: 'khamun', text: "The mummy stood in the hallway corner the whole hour. Ask him what he saw from there; you saw his bandages move." }, { about: 'corvus', text: "The plague doctor arrived last and left the hall first. Ask him where he went." }],
+      '1.3': [{ about: 'krank', text: "Krank laughed in the hallway when Victor said 'the poor man'. Ask her what was funny." }],
+      '2.1': [{ about: 'malachi', text: "The client signs 'a friend of the Order'. One man here says 'the Order' every third sentence. Ask him how his gold is doing." }],
+      '2.2': [{ about: 'edgar', text: "'The poor man.' The accountant looks poor enough. Ask Edgar what Victor meant to end." }, { about: 'krank', text: "Ask Dr. Krank who 'the poor man' is. She was there when Victor said it." }],
+      '2.3': [{ about: 'krank', text: "Strip 12 is yours: the laboratory. Ask the room who W.K. is, and keep asking until someone says the scientist's name." }],
+      '3.1': [{ about: 'zora', text: "Three people stood at the wine table. You saw the third one's rings. Ask everyone to lay their hands on the table, palms down." }],
+      '3.2': [{ about: 'zora', text: "The handkerchief came from the fortune teller's sleeve. Say so, once, clearly, and then let the mummy speak." }],
+      '3.3': [{ about: 'selene', text: "Your alibi matches Selene's exactly. If anyone calls that suspicious, ask them which two alibis in this room do not match." }]
+    }
+  };
+  characters.forEach((c) => { STAGE_IDS.forEach((sid) => { c.cards[sid].talk = tableTalk[c.id][sid]; }); });
+
+  const data = { STATIONS, STAGE_IDS, riddles, scenes, stages, ledger, teamEnvelopes, witnessCards, setPieces, reveal, characters, tableTalk, SIGN, requiredIds: ['zora', 'krank'], killerIds: ['zora', 'krank'] };
 
   root.BM = root.BM || {};
   root.BM.data = data;

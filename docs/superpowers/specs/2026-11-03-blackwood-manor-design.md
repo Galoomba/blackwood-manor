@@ -489,3 +489,9 @@ Web Audio API only, no files: ambient wind and low drone per scene; thunder (fil
 3. Hand each guest their intro sheet at the door. Nobody opens anything else.
 4. Open the website, set the roster, test the sound.
 5. Victor gives the toast. Delilah dies. Play.
+
+## Addendum: table talk (added 3 Nov 2026)
+
+Every stage card carries one **table talk** line: a rumour, observation or pointed question about *another* guest, ending in an instruction to raise it aloud in the discussion round. The lines mix real leads (jasmine, rings, the kettle laugh, K-7, the hallway argument) with red herrings (the vampire, the mask, the burglar, the cultist, the bribed inspector) so the killers are not exposed before stage 3. Killers' lines steer the room away from themselves.
+
+Content lives in `tableTalk` in `js/data.js`, keyed by character id and stage id, and is attached to each card as `card.talk`: an array of `{ about, text }` alternatives. `logic.talkFor(card, presentIds)` returns the first entry whose subject is present, so a line about an optional guest (Agnes, Khamun, Edgar, Luna) always has a fallback. The print pack is built from the current roster, so the right line is printed; the host panel lists the lines in play for the stage.

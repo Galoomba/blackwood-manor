@@ -22,7 +22,9 @@
     </div>`;
   }
 
-  function cardHtml(c, i) {
+  function allPresent() { return data.characters.map((x) => x.id); }
+
+  function cardHtml(c, i, presentIds) {
     const sid = data.STAGE_IDS[i];
     const card = c.cards[sid];
     const parts = [];
@@ -34,13 +36,15 @@
     if (card.secretSign) parts.push(`<div class="sab">${esc(data.SIGN)}</div>`);
     if (card.sabotage) parts.push(`<div class="sab">${esc(card.sabotage)}</div>`);
     if (card.lie) parts.push(`<div class="sab">${esc(card.lie)}</div>`);
+    const talk = logic.talkFor(card, presentIds || allPresent());
+    if (talk) parts.push(`<div class="talk">${esc(talk.text)}</div>`);
     if (i < data.STAGE_IDS.length - 1) parts.push(`<div class="riddle">Your next card (stage ${data.STAGE_IDS[i + 1]}): ${esc(logic.riddleFor(data, c, i + 1))}</div>`);
     else parts.push(`<div class="riddle">This is your last card. The vote is next.</div>`);
     return `<div class="card">${parts.join('')}</div>`;
   }
 
-  function cardPages(c) {
-    const cards = data.STAGE_IDS.map((_, i) => cardHtml(c, i));
+  function cardPages(c, presentIds) {
+    const cards = data.STAGE_IDS.map((_, i) => cardHtml(c, i, presentIds));
     const pages = [];
     for (let p = 0; p < cards.length; p += 4) {
       const chunk = cards.slice(p, p + 4);
@@ -50,7 +54,7 @@
     return pages.join('');
   }
 
-  function characterPack(c) { return introSheet(c) + cardPages(c); }
+  function characterPack(c, presentIds) { return introSheet(c) + cardPages(c, presentIds); }
 
   function stations() {
     const labels = data.STATIONS.map((st) => `<div class="label"><div class="big">${esc(st)}</div><div class="sym">Blackwood Manor · station envelope</div></div>`);
@@ -138,8 +142,9 @@
   }
 
   function build(kind, id, roster) {
-    if (kind === 'all') return data.characters.map(characterPack).join('');
-    if (kind === 'character') return characterPack(charById(id));
+    const presentIds = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
+    if (kind === 'all') return data.characters.map((c) => characterPack(c, presentIds)).join('');
+    if (kind === 'character') return characterPack(charById(id), presentIds);
     if (kind === 'stations') return stations();
     if (kind === 'pockets') return pockets();
     if (kind === 'envelopes') return envelopes();

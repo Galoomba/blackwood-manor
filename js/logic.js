@@ -90,7 +90,14 @@
     return data.characters.filter((c) => stationFor(c, stageIndex) === station);
   }
 
-  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining };
+  /* The first table-talk entry on a card whose subject is present (or has no subject); null if none. */
+  function talkFor(card, presentIds) {
+    const present = new Set(presentIds || []);
+    const list = (card && card.talk) || [];
+    return list.find((t) => !t.about || present.has(t.about)) || null;
+  }
+
+  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining, talkFor };
 
   root.BM = root.BM || {};
   root.BM.logic = logic;
