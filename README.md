@@ -37,7 +37,7 @@ To tell the story yourselves, press "Ghost voice-over: on" on the game screen (o
 
 "The full story" on the title, setup and game screens, and "Tell the whole story" after the reveal, open a narrated walkthrough of the whole mystery: the 1916 cellar, every guest's secret and clue, both murders, how the evidence fits, and what became of everyone. It has animated portraits, sound effects and a spoken voice-over using the browser's built-in voices, with each sentence lit as it is read. It plays by itself, or use the arrow keys, space to pause and Esc to close.
 
-The narration is recorded with ElevenLabs: George narrates, Lily is Delilah's ghost and Lance Blackwood, a sinister aristocrat from the ElevenLabs voice library, is Victor's ghost. The clips live in `assets/voice`. If a clip is missing, the browser's own voice reads that slide instead.
+The narration is recorded with ElevenLabs: George narrates, Lyla, a gloomy young Victorian woman from the ElevenLabs voice library, is Delilah's grieving ghost, and Lance Blackwood, a sinister aristocrat from the ElevenLabs voice library, is Victor's ghost. The clips live in `assets/voice`. If a clip is missing, the browser's own voice reads that slide instead.
 
 To re-record after changing the story text or a voice, put `ELEVENLABS_API_KEY=...` in `.env.local` (git-ignored; the key needs the Text to Speech permission) and run `npm run voice`. Only changed slides and lines are recorded again. `npm run voice -- --dry-run` shows what would be recorded and how many characters it costs. The voices are set at the top of `scripts/generate-voice.js`.
 

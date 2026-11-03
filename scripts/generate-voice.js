@@ -27,13 +27,17 @@ const MODEL = 'eleven_multilingual_v2';
 /* Premade ElevenLabs voices. Swap an id here and run again to re-record only that role's slides. */
 const VOICES = {
   narrator: { id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.95 } },
-  delilah: { id: 'pFZP5JQG7iQjIQuC4Bku', name: 'Lily', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.9 } },
+  /* Lyla, a young Victorian Englishwoman from the voice library, gloomy and quiet. Unsteady and slow so
+     she sounds grieving and haunted: a ghost mourning her brother. Was Lily pFZP5JQG7iQjIQuC4Bku. */
+  delilah: { id: 'gcgATH9maP3HG8oRh9Pn', name: 'Lyla', settings: { stability: 0.25, similarity_boost: 0.8, style: 0.7, use_speaker_boost: true, speed: 0.85 },
+    /* When both ghosts speak at once she slows further so Victor can keep pace. */
+    chorus: { stability: 0.25, similarity_boost: 0.8, style: 0.7, use_speaker_boost: true, speed: 0.75 } },
   /* Lance Blackwood, a sinister aristocrat from the voice library: slow, unsteady and stylised so the
      ghost sounds dark and otherworldly. Alternatives tried: Edward goT3UYdM9bhm0n2lmKQx (dark, low),
      John eoNqkziQgzmLZeatERgP (calm, mysterious), Jasper Vayne ybjoxm7ASLDUFh2pC2eM (grim narrator). */
   victor: { id: 'agL69Vji082CshT65Tcy', name: 'Lance', settings: { stability: 0.3, similarity_boost: 0.85, style: 0.6, use_speaker_boost: true, speed: 0.85 },
     /* When both ghosts speak at once he must keep pace with Delilah. */
-    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.1 } }
+    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.15 } }
 };
 
 function readKey() {

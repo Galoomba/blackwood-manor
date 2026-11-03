@@ -16,14 +16,14 @@
     },
     "ghost": {
       "src": "assets/voice/ghost.mp3",
-      "voice": "Lily",
-      "hash": "5827f2c8ceea",
-      "duration": 14.629,
+      "voice": "Lyla",
+      "hash": "aac0c84e3597",
+      "duration": 15.743,
       "starts": [
         0,
-        1.533,
-        7.082,
-        11.598
+        1.904,
+        8.266,
+        11.923
       ]
     },
     "promise": {
@@ -99,14 +99,14 @@
     },
     "ledger": {
       "src": "assets/voice/ledger.mp3",
-      "voice": "Lily",
-      "hash": "b05e63e66b3f",
-      "duration": 20.944,
+      "voice": "Lyla",
+      "hash": "f6fbee3d8c61",
+      "duration": 23.684,
       "starts": [
         0,
-        5.364,
-        7.988,
-        18.088
+        6.803,
+        9.323,
+        20.283
       ]
     },
     "midnight": {
@@ -392,13 +392,13 @@
     },
     "reveal-zora": {
       "src": "assets/voice/reveal-zora.mp3",
-      "voice": "Lily",
-      "hash": "a03f1cce19b0",
-      "duration": 21.781,
+      "voice": "Lyla",
+      "hash": "40741cfc7b07",
+      "duration": 23.266,
       "starts": [
         0,
-        8.464,
-        10.739
+        7.639,
+        9.868
       ]
     },
     "reveal-krank": {
@@ -489,124 +489,124 @@
     },
     "stage-2-1-0": {
       "src": "assets/voice/stage-2-1-0.mp3",
-      "voice": "Lily",
-      "hash": "8f2591f65b17",
-      "duration": 21.084,
+      "voice": "Lyla",
+      "hash": "83f4c3d955ed",
+      "duration": 21.873,
       "starts": [
         0,
-        1.37,
-        2.519,
-        5.492,
-        8.719,
-        10.147,
-        11.865,
-        15.093,
-        17.345,
-        19.4
+        1.602,
+        2.856,
+        6.06,
+        9.474,
+        10.96,
+        12.492,
+        15.94,
+        18.251,
+        20.167
       ]
     },
     "stage-2-2-0": {
       "src": "assets/voice/stage-2-2-0.mp3",
-      "voice": "Lily",
-      "hash": "50548e000b18",
-      "duration": 15.604,
+      "voice": "Lyla",
+      "hash": "bd22864fb93b",
+      "duration": 17.09,
       "starts": [
         0,
-        2.566,
-        5.84,
-        9.625,
-        10.971,
-        12.399
+        2.392,
+        6.49,
+        11.25,
+        12.69,
+        14.211
       ]
     },
     "stage-2-3-0": {
       "src": "assets/voice/stage-2-3-0.mp3",
-      "voice": "Lily",
-      "hash": "b9951324ad7a",
-      "duration": 31.115,
+      "voice": "Lyla",
+      "hash": "638864d05691",
+      "duration": 32.972,
       "starts": [
         0,
-        4.714,
-        8.696,
-        10.414,
-        12.225,
-        19.447,
-        24.137,
-        27.969
+        4.574,
+        9.056,
+        11.169,
+        13.05,
+        20.306,
+        25.24,
+        30.07
       ]
     },
     "stage-3-1-0.delilah": {
       "src": "assets/voice/stage-3-1-0.delilah.mp3",
-      "voice": "Lily",
-      "hash": "34d103c60d81",
-      "duration": 7.941,
+      "voice": "Lyla",
+      "hash": "d2eb886ed0ff",
+      "duration": 10.124,
       "starts": [
         0,
-        1.533,
-        3.239,
-        5.364
+        1.788,
+        3.878,
+        6.745
       ]
     },
     "stage-3-1-0.victor": {
       "src": "assets/voice/stage-3-1-0.victor.mp3",
       "voice": "Lance",
-      "hash": "7cf063a77072",
-      "duration": 10.31,
+      "hash": "004186c0a59c",
+      "duration": 8.824,
       "starts": [
         0,
-        1.753,
-        3.959,
-        6.594
+        1.591,
+        3.506,
+        5.84
       ]
     },
     "stage-3-2-0.delilah": {
       "src": "assets/voice/stage-3-2-0.delilah.mp3",
-      "voice": "Lily",
-      "hash": "a1d87f7f4978",
-      "duration": 13.189,
+      "voice": "Lyla",
+      "hash": "40e66a430d66",
+      "duration": 13.886,
       "starts": [
         0,
-        1.846,
-        3.982,
-        5.909,
-        8.057
+        1.382,
+        3.518,
+        6.002,
+        8.905
       ]
     },
     "stage-3-2-0.victor": {
       "src": "assets/voice/stage-3-2-0.victor.mp3",
       "voice": "Lance",
-      "hash": "aea199549b15",
-      "duration": 15,
+      "hash": "c4fda5f12f4f",
+      "duration": 14.211,
       "starts": [
         0,
-        1.834,
-        3.843,
-        6.351,
-        9.091
+        1.73,
+        3.68,
+        5.886,
+        8.359
       ]
     },
     "stage-3-3-0.delilah": {
       "src": "assets/voice/stage-3-3-0.delilah.mp3",
-      "voice": "Lily",
-      "hash": "7fbf09795783",
-      "duration": 14.536,
+      "voice": "Lyla",
+      "hash": "a36316223eeb",
+      "duration": 15.232,
       "starts": [
         0,
-        1.451,
-        8.429,
-        11.517
+        1.521,
+        9.009,
+        12.701
       ]
     },
     "stage-3-3-0.victor": {
       "src": "assets/voice/stage-3-3-0.victor.mp3",
       "voice": "Lance",
-      "hash": "b4ff9117baca",
-      "duration": 18.158,
+      "hash": "992d80380834",
+      "duration": 17.183,
       "starts": [
         0,
-        1.265,
-        10.298,
-        14.826
+        1.219,
+        10.089,
+        14.176
       ]
     },
     "set-victorReturns-0": {
@@ -628,12 +628,12 @@
     },
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
-      "voice": "Lily",
-      "hash": "e3de1535edb2",
-      "duration": 5.712,
+      "voice": "Lyla",
+      "hash": "7defecb5d18c",
+      "duration": 8.591,
       "starts": [
         0,
-        4.899
+        7.663
       ]
     },
     "set-victorReturns-2": {
@@ -649,14 +649,14 @@
     },
     "reveal-0": {
       "src": "assets/voice/reveal-0.mp3",
-      "voice": "Lily",
-      "hash": "744575139477",
-      "duration": 24.799,
+      "voice": "Lyla",
+      "hash": "8dc6e950f764",
+      "duration": 25.077,
       "starts": [
         0,
-        2.136,
-        9.985,
-        12.585
+        1.997,
+        9.659,
+        11.889
       ]
     },
     "reveal-1": {
@@ -675,28 +675,28 @@
     },
     "reveal-2.delilah": {
       "src": "assets/voice/reveal-2.delilah.mp3",
-      "voice": "Lily",
-      "hash": "c65acf6e1a9e",
-      "duration": 8.173,
+      "voice": "Lyla",
+      "hash": "5e3b8ecd0b71",
+      "duration": 8.684,
       "starts": [
         0,
-        1.184,
-        3.297,
-        5.224,
-        6.687
+        1.521,
+        3.657,
+        5.538,
+        7.094
       ]
     },
     "reveal-2.victor": {
       "src": "assets/voice/reveal-2.victor.mp3",
       "voice": "Lance",
-      "hash": "01a464ac6444",
-      "duration": 9.752,
+      "hash": "c0f80ec2948d",
+      "duration": 10.31,
       "starts": [
         0,
-        1.265,
-        3.947,
-        6.502,
-        8.464
+        1.649,
+        4.284,
+        6.803,
+        8.893
       ]
     },
     "intro-welcome": {
