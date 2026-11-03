@@ -112,11 +112,11 @@ test('every card has a table-talk line for any roster that keeps the required gu
   for (const c of data.characters) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(c.cards[sid], presentIds), `${c.id} ${sid}`);
 });
 
-test('voiceLines voices only the ghosts, and lines for both ghosts are marked both', () => {
+test('voiceLines voices only the ghosts and the narrator, and lines for both ghosts are marked both', () => {
   const lines = logic.voiceLines(data);
   assert.ok(lines.length > 0);
   for (const l of lines) {
-    assert.ok(['delilah', 'victor', 'both'].includes(l.voice), l.id);
+    assert.ok(['delilah', 'victor', 'both', 'narrator'].includes(l.voice), l.id);
     assert.ok(!/^Victor \(|^Stage direction/.test(l.speaker), `${l.id} is not a living or stage line`);
   }
   assert.equal(new Set(lines.map((l) => l.id)).size, lines.length, 'ids are unique');
@@ -124,4 +124,16 @@ test('voiceLines voices only the ghosts, and lines for both ghosts are marked bo
   assert.ok(logic.voiceGroup(data, 'reveal').some((l) => l.voice === 'both'));
   for (const id of ['1-1', '1-2', '1-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'victor', `stage ${id} is read by Victor`);
   for (const id of ['2-1', '2-2', '2-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'delilah', `stage ${id} is Delilah's ghost`);
+});
+
+test('an interlude separates the scenes: Victor dies after 1.3, both ghosts rise after 2.3', () => {
+  const after = (id) => data.stages.find((s) => s.id === id).setPieceAfter;
+  assert.equal(after('1.3'), 'lightsOut');
+  assert.equal(after('2.3'), 'twoGhosts');
+  assert.equal(data.setPieces.twoGhosts.then, 'victorReturns', 'the rising leads straight into Victor forming the teams');
+  for (const id of ['1.3', '2.3']) assert.ok(data.setPieces[after(id)].cue, `the host button after ${id} has a label`);
+  for (const key of ['lightsOut', 'twoGhosts']) {
+    const voiced = logic.voiceGroup(data, `set-${key}`);
+    assert.ok(voiced.length && voiced.every((l) => l.voice === 'narrator'), `${key} is narrated`);
+  }
 });

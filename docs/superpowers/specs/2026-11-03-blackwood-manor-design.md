@@ -508,3 +508,10 @@ A host tab that tells the whole mystery as 37 narrated slides in nine chapters (
 ## Addendum: the housekeeper becomes the butler (added 3 Nov 2026)
 
 The maid's player is cast from a photo of an older man, so character 5 (🗝, optional, Team Delilah) is now **Ambrose Thorne, the Butler** (id `ambrose`, costume Butler). Wherever this spec says Agnes, the housekeeper or the maid, read Ambrose, the butler, with he/him; he is Ezekiel's grandson by Nurse Ashgrove and Morgana's cousin. The story, puzzles, words and ledger strip 8 are unchanged. Act gains "carry a silver tray everywhere".
+
+## Addendum: interludes between the scenes (added 3 Nov 2026)
+
+Scene changes get a full-screen interlude, drawn by `js/interlude.js` on both the host and the TV and narrated by George (speaker "Narrator", voiced like the ghosts and muted by the same toggle).
+
+- **lightsOut** (after 1.3): candles go out one by one; four seconds of flickering dark for Victor to fall (host-only cue "Victor: fall now"); a memorial portrait "In memory of Victor Blackwood" swings crooked, its glass cracks and a red drip runs while a heartbeat glow fades; Delilah's ghost faintly appears beside it. Then "Scene 2: The Master Falls" and the narration.
+- **twoGhosts** (after 2.3, new): Delilah's ghost alone, then Victor's ghost rises and flickers into being beside her while frost creeps in. Then "Scene 3: Two Ghosts" and the narration. It leads straight into **victorReturns** (set piece `then`), whose heading is now "Victor returns: two murders, two teams", and then to 3.1.

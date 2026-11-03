@@ -153,15 +153,13 @@
     clear(ov);
     ov.className = 'overlay';
     const lines = linesNode(sp.lines, { hideDirections: true });
-    if (key === 'lightsOut') {
-      ov.classList.add('blackout', 'flicker');
-      sfx('death');
-      flashLightning();
-      setTimeout(() => { if (shownSetPiece) ov.append(el('h1', {}, 'Scene 2'), el('h2', {}, 'The Master Falls'), lines); }, 3000);
+    if (root.BM.interlude.has(key)) {
+      const at = shownSetPiece;
+      root.BM.interlude.play(ov, key, { lines, sfx, alive: () => shownSetPiece === at, onReady: () => {}, voice: () => playVoice(`set-${key}`) });
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines);
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines);
       setTimeout(() => { if (shownSetPiece) playVoice('set-victorReturns'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');

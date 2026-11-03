@@ -206,7 +206,7 @@
       voiceControls(voice.stageGroup(stage.id)),
       el('div', { class: 'scene-label' }, `Scene ${scene.number}: ${scene.title}`),
       el('h2', {}, `${stage.id} ${stage.title}`, el('span', { class: 'kind' }, stage.kind === 'team' ? 'Team' : stage.kind === 'group' ? 'Find alone, solve together' : 'Individual')),
-      stage.setPieceBefore ? el('div', { class: 'row', style: 'margin-bottom:12px' }, el('button', { class: 'ghostly', onclick: () => showSetPiece(stage.setPieceBefore, () => render()) }, '▶ Play: Victor returns')) : null,
+      stage.setPieceBefore ? el('div', { class: 'row', style: 'margin-bottom:12px' }, el('button', { class: 'ghostly small', onclick: () => showSetPiece(stage.setPieceBefore, () => render()) }, '↻ Replay: Victor returns')) : null,
       narr,
       el('div', { class: 'clue' }, stage.clue)
     );
@@ -259,7 +259,7 @@
       label.textContent = 'Stage complete';
       if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }));
       if (stage.setPieceAfter) {
-        bar.append(el('button', { class: 'primary', onclick: () => showSetPiece(stage.setPieceAfter, () => { game.nextStage(); render(); }) }, '▶ The lights go out'));
+        bar.append(el('button', { class: 'primary', onclick: () => playInterlude(stage.setPieceAfter) }, `▶ ${data.setPieces[stage.setPieceAfter].cue}`));
       } else if (game.get().stageIndex === data.stages.length - 1) {
         bar.append(el('button', { class: 'primary', onclick: () => show('vote') }, 'Open the vote'));
       } else {
@@ -375,25 +375,39 @@
   }
 
   /* ---------- set pieces (mirrored on the TV through state.setPiece) ---------- */
+  /* Between scenes: the set piece after a stage, then any it leads into, then the next stage. */
+  function playInterlude(key) {
+    showSetPiece(key, () => {
+      const next = data.setPieces[key].then;
+      if (next) playInterlude(next); else { game.nextStage(); render(); }
+    });
+  }
+
+  const INTERLUDE_BUTTON = { lightsOut: 'The ghost speaks', twoGhosts: 'Victor speaks' };
+  const INTERLUDE_CUE = { lightsOut: 'Victor: fall now', twoGhosts: 'Victor: rise and stand beside Delilah' };
+
   function showSetPiece(key, onDone) {
     const sp = data.setPieces[key];
     const ov = $('#overlay');
     clear(ov);
     ov.className = 'overlay';
-    game.set({ setPiece: { key, at: Date.now() } });
+    const at = Date.now();
+    game.set({ setPiece: { key, at } });
     const lines = linesNode(sp.lines);
     const done = () => { if ((voice.playing() || '').startsWith('set-')) voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ setPiece: null }); if (onDone) onDone(); };
     const continueBtn = (label) => el('button', { class: 'primary', style: 'margin-top:24px', onclick: done }, label || 'Continue');
 
-    if (key === 'lightsOut') {
-      ov.classList.add('blackout', 'flicker');
-      sfx('death');
-      flashLightning();
-      setTimeout(() => ov.append(el('h1', {}, 'Scene 2'), el('h2', {}, 'The Master Falls'), lines, continueBtn('The ghost speaks')), 3000);
+    if (root.BM.interlude.has(key)) {
+      root.BM.interlude.play(ov, key, {
+        lines, sfx, cue: INTERLUDE_CUE[key],
+        alive: () => (game.get().setPiece || {}).at === at,
+        onReady: () => ov.append(voiceControls(`set-${key}`), continueBtn(INTERLUDE_BUTTON[key])),
+        voice: () => { if (hostVoiceOn()) voice.play(`set-${key}`); }
+      });
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines, voiceControls('set-victorReturns'), continueBtn('Form the teams'));
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, voiceControls('set-victorReturns'), continueBtn('Form the teams'));
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');

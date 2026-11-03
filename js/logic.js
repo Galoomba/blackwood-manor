@@ -106,6 +106,7 @@
     if (/\(Victor reads\)/.test(speaker)) return 'victor';
     if (/^Delilah's ghost/.test(speaker)) return 'delilah';
     if (/^Victor's ghost/.test(speaker)) return 'victor';
+    if (/^Narrator/.test(speaker)) return 'narrator';
     return null;
   }
 

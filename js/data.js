@@ -78,7 +78,8 @@
       id: '2.3', scene: 2, title: 'The torn pages', kind: 'team',
       narration: [{ speaker: "Delilah's ghost", text: "I tore the ledger into thirteen pieces and hid them in this house. You have been carrying them to the table all night without knowing. Find your piece. Lay it down. All of them, on the table, in order; the candle in the margin burns lower on each. Then read my grandfather's confession aloud, together. Two of the lines on that page name the ones you seek. They will tell you the lines mean something else." }],
       clue: 'Two lines on that page name the ones you seek.',
-      hostNotes: "Enforce: every strip on the table, nobody keeps one. Absent characters' strips are \"found in the walls\" by the ghost; hand them over. Expect Krank to say W.K. means War Kitchen and Zora to say Z. means Zeke. Selene reads Delilah's note (strip 1) aloud."
+      hostNotes: "Enforce: every strip on the table, nobody keeps one. Absent characters' strips are \"found in the walls\" by the ghost; hand them over. Expect Krank to say W.K. means War Kitchen and Zora to say Z. means Zeke. Selene reads Delilah's note (strip 1) aloud.",
+      setPieceAfter: 'twoGhosts'
     },
     {
       id: '3.1', scene: 3, title: 'The weapon', kind: 'team',
@@ -149,10 +150,22 @@
       ]
     },
     lightsOut: {
-      title: 'The lights go out',
+      title: 'The Master Falls',
+      cue: 'The lights go out',
       sound: 'death',
       lines: [
-        { speaker: 'Stage direction', text: "Blackout. Victor collapses. Four seconds of dark, then still. When the lights return, Delilah's ghost speaks to everyone." }
+        { speaker: 'Stage direction', text: "Blackout. Victor collapses. Four seconds of dark, then still. When the lights return, Delilah's ghost speaks to everyone." },
+        { speaker: 'Narrator', text: "The candles died all at once. Somewhere in the dark a glass broke, and something heavier followed it. When the light crept back, Victor Blackwood lay still on the floor of his own house. The master of Blackwood Manor had followed his sister. And now, for the first time tonight, every one of you could hear her." }
+      ]
+    },
+    twoGhosts: {
+      title: 'Two Ghosts',
+      cue: 'The second ghost rises',
+      sound: 'ghost',
+      then: 'victorReturns',
+      lines: [
+        { speaker: 'Stage direction', text: 'Victor gets up slowly and stands beside Delilah. He is a ghost now. Nobody else moves.' },
+        { speaker: 'Narrator', text: "The pages lay on the table, and the room grew colder. Then the cold took a second shape. Beside the lady in white stood her brother, pale as candle smoke, still straightening his coat. Two Blackwoods. Two murders. Two ghosts. And neither of them will rest until this is finished." }
       ]
     },
     victorReturns: {

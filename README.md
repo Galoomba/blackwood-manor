@@ -33,6 +33,13 @@ The ghosts' lines are recorded too: every stage narration (Victor reading his si
 
 To tell the story yourselves, press "Ghost voice-over: on" on the game screen (or untick "Ghost voice-over" in setup) to mute it. "Replay voice-over" plays the current stage again. The same buttons appear on Victor's return and on the reveal.
 
+## Between the scenes
+
+Two interludes play on the laptop and the TV:
+
+- **The Master Falls** (after 1.3, "The lights go out"): three candles go out, the screen goes black for four seconds while Victor collapses (the laptop shows "Victor: fall now"), then a cracked memorial portrait swings crooked and bleeds while the narrator tells the room what happened.
+- **Two Ghosts** (after 2.3, "The second ghost rises"): Delilah's ghost alone, then Victor's ghost rises beside her as the room frosts over, with narration. "Victor speaks" goes straight on to Victor's return, where the teams are formed, and then to stage 3.1 (which keeps a "Replay: Victor returns" button).
+
 ## The full story
 
 "The full story" on the title, setup and game screens, and "Tell the whole story" after the reveal, open a narrated walkthrough of the whole mystery: the 1916 cellar, every guest's secret and clue, both murders, how the evidence fits, and what became of everyone. It has animated portraits, sound effects and a spoken voice-over using the browser's built-in voices, with each sentence lit as it is read. It plays by itself, or use the arrow keys, space to pause and Esc to close.

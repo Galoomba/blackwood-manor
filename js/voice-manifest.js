@@ -871,6 +871,34 @@
         4.075,
         11.122
       ]
+    },
+    "set-lightsOut-1": {
+      "src": "assets/voice/set-lightsOut-1.mp3",
+      "voice": "George",
+      "hash": "ea661533324b",
+      "duration": 17.972,
+      "starts": [
+        0,
+        2.287,
+        6.478,
+        11.157,
+        14.117
+      ]
+    },
+    "set-twoGhosts-1": {
+      "src": "assets/voice/set-twoGhosts-1.mp3",
+      "voice": "George",
+      "hash": "498aaa447dcb",
+      "duration": 19.319,
+      "starts": [
+        0,
+        3.529,
+        5.828,
+        12.202,
+        13.502,
+        14.93,
+        16.428
+      ]
     }
   }
 }/* END */;
