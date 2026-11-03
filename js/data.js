@@ -44,13 +44,13 @@
   const stages = [
     {
       id: '1.1', scene: 1, title: 'Who you are', kind: 'individual',
-      narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "Brother, I cannot see faces yet, only shapes. Make them tell me who they are. Each of them carries a lie they think is a costume. Let them find it. And brother: the glass that killed me was not the glass I was handed. Silas poured it. Someone else touched it." }],
+      narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "Brother, I cannot see faces yet, only shapes. Make them tell me who they are. Each of them carries a lie they think is a costume. Let them find it. And brother: the glass that killed me was not the glass I was handed. The butler poured it. Someone else touched it." }],
       clue: 'The glass that killed me was not the glass I was handed.',
       hostNotes: 'Players read privately. Nobody shares anything except their public line and their quirk. Discussion is introductions in character.'
     },
     {
       id: '1.2', scene: 1, title: 'Why you came', kind: 'individual',
-      narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "I wrote thirteen letters. I told each of them a piece of the truth, enough to bring them. Ask them why they came, brother, and watch who lies. And know this: someone in this room was paid to be blind tonight. I do not know by whom. I only know the envelope was heavy." }],
+      narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "I wrote the letters that brought them. I told each of them a piece of the truth, enough to bring them. Ask them why they came, brother, and watch who lies. And know this: someone in this room was paid to be blind tonight. I do not know by whom. I only know the envelope was heavy." }],
       clue: 'Someone in this room was paid to be blind tonight.',
       hostNotes: 'Players may share their invitation if they wish. Finch will not want to.'
     },
@@ -98,7 +98,7 @@
       id: '3.3', scene: 3, title: 'The alibis', kind: 'individual',
       narration: [{ speaker: 'Both ghosts', text: "Last thing. Each of you, find your alibi and read it aloud, word for word, no additions. Then compare it with everything you have heard tonight. Every liar makes one mistake." }],
       clue: 'Every liar makes one mistake.',
-      hostNotes: "Zora says she never left the fireplace; Finch (1.3) and Silas (1.3) saw her at the wine table. Krank says she was in the garden with Malachi; Malachi's alibi says he was alone. Then open the vote."
+      hostNotes: "Zora says she never left the fireplace; Finch (1.3), Luna (3.1) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was in the garden with Malachi; Malachi's alibi says he was alone. Then open the vote."
     }
   ];
 
@@ -130,7 +130,7 @@
   };
 
   const witnessCards = {
-    delilah: { reader: 'khamun', ghost: "Delilah's ghost", text: "I stood in the corner for an hour and nobody saw me, because nobody looks at furniture. Before the toast the lady's glass stood alone for one full minute. One person leaned over it. A short person. The hand that hovered over the glass wore five rings, and when it moved it jingled, and the air smelled of jasmine. When the lady fell, that hand wiped its rings with a handkerchief. I am decor. Decor does not lie." },
+    delilah: { reader: 'khamun', ghost: "Delilah's ghost", text: "I stood in the corner for an hour and nobody saw me, because nobody looks at furniture. Before the toast the lady's glass stood alone for one full minute. One person leaned over it, moved it to the back of the tray and set another glass in its place. A short person. The hand that hovered over the glass wore five rings, and when it moved it jingled, and the air smelled of jasmine. When the lady fell, that hand wiped its rings with a handkerchief. I am decor. Decor does not lie." },
     victor: { reader: 'edgar', ghost: "Victor's ghost", text: "The night I died I was at my desk. Before everything went dark I heard a laugh, like a kettle coming to the boil. When I woke on the table the same laugh said 'It works!' Tonight, when the lights went out, I heard four quick steps from the study door and that laugh again, soft, pleased. Then Victor said something. A question. A name, I think. I could not catch it. But I know that laugh. I will know it until I die again." }
   };
 
@@ -181,8 +181,8 @@
 
   const reveal = {
     lines: [
-      { speaker: "Delilah's ghost", text: "Madame Zora. Your grandmother found the dying for mine, and every year since, this house has paid you to forget it. I was going to stop the cheques. So you read my glass's fortune and poured nightshade into it, and your jasmine hid the taste but not the smell, and a mummy you never looked at watched you wipe your rings." },
-      { speaker: "Victor's ghost", text: "Dr. Krank. I paid you to bring Edgar back and you brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you." },
+      { speaker: "Delilah's ghost", text: "Madame Zora. Your grandmother found the dying for mine, and every year since, this house has paid you to forget it. I was going to stop the cheques. So you read my glass's fortune and swapped it for one full of nightshade, and your jasmine hid the taste but not the smell, and a mummy you never looked at watched you wipe your rings." },
+      { speaker: "Victor's ghost", text: "Dr. Krank. I paid you to cheat death, and you stopped Edgar's heart to prove you could, and brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you." },
       { speaker: 'Both', text: "Two killers. Strangers until tonight. Allies by the candle. You found each other. Did they find you?" }
     ],
     houseWins: 'THE HOUSE WINS',
@@ -228,7 +228,7 @@
       cards: {
         '1.1': { text: 'You have killed nothing yet. Your grandmother said the undead are real; your mother said grandmother was mad. Tonight you find out which. The pale man in the top hat has not touched his wine, cast no reflection in the silver tray, and smiled at you with too many teeth.' },
         '1.2': { text: 'The invitation read: "Your grandfather, Private Thomas Vane, did not die at the front. He died in my grandfather\'s cellar, and he was sold. Come and hear his name read. — D. Blackwood." You came for his name. You stayed for the vampire.' },
-        '1.3': { text: 'During the toast you watched Mr. Graves. He stood in the shadow by the curtains and stared at Delilah\'s throat through the entire speech. He did not drink. He did not blink. When she fell he was the first to reach her, and he wept. Say this aloud.' },
+        '1.3': { text: 'During the toast you watched Mr. Graves. He stood in the shadow by the curtains and stared at Delilah\'s throat through the entire speech. He did not drink. He did not blink. When she fell he reached her a heartbeat after the doctor, and he wept. Say this aloud.' },
         '2.1': { text: 'Your stake is a chair leg. The real one is at home. You have never seen a vampire until tonight and you are terrified. If anyone asks, it is the finest hawthorn.' },
         '2.2': { text: 'Goal: before the night ends, make Mr. Graves admit aloud what he is. And find the ledger strip that holds number 41. It is your grandfather.' },
         '2.3': { text: 'Your ledger strip is number 5. Put it on the table and read it aloud. It is him.', ledger: 5 },
@@ -248,7 +248,7 @@
         publicLine: 'I am a friend of the family. Which family? Oh, several.'
       },
       cards: {
-        '1.1': { text: 'You have never met the Blackwoods. You came in through the pantry window at eight. Nobody noticed; nobody ever does. In your glove is a letter from a client who signs only "A friend of the Order" and promises gold.' },
+        '1.1': { text: 'You have never met the Blackwoods. You came in through the pantry window at seven. Nobody noticed; nobody ever does. In your glove is a letter from a client who signs only "A friend of the Order" and promises gold.' },
         '1.2': { text: 'The letter: "Take the red book from the lady\'s bag during the toast. Bring it to the garden hedge. Twenty gold." You took it. The book is in your coat right now, and it is suspiciously light.' },
         '1.3': { text: 'At seven, an hour before the party, you saw Silas the butler go down to the cellar with a lantern and come up with nothing. He was crying. Say this aloud.' },
         '2.1': { text: 'You opened the book. It is empty. Every page has been torn out. You stole a cover. Your client will not pay for a cover. Keep this very, very quiet.' },
@@ -271,9 +271,9 @@
       },
       cards: {
         '1.1': { text: 'You are brilliant and nobody appreciates it. Victor pays you a fortune for research he will not let you publish. You keep a syringe of green serum, K-7, in your coat pocket at all times. It is for emergencies. You have not decided what counts.' },
-        '1.2': { text: 'Delilah did not invite you. Victor asked you to come "to keep an eye on my sister". He looked frightened. He has looked frightened for two months, ever since his accountant came back.' },
+        '1.2': { text: 'Delilah did not invite you. Victor asked you to come "to keep an eye on my sister; someone may try to stop her tonight". He looked frightened. He has looked frightened for two months, ever since his accountant came back.' },
         '1.3': { text: 'Before the party you saw Brother Malachi alone in the garden, chanting at a hedge for twenty minutes. Nobody was with him. He bowed to the hedge and went inside. Say this aloud.' },
-        '2.1': { text: 'You remember now. When the lights went out you did not freeze. You crossed the room in four steps, found Victor\'s neck by the smell of his cologne, and emptied K-7 into it. He said "Wilhelmina?" and then nothing. You killed Victor Blackwood, because at midnight he was going to read a page that says what you did to Edgar. YOU ARE A MURDERER. Keep it hidden.', sabotage: 'Tell the room, with confidence, that in the dark you saw Mr. Graves bending over Victor.' },
+        '2.1': { text: 'You remember now. The lights did not go out by themselves: you pulled the fuse in the study. You crossed the room in four steps, found Victor\'s neck by the smell of his cologne, and emptied K-7 into it. He said "Wilhelmina?" and then nothing. You killed Victor Blackwood, because at midnight he was going to read a page that says what you did to Edgar: his heart did not stop by itself. YOU ARE A MURDERER. Keep it hidden.', sabotage: 'Tell the room, with confidence, that in the dark you saw Mr. Graves bending over Victor.' },
         '2.2': { text: 'Goal: do not get caught. You did not kill Delilah, so another killer is in this room, and an ally is worth more than a secret.', secretSign: true },
         '2.3': { text: 'Your ledger strip is number 4. Put it on the table.', ledger: 4, sabotage: 'When someone reads "Lab. W.K.", insist loudly that W.K. stands for War Kitchen. Laugh when you say it.' },
         '3.1': { text: 'Team Victor. You are investigating yourself.', word: { index: 6, text: 'BLINKS' }, sabotage: 'When you give your word, say DRINKS instead of BLINKS. If the team finds the syringe anyway, say K-7 is a common vitamin.' },
@@ -297,7 +297,7 @@
         '1.3': { text: 'On your way in from the garden you saw the Witch sprinkle dried herbs over the fireplace. It smelled of sage and burned toast. Not jasmine. Definitely not jasmine. Say this aloud.' },
         '2.1': { text: 'You hired the cat burglar. You signed the letter "A friend of the Order" and promised twenty gold you do not have. You have four shillings. If she finds out, stand behind the Inspector.' },
         '2.2': { text: 'Goal: recruit one new member to the Order before the vote. Anyone. Even the mummy. Also: your spare hood is missing from your bag. Someone took it last night. Find out who.' },
-        '2.3': { text: 'Your ledger strip is number 7. Put it on the table and read it as scripture.', ledger: 7 },
+        '2.3': { text: 'Your ledger strip is number 7. Put it on the table and read it as scripture. Then understand: your grandfather dug for the undertaker in 1916 and founded the Order with his wages. The Crimson Seal began as a receipt.', ledger: 7 },
         '3.1': { text: 'Team Victor. You know ritual: Victor was struck in the dark by someone who knew exactly where he stood, someone who had been close enough all evening to know his cologne.', word: { index: 5, text: 'NEVER' } },
         '3.2': { text: 'Team Victor. Your missing hood. The Inspector described the figure who bribed him: short, jingling, jasmine. You are tall and you smell of incense. Someone wore your hood. Tell the room.', word: { index: 5, text: 'BY' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was blessing the cheese. When the lights went out I was alone in the garden chanting to the hedge. Nobody was with me. Nobody is ever with me.' }
@@ -314,15 +314,15 @@
         publicLine: 'I have served this house for thirty years and I have seen things.'
       },
       cards: {
-        '1.1': { text: 'You raised Victor and Delilah after their parents died. You know every creaking board. You set the glasses tonight and counted them: thirteen glasses, twelve guests, one lady.' },
+        '1.1': { text: 'You raised Victor and Delilah after their parents died. You know every creaking board. You set the glasses tonight and poured the lady\'s yourself. You counted them twice: thirteen.' },
         '1.2': { text: 'You live here; nobody invited you. But last week Delilah showed you the ledger and asked, "Silas, did you know?" You did. You have always known. You showed her where to hide the pages.' },
         '1.3': { text: 'After the toast, while everyone screamed, you saw Madame Zora calmly wipe her rings with a handkerchief and tuck it into her sleeve. Her hands shook. Then she started screaming too, a little late. Say this aloud.' },
-        '2.1': { text: 'You are Ezekiel Blackwood\'s grandson by Nurse Ashgrove. The true will, found with the ledger, leaves the manor to "the child of Nurse Ashgrove\'s line". That is you. You never wanted it. You wanted Delilah to live.' },
+        '2.1': { text: 'You are Ezekiel Blackwood\'s grandson by Nurse Ashgrove. The true will, found with the ledger, leaves the manor to "my child by Nurse Ashgrove, and that child\'s heirs". That is you; Morgana comes from the nurse\'s later marriage. You never wanted it. You wanted Delilah to live. At seven you went down to the cellar to fetch the true will from its hiding place, and cried where your grandmother counted the dead.' },
         '2.2': { text: 'Goal: see the true will honoured, and tell Morgana Ashgrove, the witch, that she is your cousin. She does not know. Do it in character; cry if needed.' },
         '2.3': { text: 'Your ledger strip is number 8. Put it on the table and read it aloud.', ledger: 8 },
         '3.1': { text: 'Team Delilah. You set thirteen glasses. After the toast Dr. Corvus took the lady\'s glass and poured it into the potted plant. Ask him why. Then look in the plant.', word: { index: 6, text: 'NEVER' } },
         '3.2': { text: 'Team Delilah. Zora tucked that handkerchief into her sleeve. Later the cat "bumped into" her. If the cat has it, name the stain: nightshade juice is purple.', word: { index: 6, text: 'NO' } },
-        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the wine table clearing the tray, and I saw who had been there before me. When Victor fell I was lighting candles in the hall.' }
+        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the wine table clearing the tray. At the back of it stood the lady\'s own glass, full: the one I poured her. The glass she drank from was not mine, and I saw who had been at that table before me. When Victor fell I was lighting candles in the hall.' }
       }
     },
     {
@@ -339,7 +339,7 @@
         '1.1': { text: 'You have worn the mask for ten years. Nobody has seen your face. You pronounced Delilah dead and you knew the signs before you touched her: dark lips, wide eyes. Belladonna. Nightshade. Poison, not a bite.' },
         '1.2': { text: 'Delilah\'s letter: "Doctor, the ledger says number 17 escaped the cellar. I believe that was you. Come, and I will burn your page myself." You came because you are number 17.' },
         '1.3': { text: 'When you examined Delilah\'s glass there was a smell under the wine: jasmine. Sweet enough to hide something bitter. Say this aloud.' },
-        '2.1': { text: 'You are not a doctor. You are Private Daniel Cole, number 17, who crawled out of that cellar in 1916 with his face burned, and you have hidden it ever since. When Delilah fell you panicked, took her glass, and poured it into the potted plant. You destroyed evidence. If anyone asks, you were "preserving the sample".' },
+        '2.1': { text: 'You are not a doctor. You are Private Daniel Cole, number 17, who crawled out of that cellar in 1916 with his face burned. Ezekiel had already sold your soul and the buyer never collected it, so death cannot take you either: you have not aged a day. That is what the mask hides. You became the family\'s physician ten years ago to stay close to the ledger. When Delilah fell you panicked, took her glass, and poured it into the potted plant. You destroyed evidence. If anyone asks, you were "preserving the sample".' },
         '2.2': { text: 'Goal: keep your face hidden to the end. If anyone tries to lift your mask, diagnose them with something incurable. And you want the ledger burned, not read.' },
         '2.3': { text: 'Your ledger strip is number 6. Put it on the table. It is you.', ledger: 6 },
         '3.1': { text: 'Team Victor. You looked at Victor\'s neck: one puncture with green residue at the edge. You have seen that green before, on the arm of the accountant Edgar, the day he "recovered".', word: { index: 2, text: 'GLASS' } },
@@ -388,7 +388,7 @@
         '2.3': { text: 'Your ledger strip is number 3: your grandmother\'s note. Put it on the table and read it aloud. Slowly.', ledger: 3 },
         '3.1': { text: 'Team Delilah. You know herbs: nightshade is bitter, nobody drinks it unknowing unless the taste is covered. Jasmine oil covers bitter. Sage covers nothing. Say so.', word: { index: 2, text: 'WHERE' } },
         '3.2': { text: 'Team Delilah. After the toast you brushed past someone who smelled of jasmine and whose bangles clinked, shorter than you. Silas mentioned a handkerchief; the cat looked guilty. Put it together with your team.', word: { index: 2, text: 'THE' } },
-        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace with my herbs; the Cultist saw me. When Victor fell I was still there, and someone took my hand in the dark. I do not know whose.' }
+        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace with my herbs. Madame Zora\'s chair beside me had been empty for a full minute before the toast. When Victor fell I was still there, and someone took my hand in the dark. I do not know whose.' }
       }
     },
     {
@@ -406,7 +406,7 @@
         '1.2': { text: 'Victor\'s note: "Edgar, old friend, come tonight. I am going to make it right." You do not know what "it" is. You remember the number 2,000 and it frightens you.' },
         '1.3': { text: 'Numbers. You remember the estate books: £2,000 a month from the Blackwood account to "W.K., laboratory". Victor signed every one, for two years. Say this aloud.' },
         '2.1': { text: 'You are the poor man. The experiment. You are why Victor wanted it to end and why someone wanted him silent. Your secret: you did not want to come back. You would like to be left alone with a good ledger.' },
-        '2.2': { text: 'Goal: find out exactly who did this to you and make them say it. Also: eat something. You keep forgetting.' },
+        '2.2': { text: 'Goal: find out exactly who did this to you and make them say it. Also: eat something. You keep forgetting. In your pocket is yesterday\'s receipt: one sarcophagus, Theban, sold by V.B. to pay the laboratory. Someone here will want it.' },
         '2.3': { text: 'Your ledger strip is number 13: Victor\'s last note, addressed to you. Put it on the table and read it aloud. It is the end of the page.', ledger: 13 },
         '3.1': { text: 'Team Victor. The syringe the team finds will be marked K-7. You have a scar on your arm in the shape of a K. Show it.', word: { index: 3, text: 'FACE' } },
         '3.2': { text: 'Team Victor. This is it. When the team opens the envelope at the Lamp, you read it aloud. Slowly. Remember everything.', word: { index: 3, text: 'THAT' } },
@@ -427,7 +427,7 @@
         '1.1': { text: 'You are the most famous fortune teller in three counties. Your visions are improvised. Your jasmine oil is real. The Zoras have been "friends of the Blackwoods" since 1916, and every All Hallows\' Eve a cheque arrives. You have never asked why.' },
         '1.2': { text: 'Delilah\'s letter: "Madame, your grandmother found the dying for mine. The ledger calls your family the brokers. Tonight the cheques stop. Come and hear it." You read it four times. Then you packed a small brown vial.' },
         '1.3': { text: 'Last night at the gate you saw Inspector Finch accept an envelope from a hooded figure. You could not see the figure\'s face. Say this aloud. Mention the hood. Mention nothing else.' },
-        '2.1': { text: 'You remember now. You stood over the glasses "reading their fortunes" and emptied the nightshade into the lady\'s glass, then wiped your rings. The jasmine covered the bitterness; it did not cover the smell. You killed Delilah Blackwood to keep the cheques coming and the brokers\' name buried. YOU ARE A MURDERER. Keep it hidden. The vial went into the potted plant; the handkerchief is in your sleeve, or was. Check. The hooded figure at the gate was you, in the Cultist\'s spare hood.', sabotage: 'Tell the room the Witch\'s herbs smelled of jasmine. Insist on it.' },
+        '2.1': { text: 'You remember now. At the wine table you filled a spare glass with nightshade, set it in place of the lady\'s and pushed hers to the back of the tray, then wiped your rings. You killed Delilah Blackwood to keep the cheques coming. YOU ARE A MURDERER. Keep it hidden. The vial is in the potted plant; the handkerchief is in your sleeve, or was. The hooded figure at the gate was you, in the Cultist\'s stolen hood: you paid the Inspector to look away at midnight, when you meant to take the ledger. The glass came first.', sabotage: 'Tell the room the Witch\'s herbs smelled of jasmine. Insist on it.' },
         '2.2': { text: 'Goal: do not get caught. You did not kill Victor, so another killer is in this room, and an ally is worth more than a secret.', secretSign: true },
         '2.3': { text: 'Your ledger strip is number 10. Put it on the table; you must.', ledger: 10, sabotage: 'Insist "Z." means Zeke, Ezekiel\'s own nickname, and that he paid himself. Say it with a laugh.' },
         '3.1': { text: 'Team Delilah. You are investigating yourself.', word: { index: 7, text: 'WALKS' }, sabotage: 'When you give your word, say TALKS instead of WALKS. If they find the vial anyway, say the plant is where the doctor poured the glass, so the vial must be his.' },
@@ -498,7 +498,7 @@
     vane: {
       '1.1': [{ about: 'graves', text: "He cast no reflection in the silver tray. Hold the tray up to him in front of everyone and see who flinches." }],
       '1.2': [{ about: 'corvus', text: "The plague doctor has not taken his mask off to drink. Neither has the undertaker. Ask them both which one is the vampire and enjoy the silence." }],
-      '1.3': [{ about: 'silas', text: "The butler set thirteen glasses for twelve guests and one lady. Ask him who the thirteenth was for." }, { about: 'khamun', text: "The mummy stood in the corner the whole time and nobody spoke to him. Be the first: ask him what he saw." }, { about: 'corvus', text: "The plague doctor reached the lady before anyone, and nobody watched his hands. Ask him what they did." }],
+      '1.3': [{ about: 'silas', text: "The butler poured the lady's glass himself. Ask him whether the glass she drank from was the one he poured." }, { about: 'khamun', text: "The mummy stood in the corner the whole time and nobody spoke to him. Be the first: ask him what he saw." }, { about: 'corvus', text: "The plague doctor reached the lady before anyone, and nobody watched his hands. Ask him what they did." }],
       '2.1': [{ about: 'morgana', text: "The Witch has been green for three days; it is paint. Ask her whether her herbs are as real as her skin." }],
       '2.2': [{ about: 'zora', text: "Someone brushed past you after the toast smelling of jasmine. The fortune teller dabs jasmine on her wrists; she says so herself. Ask her where she stood when the lady fell." }],
       '2.3': [{ about: 'graves', text: "Strip 2 has a note in the margin: 'I stopped.' Ask Mr. Graves what, exactly, he stopped, and whether he would say it to the ghost's face." }],

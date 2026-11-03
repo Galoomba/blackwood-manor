@@ -42,12 +42,12 @@
     {
       id: 'lab', chapter: 'II. The grandchildren', layout: 'duo', scene: 2, voice: 'narrator',
       title: "Victor's laboratory", people: ['krank', 'edgar'],
-      text: 'A century later, Victor Blackwood\'s accountant, Edgar Mills, died of a heart attack at his desk. Victor could not bear it. He paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, and she brought Edgar back with a green serum called K-7. It worked. Mostly.'
+      text: 'A century later, Victor Blackwood paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, to find a cure for death. After two years she wanted a human subject. Two months ago Victor\'s accountant, Edgar Mills, died at his desk of a heart attack, with a kettle laugh in the next room, and she brought him back with a green serum called K-7. It worked. Mostly.'
     },
     {
       id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['silas'],
       title: "Delilah's ledger",
-      text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote thirteen letters."
+      text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote her letters."
     },
     {
       id: 'midnight', chapter: 'II. The grandchildren', layout: 'ghosts', scene: 2, sfx: 'heartbeat', voice: 'narrator',
@@ -58,7 +58,7 @@
     /* ---------- III. The guests ---------- */
     {
       id: 'guests', chapter: 'III. The guests', layout: 'gallery', scene: 1, sfx: 'bell', voice: 'narrator',
-      title: 'Thirteen letters', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'silas', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
+      title: 'Thirteen in the house', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'silas', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
       text: 'They came in costume, and every one of them was lying about something. Here is who they really were, and the piece of the truth each one carried.'
     },
     {
@@ -99,7 +99,7 @@
     {
       id: 'g-corvus', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['corvus'],
       title: 'Dr. Corvus, the Plague Doctor',
-      text: 'The plague doctor is no doctor. He is Private Daniel Cole, number seventeen, the soldier who escaped the cellar. He knew it was poison the moment Delilah fell, and in a panic he poured her glass into the potted plant. It made him look guilty. It also put him right beside a vial that was never his.'
+      text: 'The plague doctor is no doctor. He is Private Daniel Cole, number seventeen, the soldier who escaped the cellar. His soul was sold and never collected, so death cannot take him, and he has not aged a day since 1916. He knew it was poison the moment Delilah fell, and in a panic he poured her glass into the potted plant. It made him look guilty. It also put him right beside a vial that was never his.'
     },
     {
       id: 'g-khamun', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['khamun'],
@@ -131,12 +131,12 @@
     {
       id: 'gate', chapter: 'IV. The toast', layout: 'duo', scene: 1, sfx: 'whisper', voice: 'narrator', people: ['zora', 'finch'], killers: ['zora'],
       title: 'The night before',
-      text: "The night before the party, wearing the Cultist's stolen hood, Zora met the Inspector at the gate and paid him to look away at midnight. The hood smelled of jasmine. The figure was short. It jingled."
+      text: "The night before the party, wearing the Cultist's stolen hood, Zora met the Inspector at the gate and paid him to look away at midnight, when she meant to snatch the ledger before it could be read. In the end she never needed him: the glass came first. The hood smelled of jasmine. The figure was short. It jingled."
     },
     {
       id: 'glass', chapter: 'IV. The toast', layout: 'duo', scene: 1, voice: 'narrator', people: ['zora', 'khamun'], killers: ['zora'],
       title: 'The glass',
-      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over Delilah's glass, emptied the nightshade into it, and wiped her rings. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
+      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over the glasses. She filled a spare, emptied the nightshade into it, set it where Delilah had put her own glass down, and wiped her rings. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
     },
     {
       id: 'fall', chapter: 'IV. The toast', layout: 'ghosts', ghosts: ['delilah'], scene: 1, sfx: 'death', effect: 'flash', voice: 'narrator',
@@ -158,7 +158,7 @@
     {
       id: 'dark', chapter: 'V. The lights go out', layout: 'portrait', scene: 2, sfx: 'death', effect: 'flicker', voice: 'narrator', people: ['krank'], killers: ['krank'],
       title: 'Four steps',
-      text: "Then the lights went out. Krank crossed the room in four quick steps, found Victor by the smell of his cologne, and emptied K-7 into his neck. Victor said one word: Wilhelmina? Then nothing. And in the dark, a soft and pleased little laugh, like a kettle coming to the boil."
+      text: "Then Krank pulled the fuse in the study and the lights went out. She crossed the room in four quick steps, found Victor by the smell of his cologne, and emptied K-7 into his neck. Victor said one word: Wilhelmina? Then nothing. And in the dark, a soft and pleased little laugh, like a kettle coming to the boil."
     },
     {
       id: 'master-falls', chapter: 'V. The lights go out', layout: 'memorial', scene: 2, sfx: 'toll', voice: 'narrator',
@@ -221,12 +221,12 @@
     {
       id: 'reveal-zora', chapter: 'VIII. The reveal', layout: 'portrait', scene: 3, effect: 'ghost', voice: 'delilah', people: ['zora'], killers: ['zora'],
       title: 'Madame Zora',
-      text: "Your grandmother found the dying for mine, and every year since, this house has paid you to forget it. I was going to stop the cheques. So you read my glass's fortune and poured nightshade into it, and your jasmine hid the taste but not the smell, and a mummy you never looked at watched you wipe your rings."
+      text: "Your grandmother found the dying for mine, and every year since, this house has paid you to forget it. I was going to stop the cheques. So you read my glass's fortune and swapped it for one full of nightshade, and your jasmine hid the taste but not the smell, and a mummy you never looked at watched you wipe your rings."
     },
     {
       id: 'reveal-krank', chapter: 'VIII. The reveal', layout: 'portrait', scene: 3, effect: 'ghost', voice: 'victor', people: ['krank'], killers: ['krank'],
       title: 'Dr. Krank',
-      text: 'I paid you to bring Edgar back and you brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you.'
+      text: 'I paid you to cheat death, and you stopped Edgar\'s heart to prove you could, and brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you.'
     },
     {
       id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['silas', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],

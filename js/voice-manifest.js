@@ -87,26 +87,26 @@
     "lab": {
       "src": "assets/voice/lab.mp3",
       "voice": "George",
-      "hash": "2406b7230114",
-      "duration": 18.112,
+      "hash": "b59ac1d6c888",
+      "duration": 24.939,
       "starts": [
         0,
-        5.991,
-        7.732,
-        16.324,
-        17.299
+        9.207,
+        12.365,
+        23.313,
+        24.091
       ]
     },
     "ledger": {
       "src": "assets/voice/ledger.mp3",
       "voice": "Lyla",
-      "hash": "7d1acce111ae",
-      "duration": 21.177,
+      "hash": "944a241cf6aa",
+      "duration": 21.316,
       "starts": [
         0,
-        6.432,
-        8.696,
-        17.903
+        6.13,
+        8.417,
+        18.146
       ]
     },
     "midnight": {
@@ -205,14 +205,15 @@
     "g-corvus": {
       "src": "assets/voice/g-corvus.mp3",
       "voice": "George",
-      "hash": "8a5e49d945a0",
-      "duration": 18.994,
+      "hash": "6ebd31103f19",
+      "duration": 25.867,
       "starts": [
         0,
-        2.264,
-        7.593,
-        14.025,
-        15.627
+        2.055,
+        7.326,
+        14.605,
+        20.898,
+        22.593
       ]
     },
     "g-khamun": {
@@ -277,26 +278,28 @@
     "gate": {
       "src": "assets/voice/gate.mp3",
       "voice": "George",
-      "hash": "d4fecc3cafb6",
-      "duration": 13.56,
+      "hash": "a662260b76f1",
+      "duration": 19.18,
       "starts": [
         0,
-        8.371,
-        10.89,
-        12.516
+        11.413,
+        15.14,
+        16.951,
+        18.124
       ]
     },
     "glass": {
       "src": "assets/voice/glass.mp3",
       "voice": "George",
-      "hash": "8d59b4c3730b",
-      "duration": 18.855,
+      "hash": "57d3c4111a0c",
+      "duration": 21.688,
       "starts": [
         0,
-        4.551,
-        10.89,
-        12.725,
-        14.733
+        4.284,
+        6.792,
+        14.211,
+        16.069,
+        17.659
       ]
     },
     "fall": {
@@ -314,14 +317,14 @@
     "dark": {
       "src": "assets/voice/dark.mp3",
       "voice": "George",
-      "hash": "a80612cc7248",
-      "duration": 19.226,
+      "hash": "b4fa7c243ec8",
+      "duration": 21.409,
       "starts": [
         0,
-        1.916,
-        9.787,
-        13.073,
-        14.315
+        4.145,
+        11.877,
+        15.058,
+        16.266
       ]
     },
     "needle": {
@@ -393,25 +396,25 @@
     "reveal-zora": {
       "src": "assets/voice/reveal-zora.mp3",
       "voice": "Lyla",
-      "hash": "40741cfc7b07",
+      "hash": "08f6aa6c6019",
       "duration": 23.266,
       "starts": [
         0,
-        7.639,
+        7.872,
         9.868
       ]
     },
     "reveal-krank": {
       "src": "assets/voice/reveal-krank.mp3",
       "voice": "Lance",
-      "hash": "9f644434bb3c",
-      "duration": 23.684,
+      "hash": "36bd2b2f545b",
+      "duration": 29.815,
       "starts": [
         0,
-        5.782,
-        8.499,
-        19.064,
-        20.793
+        9.543,
+        12.608,
+        24.033,
+        26.123
       ]
     },
     "fates": {
@@ -446,30 +449,30 @@
     "stage-1-1-0": {
       "src": "assets/voice/stage-1-1-0.mp3",
       "voice": "Lance",
-      "hash": "28a79db198b0",
+      "hash": "5c3da454ebc7",
       "duration": 23.684,
       "starts": [
         0,
-        4.795,
-        8.057,
-        12.272,
-        14.35,
-        20.283,
-        21.78
+        4.69,
+        7.477,
+        11.796,
+        13.618,
+        19.609,
+        21.792
       ]
     },
     "stage-1-2-0": {
       "src": "assets/voice/stage-1-2-0.mp3",
       "voice": "Lance",
-      "hash": "4db76ca1b435",
+      "hash": "82a10621c323",
       "duration": 23.684,
       "starts": [
         0,
-        2.624,
-        7.906,
-        12.504,
-        18.309,
-        20.596
+        2.705,
+        7.407,
+        12.539,
+        18.495,
+        20.573
       ]
     },
     "stage-1-3-0": {
@@ -650,27 +653,27 @@
     "reveal-0": {
       "src": "assets/voice/reveal-0.mp3",
       "voice": "Lyla",
-      "hash": "8dc6e950f764",
+      "hash": "637601493f80",
       "duration": 25.077,
       "starts": [
         0,
-        1.997,
-        9.659,
-        11.889
+        1.834,
+        9.381,
+        11.761
       ]
     },
     "reveal-1": {
       "src": "assets/voice/reveal-1.mp3",
       "voice": "Lance",
-      "hash": "735850d8b0e3",
-      "duration": 23.684,
+      "hash": "4768a8d9b888",
+      "duration": 32.554,
       "starts": [
         0,
-        1.219,
-        6.444,
-        9.323,
-        19.145,
-        20.759
+        1.265,
+        10.344,
+        13.433,
+        26.018,
+        28.503
       ]
     },
     "reveal-2.delilah": {
