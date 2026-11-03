@@ -139,7 +139,10 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 .soundboard { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 
 /* Overlay set pieces */
-.overlay { position: fixed; inset: 0; z-index: 100; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 24px; overflow-y: auto; }
+.overlay { position: fixed; inset: 0; z-index: 100; background: #000; display: flex; align-items: center; justify-content: flex-start; flex-direction: column; text-align: center; padding: 24px; overflow-y: auto; }
+/* Centred when it fits, scrollable from the top when it does not (plain centring would push the top off a phone screen). */
+.overlay > :first-child { margin-top: auto; }
+.overlay > :last-child { margin-bottom: auto; }
 .overlay.hidden { display: none; }
 .overlay h1 { font-size: clamp(36px, 8vw, 90px); margin-bottom: 20px; animation: fade 2s ease; }
 .overlay .lines { max-width: 800px; font-size: 22px; }
@@ -188,7 +191,20 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 body.tv .memorial-frame { width: 300px; height: 400px; }
 body.tv .memorial-frame strong { font-size: 38px; }
 body.tv .memorial-ghost { left: -230px; }
-@media (max-width: 600px) { .memorial-ghost { display: none; } .memorial-frame { width: 180px; height: 240px; } }
+@media (max-width: 600px) {
+  .overlay { padding: 20px 16px 28px; }
+  .overlay .lines { font-size: 17px; }
+  .overlay h1.interlude-title { font-size: 40px; margin-bottom: 4px; }
+  .interlude-sub { font-size: 20px; }
+  .memorial { margin-bottom: 10px; }
+  .memorial-ghost { display: none; }
+  .memorial-frame { width: 150px; height: 200px; padding: 16px; gap: 4px; border-width: 7px; }
+  .memorial-frame strong { font-size: 18px; }
+  .memorial-small { font-size: 9px; }
+  .memorial-date { font-size: 11px; }
+  .ghost-pair { gap: 16px; margin-bottom: 8px; }
+  .ghost-pair .ghost-shape { width: 90px; height: 120px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .memorial-frame, .memorial-ghost, .interlude-ghost, .interlude-ghost .ghost-shape, .overlay.mourning { animation: none; opacity: 1; }
   .memorial-frame { transform: rotate(-7deg); }

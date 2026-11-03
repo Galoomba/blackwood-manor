@@ -21,6 +21,7 @@
     [0, 1, 2].forEach((i) => later(o, 700 + i * 650, () => { c.children[i].classList.add('out'); o.sfx('puff'); }));
     later(o, 2600, () => {
       clear(ov);
+      ov.scrollTop = 0;
       ov.classList.add('flicker');
       o.sfx('death');
       flashLightning();
@@ -29,6 +30,7 @@
     /* Four seconds of dark, then the memorial. */
     later(o, 6800, () => {
       clear(ov);
+      ov.scrollTop = 0;
       ov.classList.remove('flicker');
       ov.classList.add('mourning');
       o.sfx('heartbeat');
@@ -75,7 +77,7 @@
   const KINDS = { lightsOut, twoGhosts };
 
   function has(key) { return Boolean(KINDS[key]); }
-  function play(ov, key, o) { KINDS[key](ov, o); }
+  function play(ov, key, o) { ov.scrollTop = 0; KINDS[key](ov, o); }
 
   root.BM = root.BM || {};
   root.BM.interlude = { has, play };
