@@ -100,13 +100,13 @@
     "ledger": {
       "src": "assets/voice/ledger.mp3",
       "voice": "Lily",
-      "hash": "342107f292a1",
-      "duration": 21.502,
+      "hash": "b05e63e66b3f",
+      "duration": 20.944,
       "starts": [
         0,
-        6.455,
-        8.406,
-        18.727
+        5.364,
+        7.988,
+        18.088
       ]
     },
     "midnight": {
@@ -200,17 +200,6 @@
         5.712,
         11.076,
         18.669
-      ]
-    },
-    "g-agnes": {
-      "src": "assets/voice/g-agnes.mp3",
-      "voice": "George",
-      "hash": "13597c3a09b3",
-      "duration": 16.997,
-      "starts": [
-        0,
-        3.971,
-        10.913
       ]
     },
     "g-corvus": {
@@ -380,13 +369,13 @@
     "zora-proof": {
       "src": "assets/voice/zora-proof.mp3",
       "voice": "George",
-      "hash": "eef6c47c2973",
-      "duration": 19.365,
+      "hash": "a1aa82183109",
+      "duration": 18.019,
       "starts": [
         0,
-        2.183,
-        3.947,
-        16.753
+        2.473,
+        4.075,
+        15.464
       ]
     },
     "krank-proof": {
@@ -428,18 +417,18 @@
     "fates": {
       "src": "assets/voice/fates.mp3",
       "voice": "George",
-      "hash": "5a974ecd06a9",
-      "duration": 27.214,
+      "hash": "2b39f8c118f6",
+      "duration": 27.12,
       "starts": [
         0,
-        3.135,
-        7.117,
+        3.541,
+        7.21,
         11.633,
-        16.765,
-        18.379,
-        20.62,
-        22.895,
-        26.239
+        16.95,
+        18.448,
+        20.619,
+        22.987,
+        26.145
       ]
     },
     "end": {
@@ -457,16 +446,16 @@
     "stage-1-1-0": {
       "src": "assets/voice/stage-1-1-0.mp3",
       "voice": "Lance",
-      "hash": "5b663aa6b6bd",
+      "hash": "31c09739cc5f",
       "duration": 23.684,
       "starts": [
         0,
-        4.981,
-        8.057,
-        12.26,
-        14.095,
-        20.097,
-        21.722
+        4.447,
+        7.187,
+        11.389,
+        13.293,
+        19.737,
+        21.827
       ]
     },
     "stage-1-2-0": {
@@ -640,11 +629,11 @@
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
       "voice": "Lily",
-      "hash": "bbd670c306d4",
-      "duration": 6.13,
+      "hash": "e3de1535edb2",
+      "duration": 5.712,
       "starts": [
         0,
-        5.271
+        4.899
       ]
     },
     "set-victorReturns-2": {
@@ -870,6 +859,17 @@
         3.518,
         6.676,
         7.372
+      ]
+    },
+    "g-ambrose": {
+      "src": "assets/voice/g-ambrose.mp3",
+      "voice": "George",
+      "hash": "047635ef03e7",
+      "duration": 17.183,
+      "starts": [
+        0,
+        4.075,
+        11.122
       ]
     }
   }

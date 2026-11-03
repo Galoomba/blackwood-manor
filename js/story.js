@@ -45,9 +45,9 @@
       text: 'A century later, Victor Blackwood\'s accountant, Edgar Mills, died of a heart attack at his desk. Victor could not bear it. He paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, and she brought Edgar back with a green serum called K-7. It worked. Mostly.'
     },
     {
-      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['agnes'],
+      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['ambrose'],
       title: "Delilah's ledger",
-      text: "Delilah found her grandfather's ledger and asked the housekeeper, Agnes, whether she knew. Agnes had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote thirteen letters."
+      text: "Delilah found her grandfather's ledger and asked the butler, Ambrose, whether he knew. Ambrose had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote thirteen letters."
     },
     {
       id: 'midnight', chapter: 'II. The grandchildren', layout: 'ghosts', scene: 2, sfx: 'heartbeat', voice: 'narrator',
@@ -58,7 +58,7 @@
     /* ---------- III. The guests ---------- */
     {
       id: 'guests', chapter: 'III. The guests', layout: 'gallery', scene: 1, sfx: 'bell', voice: 'narrator',
-      title: 'Thirteen letters', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'agnes', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
+      title: 'Thirteen letters', people: ['finch', 'vane', 'selene', 'luna', 'krank', 'malachi', 'ambrose', 'corvus', 'khamun', 'morgana', 'edgar', 'zora', 'graves'],
       text: 'They came in costume, and every one of them was lying about something. Here is who they really were, and the piece of the truth each one carried.'
     },
     {
@@ -92,9 +92,9 @@
       text: 'Grand Hierophant of an Order with three members, one of whom has stopped answering letters. He hired the cat burglar with gold he did not have, and somebody stole his spare hood. In the end his loneliness solved a murder: when Krank swore she was in the garden with him, his alibi said he was alone. Nobody is ever with him.'
     },
     {
-      id: 'g-agnes', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['agnes'],
-      title: 'Agnes Thorne, the Housekeeper',
-      text: "Agnes set thirteen glasses and counted every one. She is Ezekiel's granddaughter through Nurse Ashgrove, and the true heir to the manor, which she never wanted. After the toast she watched Madame Zora wipe her rings with a handkerchief and tuck it into her sleeve."
+      id: 'g-ambrose', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['ambrose'],
+      title: 'Ambrose Thorne, the Butler',
+      text: "Ambrose set thirteen glasses and counted every one. He is Ezekiel's grandson through Nurse Ashgrove, and the true heir to the manor, which he never wanted. After the toast he watched Madame Zora wipe her rings with a handkerchief and tuck it into her sleeve."
     },
     {
       id: 'g-corvus', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['corvus'],
@@ -185,13 +185,13 @@
       chips: [
         { text: 'Jasmine in the glass · Corvus' },
         { text: 'At the wine table a full minute · Finch' },
-        { text: 'Rings wiped on a handkerchief · Agnes' },
+        { text: 'Rings wiped on a handkerchief · Ambrose' },
         { text: 'Purple-stained handkerchief · Selene' },
         { text: 'Brown vial in the plant · Team Delilah' },
         { text: 'Five rings over the glass · Khamun' },
         { text: "'I never left the fireplace'", lie: true }
       ],
-      text: 'Every liar makes one mistake. Madame Zora made seven. The doctor smelled jasmine, the Inspector saw her at the wine table, the housekeeper saw the rings wiped, the cat stole the stained handkerchief, Team Delilah found the vial, and the mummy saw it all. Then she swore she had never left the fireplace.'
+      text: 'Every liar makes one mistake. Madame Zora made seven. The doctor smelled jasmine, the Inspector saw her at the wine table, the butler saw the rings wiped, the cat stole the stained handkerchief, Team Delilah found the vial, and the mummy saw it all. Then she swore she had never left the fireplace.'
     },
     {
       id: 'krank-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['krank'], killers: ['krank'],
@@ -219,9 +219,9 @@
       text: 'I paid you to bring Edgar back and you brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you.'
     },
     {
-      id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['agnes', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],
+      id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['ambrose', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],
       title: 'What became of them',
-      text: 'Agnes inherited the manor and fired nobody. Morgana got her apology, from a ghost, which counts. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
+      text: 'Ambrose inherited the manor and fired nobody. Morgana got her apology, from a ghost, which counts. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
     },
     {
       id: 'end', chapter: 'VIII. The reveal', layout: 'title', scene: 0, sfx: 'toll', voice: 'narrator',

@@ -504,3 +504,7 @@ A host tab that tells the whole mystery as 37 narrated slides in nine chapters (
 - Voice: Web Speech API, sentence by sentence, the current sentence highlighted. Narrator, Delilah and Victor get different voices and pitch. If speech is unavailable or refused, captions run on a timer.
 - Sound: per-slide effects and scene ambience from `BM.audio`.
 - Sync: own storage key `blackwood-manor-story-v1` (`onTv`, `index`, `playing`, `voice`), so it never touches the game state. Exactly one window speaks and advances: the TV while `onTv` is set, otherwise the host. Opening the story never changes the TV; "Show on TV" asks for confirmation unless the result screen is showing.
+
+## Addendum: the housekeeper becomes the butler (added 3 Nov 2026)
+
+The maid's player is cast from a photo of an older man, so character 5 (🗝, optional, Team Delilah) is now **Ambrose Thorne, the Butler** (id `ambrose`, costume Butler). Wherever this spec says Agnes, the housekeeper or the maid, read Ambrose, the butler, with he/him; he is Ezekiel's grandson by Nurse Ashgrove and Morgana's cousin. The story, puzzles, words and ledger strip 8 are unchanged. Act gains "carry a silver tray everywhere".

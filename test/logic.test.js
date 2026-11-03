@@ -59,7 +59,7 @@ test('orphanedClues moves an absent witness card to the ghost at 3.2', () => {
 });
 
 test('orphanedClues returns observation at 1.3, ledger at 2.3, alibi at 3.3', () => {
-  const r = logic.buildRoster(data, selectionWithout('agnes'));
+  const r = logic.buildRoster(data, selectionWithout('ambrose'));
   assert.equal(logic.orphanedClues(data, r, '1.3')[0].kind, 'observation');
   const ledger = logic.orphanedClues(data, r, '2.3')[0];
   assert.equal(ledger.kind, 'ledger');
