@@ -28,14 +28,14 @@
     },
     "promise": {
       "src": "assets/voice/promise.mp3",
-      "voice": "Daniel",
-      "hash": "7b309b874b7f",
-      "duration": 14.768,
+      "voice": "Lance",
+      "hash": "f54bf45dee0c",
+      "duration": 20.387,
       "starts": [
         0,
-        8.22,
-        9.485,
-        12.074
+        12.156,
+        13.537,
+        16.393
       ]
     },
     "cellar": {
@@ -364,17 +364,17 @@
     },
     "victor-returns": {
       "src": "assets/voice/victor-returns.mp3",
-      "voice": "Daniel",
-      "hash": "2c40fea2ee57",
-      "duration": 20.898,
+      "voice": "Lance",
+      "hash": "5a198d841535",
+      "duration": 23.684,
       "starts": [
         0,
-        1.196,
-        2.926,
-        10.124,
-        13.363,
-        17.125,
-        18.797
+        1.115,
+        3.158,
+        10.948,
+        14.849,
+        18.878,
+        21.269
       ]
     },
     "zora-proof": {
@@ -414,15 +414,15 @@
     },
     "reveal-krank": {
       "src": "assets/voice/reveal-krank.mp3",
-      "voice": "Daniel",
-      "hash": "5373b04f8adf",
-      "duration": 22.43,
+      "voice": "Lance",
+      "hash": "9f644434bb3c",
+      "duration": 23.684,
       "starts": [
         0,
-        5.724,
-        8.649,
-        18.564,
-        20.19
+        5.782,
+        8.499,
+        19.064,
+        20.793
       ]
     },
     "fates": {
@@ -560,14 +560,14 @@
     },
     "stage-3-1-0.victor": {
       "src": "assets/voice/stage-3-1-0.victor.mp3",
-      "voice": "Daniel",
-      "hash": "8e9db44408b1",
-      "duration": 8.731,
+      "voice": "Lance",
+      "hash": "7cf063a77072",
+      "duration": 10.31,
       "starts": [
         0,
-        1.672,
-        3.437,
-        5.805
+        1.753,
+        3.959,
+        6.594
       ]
     },
     "stage-3-2-0.delilah": {
@@ -585,15 +585,15 @@
     },
     "stage-3-2-0.victor": {
       "src": "assets/voice/stage-3-2-0.victor.mp3",
-      "voice": "Daniel",
-      "hash": "082525c2af37",
-      "duration": 12.167,
+      "voice": "Lance",
+      "hash": "aea199549b15",
+      "duration": 15,
       "starts": [
         0,
-        1.382,
-        3.077,
-        5.306,
-        7.755
+        1.834,
+        3.843,
+        6.351,
+        9.091
       ]
     },
     "stage-3-3-0.delilah": {
@@ -610,31 +610,31 @@
     },
     "stage-3-3-0.victor": {
       "src": "assets/voice/stage-3-3-0.victor.mp3",
-      "voice": "Daniel",
-      "hash": "5ca972e2f463",
-      "duration": 14.396,
+      "voice": "Lance",
+      "hash": "b4ff9117baca",
+      "duration": 18.158,
       "starts": [
         0,
         1.265,
-        8.092,
-        11.378
+        10.298,
+        14.826
       ]
     },
     "set-victorReturns-0": {
       "src": "assets/voice/set-victorReturns-0.mp3",
-      "voice": "Daniel",
-      "hash": "7c1663b843fa",
-      "duration": 23.823,
+      "voice": "Lance",
+      "hash": "b9722cc1a86b",
+      "duration": 25.867,
       "starts": [
         0,
-        0.244,
-        1.858,
-        8.069,
-        10.379,
-        13.386,
-        16.649,
-        19.04,
-        21.525
+        0.743,
+        2.334,
+        8.417,
+        10.623,
+        13.978,
+        17.206,
+        19.656,
+        22.918
       ]
     },
     "set-victorReturns-1": {
@@ -649,13 +649,13 @@
     },
     "set-victorReturns-2": {
       "src": "assets/voice/set-victorReturns-2.mp3",
-      "voice": "Daniel",
-      "hash": "755e0703fa23",
-      "duration": 8.499,
+      "voice": "Lance",
+      "hash": "fd8bb05b5b51",
+      "duration": 12.864,
       "starts": [
         0,
-        6.165,
-        7.14
+        9.091,
+        10.751
       ]
     },
     "reveal-0": {
@@ -672,16 +672,16 @@
     },
     "reveal-1": {
       "src": "assets/voice/reveal-1.mp3",
-      "voice": "Daniel",
-      "hash": "cc7345c8aff7",
+      "voice": "Lance",
+      "hash": "735850d8b0e3",
       "duration": 23.684,
       "starts": [
         0,
-        1.533,
-        7.082,
-        10.019,
-        20.201,
-        21.618
+        1.219,
+        6.444,
+        9.323,
+        19.145,
+        20.759
       ]
     },
     "reveal-2.delilah": {
@@ -699,15 +699,15 @@
     },
     "reveal-2.victor": {
       "src": "assets/voice/reveal-2.victor.mp3",
-      "voice": "Daniel",
-      "hash": "a9abc6f69c6f",
-      "duration": 8.731,
+      "voice": "Lance",
+      "hash": "01a464ac6444",
+      "duration": 9.752,
       "starts": [
         0,
-        1.37,
-        3.878,
-        5.735,
-        7.384
+        1.265,
+        3.947,
+        6.502,
+        8.464
       ]
     },
     "intro-welcome": {

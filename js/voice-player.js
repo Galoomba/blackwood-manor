@@ -18,13 +18,16 @@
     if (line.voice === 'both') return [c[`${line.id}.delilah`], c[`${line.id}.victor`]].filter(Boolean);
     return c[line.id] ? [c[line.id]] : [];
   }
+  /* In a chorus Delilah leads; Victor's speed is nudged (within 15%) so both finish together. */
+  function rateFor(parts, k) { return k ? Math.min(1.15, Math.max(0.85, parts[k].duration / parts[0].duration)) : 1; }
+  function lengthOf(parts) { return Math.max(...parts.map((c, k) => c.duration / rateFor(parts, k))); }
   function linesOf(group) { return logic.voiceGroup(data, group).filter((l) => partsFor(l).length); }
 
   /* Seconds the group takes to play, 0 when nothing is recorded for it. */
   function duration(group) {
     const lines = linesOf(group);
     if (!lines.length) return 0;
-    return lines.reduce((t, l) => t + Math.max(...partsFor(l).map((c) => c.duration)), 0) + GAP * (lines.length - 1);
+    return lines.reduce((t, l) => t + lengthOf(partsFor(l)), 0) + GAP * (lines.length - 1);
   }
 
   function stop() {
@@ -48,7 +51,7 @@
       let moved = false;
       const one = () => { if (my !== token || moved) return; if (--left <= 0) { moved = true; setTimeout(next, GAP * 1000); } };
       /* Safety net: carry on even if a clip never reports its end. */
-      const longest = Math.max(...parts.map((c) => c.duration));
+      const longest = lengthOf(parts);
       setTimeout(() => { if (my === token && !moved) { left = 0; one(); } }, (longest + 4) * 1000);
       parts.forEach((c, k) => {
         const e = els[k];
@@ -58,6 +61,10 @@
         e.onended = one;
         e.onerror = one;
         e.src = c.src;
+        /* Set after src: loading a clip resets the playback speed. */
+        if ('preservesPitch' in e) e.preservesPitch = true;
+        e.defaultPlaybackRate = rateFor(parts, k);
+        e.playbackRate = rateFor(parts, k);
         const p = e.play();
         if (p && p.catch) p.catch(one);
       });

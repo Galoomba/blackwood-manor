@@ -28,7 +28,12 @@ const MODEL = 'eleven_multilingual_v2';
 const VOICES = {
   narrator: { id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.95 } },
   delilah: { id: 'pFZP5JQG7iQjIQuC4Bku', name: 'Lily', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.9 } },
-  victor: { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.5, use_speaker_boost: true, speed: 0.92 } }
+  /* Lance Blackwood, a sinister aristocrat from the voice library: slow, unsteady and stylised so the
+     ghost sounds dark and otherworldly. Alternatives tried: Edward goT3UYdM9bhm0n2lmKQx (dark, low),
+     John eoNqkziQgzmLZeatERgP (calm, mysterious), Jasper Vayne ybjoxm7ASLDUFh2pC2eM (grim narrator). */
+  victor: { id: 'agL69Vji082CshT65Tcy', name: 'Lance', settings: { stability: 0.3, similarity_boost: 0.85, style: 0.6, use_speaker_boost: true, speed: 0.85 },
+    /* When both ghosts speak at once he must keep pace with Delilah. */
+    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.1 } }
 };
 
 function readKey() {
@@ -60,9 +65,11 @@ function writeManifest(manifest) {
 `);
 }
 
+function settingsFor(item) { const v = VOICES[item.voice]; return item.chorus && v.chorus ? v.chorus : v.settings; }
+
 function hashFor(slide) {
   const v = VOICES[slide.voice];
-  return crypto.createHash('sha1').update(JSON.stringify([MODEL, v.id, v.settings, slide.text])).digest('hex').slice(0, 12);
+  return crypto.createHash('sha1').update(JSON.stringify([MODEL, v.id, settingsFor(slide), slide.text])).digest('hex').slice(0, 12);
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -73,7 +80,7 @@ async function record(key, slide) {
     const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${v.id}/with-timestamps?output_format=mp3_44100_128`, {
       method: 'POST',
       headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: slide.text, model_id: MODEL, voice_settings: v.settings })
+      body: JSON.stringify({ text: slide.text, model_id: MODEL, voice_settings: settingsFor(slide) })
     });
     if (res.ok) return res.json();
     const body = await res.text();
@@ -98,7 +105,7 @@ async function main() {
     ...story.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
     ...intro.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
     ...logic.voiceLines(data).flatMap((l) => (l.voice === 'both'
-      ? ['delilah', 'victor'].map((v) => ({ id: `${l.id}.${v}`, voice: v, text: l.text }))
+      ? ['delilah', 'victor'].map((v) => ({ id: `${l.id}.${v}`, voice: v, text: l.text, chorus: true }))
       : [{ id: l.id, voice: l.voice, text: l.text }]))
   ];
   const todo = items.filter((s) => {
