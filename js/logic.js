@@ -80,11 +80,17 @@
     return { counts, ranked, houseWins };
   }
 
+  function formatRemaining(remaining) {
+    const abs = Math.abs(remaining);
+    const text = (remaining < 0 ? '-' : '') + String(Math.floor(abs / 60)).padStart(2, '0') + ':' + String(abs % 60).padStart(2, '0');
+    return { text, urgent: remaining > 0 && remaining <= 30, over: remaining <= 0 };
+  }
+
   function cardsAtStation(data, station, stageIndex) {
     return data.characters.filter((c) => stationFor(c, stageIndex) === station);
   }
 
-  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation };
+  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining };
 
   root.BM = root.BM || {};
   root.BM.logic = logic;

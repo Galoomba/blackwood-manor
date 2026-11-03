@@ -2,27 +2,17 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
+  const { el, clear, typewrite, narrationNode, linesNode, candles, flashLightning } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
 
   const $ = (sel) => document.querySelector(sel);
-  function el(tag, attrs, ...children) {
-    const node = document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs || {})) {
-      if (k === 'class') node.className = v;
-      else if (k === 'html') node.innerHTML = v;
-      else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
-      else if (v !== null && v !== undefined && v !== false) node.setAttribute(k, v);
-    }
-    for (const c of children.flat()) {
-      if (c === null || c === undefined || c === false) continue;
-      node.append(c.nodeType ? c : document.createTextNode(String(c)));
-    }
-    return node;
-  }
-  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); return node; }
   function charById(id) { return data.characters.find((c) => c.id === id); }
   function displayName(c) { const n = game.get().names[c.id]; return n ? `${c.short} (${n})` : c.name; }
   function teamLabel(team) { return team === 'delilah' ? 'Team Delilah' : 'Team Victor'; }
+
+  /* Sound plays here only when no TV window is open; the TV window plays it otherwise. */
+  function localSoundOn() { return game.get().sound && !game.tvConnected(); }
+  function sfx(name) { if (localSoundOn()) audio.play(name); }
 
   /* ---------- navigation ---------- */
   function show(screen) { game.set({ screen }); render(); }
@@ -33,9 +23,18 @@
     $('#screen-' + s.screen).classList.add('active');
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
-    if (s.sound && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience();
+    if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience();
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
     window.scrollTo(0, 0);
+  }
+
+  function tvBar() {
+    const connected = game.tvConnected();
+    return el('div', { class: 'tvbar' },
+      el('span', { class: 'tvdot' + (connected ? ' on' : '') }),
+      el('span', { class: 'dim' }, connected ? 'TV screen connected. Sound plays on the TV window.' : 'No TV screen open. Sound plays here.'),
+      el('button', { class: 'small', onclick: () => root.open('tv.html', 'blackwood-tv') }, 'Open TV screen')
+    );
   }
 
   /* ---------- title ---------- */
@@ -46,7 +45,7 @@
       el('div', { class: 'manor' }, "All Hallows' Eve"),
       el('h1', {}, 'Blackwood Manor'),
       el('p', { class: 'dim' }, 'A murder night in three scenes'),
-      el('div', { class: 'candles' }, el('div', { class: 'candle' }), el('div', { class: 'candle' }), el('div', { class: 'candle' })),
+      candles(),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { class: 'primary', onclick: () => { audio.init(); show('setup'); } }, 'Enter the manor'),
         (s.prologueDone || s.stageIndex > 0) && el('button', { class: 'ghostly', onclick: () => { audio.init(); show('game'); } }, 'Resume the night')
@@ -77,12 +76,14 @@
       el('p', { class: 'dim' }, 'Tap a portrait to add or remove a guest. Madame Zora and Dr. Krank must be present; the story needs them. Type the real name of the player under each portrait if you want it on the vote screen.'),
       el('div', { class: 'panel' }, grid),
       el('div', { class: 'panel' },
-        el('h3', {}, 'Timers and sound'),
+        el('h3', {}, 'Timers, sound and the TV'),
         el('div', { class: 'row' },
           el('label', { class: 'grow' }, 'Search minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 5 }) })),
           el('label', { class: 'grow' }, 'Discussion minutes', el('input', { type: 'number', min: 1, max: 30, value: s.discussMin, onchange: (e) => game.set({ discussMin: Number(e.target.value) || 7 }) })),
           el('label', {}, el('input', { type: 'checkbox', checked: s.sound ? 'checked' : null, onchange: (e) => { game.set({ sound: e.target.checked }); audio.setEnabled(e.target.checked); } }), ' Sound on')
-        )
+        ),
+        el('p', { class: 'dim', style: 'margin-top:12px' }, 'Two screens: press "Open TV screen", drag that window onto the TV and press F for fullscreen. It shows only what the room may see and follows this window automatically.'),
+        tvBar()
       ),
       roster.errors.length ? el('p', { class: 'error' }, roster.errors.join(' ')) : null,
       roster.present.length < 6 ? el('p', { class: 'error' }, 'Fewer than six guests: the mystery will be thin. Consider adding characters.') : null,
@@ -125,7 +126,6 @@
 
   /* ---------- game ---------- */
   let typedKey = null;
-  let typeHandle = null;
 
   function renderGame() {
     const s = game.get();
@@ -140,10 +140,9 @@
       onclick: () => { stopTimer(); game.set({ stageIndex: i, phase: 'narration', timerEnd: null, timerKind: null }); render(); }
     })));
 
-    const narr = el('div', { class: 'narration' });
-    stage.narration.forEach((line) => narr.append(el('span', { class: 'speaker' }, line.speaker), el('p', { class: 'typed' }, line.text)));
-
+    const narr = narrationNode(stage.narration);
     const header = el('div', { class: 'panel' },
+      tvBar(),
       el('div', { class: 'scene-label' }, `Scene ${scene.number}: ${scene.title}`),
       el('h2', {}, `${stage.id} ${stage.title}`, el('span', { class: 'kind' }, stage.kind === 'team' ? 'Team' : stage.kind === 'group' ? 'Find alone, solve together' : 'Individual')),
       stage.setPieceBefore ? el('div', { class: 'row', style: 'margin-bottom:12px' }, el('button', { class: 'ghostly', onclick: () => showSetPiece(stage.setPieceBefore, () => render()) }, '▶ Play: Victor returns')) : null,
@@ -162,26 +161,9 @@
       )
     );
 
-    const key = stage.id;
-    if (typedKey !== key) { typedKey = key; typewrite(narr); }
+    if (typedKey !== stage.id) { typedKey = stage.id; typewrite(narr); }
     else narr.querySelectorAll('.typed').forEach((p) => p.classList.add('finished'));
     resumeTimerIfRunning();
-  }
-
-  function typewrite(container) {
-    if (typeHandle) clearInterval(typeHandle);
-    const items = Array.from(container.querySelectorAll('.typed')).map((p) => ({ p, full: p.textContent }));
-    items.forEach((it) => { it.p.textContent = ''; });
-    let idx = 0, pos = 0;
-    const finish = () => { clearInterval(typeHandle); typeHandle = null; items.forEach((it) => { it.p.textContent = it.full; it.p.classList.add('finished'); }); };
-    container.addEventListener('click', finish, { once: true });
-    typeHandle = setInterval(() => {
-      if (idx >= items.length) return finish();
-      const it = items[idx];
-      pos += 1;
-      it.p.textContent = it.full.slice(0, pos);
-      if (pos >= it.full.length) { it.p.classList.add('finished'); idx += 1; pos = 0; }
-    }, 22);
   }
 
   function buildPhasePanel(panel, stage, s) {
@@ -207,9 +189,7 @@
       );
     } else {
       label.textContent = 'Stage complete';
-      if (stage.announcement) {
-        panel.append(el('div', { class: 'narration' }, el('span', { class: 'speaker' }, stage.announcement.speaker), el('p', { class: 'typed finished' }, stage.announcement.text)));
-      }
+      if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }));
       if (stage.setPieceAfter) {
         bar.append(el('button', { class: 'primary', onclick: () => showSetPiece(stage.setPieceAfter, () => { game.nextStage(); render(); }) }, '▶ The lights go out'));
       } else if (game.get().stageIndex === data.stages.length - 1) {
@@ -240,13 +220,13 @@
     const tick = () => {
       const t = $('#timer'); if (!t) return stopTimer();
       const remaining = Math.ceil((game.get().timerEnd - Date.now()) / 1000);
-      const abs = Math.abs(remaining);
-      t.textContent = (remaining < 0 ? '-' : '') + String(Math.floor(abs / 60)).padStart(2, '0') + ':' + String(abs % 60).padStart(2, '0');
-      t.classList.toggle('urgent', remaining > 0 && remaining <= 30);
-      t.classList.toggle('over', remaining <= 0);
+      const f = logic.formatRemaining(remaining);
+      t.textContent = f.text;
+      t.classList.toggle('urgent', f.urgent);
+      t.classList.toggle('over', f.over);
       if (remaining !== lastSecond) {
-        if (remaining > 0 && remaining <= 30 && game.get().sound) audio.play('tick');
-        if (remaining === 0 && game.get().sound) audio.play('toll');
+        if (f.urgent) sfx('tick');
+        if (remaining === 0) sfx('toll');
         lastSecond = remaining;
       }
     };
@@ -307,51 +287,45 @@
 
   function buildSoundboard() {
     const board = el('div', { class: 'soundboard' });
-    for (const name of audio.names) board.append(el('button', { class: 'small', onclick: () => audio.play(name) }, name));
-    board.append(el('button', { class: 'small', onclick: () => lightning() }, 'lightning'));
-    return el('div', { class: 'panel' }, el('details', { class: 'host' }, el('summary', {}, 'Soundboard'), board));
+    for (const name of audio.names) board.append(el('button', { class: 'small', onclick: () => triggerSound(name) }, name));
+    board.append(el('button', { class: 'small', onclick: () => triggerSound('lightning') }, 'lightning'));
+    return el('div', { class: 'panel' }, el('details', { class: 'host' }, el('summary', {}, 'Soundboard (plays on the TV window when it is open)'), board));
   }
 
-  function lightning() {
-    const l = $('#lightning');
-    l.classList.remove('flash'); void l.offsetWidth; l.classList.add('flash');
-    if (game.get().sound) audio.play('thunder');
+  /* A soundboard press is broadcast through state so the TV window plays it; locally only if no TV. */
+  function triggerSound(name) {
+    game.set({ sfx: { name, at: Date.now() } });
+    if (name === 'lightning') { flashLightning(); sfx('thunder'); }
+    else sfx(name);
   }
 
-  /* ---------- set pieces ---------- */
+  /* ---------- set pieces (mirrored on the TV through state.setPiece) ---------- */
   function showSetPiece(key, onDone) {
     const sp = data.setPieces[key];
     const ov = $('#overlay');
     clear(ov);
     ov.className = 'overlay';
-    const linesNode = el('div', { class: 'lines' });
-    const renderLines = () => sp.lines.forEach((l) => linesNode.append(el('span', { class: 'speaker' }, l.speaker), el('p', {}, l.text)));
-    const done = () => { ov.classList.add('hidden'); clear(ov); if (onDone) onDone(); };
+    game.set({ setPiece: { key, at: Date.now() } });
+    const lines = linesNode(sp.lines);
+    const done = () => { ov.classList.add('hidden'); clear(ov); game.set({ setPiece: null }); if (onDone) onDone(); };
     const continueBtn = (label) => el('button', { class: 'primary', style: 'margin-top:24px', onclick: done }, label || 'Continue');
-    const snd = game.get().sound;
 
     if (key === 'lightsOut') {
       ov.classList.add('blackout', 'flicker');
-      if (snd) audio.play('death');
-      lightning();
-      setTimeout(() => {
-        ov.append(el('h1', {}, 'Scene 2'), el('h2', {}, 'The Master Falls'), linesNode, continueBtn('The ghost speaks'));
-        renderLines();
-      }, 3000);
+      sfx('death');
+      flashLightning();
+      setTimeout(() => ov.append(el('h1', {}, 'Scene 2'), el('h2', {}, 'The Master Falls'), lines, continueBtn('The ghost speaks')), 3000);
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
-      if (snd) audio.play('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), linesNode, continueBtn('Form the teams'));
-      renderLines();
+      sfx('ghost');
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Scene 3'), el('h2', {}, 'Two Ghosts'), lines, continueBtn('Form the teams'));
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
-      if (snd) audio.play('toll');
-      ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), linesNode, continueBtn('Begin Scene 1'));
-      renderLines();
+      sfx('toll');
+      ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines, continueBtn('Begin Scene 1'));
     } else {
       ov.classList.add('ghostly');
-      ov.append(el('h1', {}, sp.title), linesNode, continueBtn(key === 'prologue' ? 'She is dead' : 'Continue'));
-      renderLines();
+      ov.append(el('h1', {}, sp.title), lines, continueBtn(key === 'prologue' ? 'She is dead' : 'Continue'));
     }
   }
 
@@ -374,8 +348,9 @@
       grid.append(el('div', { class: 'voter' }, el('strong', {}, `${v.symbol} ${displayName(v)}`), el('div', { class: 'dim' }, 'accuses'), s1, s2));
     });
     node.append(
+      tvBar(),
       el('h2', {}, 'The accusation'),
-      el('p', { class: 'dim' }, 'Every guest names two suspects. The house wins only if both killers are the two most accused.'),
+      el('p', { class: 'dim' }, 'Every guest names two suspects. The house wins only if both killers are the two most accused. The TV shows the tally as you enter it.'),
       el('div', { class: 'panel' }, grid),
       el('div', { class: 'panel' }, el('h3', {}, 'Tally'), el('div', { class: 'tally', id: 'tally' })),
       el('div', { class: 'row' },
@@ -400,23 +375,21 @@
 
   function playReveal() {
     const result = logic.tally(game.get().votes, data.killerIds);
+    game.set({ revealAt: Date.now() });
     const ov = $('#overlay');
     clear(ov);
     ov.className = 'overlay blackout';
-    const candles = el('div', { class: 'candles' }, el('div', { class: 'candle' }), el('div', { class: 'candle' }), el('div', { class: 'candle' }));
-    ov.append(candles);
-    const snd = game.get().sound;
-    [0, 1, 2].forEach((i) => setTimeout(() => { candles.children[i].style.visibility = 'hidden'; if (snd) audio.play('puff'); }, 1200 + i * 1100));
-    setTimeout(() => { if (snd) audio.play('heartbeat'); }, 4600);
+    const c = candles();
+    ov.append(c);
+    [0, 1, 2].forEach((i) => setTimeout(() => { c.children[i].style.visibility = 'hidden'; sfx('puff'); }, 1200 + i * 1100));
+    setTimeout(() => sfx('heartbeat'), 4600);
     setTimeout(() => {
       clear(ov);
       const portraits = el('div', { class: 'reveal-portraits' });
       data.killerIds.forEach((id) => portraits.append(el('img', { src: charById(id).image, alt: charById(id).name })));
-      const lines = el('div', { class: 'lines' });
-      data.reveal.lines.forEach((l) => lines.append(el('span', { class: 'speaker' }, l.speaker), el('p', {}, l.text)));
-      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, lines,
-        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { ov.classList.add('hidden'); clear(ov); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
-      if (snd) audio.play('ghost');
+      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines),
+        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
+      sfx('ghost');
     }, 8600);
   }
 
@@ -438,5 +411,11 @@
   /* ---------- boot ---------- */
   audio.setEnabled(game.get().sound);
   document.addEventListener('pointerdown', () => audio.init(), { once: true });
+  /* Keep the TV indicator fresh and hand ambience over when a TV window appears or disappears. */
+  let tvWas = game.tvConnected();
+  setInterval(() => {
+    const now = game.tvConnected();
+    if (now !== tvWas) { tvWas = now; render(); }
+  }, 2000);
   render();
 })(window);

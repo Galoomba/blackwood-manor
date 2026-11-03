@@ -90,3 +90,10 @@ test('cardsAtStation lists every card routed to a station for a stage', () => {
   const cards = logic.cardsAtStation(data, 'Sofa', 0);
   assert.deepEqual(cards.map((c) => c.id).sort(), ['corvus', 'finch']);
 });
+
+test('formatRemaining renders mm:ss, flags urgency and overrun', () => {
+  assert.deepEqual(logic.formatRemaining(300), { text: '05:00', urgent: false, over: false });
+  assert.deepEqual(logic.formatRemaining(29), { text: '00:29', urgent: true, over: false });
+  assert.deepEqual(logic.formatRemaining(0), { text: '00:00', urgent: false, over: true });
+  assert.deepEqual(logic.formatRemaining(-65), { text: '-01:05', urgent: false, over: true });
+});

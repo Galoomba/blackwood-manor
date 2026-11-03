@@ -46,3 +46,30 @@ test('roster uses presentIds and stage returns the current stage', () => {
   assert.ok(g.roster().errors.length > 0);
   assert.equal(g.stage().id, '1.1');
 });
+
+test('tv presence: connected only when a heartbeat was written in the last 6 seconds', () => {
+  const storage = memoryStorage();
+  const g = createGame(data, logic, storage);
+  assert.equal(g.tvConnected(1000000), false);
+  g.markTvSeen(1000000);
+  assert.equal(g.tvConnected(1003000), true);
+  assert.equal(g.tvConnected(1007000), false);
+});
+
+test('reload re-reads state written by another window and reports whether it changed', () => {
+  const storage = memoryStorage();
+  const host = createGame(data, logic, storage);
+  const tv = createGame(data, logic, storage);
+  assert.equal(tv.reload(), false);
+  host.set({ stageIndex: 5, setPiece: { key: 'lightsOut', at: 42 } });
+  assert.equal(tv.reload(), true);
+  assert.equal(tv.get().stageIndex, 5);
+  assert.equal(tv.get().setPiece.key, 'lightsOut');
+  assert.equal(tv.reload(), false);
+});
+
+test('defaults carry no set piece and no reveal', () => {
+  const g = createGame(data, logic, memoryStorage());
+  assert.equal(g.get().setPiece, null);
+  assert.equal(g.get().revealAt, null);
+});

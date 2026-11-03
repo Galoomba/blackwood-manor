@@ -192,3 +192,35 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }
 }
+
+/* TV window and host-side TV bar */
+.tvbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 14px; margin-bottom: 12px; }
+.tvdot { width: 10px; height: 10px; border-radius: 50%; background: #553; box-shadow: none; display: inline-block; }
+.tvdot.on { background: var(--green); box-shadow: 0 0 10px var(--green); }
+body.tv { cursor: none; font-size: 24px; }
+body.tv #tv-root { position: relative; z-index: 1; max-width: 1500px; margin: 0 auto; padding: 5vh 5vw; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+body.tv .tv-center { text-align: center; }
+body.tv .tv-center h1 { font-size: clamp(48px, 9vw, 140px); }
+body.tv .tv-head { margin-bottom: 3vh; }
+body.tv .tv-head h2 { font-size: clamp(32px, 5vw, 72px); }
+body.tv .scene-label { font-size: clamp(14px, 1.6vw, 24px); }
+body.tv .narration { font-size: clamp(24px, 3vw, 44px); line-height: 1.5; min-height: 0; }
+body.tv .narration .speaker { font-size: clamp(12px, 1.3vw, 20px); }
+body.tv .clue { font-size: clamp(22px, 2.6vw, 38px); padding: 16px 24px; margin-top: 3vh; }
+body.tv .tv-timer { margin-top: 4vh; }
+body.tv .tv-timer.hidden { display: none; }
+body.tv .timer { font-size: clamp(90px, 18vw, 260px); }
+body.tv .timer-label { font-size: clamp(14px, 1.6vw, 24px); }
+body.tv .tally { max-width: 1100px; margin: 0 auto; }
+body.tv .tally .bar { grid-template-columns: 420px 1fr 80px; font-size: clamp(22px, 2.6vw, 36px); margin: 14px 0; }
+body.tv .tally .fill { height: 34px; border-radius: 17px; }
+body.tv .overlay h1 { font-size: clamp(48px, 9vw, 140px); }
+body.tv .overlay .lines { font-size: clamp(24px, 2.8vw, 40px); max-width: 1300px; }
+body.tv .overlay .lines .speaker { font-size: clamp(12px, 1.3vw, 20px); }
+body.tv .reveal-portraits img { width: clamp(180px, 22vw, 360px); }
+body.tv .result-title { font-size: clamp(48px, 9vw, 140px); }
+body.tv .ghost-shape { width: 200px; height: 260px; border-radius: 100px 100px 16px 16px; }
+.tv-hint { position: fixed; bottom: 16px; right: 20px; z-index: 200; font-size: 14px; color: var(--ink-dim); background: rgba(0,0,0,0.5); padding: 6px 12px; border-radius: 6px; transition: opacity 1s; }
+.tv-hint.fade { opacity: 0; pointer-events: none; }
+body.tv .clue.reveal-later { opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s ease; }
+body.tv .clue.reveal-later.shown { opacity: 1; transform: none; }

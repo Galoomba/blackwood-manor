@@ -1,5 +1,7 @@
 (function (root) {
   const KEY = 'blackwood-manor-state-v1';
+  const TV_KEY = 'blackwood-manor-tv-seen';
+  const TV_TIMEOUT = 6000;
 
   function createGame(data, logic, storage) {
     const defaults = () => ({
@@ -14,19 +16,37 @@
       timerEnd: null,
       timerKind: null,
       prologueDone: false,
-      votes: {}
+      votes: {},
+      setPiece: null,
+      revealAt: null
     });
 
+    let lastRaw = null;
     let state = load();
 
+    function readRaw() { try { return storage.getItem(KEY); } catch (e) { return null; } }
     function load() {
+      const raw = readRaw();
+      lastRaw = raw;
       try {
-        const raw = storage.getItem(KEY);
         if (raw) return Object.assign(defaults(), JSON.parse(raw));
-      } catch (e) { /* corrupt or unavailable storage: start fresh */ }
+      } catch (e) { /* corrupt storage: start fresh */ }
       return defaults();
     }
-    function save() { try { storage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
+    function save() { try { lastRaw = JSON.stringify(state); storage.setItem(KEY, lastRaw); } catch (e) { /* ignore */ } }
+    function reload() {
+      const raw = readRaw();
+      if (raw === lastRaw) return false;
+      state = load();
+      return true;
+    }
+    function markTvSeen(now) { try { storage.setItem(TV_KEY, String(now || Date.now())); } catch (e) { /* ignore */ } }
+    function tvConnected(now) {
+      try {
+        const seen = Number(storage.getItem(TV_KEY) || 0);
+        return (now || Date.now()) - seen < TV_TIMEOUT;
+      } catch (e) { return false; }
+    }
     function get() { return state; }
     function set(patch) { Object.assign(state, patch); save(); return state; }
     function reset() { state = defaults(); save(); return state; }
@@ -44,7 +64,7 @@
       set({ presentIds: data.characters.map((c) => c.id).filter((x) => ids.has(x)) });
     }
 
-    return { get, set, reset, roster, stage, nextStage, prevStage, togglePresent };
+    return { get, set, reset, reload, roster, stage, nextStage, prevStage, togglePresent, markTvSeen, tvConnected };
   }
 
   root.BM = root.BM || {};
