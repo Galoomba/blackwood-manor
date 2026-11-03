@@ -437,5 +437,6 @@
 
   /* ---------- boot ---------- */
   audio.setEnabled(game.get().sound);
+  document.addEventListener('pointerdown', () => audio.init(), { once: true });
   render();
 })(window);
