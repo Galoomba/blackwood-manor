@@ -224,6 +224,7 @@
   const intro = root.BM.storyView.createPlayer({
     deck: root.BM.intro,
     key: 'blackwood-manor-intro-v1',
+    narrateOnStep: true,
     layer: document.getElementById('intro-layer'),
     controls: false,
     isVisible: (st) => st.onTv,

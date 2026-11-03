@@ -25,7 +25,7 @@ The browser remembers the current stage, so a refresh or accidental close does n
 
 ## Introduce the game
 
-"Introduce the game" on the home and setup screens walks the group through how the night works, in 14 spoiler-free steps: characters, the three scenes, the six hiding places, following riddles, search rules, secret cards, discussion and table talk, secrets, team puzzles, the vote and the house rules. If the TV window is open it goes straight to the TV, and the laptop becomes the remote. Step through it with the arrows while you explain, or press Play to let the recorded narrator read it. The last step has "Go to the home screen", ready to start the game.
+"Introduce the game" on the home and setup screens walks the group through how the night works, in 14 spoiler-free steps: characters, the three scenes, the six hiding places, following riddles, search rules, secret cards, discussion and table talk, secrets, team puzzles, the vote and the house rules. If the TV window is open it goes straight to the TV, and the laptop becomes the remote. The recorded narrator reads each step aloud as you arrive on it and then waits for you to press next. Press Play to let it run through every step by itself, or switch "Voice" off to present it yourselves. The last step has "Go to the home screen", ready to start the game.
 
 ## Ghost voice-over
 

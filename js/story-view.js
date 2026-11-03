@@ -121,7 +121,8 @@
   /* ---------- the player ---------- */
   /* opts: layer (element), controls (bool), isVisible(state), isSpeaker(state), soundOn(), onHide(), tvConnected() */
   /* opts.deck: { slides, chapters() } (default the full story); opts.key: its storage key;
-     opts.finalAction: { label, run } shows a button on the last slide (host only). */
+     opts.finalAction: { label, run } shows a button on the last slide (host only);
+     opts.narrateOnStep: read each step aloud on arrival even when not playing. */
   function createPlayer(opts) {
     const deck = opts.deck || story;
     const key = opts.key || KEY;
@@ -138,6 +139,8 @@
     let wasSpeaker = null;
     let controlsNode = null;
     let progressFill = null;
+    let narratedIndex = -1;   // the step already read aloud since it was reached
+    let autoMode = false;     // the current reading was started by Play (so Pause stops it)
     let open = false;   // host: opened from the panel; the TV passes isVisible instead
     const visible = (st) => (opts.isVisible ? opts.isVisible(st) : open);
 
@@ -318,7 +321,7 @@
       progressFill = el('div', {});
       append(layer, el('div', { class: 'story-stage' }), el('div', { class: 'story-progress' }, progressFill), opts.controls ? buildControls() : null);
       layer.classList.remove('hidden');
-      current = -1; wasSpeaker = null;
+      current = -1; wasSpeaker = null; narratedIndex = -1;
     }
     function hide() {
       stopNarration();
@@ -336,9 +339,15 @@
       const speaker = opts.isSpeaker(st);
       if (st.index !== current) { stopNarration(); current = st.index; draw(st); }
       if (speaker !== wasSpeaker) { wasSpeaker = speaker; if (!speaker) { stopNarration(); lightAll(); } }
-      if (speaker && st.playing && !speaking) narrate(st);
-      if (speaking && (!st.playing || !speaker)) { stopNarration(); lightAll(); }
-      if (speaker && !st.playing) lightAll();
+      if (speaker && !speaking) {
+        /* Play: read every step and move on. narrateOnStep: also read a step once when the host
+           steps onto it by hand, without moving on afterwards. */
+        if (st.playing) { narratedIndex = st.index; autoMode = true; narrate(st); }
+        else if (opts.narrateOnStep && st.voice && narratedIndex !== st.index) { narratedIndex = st.index; autoMode = false; narrate(st); }
+      }
+      if (speaking && st.playing) autoMode = true;
+      if (speaking && (!speaker || !st.voice && !st.playing || (autoMode && !st.playing))) { stopNarration(); lightAll(); }
+      if (speaker && !st.playing && !speaking) lightAll();
       updateControls(st, speaker);
     }
 
