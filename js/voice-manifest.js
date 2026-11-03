@@ -456,46 +456,46 @@
     },
     "stage-1-1-0": {
       "src": "assets/voice/stage-1-1-0.mp3",
-      "voice": "Lily",
-      "hash": "3d8f26ef5736",
-      "duration": 22.709,
+      "voice": "Lance",
+      "hash": "5b663aa6b6bd",
+      "duration": 23.684,
       "starts": [
         0,
-        4.923,
-        7.964,
-        11.61,
-        13.618,
-        19.145,
-        20.979
+        4.981,
+        8.057,
+        12.26,
+        14.095,
+        20.097,
+        21.722
       ]
     },
     "stage-1-2-0": {
       "src": "assets/voice/stage-1-2-0.mp3",
-      "voice": "Lily",
-      "hash": "0fed3799f747",
-      "duration": 22.988,
+      "voice": "Lance",
+      "hash": "4db76ca1b435",
+      "duration": 23.684,
       "starts": [
         0,
-        2.368,
-        7.152,
-        11.668,
-        18.204,
-        20.434
+        2.624,
+        7.906,
+        12.504,
+        18.309,
+        20.596
       ]
     },
     "stage-1-3-0": {
       "src": "assets/voice/stage-1-3-0.mp3",
-      "voice": "Lily",
-      "hash": "347eca29f0c2",
-      "duration": 17.786,
+      "voice": "Lance",
+      "hash": "198c1c569cd6",
+      "duration": 23.684,
       "starts": [
         0,
-        1.997,
-        3.947,
-        9.172,
-        13.108,
-        14.745,
-        16.73
+        2.717,
+        6.13,
+        13.781,
+        18.622,
+        20.236,
+        22.57
       ]
     },
     "stage-2-1-0": {

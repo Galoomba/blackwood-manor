@@ -29,7 +29,7 @@ The browser remembers the current stage, so a refresh or accidental close does n
 
 ## Ghost voice-over
 
-The ghosts' lines are recorded too: every stage narration (Delilah, then both ghosts together in Scene 3), Victor's return and the reveal. They play on the TV window when it is open, otherwise on the laptop, and the TV types the narration in time with the voice. Victor's lines while he is still alive (the toast, "She is dead" and the midnight announcement) are left for the host to perform.
+The ghosts' lines are recorded too: every stage narration (Victor reading his sister's words in Scene 1, Delilah's ghost in Scene 2, both ghosts together in Scene 3), Victor's return and the reveal. They play on the TV window when it is open, otherwise on the laptop, and the TV types the narration in time with the voice. Victor's lines while he is still alive (the toast, "She is dead" and the midnight announcement) are left for the host to perform.
 
 To tell the story yourselves, press "Ghost voice-over: on" on the game screen (or untick "Ghost voice-over" in setup) to mute it. "Replay voice-over" plays the current stage again. The same buttons appear on Victor's return and on the reveal.
 

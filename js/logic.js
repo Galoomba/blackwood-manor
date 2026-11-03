@@ -102,6 +102,8 @@
   function voiceForSpeaker(speaker) {
     if (/^Stage direction/.test(speaker)) return null;
     if (/^Both/.test(speaker)) return 'both';
+    /* Scene 1: only Victor hears his sister, so he speaks her words. */
+    if (/\(Victor reads\)/.test(speaker)) return 'victor';
     if (/^Delilah's ghost/.test(speaker)) return 'delilah';
     if (/^Victor's ghost/.test(speaker)) return 'victor';
     return null;

@@ -122,4 +122,6 @@ test('voiceLines voices only the ghosts, and lines for both ghosts are marked bo
   assert.equal(new Set(lines.map((l) => l.id)).size, lines.length, 'ids are unique');
   for (const st of data.stages) assert.ok(logic.voiceGroup(data, `stage-${st.id.replace('.', '-')}`).length, `stage ${st.id} is voiced`);
   assert.ok(logic.voiceGroup(data, 'reveal').some((l) => l.voice === 'both'));
+  for (const id of ['1-1', '1-2', '1-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'victor', `stage ${id} is read by Victor`);
+  for (const id of ['2-1', '2-2', '2-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'delilah', `stage ${id} is Delilah's ghost`);
 });
