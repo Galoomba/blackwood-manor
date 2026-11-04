@@ -443,7 +443,7 @@
         '2.3': { text: 'Your ledger strip is number 10. Put it on the table; you must.', ledger: 10, sabotage: "Insist \"Z.\" is Zeke, Ezekiel's own nickname, and that \"still paid\" means the house still pays Zeke's heirs. Ask who in this room has Blackwood blood, and look at the butler, or the Witch." },
         '3.1': { text: 'Team Delilah. You are investigating yourself.', word: { index: 4, text: 'GROWS' }, sabotage: "When you give your word, say GLOWS instead of GROWS: \"where green glows\" sends your team to the Lamp or the Television. If they find the vial anyway, say the plant is where the doctor poured the glass, so the vial must be his." },
         '3.2': { text: 'Team Delilah. The mummy has been staring at you for an hour. He saw.', word: { index: 7, text: 'BACKBONE' }, sabotage: 'Before the witness card is read, announce that you foresaw the witness would lie: "the dead envy the living". Then take off your rings and pocket them. Too late, probably.' },
-        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace. I never left it, not once, until she fell. When Victor fell I was holding the Witch\'s hand in the dark.', lie: 'You did leave the fireplace. The Inspector saw you. This is your lie. Sell it.' },
+        '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace. I never left it, not once, until she fell. When Victor fell I was holding the Witch\'s hand in the dark.', lie: 'You did leave the fireplace. The Inspector saw someone go, and the Witch saw your chair empty. This is your lie. Sell it.' },
         '3.4': { text: "You know where the true key is: in the rabbit hat, behind a little door at about waist height. You watched the lady hide it there this evening, before the toast, through the garden window. Her letter is in the box, and it all but names you. If the box opens before the vote, you are finished.", sabotage: "Foresee, loudly, that the key lies low: under the cushions, under the sofa, near the floor. Offer to fetch keys for others, and bring them the wrong ones. Lie as much as you like, but never touch, move or pocket the true key." }
       }
     },
@@ -507,7 +507,7 @@
       '2.3': [{ about: 'zora', text: "Strip 11 says Z. is still paid. One guest begins with Z and foresees things after they happen. Ask her when the last cheque arrived." }],
       '3.1': [{ about: 'edgar', text: "Edgar has a scar on his arm shaped like a letter. Ask him to roll up his sleeve." }, { about: 'corvus', text: "Corvus says he has seen that green before. Ask him on whom." }],
       '3.2': [{ about: 'vane', text: "The Hunter has watched Graves all night, which means she has watched nobody else. Ask her what she missed." }],
-      '3.3': [{ about: 'zora', text: "You saw Madame Zora leave the fireplace. If her alibi says she never moved, say so out loud, immediately." }],
+      '3.3': [{ about: 'zora', text: "Someone left a chair by the fireplace before the toast. If an alibi says its owner never moved, say so out loud, immediately." }],
       '3.4': [{ about: 'zora', text: "Before anyone tries the lock, ask Madame Zora where she foresees the key. Then look everywhere else." }]
     },
     vane: {
@@ -624,7 +624,7 @@
       '1.3': [{ about: 'malachi', text: "The hooded figure wore a cultist's hood. Say so. Ask Brother Malachi how many hoods the Order owns." }],
       '2.1': [{ about: 'selene', text: "Keep the jasmine on the cat. Ask her what she was doing behind the lady." }],
       '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why a doctor hides evidence. If the plant is searched later, that was his doing." }],
-      '2.3': [{ about: 'krank', text: "Strip 12 names W.K. and a laboratory. Ask Dr. Krank, lightly, whether she laughs like that in the laboratory too. If she laughs, she may be more useful than she looks." }],
+      '2.3': [{ about: 'krank', text: "Strip 12 names W.K. and 'research'. Ask Dr. Krank, lightly, whether she laughs like that at her research too. If she laughs, she may be more useful than she looks." }],
       '3.1': [{ about: 'selene', text: "The cat was 'right behind' the lady when she fell. Say that is a confession. Ask her to turn out her gloves." }],
       '3.2': [{ about: 'vane', text: "Ask the Hunter whether she trusts the testimony of a corpse. She wants a vampire; give her one." }],
       '3.3': [{ about: 'finch', text: "The Inspector will say he was watching the window. Before your own alibi, ask him what the window showed. Keep him talking." }],

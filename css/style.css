@@ -321,6 +321,9 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .sheet:last-child { break-after: auto; page-break-after: auto; }
   .sheet h1 { font-family: Georgia, serif; font-size: 26pt; color: #000; text-shadow: none; margin-bottom: 4pt; }
   .sheet h2 { font-family: Georgia, serif; font-size: 16pt; color: #000; margin: 12pt 0 4pt; }
+  /* Keep every heading with what follows it, and never split one list item across pages. */
+  .sheet h1, .sheet h2, .sheet h3 { break-after: avoid; page-break-after: avoid; }
+  .sheet li, .sheet .boxed { break-inside: avoid; page-break-inside: avoid; }
   .sheet .portrait { float: right; width: 45mm; aspect-ratio: 3/4; object-fit: cover; border: 1px solid #000; margin: 0 0 6mm 6mm; }
   .sheet .boxed { border: 1px solid #000; padding: 6pt 8pt; margin: 8pt 0; }
   /* Fixed-size grid: fits A4 and Letter with any sane printer margin, rows can never grow. */
