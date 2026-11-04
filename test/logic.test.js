@@ -21,7 +21,7 @@ test('buildRoster groups teams from present characters only', () => {
   const r = logic.buildRoster(data, selectionWithout('khamun'));
   assert.ok(r.teams.delilah.every((c) => c.team === 'delilah'));
   assert.ok(!r.teams.delilah.some((c) => c.id === 'khamun'));
-  assert.equal(r.teams.victor.length, 6);
+  assert.equal(r.teams.victor.length, 7);
 });
 
 test('orphanedClues moves an absent witness card to the ghost at 3.2', () => {
@@ -48,7 +48,7 @@ test('orphanedClues returns observation at 1.3, ledger at 2.3, alibi at 3.3', ()
 test('teamSentence orders words and flags missing holders', () => {
   const r = logic.buildRoster(data, selectionWithout('luna'));
   const s = logic.teamSentence(data, r, 'delilah', '3.1');
-  assert.equal(s.sentence, 'LOOK WHERE GREEN GROWS BUT NEVER WALKS');
+  assert.equal(s.sentence, 'WHERE GREEN GROWS BUT NEVER WALKS');
   assert.equal(s.picture, 'Plant');
   assert.deepEqual(s.missing.map((w) => w.text), ['GREEN']);
 });
@@ -163,4 +163,12 @@ test('every soundboard effect has a recorded clip on disk', () => {
     assert.ok(sfx.clips[n], `${n} is recorded`);
     assert.ok(fs.existsSync(path.join(__dirname, '..', sfx.clips[n].src)), `${n} clip file exists`);
   }
+});
+
+test('Morgana stands with Team Victor, and each team sentence has one word per member', () => {
+  assert.equal(data.characters.find((c) => c.id === 'morgana').team, 'victor');
+  const all = logic.buildRoster(data, { presentIds: data.characters.map((c) => c.id) });
+  assert.equal(logic.teamSentence(data, all, 'victor', '3.1').sentence, 'FIND THE GLASS FACE THAT NEVER BLINKS');
+  assert.equal(logic.teamSentence(data, all, 'victor', '3.2').sentence, 'FIND A SUN THAT SLEEPS BY DAY');
+  assert.equal(logic.teamSentence(data, all, 'delilah', '3.2').sentence, 'SEEK SPINES THAT HAVE NO BACKBONE');
 });

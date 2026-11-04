@@ -633,22 +633,23 @@
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
       "voice": "Lyla",
-      "hash": "1c9568686e67",
-      "duration": 9.009,
+      "hash": "b626166dd2e7",
+      "duration": 7.663,
       "starts": [
         0,
-        8.022
+        6.757
       ]
     },
     "set-victorReturns-2": {
       "src": "assets/voice/set-victorReturns-2.mp3",
       "voice": "Lance",
-      "hash": "fd8bb05b5b51",
-      "duration": 12.864,
+      "hash": "e935892c3483",
+      "duration": 22.198,
       "starts": [
         0,
-        9.091,
-        10.751
+        8.777,
+        18.355,
+        19.691
       ]
     },
     "reveal-0": {
