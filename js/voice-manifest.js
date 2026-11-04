@@ -706,12 +706,12 @@
     "intro-welcome": {
       "src": "assets/voice/intro-welcome.mp3",
       "voice": "George",
-      "hash": "40a0beae53c2",
-      "duration": 11.285,
+      "hash": "070013929870",
+      "duration": 11.146,
       "starts": [
         0,
-        2.287,
-        8.034
+        2.276,
+        7.976
       ]
     },
     "intro-characters": {

@@ -10,7 +10,7 @@
     {
       id: 'intro-welcome', chapter: 'Welcome', layout: 'title', scene: 1, sfx: 'bell', voice: 'narrator',
       title: 'Welcome to Blackwood Manor', kicker: "All Hallows' Eve",
-      text: 'Good evening, and thank you for coming. Lady Delilah Blackwood has invited you for a toast, a dinner, and a confession at midnight. Before the doors are locked, here is how tonight works.'
+      text: 'Good evening, and thank you for coming. Victor and Delilah Blackwood have invited you for a toast, a dinner, and a confession at midnight. Before the doors are locked, here is how tonight works.'
     },
     {
       id: 'intro-characters', chapter: 'Your character', layout: 'gallery', scene: 1, voice: 'narrator', people: ALL,
