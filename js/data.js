@@ -1,7 +1,9 @@
 (function (root) {
   const STAGE_IDS = ['1.1', '1.2', '1.3', '2.1', '2.2', '2.3', '3.1', '3.2', '3.3', '3.4'];
-  /* The four team envelopes lie on the table with these pictures; each team sentence describes one. */
-  const PICTURES = ['Plant', 'Television', 'Bookshelf', 'Lamp'];
+  /* The picture envelopes the host holds; each team sentence describes one. Clock and Mirror are
+     decoys (both have a glass face) and stay empty, so 3.2 cannot be solved by elimination. */
+  const PICTURES = ['Plant', 'Television', 'Bookshelf', 'Lamp', 'Clock', 'Mirror'];
+  const DECOYS = ['Clock', 'Mirror'];
 
   const scenes = [
     { number: 1, title: 'The Toast', subtitle: 'The lady is dead', theme: 'scene1' },
@@ -67,7 +69,7 @@
       run: ["Each team says its words in order and names a picture.", "Hand over the picture envelope only if it is right; a wrong picture costs one minute.", "Stuck for 3 minutes? Whisper the sentence."],
       narration: [{ speaker: 'Both ghosts', text: "Find your words. Speak them in order. Go where the sentence sends you. What you find there is what killed us." }],
       clue: 'What killed us is still in this room.',
-      hostNotes: "Only the host opens the picture envelopes: a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp or Television) and Krank SHADE instead of FACE (the Lamp).",
+      hostNotes: "Only the host opens the picture envelopes (six, two of them empty decoys: Clock and Mirror): a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp or Television) and Krank SHADE instead of FACE (the Lamp).",
       setPieceBefore: 'victorReturns'
     },
     {
@@ -268,7 +270,7 @@
         '2.2': { text: 'Goal: get paid anyway. Find out who "a friend of the Order" is and convince them the cover is worth twenty gold. And if anyone accuses you: you are a thief, not a killer. Show your paws. No blood.' },
         '2.3': { text: 'Your ledger strip is number 1: Delilah\'s own note, which was tucked in the cover. You are the one who has the ledger. Confess it, put the cover and the strip on the table, and read the note aloud. The room will need you.', ledger: 1 },
         '3.1': { text: 'Team Delilah. You know bottles. The little vial you glimpsed in someone\'s sleeve at the wine table was brown glass with a cork, apothecary stock. The sleeve jingled.', word: { index: 6, text: 'WALKS' } },
-        '3.2': { text: 'Team Delilah. Out of habit you pickpocketed Madame Zora earlier. Her handkerchief is in your glove. It smells of jasmine and one corner is stained dark purple. Produce it.', word: { index: 2, text: 'SPINES' } },
+        '3.2': { text: 'Team Delilah. Out of habit you picked a sleeve earlier: a jingling one, over a hand heavy with rings. The handkerchief is in your glove. It smells of jasmine and one corner is stained dark purple. Produce it.', word: { index: 2, text: 'SPINES' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was stealing her book, so I was right behind her. I saw her glass. I did not touch it. When Victor fell I was stealing nothing, for once.' },
         '3.4': { text: "You picked the lady's bag during the toast. Besides the book there was a note in her hand: \"Key: V.'s old trick. He never learned how the rabbit got in.\" You thought it was a recipe. Read it out." }
       }
@@ -644,7 +646,7 @@
       '1.1': [{ about: 'vane', text: "The Hunter's stake is pine with a nail hole. Ask her, politely, which forest grows hawthorn with screws in it." }],
       '1.2': [{ about: 'corvus', text: "Dr. Corvus has not removed his mask to drink either. Ask him, one professional to another, why not. Deflection is a courtesy." }],
       '1.3': [{ about: 'selene', text: "The cat woman had her hand in the lady's bag during the toast. Ask her what she took. You have nothing to hide; let her squirm." }],
-      '2.1': [{ about: 'krank', text: "You smell blood, and there is none on Victor. You do smell something else, on the scientist: ether. Ask Dr. Krank what she keeps in her coat." }],
+      '2.1': [{ about: 'krank', text: "There is no blood on Victor, none at all, and you would know. Ask the room who here knows how to kill without spilling a drop." }],
       '2.2': [{ about: 'malachi', text: "The Cultist's grandfather dug the graves you filled. Ask him whether the Order knows what it was built on." }],
       '2.3': [{ about: 'zora', text: "Strip 2 is your contract; strip 10 is the broker's. You met her grandmother. Ask Madame Zora whether she still wears her grandmother's rings." }],
       '3.1': [{ about: 'edgar', text: "Say the wound is a needle. When Dr. Krank says 'vitamin', ask her which vitamin leaves a scar in the shape of a K." }, { about: 'krank', text: "Say the wound is a needle, with authority. Then ask Dr. Krank what K-7 stands for." }],
@@ -809,7 +811,7 @@
       { about: 'vane', text: "One guest came for her grandfather's name and would like to hear it read aloud." },
       { about: 'krank', text: "One guest's laboratory is paid two thousand pounds a month from the estate account." },
       { about: 'malachi', text: "One guest stood alone by the garden door when the master fell. Nobody was with him; nobody ever is." },
-      { about: 'selene', text: "One guest pickpocketed the fortune teller out of habit, and has the proof in her glove." },
+      { about: 'selene', text: "One guest picked a jingling sleeve out of habit, and has the proof in her glove." },
       { about: 'corvus', text: "One guest was by the fireplace when the master fell, and heard the laughter come from the study door." },
       { about: 'zora', text: "One guest keeps touching her bare fingers, as if she has lost something she was wearing." }
     ],
@@ -829,7 +831,7 @@
 
   characters.forEach((c) => { STAGE_IDS.forEach((sid, i) => { c.cards[sid].talk = tableTalk[c.id][sid]; c.cards[sid].rumour = rumours[c.id][i]; }); });
 
-  const data = { STAGE_IDS, PICTURES, scenes, stages, ledger, teamEnvelopes, witnessCards, setPieces, box, reveal, characters, tableTalk, rumours, SIGN, requiredIds: ['zora', 'krank'], killerIds: ['zora', 'krank'] };
+  const data = { STAGE_IDS, PICTURES, DECOYS, scenes, stages, ledger, teamEnvelopes, witnessCards, setPieces, box, reveal, characters, tableTalk, rumours, SIGN, requiredIds: ['zora', 'krank'], killerIds: ['zora', 'krank'] };
 
   root.BM = root.BM || {};
   root.BM.data = data;

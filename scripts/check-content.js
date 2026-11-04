@@ -77,6 +77,12 @@ for (const team of ['delilah', 'victor']) {
   }
 }
 
+// Decoy pictures stay empty and are real pictures
+for (const d of data.DECOYS || []) {
+  if (!data.PICTURES.includes(d)) fail(`decoy ${d} is not a picture`);
+  for (const team of ['delilah', 'victor']) for (const sid of ['3.1', '3.2']) if (data.teamEnvelopes[team][sid].picture === d) fail(`decoy ${d} holds team evidence`);
+}
+
 // Witness cards
 for (const team of ['delilah', 'victor']) {
   const w = data.witnessCards && data.witnessCards[team];

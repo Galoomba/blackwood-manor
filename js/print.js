@@ -58,7 +58,7 @@
   function characterPack(c, presentIds) { return introSheet(c) + cardPages(c, presentIds); }
 
   /* Envelope covers: one per guest with their portrait (their cards go inside, top card first),
-     and the four picture envelopes for the team stages. */
+     and the six picture envelopes for the team stages (two of them empty decoys). */
   function covers() {
     const guests = data.characters.map((c) => `<div class="cover"><img src="${c.image}" alt=""><div class="cv-name">${c.symbol} ${esc(c.short)}</div><div class="cv-note">${esc(c.costume)}</div><div class="cv-note">Blackwood Manor · All Hallows' Eve<br>Take only the top card, one stage at a time</div></div>`);
     const pictures = data.PICTURES.map((p) => `<div class="cover picture">${root.BM.art[p]}<div class="cv-note">Blackwood Manor · only the host opens this, when a team names it</div></div>`);
@@ -119,7 +119,7 @@
     const kind = { individual: 'On your own', group: 'Find alone, solve together', team: 'Teams' };
     const before = row('Before', 'the guests arrive', [
       'Set who is present on the setup screen, then print.',
-      'Lay the guests\' envelopes on the table, 1.1 on top. Keep the four picture envelopes with you.',
+      'Lay the guests\' envelopes on the table, 1.1 on top. Keep the six picture envelopes with you (Clock and Mirror stay empty).',
       'The box: letter locked inside. Put the true key in the rabbit hat, and the hat behind a small door at waist height. Hide the fake keys around the room.',
       'Laptop: open the site. TV: press "Open TV screen", click it once, press F.',
       'Hand out the intro sheets at the door. Optional: "Introduce the game".'
@@ -151,7 +151,7 @@
       <h1>Host guide</h1>
       <h2>Night-of checklist</h2>
       <ol>
-        <li>Print all packs. Cut the cards. Glue a cover on each of the seventeen envelopes: thirteen guests and four pictures.</li>
+        <li>Print all packs. Cut the cards. Glue a cover on each of the nineteen envelopes: thirteen guests and six pictures. The Clock and Mirror envelopes are decoys and stay empty.</li>
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
         <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; keep the four picture envelopes by you (or on the table, untouchable) and hand one over only when a team names the right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>

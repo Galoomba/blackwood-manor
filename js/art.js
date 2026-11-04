@@ -40,6 +40,23 @@
       '<path d="M70 184 h60 l-8 -22 h-44 z" fill="#000" fill-opacity="0.15"/>' +
       '<path d="M112 100 v22"/><circle cx="112" cy="126" r="3" fill="#000"/>' +
       '<path d="M30 104 l-14 8 M170 104 l14 8 M44 124 l-10 14 M156 124 l10 14" stroke-width="3" opacity="0.5"/>' +
+      '</svg>',
+    /* Decoys: both have a glass face, like the television. */
+    Clock: open +
+      '<path d="M58 186 h84 v-20 h-84 z" fill="#000" fill-opacity="0.12"/>' +
+      '<path d="M62 166 V70 a38 38 0 0 1 76 0 V166"/>' +
+      '<circle cx="100" cy="74" r="28" fill="#000" fill-opacity="0.08"/>' +
+      '<path d="M100 74 V56 M100 74 L114 82" stroke-width="5"/>' +
+      '<path d="M100 50 v4 M124 74 h-4 M100 98 v-4 M76 74 h4" stroke-width="3"/>' +
+      '<path d="M100 104 V146" stroke-width="3"/><circle cx="100" cy="150" r="7" fill="#000"/>' +
+      '<path d="M84 30 h32" stroke-width="3"/>' +
+      '</svg>',
+    Mirror: open +
+      '<ellipse cx="100" cy="88" rx="48" ry="64" fill="#000" fill-opacity="0.06"/>' +
+      '<ellipse cx="100" cy="88" rx="38" ry="54"/>' +
+      '<path d="M76 58 C84 46 94 42 104 42" stroke-width="3" opacity="0.6"/><path d="M72 76 l18 -18" stroke-width="3" opacity="0.4"/>' +
+      '<path d="M100 152 V172 M70 186 h60 M80 186 l20 -14 l20 14" />' +
+      '<path d="M52 40 c-8 -10 -2 -22 8 -22 M148 40 c8 -10 2 -22 -8 -22" stroke-width="3"/>' +
       '</svg>'
   };
 
