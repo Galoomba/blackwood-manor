@@ -150,3 +150,17 @@ test('an interlude separates the scenes: Victor dies after 1.3, both ghosts rise
     assert.ok(voiced.length && voiced.every((l) => l.voice === 'narrator'), `${key} is narrated`);
   }
 });
+
+test('every soundboard effect has a recorded clip on disk', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'audio.js'), 'utf8');
+  const block = src.slice(src.indexOf('const sounds = {'), src.indexOf('};', src.indexOf('const sounds = {')));
+  const names = [...block.matchAll(/^\s{4}(\w+):/gm)].map((m) => m[1]);
+  assert.ok(names.length >= 10, 'found the soundboard names');
+  const sfx = require('../js/sfx-manifest.js');
+  for (const n of names) {
+    assert.ok(sfx.clips[n], `${n} is recorded`);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', sfx.clips[n].src)), `${n} clip file exists`);
+  }
+});

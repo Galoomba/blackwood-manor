@@ -62,6 +62,10 @@ To re-record after changing the story text or a voice, put `ELEVENLABS_API_KEY=.
 
 It contains every spoiler, so it stays on the laptop until you press "Show on TV". The TV then shows it full screen and speaks it, and the laptop becomes the remote. Click the TV window once beforehand so the browser allows it to speak. On a phone, start the voice by tapping Play: phones only allow speech that begins with a tap, and an iPhone on silent may stay quiet. Without a voice it still plays with timed captions.
 
+## Sound effects
+
+The soundboard effects (bell, thunder, heartbeat, tick, whisper, scream, puff, death, ghost, toll) are recorded with ElevenLabs sound generation and live in `assets/sfx`. Each one is described in words at the top of `scripts/generate-sfx.js`. To change one, edit its description and run `npm run sfx`; to get a new take of the same description, run `npm run sfx -- --force --only toll`. If a clip is missing, the browser's own synthesised version plays instead. The background ambience is still synthesised.
+
 ## Develop
 
 `npm test` runs the logic tests and the content integrity check. Story and card text live in `js/data.js`, the narrated full story in `js/story.js` and the introduction in `js/intro.js` (both drawn by `js/story-view.js`); the design is in `docs/superpowers/specs/`.

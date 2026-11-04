@@ -114,10 +114,34 @@
     toll: () => { const t = ctx.currentTime; bell(t, 110); bell(t + 1.6, 110); bell(t + 3.2, 110); }
   };
 
+  /* Recorded effects (scripts/generate-sfx.js, listed in js/sfx-manifest.js) play when present;
+     the synthesised sounds above are the fallback when a clip is missing or will not play. */
+  const clipCache = {};
+  function clipFor(name) { const m = root.BM.sfx; return m && m.clips ? m.clips[name] : null; }
+  function preloadClips() {
+    if (typeof root.Audio !== 'function') return;
+    Object.keys(sounds).forEach((name) => {
+      const clip = clipFor(name);
+      if (clip && !clipCache[name]) { const a = new root.Audio(clip.src); a.preload = 'auto'; clipCache[name] = a; }
+    });
+  }
+  function synth(name) { init(); if (ctx && sounds[name]) sounds[name](); }
+  function playClip(name) {
+    const clip = clipFor(name);
+    if (!clip || typeof root.Audio !== 'function') return false;
+    if (!clipCache[name]) preloadClips();
+    const a = clipCache[name].cloneNode();
+    a.volume = 0.8 * (clip.volume == null ? 1 : clip.volume);
+    const p = a.play();
+    if (p && p.catch) p.catch(() => synth(name));
+    return true;
+  }
+
   function play(name) {
     init();
-    if (!ctx || !sounds[name]) return;
-    sounds[name]();
+    preloadClips();
+    if (!enabled || !sounds[name]) return;
+    if (!playClip(name)) synth(name);
   }
 
   function startAmbience(scene) {

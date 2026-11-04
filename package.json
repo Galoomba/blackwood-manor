@@ -5,6 +5,7 @@
   "description": "Blackwood Manor murder night host website",
   "scripts": {
     "test": "node --test 'test/*.test.js' && node scripts/check-content.js",
-    "voice": "node scripts/generate-voice.js"
+    "voice": "node scripts/generate-voice.js",
+    "sfx": "node scripts/generate-sfx.js"
   }
 }
