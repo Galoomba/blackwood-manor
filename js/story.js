@@ -136,7 +136,7 @@
     {
       id: 'glass', chapter: 'IV. The toast', layout: 'duo', scene: 1, voice: 'narrator', people: ['zora', 'khamun'], killers: ['zora'],
       title: 'The glass',
-      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over the glasses. She filled a spare, emptied the nightshade into it, set it where Delilah had put her own glass down, and wiped her rings. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
+      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over the glasses. She emptied the nightshade into her own glass, set it where Delilah had put her own glass down, and wiped her rings. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
     },
     {
       id: 'fall', chapter: 'IV. The toast', layout: 'ghosts', ghosts: ['delilah'], scene: 1, sfx: 'death', effect: 'flash', voice: 'narrator',
@@ -192,7 +192,7 @@
     {
       id: 'last-letter', chapter: 'VII. How the truth came out', layout: 'ghosts', ghosts: ['delilah'], scene: 3, effect: 'ghost', sfx: 'whisper', voice: 'delilah',
       title: 'The last letter',
-      text: 'I left one letter, locked in a box, for whoever was left. The killers knew where the key was and sent everyone searching high and low. It was in my brother\'s old conjuring hat, where something always comes out that never went in. In the letter I named the two who wanted me silent: the family still paid for finding the dying, and the laboratory that brought back the poor man.'
+      text: 'I left one letter, locked in a box, for whoever was left. The killers knew where the key was and sent everyone searching high and low. It was in my brother\'s old conjuring hat, where something always comes out that never went in. In the letter I all but named the two who wanted me silent: the broker\'s granddaughter, wearing her grandmother\'s five rings, and the one who signs the laboratory bills W.K. and laughs when they are paid.'
     },
     {
       id: 'zora-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['zora'], killers: ['zora'],

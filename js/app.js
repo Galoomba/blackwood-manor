@@ -134,7 +134,8 @@
       el('div', { class: 'panel' },
         el('h3', {}, 'Timers, sound and the TV'),
         el('div', { class: 'row' },
-          el('label', { class: 'grow' }, 'Card time (and the key hunt), minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 5 }) })),
+          el('label', { class: 'grow' }, 'Card time, minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 3 }) })),
+          el('label', { class: 'grow' }, 'Key hunt (3.4), minutes', el('input', { type: 'number', min: 1, max: 30, value: s.huntMin || 10, onchange: (e) => game.set({ huntMin: Number(e.target.value) || 10 }) })),
           el('label', { class: 'grow' }, 'Discussion minutes', el('input', { type: 'number', min: 1, max: 30, value: s.discussMin, onchange: (e) => game.set({ discussMin: Number(e.target.value) || 7 }) })),
           el('label', {}, el('input', { type: 'checkbox', checked: s.sound ? 'checked' : null, onchange: (e) => { game.set({ sound: e.target.checked }); audio.setEnabled(e.target.checked); } }), ' Sound on'),
           el('label', { title: 'Recorded ghost voices read the narration. Turn off to tell the story yourselves.' }, el('input', { type: 'checkbox', checked: s.voiceOver ? 'checked' : null, onchange: (e) => { game.set({ voiceOver: e.target.checked }); if (!e.target.checked) voice.stop(); } }), ' Ghost voice-over')
@@ -165,13 +166,13 @@
   function renderPrint() {
     const node = clear($('#screen-print'));
     const list = el('div', { class: 'row' });
-    for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id) }, `${c.symbol} ${c.short}`));
+    for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Envelope covers: one per guest with their portrait, plus four pictures for the team stages; glue each on a C5 envelope and lay them all on the table.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Set who is present first: the character packs leave out whispers and table talk about absent guests. Envelope covers: one per guest with their portrait, plus four pictures for the team stages; glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
-          el('button', { class: 'primary', onclick: () => root.BM.print.open('all') }, 'All character packs'),
+          el('button', { class: 'primary', onclick: () => root.BM.print.open('all', null, game.roster()) }, 'All character packs'),
           el('button', { onclick: () => root.BM.print.open('covers') }, 'Envelope covers'),
           el('button', { onclick: () => root.BM.print.open('envelopes') }, 'Team envelopes and witness cards'),
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
@@ -242,7 +243,7 @@
 
     if (s.phase === 'narration') {
       label.textContent = (s.voiceOver ? 'Let the ghost speak, then ' : 'Read the narration aloud, then ') + (stage.searchOnly ? 'start the key hunt' : 'send them to their envelopes');
-      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `${stage.searchOnly ? 'Start the key hunt' : 'Cards out'} (${s.searchMin} min)`));
+      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `${stage.searchOnly ? 'Start the key hunt' : 'Cards out'} (${stage.searchOnly ? (s.huntMin || 10) : s.searchMin} min)`));
     } else if (s.phase === 'search') {
       label.textContent = stage.searchOnly ? 'Hunting for the key' : 'Reading cards';
       bar.append(
@@ -278,7 +279,7 @@
 
   function startPhase(kind) {
     const s = game.get();
-    const minutes = kind === 'search' ? s.searchMin : s.discussMin;
+    const minutes = kind === 'search' ? (game.stage().searchOnly ? (s.huntMin || 10) : s.searchMin) : s.discussMin;
     game.set({ phase: kind, timerKind: kind, timerEnd: Date.now() + minutes * 60000 });
     render();
   }

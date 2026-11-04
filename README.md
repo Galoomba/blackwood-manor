@@ -11,7 +11,7 @@ Double-click `index.html`. No server, no install, works offline. Chrome or Edge 
 1. **Setup**: tick who is present, optionally type each player's real name, set timers.
 2. **Print pack**: print all character packs, the envelope covers, the team envelopes and witness cards, the ledger strips, the box letter and the host guide. A4 portrait.
 3. Glue a cover on each of 17 C5 envelopes: one per guest with their portrait, and four pictures (plant, television, bookshelf, lamp) for the team stages.
-4. Fill each guest's envelope with their own cards, face down, 1.1 on top, with their ledger strip under the 2.3 card. Put the team evidence and witness cards in the picture envelopes (the host guide lists which). Lay all 17 envelopes on the table.
+4. Set who is present before printing: the character packs leave out whispers and table talk about absent guests. Fill each guest's envelope with their own cards, face down, 1.1 on top, with their ledger strip under the 2.3 card. Put the team evidence and witness cards in the picture envelopes (the host guide lists which). Lay the 13 guest envelopes on the table (minus absent guests). Only the host opens the picture envelopes: a team names its picture, and a wrong one costs a minute.
 5. Set up the box: lock Delilah's letter inside, put the true key in the rabbit hat, and hide the fake keys anywhere in the room.
 6. Hand out intro sheets at the door.
 
@@ -27,7 +27,7 @@ The foot of every card carries a whisper: one true detail about another guest, w
 
 ## The box (stage 3.4)
 
-After the alibis, Delilah tells the room she left a letter locked in a box. Fake keys are hidden all over the room; the true key is in the rabbit hat. Each innocent's 3.4 card holds one piece of where it is (Victor's old conjuring hat, "where something always comes out that never went in"). Both killers know the hiding place and have orders to send the room searching in the wrong places: Zora low, Krank high. House rule: each guest may try the lock once, and the killers may lie but may not touch, move or pocket the true key. Press "The box is open" and Delilah's ghost reads her last letter, which names both motives but not the killers, then the vote opens. If time runs out, "The box stays shut: open the vote".
+After the alibis, Delilah tells the room she left a letter locked in a box. Fake keys are hidden all over the room; the true key is in the rabbit hat, and the hat itself is hidden out of sight too. Each innocent's 3.4 card holds one piece of where it is (Victor's old conjuring hat, "where something always comes out that never went in"). Both killers know the hiding place and have orders to send the room searching in the wrong places: Zora low, Krank high. House rule: each guest may try the lock once, and the killers may lie but may not touch, move or pocket the true key. Press "The box is open" and Delilah's ghost reads her last letter, which names both motives but not the killers, then two minutes of last words and the vote. The letter all but names both killers, so they have every reason to keep it shut. If time runs out, "The box stays shut: open the vote".
 
 The browser remembers the current stage, so a refresh or accidental close does not lose the game. "Reset everything" on the setup screen starts fresh.
 

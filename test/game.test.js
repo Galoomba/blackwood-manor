@@ -15,7 +15,8 @@ test('defaults include all non-optional characters and 5/7 minute timers', () =>
   assert.equal(s.screen, 'title');
   assert.ok(s.presentIds.includes('zora'));
   assert.ok(!s.presentIds.includes('luna'));
-  assert.equal(s.searchMin, 5);
+  assert.equal(s.searchMin, 3);
+  assert.equal(s.huntMin, 10);
   assert.equal(s.discussMin, 7);
 });
 
