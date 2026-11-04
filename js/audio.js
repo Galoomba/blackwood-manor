@@ -13,6 +13,7 @@
     master = ctx.createGain();
     master.gain.value = enabled ? 0.8 : 0;
     master.connect(ctx.destination);
+    setTimeout(loadBuffers, 0);
     noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
     const d = noiseBuffer.getChannelData(0);
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
@@ -126,6 +127,28 @@
     });
   }
   function synth(name) { init(); if (ctx && sounds[name]) sounds[name](); }
+  /* Decoded clips play through the Web Audio context, which the first tap unlocks once for the whole
+     page, so effects that start without a tap (the TV, the interludes, phones) are not refused. */
+  const buffers = {};
+  function loadBuffers() {
+    if (!ctx || loadBuffers.started || typeof root.fetch !== 'function' || root.location.protocol === 'file:') return;
+    loadBuffers.started = true;
+    Object.keys(sounds).forEach((name) => {
+      const clip = clipFor(name);
+      if (!clip) return;
+      root.fetch(clip.src).then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => { buffers[name] = buf; }).catch(() => {});
+    });
+  }
+  function playBuffer(name) {
+    const buf = buffers[name];
+    if (!buf || !ctx) return false;
+    const clip = clipFor(name);
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const g = ctx.createGain(); g.gain.value = clip.volume == null ? 1 : clip.volume;
+    src.connect(g); g.connect(master);
+    src.start();
+    return true;
+  }
   function playClip(name) {
     const clip = clipFor(name);
     if (!clip || typeof root.Audio !== 'function') return false;
@@ -140,8 +163,9 @@
   function play(name) {
     init();
     preloadClips();
+    loadBuffers();
     if (!enabled || !sounds[name]) return;
-    if (!playClip(name)) synth(name);
+    if (!playBuffer(name) && !playClip(name)) synth(name);
   }
 
   function startAmbience(scene) {
@@ -179,5 +203,5 @@
   }
 
   root.BM = root.BM || {};
-  root.BM.audio = { init, play, setEnabled, startAmbience, stopAmbience, names: Object.keys(sounds) };
+  root.BM.audio = { init, play, setEnabled, startAmbience, stopAmbience, names: Object.keys(sounds), loadedClips: () => Object.keys(buffers) };
 })(window);

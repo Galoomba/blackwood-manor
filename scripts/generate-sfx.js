@@ -25,10 +25,10 @@ const EFFECTS = {
   heartbeat: { seconds: 4, influence: 0.7, volume: 0.9, text: 'A slow, heavy human heartbeat, four deep low thumps, tense horror atmosphere, no music.' },
   tick: { seconds: 0.5, influence: 0.7, volume: 0.6, text: 'A single crisp tick of an old wooden grandfather clock.' },
   whisper: { seconds: 3, influence: 0.6, volume: 0.8, text: 'Eerie ghostly whispering of a woman, unintelligible and breathy, echoing softly through an empty old house.' },
-  scream: { seconds: 2, influence: 0.6, volume: 0.8, text: 'A woman gasps and lets out a short horrified scream in a large old room, then silence.' },
+  scream: { seconds: 2.5, influence: 0.8, volume: 0.85, text: 'Loud, terrified scream of a young woman in a horror film, high pitched and piercing, with a short echo in a stone hall.' },
   puff: { seconds: 0.8, influence: 0.7, volume: 0.7, text: 'A candle flame blown out with a short soft puff of breath and a tiny hiss of smoke.' },
-  death: { seconds: 4, influence: 0.55, volume: 0.9, text: 'A wine glass shatters on a stone floor, a body collapses heavily, then a deep boom of thunder. Horror film.' },
-  ghost: { seconds: 5, influence: 0.5, volume: 0.8, text: 'A ghost appears: a cold rising wind, a distant eerie choir tone and a faint chime, haunting and supernatural.' },
+  death: { seconds: 3.5, influence: 0.8, volume: 0.95, text: 'Horror film death sting: a sudden deep orchestral boom with a dissonant string screech, then a low rumble fading out.' },
+  ghost: { seconds: 5, influence: 0.8, volume: 0.85, text: 'Haunting ghostly wail: a distant female voice moaning wordlessly, drifting and echoing, cold and supernatural.' },
   toll: { seconds: 7, influence: 0.6, volume: 0.8, text: 'A deep mournful funeral bell tolling slowly three times in an old stone church, long echoes between the strikes.' }
 };
 

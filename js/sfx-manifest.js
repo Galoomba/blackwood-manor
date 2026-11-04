@@ -34,9 +34,9 @@
     },
     "scream": {
       "src": "assets/sfx/scream.mp3",
-      "hash": "cbfc2974b284",
-      "seconds": 2,
-      "volume": 0.8
+      "hash": "1d9aa913cd51",
+      "seconds": 2.5,
+      "volume": 0.85
     },
     "puff": {
       "src": "assets/sfx/puff.mp3",
@@ -46,15 +46,15 @@
     },
     "death": {
       "src": "assets/sfx/death.mp3",
-      "hash": "a681b31ae300",
-      "seconds": 4,
-      "volume": 0.9
+      "hash": "13352f2820f8",
+      "seconds": 3.5,
+      "volume": 0.95
     },
     "ghost": {
       "src": "assets/sfx/ghost.mp3",
-      "hash": "a34cb9d7858e",
+      "hash": "10afc94ddeab",
       "seconds": 5,
-      "volume": 0.8
+      "volume": 0.85
     },
     "toll": {
       "src": "assets/sfx/toll.mp3",
