@@ -28,13 +28,13 @@ test('set persists and load restores', () => {
   assert.equal(g2.get().phase, 'search');
 });
 
-test('nextStage and prevStage clamp to 0..8 and reset phase', () => {
+test('nextStage and prevStage clamp to 0..9 and reset phase', () => {
   const g = createGame(data, logic, memoryStorage());
-  g.set({ stageIndex: 8, phase: 'done' });
+  g.set({ stageIndex: 9, phase: 'done' });
   g.nextStage();
-  assert.equal(g.get().stageIndex, 8);
+  assert.equal(g.get().stageIndex, 9);
   g.prevStage();
-  assert.equal(g.get().stageIndex, 7);
+  assert.equal(g.get().stageIndex, 8);
   assert.equal(g.get().phase, 'narration');
 });
 

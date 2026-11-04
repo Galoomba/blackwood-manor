@@ -190,6 +190,11 @@
 
     /* ---------- VII. How the truth came out ---------- */
     {
+      id: 'last-letter', chapter: 'VII. How the truth came out', layout: 'ghosts', ghosts: ['delilah'], scene: 3, effect: 'ghost', sfx: 'whisper', voice: 'delilah',
+      title: 'The last letter',
+      text: 'I left one letter, locked in a box, for whoever was left. The killers knew where the key was and sent everyone searching high and low. It was in my brother\'s old conjuring hat, where something always comes out that never went in. In the letter I named the two who wanted me silent: the family still paid for finding the dying, and the laboratory that brought back the poor man.'
+    },
+    {
       id: 'zora-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['zora'], killers: ['zora'],
       title: "Madame Zora's mistakes",
       chips: [

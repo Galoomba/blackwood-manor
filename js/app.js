@@ -134,7 +134,7 @@
       el('div', { class: 'panel' },
         el('h3', {}, 'Timers, sound and the TV'),
         el('div', { class: 'row' },
-          el('label', { class: 'grow' }, 'Search minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 5 }) })),
+          el('label', { class: 'grow' }, 'Card time (and the key hunt), minutes', el('input', { type: 'number', min: 1, max: 30, value: s.searchMin, onchange: (e) => game.set({ searchMin: Number(e.target.value) || 5 }) })),
           el('label', { class: 'grow' }, 'Discussion minutes', el('input', { type: 'number', min: 1, max: 30, value: s.discussMin, onchange: (e) => game.set({ discussMin: Number(e.target.value) || 7 }) })),
           el('label', {}, el('input', { type: 'checkbox', checked: s.sound ? 'checked' : null, onchange: (e) => { game.set({ sound: e.target.checked }); audio.setEnabled(e.target.checked); } }), ' Sound on'),
           el('label', { title: 'Recorded ghost voices read the narration. Turn off to tell the story yourselves.' }, el('input', { type: 'checkbox', checked: s.voiceOver ? 'checked' : null, onchange: (e) => { game.set({ voiceOver: e.target.checked }); if (!e.target.checked) voice.stop(); } }), ' Ghost voice-over')
@@ -168,14 +168,14 @@
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Pocket labels are optional: stick one on each of nine small envelopes per station so players can only open the current stage.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Envelope covers: one per guest with their portrait, plus four pictures for the team stages; glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
           el('button', { class: 'primary', onclick: () => root.BM.print.open('all') }, 'All character packs'),
-          el('button', { onclick: () => root.BM.print.open('stations') }, 'Station labels'),
-          el('button', { onclick: () => root.BM.print.open('pockets') }, 'Pocket labels (one per stage per station)'),
+          el('button', { onclick: () => root.BM.print.open('covers') }, 'Envelope covers'),
           el('button', { onclick: () => root.BM.print.open('envelopes') }, 'Team envelopes and witness cards'),
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
+          el('button', { onclick: () => root.BM.print.open('box') }, "The box: Delilah's letter"),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
         )
       ),
@@ -241,12 +241,14 @@
     const bar = el('div', { class: 'phase-bar' });
 
     if (s.phase === 'narration') {
-      label.textContent = s.voiceOver ? 'Let the ghost speak, then send them searching' : 'Read the narration aloud, then send them searching';
-      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `Start search (${s.searchMin} min)`));
+      label.textContent = (s.voiceOver ? 'Let the ghost speak, then ' : 'Read the narration aloud, then ') + (stage.searchOnly ? 'start the key hunt' : 'send them to their envelopes');
+      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `${stage.searchOnly ? 'Start the key hunt' : 'Cards out'} (${s.searchMin} min)`));
     } else if (s.phase === 'search') {
-      label.textContent = 'Searching';
+      label.textContent = stage.searchOnly ? 'Hunting for the key' : 'Reading cards';
       bar.append(
-        el('button', { class: 'primary', onclick: () => startPhase('discussion') }, `Start discussion (${s.discussMin} min)`),
+        stage.searchOnly
+          ? el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); } }, 'End the hunt')
+          : el('button', { class: 'primary', onclick: () => startPhase('discussion') }, `Start discussion (${s.discussMin} min)`),
         el('button', { class: 'small', onclick: () => addMinute() }, '+1 min')
       );
     } else if (s.phase === 'discussion') {
@@ -260,6 +262,7 @@
       if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }));
       if (stage.setPieceAfter) {
         bar.append(el('button', { class: 'primary', onclick: () => playInterlude(stage.setPieceAfter) }, `▶ ${data.setPieces[stage.setPieceAfter].cue}`));
+        if (stage.searchOnly) bar.append(el('button', { onclick: () => show('vote') }, 'The box stays shut: open the vote'));
       } else if (game.get().stageIndex === data.stages.length - 1) {
         bar.append(el('button', { class: 'primary', onclick: () => show('vote') }, 'Open the vote'));
       } else {
@@ -308,22 +311,10 @@
     const details = el('details', { class: 'host' }, el('summary', {}, 'Host only: answer key for this stage'));
     details.append(el('p', {}, stage.hostNotes));
 
-    const table = el('table', {}, el('tr', {}, el('th', {}, 'Station'), el('th', {}, 'Cards here this stage')));
-    for (const st of data.STATIONS) {
-      const cards = logic.cardsAtStation(data, st, idx).map((c) => `${c.symbol} ${c.short}${roster.present.some((p) => p.id === c.id) ? '' : ' (absent)'}`);
-      const extras = [];
-      for (const team of ['delilah', 'victor']) {
-        const env = data.teamEnvelopes[team][stage.id];
-        if (env && env.station === st) extras.push(`${teamLabel(team).toUpperCase()} envelope: ${env.title}`);
-      }
-      table.append(el('tr', {}, el('td', {}, st), el('td', {}, [...cards, ...extras].join(' · '))));
-    }
-    details.append(el('h3', {}, 'Where the cards are'), table);
-
     if (stage.id === '3.1' || stage.id === '3.2') {
       for (const team of ['delilah', 'victor']) {
         const ts = logic.teamSentence(data, roster, team, stage.id);
-        details.append(el('p', {}, el('strong', {}, `${teamLabel(team)}: `), `${ts.sentence} → ${ts.station}`,
+        details.append(el('p', {}, el('strong', {}, `${teamLabel(team)}: `), `${ts.sentence} → the ${ts.picture} envelope (${data.teamEnvelopes[team][stage.id].title})`,
           ts.missing.length ? el('span', { class: 'dim' }, ` (ghost whispers: ${ts.missing.map((w) => `#${w.index} ${w.text}`).join(', ')})`) : null));
       }
       if (stage.id === '3.1') details.append(el('p', { class: 'dim' }, "Killers' wrong words: Zora says TALKS for WALKS; Krank says DRINKS for BLINKS."));
@@ -343,6 +334,13 @@
       const ul = el('ul', {});
       roster.present.forEach((c) => ul.append(el('li', {}, el('strong', {}, c.short + ': '), c.cards['3.3'].alibi, c.cards['3.3'].lie ? el('em', { class: 'error' }, ` LIE: ${c.cards['3.3'].lie}`) : null)));
       details.append(el('h3', {}, 'Alibis'), ul);
+    }
+
+    if (stage.id === '3.4') {
+      details.append(el('p', {}, el('strong', {}, 'True key: '), `${data.box.hidingPlace}. ${data.box.rule}`));
+      const ul = el('ul', {});
+      data.killerIds.map(charById).forEach((c) => ul.append(el('li', {}, el('strong', {}, c.short + ': '), c.cards['3.4'].sabotage)));
+      details.append(el('h3', {}, "The killers' tricks"), ul);
     }
 
     const talkList = el('ul', {});
@@ -379,7 +377,9 @@
   function playInterlude(key) {
     showSetPiece(key, () => {
       const next = data.setPieces[key].then;
-      if (next) playInterlude(next); else { game.nextStage(); render(); }
+      if (next) playInterlude(next);
+      else if (game.get().stageIndex === data.stages.length - 1) show('vote');
+      else { game.nextStage(); render(); }
     });
   }
 
@@ -409,6 +409,11 @@
       sfx('ghost');
       ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, voiceControls('set-victorReturns'), continueBtn('Form the teams'));
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
+    } else if (key === 'lastLetter') {
+      ov.classList.add('ghostly');
+      sfx('whisper');
+      ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines, voiceControls('set-lastLetter'), continueBtn('Open the vote'));
+      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-lastLetter'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');

@@ -591,25 +591,25 @@
     "stage-3-3-0.delilah": {
       "src": "assets/voice/stage-3-3-0.delilah.mp3",
       "voice": "Lyla",
-      "hash": "a36316223eeb",
-      "duration": 15.232,
+      "hash": "6dce8e83ea45",
+      "duration": 14.35,
       "starts": [
         0,
-        1.521,
-        9.009,
-        12.701
+        1.602,
+        8.185,
+        11.889
       ]
     },
     "stage-3-3-0.victor": {
       "src": "assets/voice/stage-3-3-0.victor.mp3",
       "voice": "Lance",
-      "hash": "992d80380834",
-      "duration": 17.183,
+      "hash": "fd9729e64824",
+      "duration": 16.068,
       "starts": [
         0,
-        1.219,
-        10.089,
-        14.176
+        1.207,
+        9.311,
+        13.154
       ]
     },
     "set-victorReturns-0": {
@@ -739,46 +739,47 @@
     "intro-scenes": {
       "src": "assets/voice/intro-scenes.mp3",
       "voice": "George",
-      "hash": "2f1685ed848e",
-      "duration": 11.796,
+      "hash": "244ecb4b1c9a",
+      "duration": 13.653,
       "starts": [
         0,
-        3.518,
-        5.77,
-        9.369
+        4.981,
+        7.256,
+        11.262
       ]
     },
     "intro-stations": {
       "src": "assets/voice/intro-stations.mp3",
       "voice": "George",
-      "hash": "084c04d04942",
-      "duration": 12.632,
+      "hash": "93ba5c0b4359",
+      "duration": 13.282,
       "starts": [
         0,
-        7.814
+        4.853,
+        8.824,
+        11.273
       ]
     },
     "intro-riddles": {
       "src": "assets/voice/intro-riddles.mp3",
       "voice": "George",
-      "hash": "d17f47f61bf1",
-      "duration": 13.746,
+      "hash": "7b8a4b6125c0",
+      "duration": 10.774,
       "starts": [
         0,
-        2.287,
-        4.679,
-        11.134
+        2.659,
+        7.802
       ]
     },
     "intro-search-rules": {
       "src": "assets/voice/intro-search-rules.mp3",
       "voice": "George",
-      "hash": "001e4fede8c1",
-      "duration": 11.796,
+      "hash": "339d252bcc74",
+      "duration": 10.82,
       "starts": [
         0,
-        1.695,
-        8.429
+        1.776,
+        7.697
       ]
     },
     "intro-cards": {
@@ -821,12 +822,12 @@
     "intro-together": {
       "src": "assets/voice/intro-together.mp3",
       "voice": "George",
-      "hash": "2ca5c3c983e0",
-      "duration": 12.028,
+      "hash": "2e0dc669a083",
+      "duration": 15.047,
       "starts": [
         0,
-        2.902,
-        9.718
+        2.752,
+        12.98
       ]
     },
     "intro-vote": {
@@ -927,6 +928,60 @@
         14.872,
         15.952,
         17.194
+      ]
+    },
+    "last-letter": {
+      "src": "assets/voice/last-letter.mp3",
+      "voice": "Lyla",
+      "hash": "135c27f9b897",
+      "duration": 28.839,
+      "starts": [
+        0,
+        5.747,
+        11.088,
+        17.972
+      ]
+    },
+    "stage-3-4-0": {
+      "src": "assets/voice/stage-3-4-0.mp3",
+      "voice": "Lyla",
+      "hash": "734630d4b1ae",
+      "duration": 26.146,
+      "starts": [
+        0,
+        2.473,
+        7.605,
+        13.084,
+        17.786,
+        23.069
+      ]
+    },
+    "set-lastLetter-1": {
+      "src": "assets/voice/set-lastLetter-1.mp3",
+      "voice": "Lyla",
+      "hash": "22fc2929270d",
+      "duration": 98.498,
+      "starts": [
+        0,
+        4.04,
+        11.355,
+        18.924,
+        25.24,
+        38.487,
+        43.003,
+        45.615,
+        54.52,
+        58.165,
+        62.473,
+        64.261,
+        71.4,
+        74.732,
+        78.064,
+        83.08,
+        86.505,
+        93.807,
+        96.477,
+        97.511
       ]
     }
   }

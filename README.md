@@ -9,9 +9,11 @@ Double-click `index.html`. No server, no install, works offline. Chrome or Edge 
 ## Prepare the night
 
 1. **Setup**: tick who is present, optionally type each player's real name, set timers.
-2. **Print pack**: print all character packs, station labels, team envelopes and witness cards, the ledger strips, and the host guide. A4 portrait.
-3. Follow the host guide's table to stock the six station envelopes.
-4. Hand out intro sheets at the door.
+2. **Print pack**: print all character packs, the envelope covers, the team envelopes and witness cards, the ledger strips, the box letter and the host guide. A4 portrait.
+3. Glue a cover on each of 17 C5 envelopes: one per guest with their portrait, and four pictures (plant, television, bookshelf, lamp) for the team stages.
+4. Fill each guest's envelope with their own cards, face down, 1.1 on top, with their ledger strip under the 2.3 card. Put the team evidence and witness cards in the picture envelopes (the host guide lists which). Lay all 17 envelopes on the table.
+5. Set up the box: lock Delilah's letter inside, put the true key in the rabbit hat, and hide the fake keys anywhere in the room.
+6. Hand out intro sheets at the door.
 
 ## Two screens
 
@@ -19,17 +21,23 @@ Connect the TV to the laptop as a second display (HDMI or AirPlay, set to "exten
 
 ## Run the night
 
-Setup → Begin the night → read the prologue → "She is dead" → nine stages. Each stage: read the narration, start the search timer, start the discussion timer, next. The host panel on each stage shows the answer key and anything the ghost must deliver for absent guests. After stage 3.3, open the vote, then press Reveal.
+Setup → Begin the night → read the prologue → "She is dead" → ten stages. Each stage: read the narration, "Cards out" (everyone takes the top card from their own envelope), start the discussion timer, next. The host panel on each stage shows the answer key and anything the ghost must deliver for absent guests. Then open the vote and press Reveal.
+
+The foot of every card carries a whisper: one true detail about another guest, who is never named. A whisper about a guest who is absent tonight is left off the printed card.
+
+## The box (stage 3.4)
+
+After the alibis, Delilah tells the room she left a letter locked in a box. Fake keys are hidden all over the room; the true key is in the rabbit hat. Each innocent's 3.4 card holds one piece of where it is (Victor's old conjuring hat, "where something always comes out that never went in"). Both killers know the hiding place and have orders to send the room searching in the wrong places: Zora low, Krank high. House rule: each guest may try the lock once, and the killers may lie but may not touch, move or pocket the true key. Press "The box is open" and Delilah's ghost reads her last letter, which names both motives but not the killers, then the vote opens. If time runs out, "The box stays shut: open the vote".
 
 The browser remembers the current stage, so a refresh or accidental close does not lose the game. "Reset everything" on the setup screen starts fresh.
 
 ## Introduce the game
 
-"Introduce the game" on the home and setup screens walks the group through how the night works, in 14 spoiler-free steps: characters, the three scenes, the six hiding places, following riddles, search rules, secret cards, discussion and table talk, secrets, team puzzles, the vote and the house rules. If the TV window is open it goes straight to the TV, and the laptop becomes the remote. The recorded narrator reads each step aloud as you arrive on it and then waits for you to press next. Press Play to let it run through every step by itself, or switch "Voice" off to present it yourselves. The last step has "Go to the home screen", ready to start the game.
+"Introduce the game" on the home and setup screens walks the group through how the night works, in 14 spoiler-free steps: characters, the three scenes, your envelope, the whispers, the rules for cards, secret cards, discussion and table talk, secrets, team puzzles, the vote and the house rules. If the TV window is open it goes straight to the TV, and the laptop becomes the remote. The recorded narrator reads each step aloud as you arrive on it and then waits for you to press next. Press Play to let it run through every step by itself, or switch "Voice" off to present it yourselves. The last step has "Go to the home screen", ready to start the game.
 
 ## Ghost voice-over
 
-The ghosts' lines are recorded too: every stage narration (Victor reading his sister's words in Scene 1, Delilah's ghost in Scene 2, both ghosts together in Scene 3), Victor's return and the reveal. They play on the TV window when it is open, otherwise on the laptop, and the TV types the narration in time with the voice. Victor's lines while he is still alive (the toast, "She is dead" and the midnight announcement) are left for the host to perform.
+The ghosts' lines are recorded too: every stage narration (Victor reading his sister's words in Scene 1, Delilah's ghost in Scene 2, both ghosts together in Scene 3), Victor's return, Delilah's last letter and the reveal. They play on the TV window when it is open, otherwise on the laptop, and the TV types the narration in time with the voice. Victor's lines while he is still alive (the toast, "She is dead" and the midnight announcement) are left for the host to perform.
 
 To tell the story yourselves, press "Ghost voice-over: on" on the game screen (or untick "Ghost voice-over" in setup) to mute it. "Replay voice-over" plays the current stage again. The same buttons appear on Victor's return and on the reveal.
 

@@ -66,7 +66,7 @@
       s.phase === 'done' && stage.announcement ? narrationNode([stage.announcement], { instant: true }) : null,
       el('div', { class: 'tv-timer' + (s.timerEnd ? '' : ' hidden') },
         el('div', { class: 'timer', id: 'timer' }, '--:--'),
-        el('div', { class: 'timer-label' }, s.phase === 'search' ? 'Search' : s.phase === 'discussion' ? 'Discussion' : '')
+        el('div', { class: 'timer-label' }, s.phase === 'search' ? (stage.searchOnly ? 'Hunt for the key' : 'Cards out') : s.phase === 'discussion' ? 'Discussion' : '')
       )
     );
     if (!alreadyTyped) {
@@ -161,6 +161,11 @@
       sfx('ghost');
       ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines);
       setTimeout(() => { if (shownSetPiece) playVoice('set-victorReturns'); }, 1500);
+    } else if (key === 'lastLetter') {
+      ov.classList.add('ghostly');
+      sfx('whisper');
+      ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines);
+      setTimeout(() => { if (shownSetPiece) playVoice('set-lastLetter'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');

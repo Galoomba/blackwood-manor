@@ -24,27 +24,27 @@
     },
     {
       id: 'intro-scenes', chapter: 'What happens', layout: 'evidence', scene: 2, voice: 'narrator',
-      title: 'Three scenes, nine stages',
-      chips: [{ text: 'Scene 1 · three stages' }, { text: 'Scene 2 · three stages' }, { text: 'Scene 3 · three stages' }, { text: 'Then the accusation' }],
-      text: 'The night has three scenes, each with three stages. Every stage runs the same way. The ghost speaks, you search the room, and then you talk. After the last stage, you accuse.'
+      title: 'Three scenes, ten stages',
+      chips: [{ text: 'Scene 1 · three stages' }, { text: 'Scene 2 · three stages' }, { text: 'Scene 3 · four stages' }, { text: 'Then the accusation' }],
+      text: 'The night has three scenes: three stages, three more, and a final four. Every stage runs the same way. The ghost speaks, you take your next card, and then you talk. After the last stage, you accuse.'
     },
     {
-      id: 'intro-stations', chapter: 'Searching', layout: 'evidence', scene: 1, voice: 'narrator',
-      title: 'Six hiding places',
-      chips: [{ text: 'Sofa' }, { text: 'Bookshelf' }, { text: 'Television' }, { text: 'Plant' }, { text: 'Lamp' }, { text: 'Cupboard' }],
-      text: 'Six places in this room hide envelopes: the sofa, the bookshelf, the television, the plant, the lamp and the cupboard. Every place holds a small envelope for each stage, marked with the stage number.'
+      id: 'intro-stations', chapter: 'Your cards', layout: 'evidence', scene: 1, voice: 'narrator',
+      title: 'Your envelope',
+      chips: [{ text: 'One envelope each' }, { text: 'Your face on the front' }, { text: 'Top card only' }, { text: 'One stage at a time' }],
+      text: 'Every one of you has an envelope on the table, with your own face on the front. At each stage, take only the top card from your own envelope. It is marked with the stage number. Never look further down the pile.'
     },
     {
-      id: 'intro-riddles', chapter: 'Searching', layout: 'evidence', scene: 1, voice: 'narrator',
-      title: 'Follow your riddle',
-      chips: [{ text: 'Solve your riddle' }, { text: 'Open this stage only' }, { text: 'Take the card with your symbol' }],
-      text: "Your character sheet ends with a riddle. It points to one of the six places. Go there, open only the current stage's envelope, and take the one card with your symbol and your name. Every card ends with the riddle for your next one."
+      id: 'intro-riddles', chapter: 'Your cards', layout: 'evidence', scene: 1, voice: 'narrator',
+      title: 'A whisper on every card',
+      chips: [{ text: 'True' }, { text: 'About another guest' }, { text: 'Never named' }],
+      text: 'The foot of every card carries a whisper. It is always true, it is always about another guest, and it never says who. Work out who it means, and decide what to do with it.'
     },
     {
-      id: 'intro-search-rules', chapter: 'Searching', layout: 'evidence', scene: 1, voice: 'narrator',
-      title: 'Search like a guest, not a burglar',
-      chips: [{ text: 'Only your own card' }, { text: "Never someone else's" }, { text: 'Never a later stage' }, { text: 'Put it back as you found it' }],
-      text: "Take only your own card. Never take someone else's, never open a later stage, and put every envelope back exactly where you found it. Cheating angers the dead, and the dead hold grudges."
+      id: 'intro-search-rules', chapter: 'Your cards', layout: 'evidence', scene: 1, voice: 'narrator',
+      title: 'Play like a guest, not a burglar',
+      chips: [{ text: 'Only your own envelope' }, { text: "Never someone else's" }, { text: 'Never a later stage' }, { text: 'Put it back on the table' }],
+      text: "Open only your own envelope. Never touch someone else's, never read ahead, and put your envelope back on the table when you are done. Cheating angers the dead, and the dead hold grudges."
     },
     {
       id: 'intro-cards', chapter: 'Your cards', layout: 'evidence', scene: 2, voice: 'narrator',
@@ -66,8 +66,8 @@
     {
       id: 'intro-together', chapter: 'Discussion', layout: 'evidence', scene: 3, voice: 'narrator',
       title: 'Some puzzles need everyone',
-      chips: [{ text: 'Torn pages' }, { text: 'Team words' }, { text: 'Bring every card' }],
-      text: 'Later in the night you will have to work together. There are torn pages to lay out in order, and words that only make sense when a whole team says them together. No one can solve this house alone.'
+      chips: [{ text: 'Torn pages' }, { text: 'Team words' }, { text: 'A locked box' }, { text: 'Bring every card' }],
+      text: 'Later in the night you will have to work together. There are torn pages to lay out in order, words that only make sense when a whole team says them together, and, at the very end, a locked box and a room full of keys. No one can solve this house alone.'
     },
     {
       id: 'intro-vote', chapter: 'The end', layout: 'evidence', scene: 3, voice: 'narrator',

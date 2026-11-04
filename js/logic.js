@@ -1,21 +1,4 @@
 (function (root) {
-  const STATIONS = ['Sofa', 'Bookshelf', 'Television', 'Plant', 'Lamp', 'Cupboard'];
-  const LUNA_OFFSET = 5;
-
-  function stationIndexFor(character, stageIndex) {
-    const base = character.id === 'luna' ? LUNA_OFFSET : character.index;
-    return (base + stageIndex) % STATIONS.length;
-  }
-
-  function stationFor(character, stageIndex) {
-    return STATIONS[stationIndexFor(character, stageIndex)];
-  }
-
-  function riddleFor(data, character, targetStageIndex) {
-    const station = stationFor(character, targetStageIndex);
-    return data.riddles[station][targetStageIndex % 3];
-  }
-
   function buildRoster(data, selection) {
     const presentIds = new Set(selection.presentIds || []);
     const present = data.characters.filter((c) => presentIds.has(c.id));
@@ -52,6 +35,7 @@
         out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.text });
       }
       if (stageId === '3.3') out.push({ ...base, kind: 'alibi', text: card.alibi });
+      if (stageId === '3.4' && !c.killer) out.push({ ...base, kind: 'key hint', text: card.text });
     }
     return out;
   }
@@ -63,7 +47,7 @@
       .map((c) => ({ index: c.cards[stageId].word.index, text: c.cards[stageId].word.text, holder: c.id, holderName: c.short, present: presentIds.has(c.id) }))
       .sort((a, b) => a.index - b.index);
     const env = data.teamEnvelopes[team][stageId];
-    return { words, sentence: words.map((w) => w.text).join(' '), station: env.station, missing: words.filter((w) => !w.present) };
+    return { words, sentence: words.map((w) => w.text).join(' '), picture: env.picture, missing: words.filter((w) => !w.present) };
   }
 
   function tally(votes, killerIds) {
@@ -86,15 +70,18 @@
     return { text, urgent: remaining > 0 && remaining <= 30, over: remaining <= 0 };
   }
 
-  function cardsAtStation(data, station, stageIndex) {
-    return data.characters.filter((c) => stationFor(c, stageIndex) === station);
-  }
-
   /* The first table-talk entry on a card whose subject is present (or has no subject); null if none. */
   function talkFor(card, presentIds) {
     const present = new Set(presentIds || []);
     const list = (card && card.talk) || [];
     return list.find((t) => !t.about || present.has(t.about)) || null;
+  }
+
+  /* The rumour at the foot of a card, unless its (unnamed) subject is absent tonight. */
+  function rumourFor(card, presentIds) {
+    const r = card && card.rumour;
+    if (!r) return null;
+    return !r.about || (presentIds || []).includes(r.about) ? r : null;
   }
 
   /* Which recorded voice reads a line: the ghosts are voiced, stage directions and living Victor
@@ -126,7 +113,7 @@
 
   function voiceGroup(data, group) { return voiceLines(data).filter((l) => l.group === group); }
 
-  const logic = { STATIONS, stationFor, riddleFor, buildRoster, orphanedClues, teamSentence, tally, cardsAtStation, formatRemaining, talkFor, voiceLines, voiceGroup };
+  const logic = { buildRoster, orphanedClues, teamSentence, tally, formatRemaining, talkFor, rumourFor, voiceLines, voiceGroup };
 
   root.BM = root.BM || {};
   root.BM.logic = logic;

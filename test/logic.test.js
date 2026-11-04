@@ -3,29 +3,6 @@ const assert = require('node:assert/strict');
 const data = require('../js/data.js');
 const logic = require('../js/logic.js');
 
-const finch = { id: 'finch', index: 0 };
-const graves = { id: 'graves', index: 11 };
-const luna = { id: 'luna', index: 12 };
-
-test('stationFor rotates by stage from the character index', () => {
-  assert.equal(logic.stationFor(finch, 0), 'Sofa');
-  assert.equal(logic.stationFor(finch, 1), 'Bookshelf');
-  assert.equal(logic.stationFor(finch, 8), 'Television');
-  assert.equal(logic.stationFor(graves, 0), 'Cupboard');
-});
-
-test('luna uses the offset 5 instead of her index', () => {
-  assert.equal(logic.stationFor(luna, 0), 'Cupboard');
-  assert.equal(logic.stationFor(luna, 1), 'Sofa');
-});
-
-test('riddleFor picks the target station riddle variant by target stage mod 3', () => {
-  const r0 = logic.riddleFor(data, finch, 0);
-  assert.equal(r0, data.riddles.Sofa[0]);
-  const r4 = logic.riddleFor(data, finch, 4); // station (0+4)%6 = Lamp, variant 4%3 = 1
-  assert.equal(r4, data.riddles.Lamp[1]);
-});
-
 function selectionWithout(...ids) {
   return { presentIds: data.characters.map((c) => c.id).filter((id) => !ids.includes(id)) };
 }
@@ -72,7 +49,7 @@ test('teamSentence orders words and flags missing holders', () => {
   const r = logic.buildRoster(data, selectionWithout('luna'));
   const s = logic.teamSentence(data, r, 'delilah', '3.1');
   assert.equal(s.sentence, 'LOOK WHERE GREEN GROWS BUT NEVER WALKS');
-  assert.equal(s.station, 'Plant');
+  assert.equal(s.picture, 'Plant');
   assert.deepEqual(s.missing.map((w) => w.text), ['GROWS']);
 });
 
@@ -86,9 +63,41 @@ test('tally counts votes and the house wins only when both killers are the clear
   assert.equal(miss.houseWins, false);
 });
 
-test('cardsAtStation lists every card routed to a station for a stage', () => {
-  const cards = logic.cardsAtStation(data, 'Sofa', 0);
-  assert.deepEqual(cards.map((c) => c.id).sort(), ['corvus', 'finch']);
+test('rumourFor prints the whisper only when its unnamed subject is present', () => {
+  const card = data.characters.find((c) => c.id === 'finch').cards['1.1'];
+  assert.equal(card.rumour.about, 'vane');
+  assert.equal(logic.rumourFor(card, ['finch', 'vane']).text, card.rumour.text);
+  assert.equal(logic.rumourFor(card, ['finch']), null);
+});
+
+test('every card carries a whisper about someone else who is never named in it', () => {
+  for (const c of data.characters) {
+    for (const sid of data.STAGE_IDS) {
+      const r = c.cards[sid].rumour;
+      assert.ok(r && r.text, `${c.id} ${sid} has no whisper`);
+      assert.notEqual(r.about, c.id, `${c.id} ${sid} whisper is about themselves`);
+      const subject = data.characters.find((x) => x.id === r.about);
+      for (const word of [subject.short, ...subject.name.split(/[\s,]+/).filter((w) => w.length > 3 && /^[A-Z]/.test(w))]) {
+        assert.ok(!r.text.includes(word), `${c.id} ${sid} whisper names ${word}`);
+      }
+    }
+  }
+});
+
+test('stage 3.4 is the box: last stage, leads to the letter, killers know the hiding place', () => {
+  const last = data.stages[data.stages.length - 1];
+  assert.equal(last.id, '3.4');
+  assert.equal(last.setPieceAfter, 'lastLetter');
+  assert.equal(data.setPieces.lastLetter.cue, 'The box is open');
+  assert.deepEqual(logic.voiceGroup(data, 'set-lastLetter').map((l) => l.voice), ['delilah']);
+  for (const id of data.killerIds) {
+    const card = data.characters.find((c) => c.id === id).cards['3.4'];
+    assert.match(card.text, /rabbit hat/);
+    assert.ok(card.sabotage, `${id} has orders for the box`);
+  }
+  const r = logic.buildRoster(data, selectionWithout('silas'));
+  const hint = logic.orphanedClues(data, r, '3.4');
+  assert.deepEqual(hint.map((h) => h.kind), ['key hint']);
 });
 
 test('formatRemaining renders mm:ss, flags urgency and overrun', () => {

@@ -4,14 +4,9 @@ const logic = require('../js/logic.js');
 const problems = [];
 const fail = (msg) => problems.push(msg);
 
-// Stations and riddles
-for (const s of data.STATIONS) {
-  if (!data.riddles[s] || data.riddles[s].length !== 3) fail(`riddles for ${s} must have 3 variants`);
-}
-
 // Scenes and stages
 if (!data.scenes || data.scenes.length !== 3) fail('expected 3 scenes');
-if (!data.stages || data.stages.length !== 9) fail('expected 9 stages');
+if (!data.stages || data.stages.length !== 10) fail('expected 10 stages');
 (data.stages || []).forEach((st, i) => {
   if (st.id !== data.STAGE_IDS[i]) fail(`stage ${i} id should be ${data.STAGE_IDS[i]}`);
   if (!st.narration || !st.narration.length) fail(`stage ${st.id} has no narration`);
@@ -37,19 +32,19 @@ chars.forEach((c) => {
   if (c.cards && c.cards['3.3'] && !c.cards['3.3'].alibi) fail(`${c.id} 3.3 has no alibi`);
 });
 
-// Routing: 2 cards per station per stage, 3 where Luna lands
-for (let s = 0; s < 9; s++) {
-  const perStation = {};
-  chars.forEach((c) => {
-    const st = logic.stationFor(c, s);
-    perStation[st] = (perStation[st] || 0) + 1;
-  });
-  const lunaStation = logic.stationFor({ id: 'luna', index: 12 }, s);
-  for (const st of data.STATIONS) {
-    const expected = st === lunaStation ? 3 : 2;
-    if (perStation[st] !== expected) fail(`stage ${s} station ${st} has ${perStation[st]} cards, expected ${expected}`);
+// Whispers: one per card, about someone else
+chars.forEach((c) => {
+  for (const sid of data.STAGE_IDS) {
+    const r = c.cards && c.cards[sid] && c.cards[sid].rumour;
+    if (!r || !r.text) fail(`${c.id} ${sid} has no whisper`);
+    else if (!ids.has(r.about) || r.about === c.id) fail(`${c.id} ${sid} whisper subject invalid`);
   }
-}
+});
+
+// The box
+if (!data.box || !data.box.hidingPlace || !data.box.letter || !data.box.letter.text) fail('box incomplete');
+if (!data.setPieces.lastLetter) fail('missing lastLetter set piece');
+chars.filter((c) => c.killer).forEach((c) => { if (!c.cards['3.4'] || !c.cards['3.4'].sabotage) fail(`${c.id} 3.4 has no orders for the box`); });
 
 // Ledger
 const ledger = data.ledger || [];
@@ -76,7 +71,7 @@ for (const team of ['delilah', 'victor']) {
     const env = data.teamEnvelopes && data.teamEnvelopes[team] && data.teamEnvelopes[team][sid];
     if (!env) fail(`missing team envelope ${team} ${sid}`);
     else if (env.sentence !== sentence) fail(`team ${team} ${sid} sentence mismatch: "${sentence}" vs "${env.sentence}"`);
-    else if (!data.STATIONS.includes(env.station)) fail(`team ${team} ${sid} station invalid`);
+    else if (!data.PICTURES.includes(env.picture)) fail(`team ${team} ${sid} picture invalid`);
   }
 }
 
