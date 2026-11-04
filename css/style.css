@@ -372,6 +372,9 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .sheet h3 { color: #000; text-shadow: none; }
   .guide h3 { font-size: 12.5pt; margin: 10pt 0 2pt; break-after: avoid; page-break-after: avoid; }
   .guide .gs-stage p { margin: 3pt 0; }
+  /* A stage, a section or a table is never split across two pages: the host reads each one whole. */
+  .guide .gs-stage, .guide .gs-block, .guide table, .guide tr { break-inside: avoid; page-break-inside: avoid; }
+  .guide h2 + .gs-block, .guide h2 + .gs-stage { break-before: avoid; page-break-before: avoid; }
   .guide .gs-stage table th { width: 22%; }
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }

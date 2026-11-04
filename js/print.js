@@ -175,9 +175,9 @@
 
   function stageByStage() {
     const li = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
-    const parts = [`<h2>How the hosts split the night</h2>${li(HOST_SPLIT)}`,
+    const parts = [`<div class="gs-block"><h2>How the hosts split the night</h2>${li(HOST_SPLIT)}</div>`,
       `<h2>Stage by stage</h2>`,
-      `<h3>Prologue · The Toast</h3>${li(['Press "Begin the night". Victor gives the toast.', 'Delilah drinks and falls. Corvus pronounces her dead.', 'Press "She is dead". Victor sends everyone to their envelopes.'])}`];
+      `<div class="gs-stage"><h3>Prologue · The Toast</h3>${li(['Press "Begin the night". Victor gives the toast.', 'Delilah drinks and falls. Corvus pronounces her dead.', 'Press "She is dead". Victor sends everyone to their envelopes.'])}</div>`];
     data.stages.forEach((st) => {
       let extra = '';
       if (st.id === '2.3') extra = `<p><strong>The ledger, in order:</strong> ${data.ledger.map((x) => `${x.number} ${esc(charById(x.holder).short)}`).join(' · ')}</p>`;
@@ -186,19 +186,19 @@
       if (st.id === '3.4') extra = `<p><strong>Answer:</strong> the true key is in ${esc(data.box.hidingPlace)}, behind a small door at waist height. ${esc(data.box.rule)} ${data.killerIds.map((id) => `${esc(charById(id).short)}: ${esc(charById(id).cards['3.4'].sabotage.split('. ')[0])}.`).join(' ')}</p>`;
       parts.push(`<div class="gs-stage"><h3>${esc(st.id)} ${esc(st.title)} · ${esc(KIND[st.kind] || st.kind)}</h3>${li(st.run || [])}<p><em>Notes:</em> ${esc(st.hostNotes)}</p>${extra}</div>`);
     });
-    parts.push(`<h3>Vote and reveal</h3>${li(['Everyone names two suspects in secret. Enter the votes.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}`);
+    parts.push(`<div class="gs-stage"><h3>Vote and reveal</h3>${li(['Everyone names two suspects in secret. Enter the votes.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}</div>`);
     return parts.join('');
   }
 
   function guide(roster) {
     roster = roster || logic.buildRoster(data, { presentIds: data.characters.map((c) => c.id) });
-    const killers = data.killerIds.map((id) => charById(id)).map((c) => `<h2>${c.symbol} ${esc(c.name)}</h2><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul>`).join('');
+    const killers = data.killerIds.map((id) => charById(id)).map((c) => `<div class="gs-block"><h3>${c.symbol} ${esc(c.name)}</h3><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul></div>`).join('');
     const sentences = ['3.1', '3.2'].map((sid) => ['delilah', 'victor'].map((team) => { const ts = logic.teamSentence(data, roster, team, sid); return `<li><strong>${sid} ${teamLabel(team)}:</strong> ${esc(ts.sentence)} → the ${esc(ts.picture)} envelope</li>`; }).join('')).join('');
     const alibis = data.characters.map((c) => `<li><strong>${c.symbol} ${esc(c.short)}:</strong> “${esc(c.cards['3.3'].alibi)}”${c.cards['3.3'].lie ? ` <strong>LIE.</strong> ${esc(c.cards['3.3'].lie)}` : ''}</li>`).join('');
     const orphans = data.STAGE_IDS.map((sid) => logic.orphanedClues(data, roster, sid).map((o) => `<li><strong>${sid} · ${o.symbol} ${esc(o.name)} (${o.kind}):</strong> ${esc(o.text)}</li>`).join('')).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
-      <h2>Night-of checklist</h2>
+      <div class="gs-block"><h2>Night-of checklist</h2>
       <ol>
         <li>Print all packs. Cut the cards. Glue a cover on each of the nineteen envelopes: thirteen guests and six pictures. The Clock and Mirror envelopes are decoys and stay empty.</li>
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
@@ -208,14 +208,14 @@
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
         <li>Victor gives the toast. Delilah dies. Play.</li>
-      </ol>
+      </ol></div>
       ${stageByStage()}
-      <h2>What goes in each guest's envelope</h2><ul>${stocking()}</ul>
-      <h2>The box</h2><p>True key: ${esc(data.box.hidingPlace)}. ${esc(data.box.rule)}</p>
-      <h2>Team sentences</h2><ul>${sentences}</ul>
+      <div class="gs-block"><h2>What goes in each guest's envelope</h2><ul>${stocking()}</ul></div>
+      <div class="gs-block"><h2>The box</h2><p>True key: ${esc(data.box.hidingPlace)}. ${esc(data.box.rule)}</p></div>
+      <div class="gs-block"><h2>Team sentences</h2><ul>${sentences}</ul></div>
       <h2>The killers and their orders</h2>${killers}
-      <h2>Alibis</h2><ul>${alibis}</ul>
-      <h2>Absent guests (current roster): the ghost delivers these</h2><ul>${orphans || '<li>None. Everyone is present.</li>'}</ul>
+      <div class="gs-block"><h2>Alibis</h2><ul>${alibis}</ul></div>
+      <div class="gs-block"><h2>Absent guests (current roster): the ghost delivers these</h2><ul>${orphans || '<li>None. Everyone is present.</li>'}</ul></div>
     </div>`;
   }
 
