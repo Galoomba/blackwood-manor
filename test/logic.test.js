@@ -50,7 +50,7 @@ test('teamSentence orders words and flags missing holders', () => {
   const s = logic.teamSentence(data, r, 'delilah', '3.1');
   assert.equal(s.sentence, 'LOOK WHERE GREEN GROWS BUT NEVER WALKS');
   assert.equal(s.picture, 'Plant');
-  assert.deepEqual(s.missing.map((w) => w.text), ['GROWS']);
+  assert.deepEqual(s.missing.map((w) => w.text), ['GREEN']);
 });
 
 test('tally counts votes and the house wins only when both killers are the clear top two', () => {

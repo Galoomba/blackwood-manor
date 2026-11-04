@@ -18,7 +18,8 @@
       <h2>Your public line (say it to everyone)</h2><div class="boxed">“${esc(c.intro.publicLine)}”</div>
       <h2>How the night works</h2>
       <p>Every guest has an envelope on the table with their own picture on it. At each stage, take only the top card from <strong>your</strong> envelope (${c.symbol} ${esc(c.short)}) and check its stage number. Never look further down the pile, and never open anyone else's envelope. Read your cards privately unless the card says otherwise. Keep your cards; you will need them.</p>
-      <p>The foot of every card carries a whisper: something true about another guest, who is never named. Work out who it is about, and use it.</p>
+      <p>The foot of every card carries a whisper: something true about another guest, who is never named. Work out who it is about, and use it. Most cards also carry <strong>table talk</strong>: a question to raise aloud in the discussion. Raise it.</p>
+      <p>At the end, everyone names two suspects in secret. The house wins only if both killers are clearly the top two.</p>
     </div>`;
   }
 
@@ -59,7 +60,7 @@
   /* Envelope covers: one per guest with their portrait (their cards go inside, top card first),
      and the four picture envelopes for the team stages. */
   function covers() {
-    const guests = data.characters.map((c) => `<div class="cover"><img src="${c.image}" alt=""><div class="cv-name">${c.symbol} ${esc(c.name)}</div><div class="cv-note">Blackwood Manor · All Hallows' Eve<br>Take only the top card, one stage at a time</div></div>`);
+    const guests = data.characters.map((c) => `<div class="cover"><img src="${c.image}" alt=""><div class="cv-name">${c.symbol} ${esc(c.short)}</div><div class="cv-note">${esc(c.costume)}</div><div class="cv-note">Blackwood Manor · All Hallows' Eve<br>Take only the top card, one stage at a time</div></div>`);
     const pictures = data.PICTURES.map((p) => `<div class="cover picture">${root.BM.art[p]}<div class="cv-note">Blackwood Manor · only the host opens this, when a team names it</div></div>`);
     const all = [...guests, ...pictures];
     const pages = [];
@@ -104,7 +105,7 @@
     <div class="sheet"><h1>The box · stage 3.4</h1>
       <ol>
         <li>Fold the letter, seal it, and lock it in the box.</li>
-        <li>Put the true key inside ${esc(b.hidingPlace)}, and hide the hat itself somewhere out of sight. Its own clues only say "a black hat", "a conjuring set", "long ears".</li>
+        <li>Put the true key inside ${esc(b.hidingPlace)}, and hide the hat behind a small door at about waist height: a cupboard, cabinet or sideboard. Not high, not low, not under cushions: the guests' clues say so, and the killers will send people high and low.</li>
         <li>Hide the fake keys anywhere you like around the room.</li>
         <li>House rule, read out at the start of 3.4: ${esc(b.rule)}</li>
         <li>If the box opens, press "The box is open" and Delilah reads the letter. If time runs out, press "The box stays shut" and go to the vote.</li>
@@ -125,7 +126,7 @@
         <li>Print all packs. Cut the cards. Glue a cover on each of the seventeen envelopes: thirteen guests and four pictures.</li>
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
         <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; keep the four picture envelopes by you (or on the table, untouchable) and hand one over only when a team names the right picture. A wrong picture costs a minute.</li>
-        <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat hidden out of sight, fake keys hidden around the room.</li>
+        <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
         <li>Set who is present on the setup screen before printing the character packs. Remove absent guests' envelopes from the table.</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>

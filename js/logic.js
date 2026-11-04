@@ -32,7 +32,7 @@
       }
       if (stageId === '3.2' && c.witness) {
         const w = data.witnessCards[c.team];
-        out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.text });
+        out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.ghostIntro ? `${w.ghostIntro} ${w.text}` : w.text });
       }
       if (stageId === '3.3') out.push({ ...base, kind: 'alibi', text: card.alibi });
       if (stageId === '3.4' && !c.killer) out.push({ ...base, kind: 'key hint', text: card.text });

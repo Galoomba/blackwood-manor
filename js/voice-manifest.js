@@ -344,14 +344,15 @@
     "sign": {
       "src": "assets/voice/sign.mp3",
       "voice": "George",
-      "hash": "53ebff2fc598",
-      "duration": 18.297,
+      "hash": "fadad971cb76",
+      "duration": 20.248,
       "starts": [
         0,
-        1.916,
-        6.211,
-        12.701,
-        15.906
+        2.264,
+        6.444,
+        11.413,
+        14.687,
+        18.181
       ]
     },
     "victor-returns": {

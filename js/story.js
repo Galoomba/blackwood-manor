@@ -175,7 +175,7 @@
     {
       id: 'sign', chapter: 'VI. Strangers by candlelight', layout: 'duo', scene: 2, sfx: 'bell', voice: 'narrator', people: ['zora', 'krank'], killers: ['zora', 'krank'],
       title: 'The candles burn low',
-      text: 'Neither killer knew the other. Each learned only that someone else in the room had killed the other Blackwood. They found each other with a sign: two taps on the table, and the words, the candles burn low. And the answer: and the wax remembers. From then on, they lied for each other.'
+      text: 'Neither killer knew the other. Each learned only that someone else in the room had killed the other Blackwood. They found each other with words slipped into idle talk: the candles burn low. And the answer: the wax remembers. The butler said the first half all night, about the candles. From then on, they lied for each other.'
     },
     {
       id: 'second-ghost', chapter: 'VI. Strangers by candlelight', layout: 'risen', scene: 3, effect: 'ghost', sfx: 'ghost', voice: 'narrator',
