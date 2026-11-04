@@ -93,7 +93,8 @@ test('every slide and ghost line is recorded, and every clip file exists', () =>
 
 test('the introduction gives nothing away', () => {
   const killerWords = data.characters.filter((c) => c.killer).flatMap((c) => [c.short, c.name]);
-  const spoilers = [...killerWords, 'Victor', 'nightshade', 'jasmine', 'K-7', 'syringe', 'vial', 'ledger', 'needle', 'kettle'];
+  /* The hosts may be named (Victor and Delilah invite the guests); who dies, and how, may not. */
+  const spoilers = [...killerWords, 'nightshade', 'jasmine', 'K-7', 'syringe', 'vial', 'ledger', 'needle', 'kettle', 'Victor dies', 'Victor will die', 'second death'];
   for (const s of intro.slides) {
     const all = [s.title, s.kicker || '', s.text, ...(s.chips || []).map((c) => c.text)].join(' ');
     for (const w of spoilers) assert.ok(!all.includes(w), `${s.id} mentions "${w}"`);
