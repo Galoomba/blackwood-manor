@@ -27,7 +27,7 @@
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
       hostNotes: "Every player must state their observation aloud. Absent characters' observations are listed below for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",
-      announcement: { speaker: 'Victor (alive, aloud)', text: "Enough. My sister died for a book. She tore its pages and hid them in this house so that no one of you could steal the whole of it. At midnight I will find every page and read every line, and if it ruins the name of Blackwood then let it. Nobody leaves this house before then. Nobody." },
+      announcement: { speaker: 'Victor (alive, aloud)', text: "Enough. My sister died for a book. She tore its pages and hid them among you so that no one of you could steal the whole of it. At midnight I will find every page and read every line, and if it ruins the name of Blackwood then let it. Nobody leaves this house before then. Nobody." },
       setPieceAfter: 'lightsOut'
     },
     {
@@ -66,7 +66,7 @@
       id: '3.3', scene: 3, title: 'The alibis', kind: 'individual',
       narration: [{ speaker: 'Both ghosts', text: "Nearly done. Each of you, find your alibi and read it aloud, word for word, no additions. Then compare it with everything you have heard tonight. Every liar makes one mistake." }],
       clue: 'Every liar makes one mistake.',
-      hostNotes: "Zora says she never left the fireplace; Silas (1.3) put her by the tray, Finch (3.2), Luna (3.1, a ringed hand at the lady's glass) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was by the garden door with Malachi; Malachi's alibi says he was alone. Then go on to the box."
+      hostNotes: "Zora says she never left the fireplace; Silas (1.3) put her by the tray, Finch (3.2: someone from the fireplace, jingling), Luna (3.1, a ringed hand at the lady's glass) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was by the garden door with Malachi; Malachi's alibi says he was alone. Then go on to the box."
     },
     {
       id: '3.4', scene: 3, title: 'The box', kind: 'group', searchOnly: true,
@@ -202,7 +202,7 @@
         '2.2': { text: 'Goal: redemption. If you name the killers before the ghosts do, the Yard might take you back. Before the final vote, get one other guest to say aloud that they trust you.' },
         '2.3': { text: 'Your ledger strip is number 11 (the retainer to Z.). Put it on the table and read it aloud.', ledger: 11 },
         '3.1': { text: 'Team Victor. You searched Victor when the lights returned: one pinprick on the neck. Not a bite. A needle.', word: { index: 1, text: 'THE' } },
-        '3.2': { text: "Team Victor. You remember now: just before the toast Madame Zora left the fireplace for the wine table \"to read the bottles' fortunes\" and stood over the glasses for a full minute. And the bribe note's writing puts a little circle over every i, like a crystal ball. Say both.", word: { index: 1, text: 'A' } },
+        '3.2': { text: "Team Victor. You remember now: just before the toast someone left a chair by the fireplace for the wine table and stood over the glasses for a full minute, jingling. You were watching the window, not the face. And the bribe note's writing puts a little circle over every i, like a crystal ball. Say both.", word: { index: 1, text: 'A' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was by the door, watching the window. When Victor fell I was in the dark like everyone else, and I heard someone laugh softly. I could not tell who.' },
         '3.4': { text: "Delilah's letter to you had a postscript you never understood: \"If anything happens to me, the key is where something always comes out that never went in.\" Say it aloud. And keep count: each guest may try the lock once." }
       }
@@ -311,7 +311,7 @@
       },
       cards: {
         '1.1': { text: 'You raised Victor and Delilah after their parents died. You know every creaking board. You set the glasses tonight and poured the lady\'s yourself. You counted them twice: thirteen.' },
-        '1.2': { text: 'You live here; nobody invited you. But last week Delilah showed you the ledger and asked, "Silas, did you know?" You did. You have always known. You showed her where to hide the pages.' },
+        '1.2': { text: 'You live here; nobody invited you. But last week Delilah showed you the ledger and asked, "Silas, did you know?" You did. You have always known. You helped her slip one page into each guest\'s envelope.' },
         '1.3': { text: "You poured the lady's glass, set it on the tray and turned away for one minute to fetch the cheese. When you turned back, three guests stood near the tray: the Witch, the cat woman and Madame Zora. Say this aloud." },
         '2.1': { text: 'You are Ezekiel Blackwood\'s grandson by Nurse Ashgrove. The true will, found with the ledger, leaves the manor to "my child by Nurse Ashgrove, and that child\'s heirs". That is you; Morgana comes from the nurse\'s later marriage. You never wanted it. You wanted Delilah to live. At seven you went down to the cellar to fetch the true will from its hiding place, and cried where your grandmother counted the dead.' },
         '2.2': { text: 'Goal: see the true will honoured, and tell Morgana Ashgrove, the witch, that she is your cousin. She does not know. Do it in character; cry if needed.' },
@@ -434,7 +434,7 @@
         '3.1': { text: 'Team Delilah. You are investigating yourself.', word: { index: 4, text: 'GROWS' }, sabotage: "When you give your word, say GLOWS instead of GROWS: \"where green glows\" sends your team to the Lamp or the Television. If they find the vial anyway, say the plant is where the doctor poured the glass, so the vial must be his." },
         '3.2': { text: 'Team Delilah. The mummy has been staring at you for an hour. He saw.', word: { index: 7, text: 'BACKBONE' }, sabotage: 'Before the witness card is read, announce that you foresaw the witness would lie: "the dead envy the living". Then take off your rings and pocket them. Too late, probably.' },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace. I never left it, not once, until she fell. When Victor fell I was holding the Witch\'s hand in the dark.', lie: 'You did leave the fireplace. The Inspector saw you. This is your lie. Sell it.' },
-        '3.4': { text: "You know where the true key is: in the rabbit hat, behind a little door at about waist height. You watched the lady hide it there this evening, before the toast, from the doorway. Her letter is in the box, and it all but names you. If the box opens before the vote, you are finished.", sabotage: "Foresee, loudly, that the key lies low: under the cushions, under the sofa, near the floor. Offer to fetch keys for others, and bring them the wrong ones. Lie as much as you like, but never touch, move or pocket the true key." }
+        '3.4': { text: "You know where the true key is: in the rabbit hat, behind a little door at about waist height. You watched the lady hide it there this evening, before the toast, through the garden window. Her letter is in the box, and it all but names you. If the box opens before the vote, you are finished.", sabotage: "Foresee, loudly, that the key lies low: under the cushions, under the sofa, near the floor. Offer to fetch keys for others, and bring them the wrong ones. Lie as much as you like, but never touch, move or pocket the true key." }
       }
     },
     {
@@ -478,7 +478,7 @@
         '2.2': { text: 'Goal: keep Selene out of trouble; she talks too much. And find out who "the poor man" is.' },
         '2.3': { text: 'Your ledger strip is number 12. Put it on the table and read it aloud. It is the line about W.K.', ledger: 12 },
         '3.1': { text: 'Team Delilah. You watch doors. The wine table stood before your door. Three people stood at it before the toast: the butler, who set the glasses; the witch, who waved a herb bundle; and a third who leaned over the lady\'s glass. You saw only their back, and their rings.', word: { index: 3, text: 'GREEN' } },
-        '3.2': { text: 'Team Delilah. Selene stole a handkerchief tonight. You saw whose sleeve it came from: the fortune teller\'s.', word: { index: 4, text: 'THAT' } },
+        '3.2': { text: 'Team Delilah. Selene stole a handkerchief tonight. You saw the sleeve it came from: a jingling one, and the hand below it was heavy with rings.', word: { index: 4, text: 'THAT' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was in the hallway doorway. When Victor fell I was holding Selene\'s hand in the dark. We were together.' },
         '3.4': { text: "At half past seven, from the hallway, you saw the lady carry something round and black into this room. A small door clicked shut, and she came out without it. Say so." }
       }
@@ -528,7 +528,7 @@
       '1.1': [{ about: 'edgar', text: "Edgar is 'recovering'. Tell the room, with a laugh, that he was a very interesting case, and ask him to recite a number for the guests." }, { about: 'corvus', text: "The plague doctor is no doctor; his diagnoses are nonsense. Ask him to name the bones of the hand." }],
       '1.2': [{ about: 'graves', text: "Victor was frightened for two months, and the undertaker's cart has stood in the drive for two months too. Ask Mr. Graves why he arrives early." }],
       '1.3': [{ about: 'malachi', text: "The Cultist was alone in the garden before the party. Ask him who he was talking to, and watch whether he says 'the hedge'." }],
-      '2.1': [{ about: 'vane', text: "You need the room looking at Graves. Ask the Hunter, loudly, whether a vampire could cross a dark room in four steps. She will say yes. Good." }],
+      '2.1': [{ about: 'vane', text: "You need the room looking at Graves. Ask the Hunter, loudly, whether a vampire could find a man in the dark by smell alone. She will say yes. Good." }],
       '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why. Keep the room on poison and glasses, never on needles." }],
       '2.3': [{ about: 'zora', text: "Strip 10 names a broker, Z. Ask Madame Zora what 'ten percent per soul' pays for these days. If she laughs, she may be more useful than she looks." }],
       '3.1': [{ about: 'vane', text: "The Hunter is sure it was a vampire. Agree with her, loudly, and ask her to describe the bite she expects to find. The longer she talks, the better." }],
@@ -637,10 +637,10 @@
       '1.2': [{ about: 'khamun', text: "The mummy stood in the hallway corner the whole hour. Ask him what he saw from there; you saw his bandages move." }, { about: 'corvus', text: "The plague doctor arrived last and left the hall first. Ask him where he went." }],
       '1.3': [{ about: 'malachi', text: "Victor argued with someone in the hallway about 'the poor man'. Ask the room who came in from the garden before the toast." }],
       '2.1': [{ about: 'malachi', text: "The client signs 'a friend of the Order'. One man here says 'the Order' every third sentence. Ask him how his gold is doing." }],
-      '2.2': [{ about: 'edgar', text: "'The poor man.' The accountant looks poor enough. Ask Edgar what Victor meant to end." }, { about: 'krank', text: "Ask Dr. Krank who 'the poor man' is. She was there when Victor said it." }],
+      '2.2': [{ about: 'edgar', text: "'The poor man.' The accountant looks poor enough. Ask Edgar what Victor meant to end." }, { about: 'corvus', text: "Ask Dr. Corvus who 'the poor man' is. Doctors know their patients." }],
       '2.3': [{ about: 'krank', text: "Strip 12 is yours: the laboratory. Ask the room who W.K. is. Somebody here knows." }],
       '3.1': [{ about: 'zora', text: "Three people stood at the wine table. You saw the third one's rings. Ask everyone to lay their hands on the table, palms down." }],
-      '3.2': [{ about: 'zora', text: "The handkerchief came from the fortune teller's sleeve. Say so, once, clearly, and then let the mummy speak." }],
+      '3.2': [{ about: 'zora', text: "The handkerchief came from a jingling sleeve over a hand heavy with rings. Say so, once, clearly, and then let the mummy speak." }],
       '3.3': [{ about: 'selene', text: "Your alibi matches Selene's exactly. If anyone calls that suspicious, ask them which two alibis in this room do not match." }],
       '3.4': [{ about: 'selene', text: "Ask Selene what was written on the note in the lady's bag. She reads everything she steals." }]
     }
