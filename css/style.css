@@ -334,24 +334,34 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .sheet li, .sheet .boxed { break-inside: avoid; page-break-inside: avoid; }
   .sheet .portrait { float: right; width: 45mm; aspect-ratio: 3/4; object-fit: cover; border: 1px solid #000; margin: 0 0 6mm 6mm; }
   .sheet .boxed { border: 1px solid #000; padding: 6pt 8pt; margin: 8pt 0; }
-  /* Fixed-size grid: fits A4 and Letter with any sane printer margin, rows can never grow. */
-  .card-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 0; height: 250mm; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
-  .card { border: 1px dashed #666; padding: 5mm 6mm; font-size: 10.5pt; line-height: 1.35; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
-  .card .head { display: flex; justify-content: space-between; font-size: 9pt; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid #000; padding-bottom: 3pt; margin-bottom: 5pt; }
-  .card .word { font-size: 20pt; font-weight: bold; text-align: center; margin: 4pt 0; letter-spacing: 0.1em; }
-  .card .sab { border: 2px solid #000; padding: 4pt 6pt; margin-top: 5pt; font-size: 9.5pt; }
+  /* A sheet of four cards is sized from the page WIDTH, never in fixed millimetres, and its text scales
+     with it (cqw = 1% of the sheet's width). Phones print at their own scale and margins (an iPhone lays a
+     page out about 18% larger than Chrome), so a fixed 250mm sheet ran onto a second page there. Now every
+     browser gets the same proportions: 186mm wide x 238mm tall on a desktop A4 page, and short enough to fit the squatter Letter and phone pages. */
+  /* Intro sheets fit one page even on a phone's smaller print area; the rules never split. */
+  .sheet.intro { font-size: 11pt; line-height: 1.4; }
+  .sheet.intro .intro-rules { break-inside: avoid; page-break-inside: avoid; }
+  /* Character symbols at fixed sizes only (see sym() in js/print.js). */
+  .sheet .sym { font-size: 10pt; font-style: normal; }
+  .sheet h1 .sym, .cover .cv-name .sym { font-size: 18pt; }
+  .card-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 0; width: 100%; aspect-ratio: 186 / 238; container-type: inline-size; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  .card { border: 1px dashed #666; padding: 1.35em 1.62em; font-size: 1.9cqw; line-height: 1.32; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  .card .head { display: flex; justify-content: space-between; font-size: 0.857em; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid #000; padding-bottom: 0.33em; margin-bottom: 0.55em; }
+  .card .word { font-size: 1.905em; font-weight: bold; text-align: center; margin: 0.2em 0; letter-spacing: 0.1em; }
+  .card .sab { border: 2px solid #000; padding: 0.4em 0.6em; margin-top: 0.5em; font-size: 0.905em; }
   .card .sab::before { content: 'SECRET ORDERS: '; font-weight: bold; }
-  .card .talk { border-left: 3px solid #000; padding: 2pt 0 2pt 6pt; margin-top: 5pt; font-size: 9.5pt; }
+  .card .talk { border-left: 3px solid #000; padding: 0.2em 0 0.2em 0.6em; margin-top: 0.5em; font-size: 0.905em; }
   .card .talk::before { content: 'TABLE TALK: '; font-weight: bold; letter-spacing: 0.05em; }
-  .card .whisper { margin-top: auto; border-top: 1px solid #000; padding-top: 4pt; font-style: italic; font-size: 9.5pt; }
+  .card .whisper { margin-top: auto; border-top: 1px solid #000; padding-top: 0.4em; font-style: italic; font-size: 0.905em; }
   .card .whisper::before { content: 'A WHISPER: '; font-style: normal; font-weight: bold; letter-spacing: 0.05em; }
   /* Envelope covers: two per page, cut in half to fit a C5 envelope. */
-  .cover-grid { display: grid; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); height: 250mm; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
-  .cover { border: 1px dashed #666; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4mm; min-height: 0; overflow: hidden; padding: 6mm; text-align: center; }
-  .cover img { height: 80mm; aspect-ratio: 3/4; object-fit: cover; border: 2px solid #000; }
-  .cover svg { height: 85mm; width: 85mm; }
-  .cover .cv-name { font-size: 22pt; font-weight: bold; }
-  .cover .cv-note { font-size: 10pt; font-style: italic; letter-spacing: 0.05em; }
+  /* Covers are sized from the page width too, for the same reason as the card sheets. */
+  .cover-grid { display: grid; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); width: 100%; aspect-ratio: 186 / 238; container-type: inline-size; overflow: hidden; break-inside: avoid; page-break-inside: avoid; }
+  .cover { border: 1px dashed #666; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.15cqw; min-height: 0; overflow: hidden; padding: 3.2cqw; text-align: center; font-size: 1.9cqw; }
+  .cover img { height: 35cqw; aspect-ratio: 3/4; object-fit: cover; border: 2px solid #000; }
+  .cover svg { height: 44cqw; width: 44cqw; }
+  .cover .cv-name { font-size: 4.17cqw; font-weight: bold; }
+  .cover .cv-note { font-size: 1.9cqw; font-style: italic; letter-spacing: 0.05em; }
   .letter { font-size: 12.5pt; line-height: 1.6; padding: 10mm 8mm; }
   .letter h1 { font-style: italic; }
   .letter .lt-outside { text-transform: uppercase; letter-spacing: 0.15em; font-size: 9pt; border-bottom: 1px solid #000; padding-bottom: 3pt; }
