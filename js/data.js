@@ -152,7 +152,7 @@
       sound: 'death',
       lines: [
         { speaker: 'Stage direction', text: "Blackout. Victor collapses. Four seconds of dark, then still. When the lights return, Delilah's ghost speaks to everyone." },
-        { speaker: 'Narrator', text: "The candles died all at once. Somewhere in the dark a glass broke, and something heavier followed it. When the light crept back, Victor Blackwood lay still on the floor of his own house. The master of Blackwood Manor had followed his sister. And now, for the first time tonight, every one of you could hear her." }
+        { speaker: 'Narrator', text: "The lights died all at once. Somewhere in the dark a glass broke, and something heavier followed it. When the light crept back, Victor Blackwood lay still on the floor of his own house. The master of Blackwood Manor had followed his sister. And now, for the first time tonight, every one of you could hear her." }
       ]
     },
     twoGhosts: {
@@ -476,7 +476,7 @@
         '2.1': { text: 'You have not fed in six years. You are very tired, and the hunter\'s stake is, you are fairly sure, a chair leg. Your secret: you wept when Delilah fell. Vampires are not supposed to. Keep it to yourself; it is embarrassing.' },
         '2.2': { text: 'Goal: survive the hunter until dawn and see the ledger burned. When she corners you, admit what you are, but only if she asks nicely.' },
         '2.3': { text: 'Your ledger strip is number 2, with your own note in the margin. Put it on the table and read it, including the margin.', ledger: 2 },
-        '3.1': { text: "Team Delilah. You knelt beside the lady when she fell. Her lips were dark, and under the jasmine her breath was bitter. You smelled that bitterness in the cellar in 1916. Nightshade. Say so.", word: { index: 5, text: 'NEVER' } },
+        '3.1': { text: "Team Delilah. You knelt beside the lady when she fell. Her lips were dark, and under the jasmine her breath was bitter. You know that smell from a hundred deathbeds. Nightshade. Say so.", word: { index: 5, text: 'NEVER' } },
         '3.2': { text: "Team Delilah. In 1916 the broker who found the dying for this house wore five rings and smelled of jasmine; you remember, because she never once looked at the dead. Tonight someone at this table smells exactly the same. Say so.", word: { index: 5, text: 'NO' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was by the curtains and the hunter was watching me; ask her. When Victor fell I was by the window with the hunter beside me. We did not move.' },
         '3.4': { text: "When the lady asked you to help burn the ledger, she said: \"If I am gone, the key is in Victor's best trick, behind a door he was never allowed to open as a boy.\" You never saw Victor do a trick. Ask who did." }
@@ -751,7 +751,7 @@
       { about: 'graves', text: "One guest left this house with a cart every All Hallows' Eve from 1916 to 1918." },
       { about: 'finch', text: "One guest was hired by the dead lady and paid by somebody else." },
       { about: 'zora', text: "One guest has not once looked at the mummy tonight. She knows exactly where he is standing." },
-      { about: 'krank', text: "One guest's coat smells faintly of ether. The undertaker noticed; undertakers notice." },
+      { about: 'krank', text: "One guest's coat smells faintly of ether. The Hunter noticed; hunters notice." },
       { about: 'malachi', text: "One guest swears he was alone when the lights went out. He is, unusually, telling the truth." },
       { about: 'vane', text: "One guest swore to stake a vampire tonight and has started to like him instead." }
     ],

@@ -199,14 +199,14 @@
       title: "Madame Zora's mistakes",
       chips: [
         { text: 'Jasmine in the glass · Corvus' },
-        { text: 'At the wine table a full minute · Finch' },
-        { text: 'Rings wiped on a handkerchief · Silas' },
+        { text: 'Her chair empty, someone at the wine table · Morgana, Finch' },
+        { text: "The 1916 broker's rings and scent · Graves" },
         { text: 'Purple-stained handkerchief · Selene' },
         { text: 'Brown vial in the plant · Team Delilah' },
         { text: 'Five rings over the glass · Khamun' },
         { text: "'I never left the fireplace'", lie: true }
       ],
-      text: 'Every liar makes one mistake. Madame Zora made seven. The doctor smelled jasmine, the Inspector saw her at the wine table, the butler saw the rings wiped, the cat stole the stained handkerchief, Team Delilah found the vial, and the mummy saw it all. Then she swore she had never left the fireplace.'
+      text: 'Every liar makes one mistake. Madame Zora made seven. The doctor smelled jasmine, the Witch saw her chair empty while the Inspector watched someone stand over the glasses, the undertaker knew her grandmother\'s rings and scent from 1916, the cat stole the stained handkerchief, Team Delilah found the vial, and the mummy saw it all. Then she swore she had never left the fireplace.'
     },
     {
       id: 'krank-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['krank'], killers: ['krank'],

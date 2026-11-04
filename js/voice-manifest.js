@@ -372,13 +372,13 @@
     "zora-proof": {
       "src": "assets/voice/zora-proof.mp3",
       "voice": "George",
-      "hash": "a1aa82183109",
-      "duration": 18.019,
+      "hash": "a9d13345ea00",
+      "duration": 24.938,
       "starts": [
         0,
-        2.473,
-        4.075,
-        15.464
+        2.299,
+        4.423,
+        22.209
       ]
     },
     "krank-proof": {
@@ -869,14 +869,14 @@
     "set-lightsOut-1": {
       "src": "assets/voice/set-lightsOut-1.mp3",
       "voice": "George",
-      "hash": "ea661533324b",
-      "duration": 17.972,
+      "hash": "70f036b02e7b",
+      "duration": 17.926,
       "starts": [
         0,
-        2.287,
-        6.478,
-        11.157,
-        14.117
+        1.927,
+        6.026,
+        11.088,
+        14.118
       ]
     },
     "set-twoGhosts-1": {
