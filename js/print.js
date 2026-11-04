@@ -113,6 +113,34 @@
     </div>`;
   }
 
+  /* The host's run sheet: headlines and what has to happen, in order, on two pages. */
+  function runSheet() {
+    const row = (head, sub, items) => `<tr><th>${head}${sub ? `<br><small>${esc(sub)}</small>` : ''}</th><td><ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></td></tr>`;
+    const kind = { individual: 'On your own', group: 'Find alone, solve together', team: 'Teams' };
+    const before = row('Before', 'the guests arrive', [
+      'Set who is present on the setup screen, then print.',
+      'Lay the guests\' envelopes on the table, 1.1 on top. Keep the four picture envelopes with you.',
+      'The box: letter locked inside. Put the true key in the rabbit hat, and the hat behind a small door at waist height. Hide the fake keys around the room.',
+      'Laptop: open the site. TV: press "Open TV screen", click it once, press F.',
+      'Hand out the intro sheets at the door. Optional: "Introduce the game".'
+    ]);
+    const prologue = row('Prologue', 'The Toast', [
+      'Press "Begin the night". Victor gives the toast from the screen.',
+      'Delilah drinks and falls. Corvus pronounces her dead.',
+      'Press "She is dead". Victor sends everyone to their envelopes.'
+    ]);
+    const loop = '<p class="rs-loop"><strong>Every stage:</strong> the ghost speaks → <strong>Cards out</strong> (everyone takes the top card) → <strong>Start discussion</strong> → <strong>End discussion</strong> → <strong>Next stage</strong>. The host panel shows absent guests\' lines and the answers.</p>';
+    const rows = data.stages.map((st) => row(`${esc(st.id)} ${esc(st.title)}`, kind[st.kind], st.run || []));
+    const end = row('Vote', 'and reveal', [
+      'Everyone names two suspects in secret. Enter the votes.',
+      'Press "Reveal". The ghosts name the killers.',
+      'Optional: "Tell the whole story".'
+    ]);
+    const scene = (n) => `<tr class="rs-scene"><td colspan="2">Scene ${n}: ${esc(data.scenes[n - 1].title)}</td></tr>`;
+    const body = [before, prologue, scene(1), ...rows.slice(0, 3), scene(2), ...rows.slice(3, 6), scene(3), ...rows.slice(6), end].join('');
+    return `<div class="sheet runsheet"><h1>Host run sheet</h1><p><em>Blackwood Manor · what happens, in order. Answers and details are in the host guide and on the laptop.</em></p>${loop}<table>${body}</table></div>`;
+  }
+
   function guide(roster) {
     roster = roster || logic.buildRoster(data, { presentIds: data.characters.map((c) => c.id) });
     const killers = data.killerIds.map((id) => charById(id)).map((c) => `<h2>${c.symbol} ${esc(c.name)}</h2><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul>`).join('');
@@ -150,6 +178,7 @@
     if (kind === 'envelopes') return envelopes();
     if (kind === 'ledger') return ledger();
     if (kind === 'guide') return guide(roster);
+    if (kind === 'runsheet') return runSheet();
     return '';
   }
 
@@ -162,5 +191,5 @@
   }
 
   root.BM = root.BM || {};
-  root.BM.print = { open, build, characterPack, covers, envelopes, box, ledger, guide };
+  root.BM.print = { open, build, characterPack, covers, envelopes, box, ledger, guide, runSheet };
 })(window);

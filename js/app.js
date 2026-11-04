@@ -177,6 +177,7 @@
           el('button', { onclick: () => root.BM.print.open('envelopes') }, 'Team envelopes and witness cards'),
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
           el('button', { onclick: () => root.BM.print.open('box') }, "The box: Delilah's letter"),
+          el('button', { onclick: () => root.BM.print.open('runsheet') }, 'Host run sheet'),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
         )
       ),

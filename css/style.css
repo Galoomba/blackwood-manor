@@ -348,6 +348,15 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .strip .margin { border-right: 1px solid #000; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2mm; }
   .strip .candle-ink { width: 5mm; background: #000; }
   .strip .body { padding: 3mm 4mm; }
+  .runsheet h1 { font-size: 22pt; }
+  .runsheet .rs-loop { border: 2px solid #000; padding: 4pt 6pt; font-size: 10pt; }
+  .runsheet table { width: 100%; border-collapse: collapse; font-size: 9pt; line-height: 1.22; }
+  .runsheet th, .runsheet td { border: 1px solid #000; padding: 2pt 5pt; text-align: left; vertical-align: top; }
+  .runsheet th { width: 30%; }
+  .runsheet th small { font-weight: normal; font-style: italic; }
+  .runsheet ul { margin: 0; padding-left: 12pt; }
+  .runsheet tr { break-inside: avoid; page-break-inside: avoid; }
+  .runsheet .rs-scene td { background: #000; color: #fff; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }
 }

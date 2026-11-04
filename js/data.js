@@ -12,18 +12,21 @@
   const stages = [
     {
       id: '1.1', scene: 1, title: 'Who you are', kind: 'individual',
+      run: ["Introductions in character: public line and quirk only.", "Players keep their cards secret."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "Brother, I cannot see faces yet, only shapes. Make them tell me who they are. Each of them carries a lie they think is a costume. Let them find it. And brother: the glass that killed me was not the glass I was handed. The butler poured it. Someone else touched it." }],
       clue: 'The glass that killed me was not the glass I was handed.',
       hostNotes: 'Players read privately. Nobody shares anything except their public line and their quirk. Discussion is introductions in character.'
     },
     {
       id: '1.2', scene: 1, title: 'Why you came', kind: 'individual',
+      run: ["Each guest says why they came. Showing the invitation is optional."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "I wrote the letters that brought them. I told each of them a piece of the truth, enough to bring them. Ask them why they came, brother, and watch who lies. And know this: someone in this room was paid to be blind tonight. I do not know by whom. I only know the envelope was heavy." }],
       clue: 'Someone in this room was paid to be blind tonight.',
       hostNotes: 'Players may share their invitation if they wish. Finch will not want to.'
     },
     {
       id: '1.3', scene: 1, title: 'What you saw', kind: 'group',
+      run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Victor reads the midnight announcement aloud.", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
       hostNotes: "Every player must state their observation aloud. Absent characters' observations are listed below for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",
@@ -32,18 +35,21 @@
     },
     {
       id: '2.1', scene: 2, title: 'What you hide', kind: 'individual',
+      run: ["The two killers learn the truth on this card.", "Expect the vampire and the cat to be accused. Let it run."],
       narration: [{ speaker: "Delilah's ghost (to the room)", text: "You can hear me now. All of you. Good; I am tired of whispering. My brother lies there with one hole in his neck. Not two. Not teeth. My brother fell by a needle, not a fang. Each of you hides something. Tonight it comes out. Go and find what you are." }],
       clue: 'My brother fell by a needle, not a fang.',
       hostNotes: "The killers learn the truth on this card. Expect Krank to accuse Graves and Zora to blame the cat's jasmine. Let them."
     },
     {
       id: '2.2', scene: 2, title: 'What you want', kind: 'individual',
+      run: ["The killers get the secret sign.", "If Morgana asks a ghost for an apology, Victor gives one in front of everyone."],
       narration: [{ speaker: "Delilah's ghost", text: "Now I know what you hide. Tell me what you want, and I will tell you what I see. I see two hands did this, and they have not yet shaken. Two of you. Strangers. Looking for each other across this room right now." }],
       clue: 'Two hands did this, and they have not yet shaken.',
       hostNotes: 'Both killers now hold the secret sign: "the candles burn low" / "the wax remembers", worked into what they say. Silas says the first half innocently all night. Innocents have personal goals to play. Morgana will ask a ghost for an apology: Victor (the host) should give her one in front of everyone before the vote.'
     },
     {
       id: '2.3', scene: 2, title: 'The torn pages', kind: 'team',
+      run: ["Every strip goes on the table in candle order and is read aloud. Hand over absent guests' strips.", "Press “The second ghost rises”. Victor stands beside Delilah.", "Press “Victor speaks”. The teams form."],
       narration: [{ speaker: "Delilah's ghost", text: "I tore the ledger into thirteen pieces and put one in each of your envelopes before you came. You have carried it all night without knowing. Find your piece. Lay it down. All of them, on the table, in order; the candle in the margin burns lower on each. Then read my grandfather's confession aloud, together. Two of the lines on that page name the ones you seek. They will tell you the lines mean something else." }],
       clue: 'Two lines on that page name the ones you seek.',
       hostNotes: "Enforce: every strip on the table, nobody keeps one. Absent characters' strips are \"found in the walls\" by the ghost; hand them over. Expect Krank to say W.K. means Wellington & Keyes, the village chemist (to point at Corvus), and Zora to say Z. means Zeke. Selene reads Delilah's note (strip 1) aloud.",
@@ -51,6 +57,7 @@
     },
     {
       id: '3.1', scene: 3, title: 'The weapon', kind: 'team',
+      run: ["Each team says its words in order and names a picture.", "Hand over the picture envelope only if it is right; a wrong picture costs one minute.", "Stuck for 3 minutes? Whisper the sentence."],
       narration: [{ speaker: 'Both ghosts', text: "Find your words. Speak them in order. Go where the sentence sends you. What you find there is what killed us." }],
       clue: 'What killed us is still in this room.',
       hostNotes: "Only the host opens the picture envelopes: a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp or Television) and Krank SHADE instead of FACE (the Lamp).",
@@ -58,18 +65,21 @@
     },
     {
       id: '3.2', scene: 3, title: 'The witness', kind: 'team',
+      run: ["Same picture rule.", "Khamun and Edgar read the witness cards. The ghost reads for an absent reader."],
       narration: [{ speaker: 'Both ghosts', text: "Someone saw. Someone remembers. Find your words again. Go where the sentence sends you. Let the one named on the envelope read it, and let nobody interrupt." }],
       clue: 'The one who saw was never looked at.',
       hostNotes: 'Picture envelopes as in 3.1: the team names it, the host hands it over. Khamun reads the Team Delilah card; Edgar reads the Team Victor card. If either is absent, the matching ghost reads it (text below).'
     },
     {
       id: '3.3', scene: 3, title: 'The alibis', kind: 'individual',
+      run: ["Everyone reads their alibi aloud, word for word."],
       narration: [{ speaker: 'Both ghosts', text: "Nearly done. Each of you, find your alibi and read it aloud, word for word, no additions. Then compare it with everything you have heard tonight. Every liar makes one mistake." }],
       clue: 'Every liar makes one mistake.',
       hostNotes: "Zora says she never left the fireplace; Silas (1.3) put her by the tray, Finch (3.2: someone from the fireplace, jingling), Luna (3.1, a ringed hand at the lady's glass) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was by the garden door with Malachi; Malachi's alibi says he was alone. Then go on to the box."
     },
     {
       id: '3.4', scene: 3, title: 'The box', kind: 'group', searchOnly: true,
+      run: ["Read the house rule: one try at the lock each, and the killers may not touch the true key.", "Press “Start the key hunt” (10 min).", "Box open? Press “The box is open”, then 2 minutes of last words.", "Otherwise press “The box stays shut”."],
       narration: [{ speaker: "Delilah's ghost", text: "One more thing before you name them. I left a letter, locked in a box, for whoever was left. The key is somewhere in this room, and so are a great many keys that open nothing. Each of you may try the lock once, and only once. Look where I would hide something, not where a thief would. And do not trust everyone who helps you look." }],
       clue: 'Something always comes out that never went in.',
       hostNotes: "Before the night: hide the fake keys anywhere in the room, put the true key inside the rabbit hat and hide the hat behind a small door at about waist height (a cupboard, cabinet or sideboard: not high, not low, not under cushions), and lock Delilah's letter (print pack: The box) in the box. Each guest may try the lock once; count the tries out loud. Zora will send people low (cushions, under the sofa, the floor); Krank will send them high (the lamp, the shelves, the top of the cupboard) and call the hat 'far too obvious'. The killers may lie but may not touch, move or pocket the true key. When the box opens, press \"The box is open\" and Delilah reads her letter. If time runs out first, press \"The box stays shut\" and go to the vote.",

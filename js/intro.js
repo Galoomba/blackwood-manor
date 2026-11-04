@@ -55,8 +55,8 @@
     {
       id: 'intro-talk', chapter: 'Discussion', layout: 'evidence', scene: 2, voice: 'narrator',
       title: 'Then, talk',
-      chips: [{ text: 'Search timer' }, { text: 'Discussion timer' }, { text: 'Table talk on every card' }],
-      text: 'When the search timer runs out, the discussion begins. Question each other, share what you choose and accuse freely. Every card carries a little table talk about another guest. Use it. Stir the pot.'
+      chips: [{ text: 'Card time' }, { text: 'Discussion timer' }, { text: 'Table talk on every card' }],
+      text: 'When everyone has read their card, the discussion begins. Question each other, share what you choose and accuse freely. Every card carries a little table talk about another guest. Use it. Stir the pot.'
     },
     {
       id: 'intro-secrets', chapter: 'Discussion', layout: 'title', scene: 2, sfx: 'whisper', voice: 'narrator',

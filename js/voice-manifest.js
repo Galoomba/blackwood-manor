@@ -798,14 +798,14 @@
     "intro-talk": {
       "src": "assets/voice/intro-talk.mp3",
       "voice": "George",
-      "hash": "545a0bb8f80d",
-      "duration": 13.096,
+      "hash": "46e8072124e7",
+      "duration": 13.746,
       "starts": [
         0,
-        3.599,
-        7.477,
-        11.192,
-        11.958
+        3.669,
+        7.767,
+        11.517,
+        12.504
       ]
     },
     "intro-secrets": {
