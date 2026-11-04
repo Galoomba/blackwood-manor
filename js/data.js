@@ -34,7 +34,7 @@
       run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
-      hostNotes: "Every player must state their observation aloud. Absent characters' observations are listed below for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",
+      hostNotes: "Every player must state their observation aloud. Absent characters' observations are in the host panel for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",
       announcement: { speaker: 'Victor (alive, aloud)', text: "Enough. My sister died for a book. She tore its pages and hid them among you so that no one of you could steal the whole of it. At midnight I will find every page and read every line, and if it ruins the name of Blackwood then let it. Nobody leaves this house before then. Nobody." },
       setPieceAfter: 'lightsOut'
     },
@@ -78,7 +78,7 @@
       run: ["Same picture rule.", "Khamun and Edgar read the witness cards. The ghost reads for an absent reader."],
       narration: [{ speaker: 'Both ghosts', text: "Someone saw. Someone remembers. Find your words again. Go where the sentence sends you. Let the one named on the envelope read it, and let nobody interrupt." }],
       clue: 'The one who saw was never looked at.',
-      hostNotes: 'Picture envelopes as in 3.1: the team names it, the host hands it over. Khamun reads the Team Delilah card; Edgar reads the Team Victor card. If either is absent, the matching ghost reads it (text below).'
+      hostNotes: 'Picture envelopes as in 3.1: the team names it, the host hands it over. Khamun reads the Team Delilah card; Edgar reads the Team Victor card. If either is absent, the matching ghost reads it (text in the host panel).'
     },
     {
       id: '3.3', scene: 3, title: 'The alibis', kind: 'individual',

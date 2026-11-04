@@ -170,7 +170,7 @@
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Set who is present first: the character packs leave out whispers and table talk about absent guests. "Print everything" prints the whole pack in one go (about 76 pages): run sheet, host guide, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Set who is present first: the character packs leave out whispers and table talk about absent guests. "Print everything" prints the whole pack in one go (about 79 pages): run sheet, host guide, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
           el('button', { class: 'primary', onclick: () => root.BM.print.open('everything', null, game.roster()) }, 'Print everything'),

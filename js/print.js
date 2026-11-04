@@ -141,6 +141,54 @@
     return `<div class="sheet runsheet"><h1>Host run sheet</h1><p><em>Blackwood Manor · what happens, in order. Answers and details are in the host guide and on the laptop.</em></p>${loop}<table>${body}</table></div>`;
   }
 
+  /* The host guide's stage-by-stage section: how the two hosts split the night, then every stage with
+     what happens, the buttons, the notes and the answers, all drawn from the game data. */
+  const KIND = { individual: 'On your own', group: 'Whole room', team: 'Teams' };
+  const HOST_SPLIT = [
+    "Delilah's host dies at the toast and plays her ghost from then on. She runs the laptop all night: the buttons, the timers and the host panel.",
+    'Victor\'s host performs the toast, "She is dead" and the midnight announcement (or lets the recordings speak them), falls in the blackout after 1.3, and stays down as the body through Scene 2.',
+    'At "The second ghost rises" (after 2.3) Victor\'s host rises as his ghost. In Scene 3 each ghost stands with their own team and answers for it.',
+    'The recorded voices speak for the ghosts and the narrator; the hosts act, point, sigh and react. Mute "Ghost voice-over" to speak the lines yourselves.'
+  ];
+  const TEAM_STEPS = [
+    'Cards out: everyone takes their card. It shows their team word and its number, plus a personal clue to say aloud.',
+    "Each team says its words aloud in number order. The team's ghost says the words of absent teammates (host panel).",
+    "The team names one of the six pictures to its ghost. Right: hand over that envelope. Wrong: shake your head, and the team waits one minute.",
+    'Stuck for 3 minutes? The ghost whispers the full sentence. It also exposes the killer\'s wrong word.',
+    'Press +1 min as needed, then "Start discussion" once both teams have their evidence. Each team shows the room what it found.',
+    'Rules: everyone must say the word on their card; the killers may say it wrong. Nobody reads anyone else\'s card.'
+  ];
+
+  function teamTable(sid) {
+    const rows = ['delilah', 'victor'].map((team) => {
+      const env = data.teamEnvelopes[team][sid];
+      const words = data.characters.filter((c) => c.team === team && c.cards[sid].word)
+        .sort((a, b) => a.cards[sid].word.index - b.cards[sid].word.index)
+        .map((c) => `${c.cards[sid].word.index} ${esc(c.cards[sid].word.text)} (${esc(c.short)}${c.optional ? '*' : ''}${c.killer ? ', killer' : ''})`).join(' · ');
+      const killer = data.characters.find((c) => c.team === team && c.killer);
+      const trap = killer && killer.cards[sid].sabotage ? esc(killer.cards[sid].sabotage.split('. ')[0]) + '.' : '';
+      return `<tr><th>${teamLabel(team)}</th><td><strong>${esc(env.sentence)}</strong> → <strong>${esc(env.picture)}</strong><br><small>${words}</small><br>Inside: <strong>${esc(env.title)}</strong>. ${esc(env.text)}${trap ? `<br><em>${esc(killer.short)}'s trap:</em> ${trap}` : ''}</td></tr>`;
+    });
+    return `<table>${rows.join('')}</table><p><small>* optional guest. Decoys: ${data.DECOYS.map(esc).join(' and ')} (empty).</small></p>`;
+  }
+
+  function stageByStage() {
+    const li = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
+    const parts = [`<h2>How the hosts split the night</h2>${li(HOST_SPLIT)}`,
+      `<h2>Stage by stage</h2>`,
+      `<h3>Prologue · The Toast</h3>${li(['Press "Begin the night". Victor gives the toast.', 'Delilah drinks and falls. Corvus pronounces her dead.', 'Press "She is dead". Victor sends everyone to their envelopes.'])}`];
+    data.stages.forEach((st) => {
+      let extra = '';
+      if (st.id === '2.3') extra = `<p><strong>The ledger, in order:</strong> ${data.ledger.map((x) => `${x.number} ${esc(charById(x.holder).short)}`).join(' · ')}</p>`;
+      if (st.id === '3.1') extra = `<p><strong>How a team round runs (3.1 and 3.2):</strong></p><ol>${TEAM_STEPS.map((t) => `<li>${esc(t)}</li>`).join('')}</ol>${teamTable('3.1')}`;
+      if (st.id === '3.2') extra = teamTable('3.2') + `<p>Witness readers: ${['delilah', 'victor'].map((t) => `${esc(charById(data.witnessCards[t].reader).short)} (${teamLabel(t)}), or ${esc(data.witnessCards[t].ghost)}`).join('; ')}.</p>`;
+      if (st.id === '3.4') extra = `<p><strong>Answer:</strong> the true key is in ${esc(data.box.hidingPlace)}, behind a small door at waist height. ${esc(data.box.rule)} ${data.killerIds.map((id) => `${esc(charById(id).short)}: ${esc(charById(id).cards['3.4'].sabotage.split('. ')[0])}.`).join(' ')}</p>`;
+      parts.push(`<div class="gs-stage"><h3>${esc(st.id)} ${esc(st.title)} · ${esc(KIND[st.kind] || st.kind)}</h3>${li(st.run || [])}<p><em>Notes:</em> ${esc(st.hostNotes)}</p>${extra}</div>`);
+    });
+    parts.push(`<h3>Vote and reveal</h3>${li(['Everyone names two suspects in secret. Enter the votes.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}`);
+    return parts.join('');
+  }
+
   function guide(roster) {
     roster = roster || logic.buildRoster(data, { presentIds: data.characters.map((c) => c.id) });
     const killers = data.killerIds.map((id) => charById(id)).map((c) => `<h2>${c.symbol} ${esc(c.name)}</h2><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul>`).join('');
@@ -153,13 +201,14 @@
       <ol>
         <li>Print all packs. Cut the cards. Glue a cover on each of the nineteen envelopes: thirteen guests and six pictures. The Clock and Mirror envelopes are decoys and stay empty.</li>
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
-        <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; keep the four picture envelopes by you (or on the table, untouchable) and hand one over only when a team names the right picture. A wrong picture costs a minute.</li>
+        <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; keep the six picture envelopes by you, or on the table where nobody may touch them (Clock and Mirror are empty decoys), and hand one over only when a team names the right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
         <li>Set who is present on the setup screen before printing the character packs. Remove absent guests' envelopes from the table.</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
         <li>Victor gives the toast. Delilah dies. Play.</li>
       </ol>
+      ${stageByStage()}
       <h2>What goes in each guest's envelope</h2><ul>${stocking()}</ul>
       <h2>The box</h2><p>True key: ${esc(data.box.hidingPlace)}. ${esc(data.box.rule)}</p>
       <h2>Team sentences</h2><ul>${sentences}</ul>
