@@ -95,7 +95,10 @@
       const holder = charById(s.holder);
       return `<div class="strip"><div class="margin"><div class="candle-ink" style="height:${h}mm"></div></div><div class="body">${esc(s.text)}<br><small>holder: ${holder.symbol} ${esc(holder.short)} (put in their envelope, under the 2.3 card)</small></div></div>`;
     });
-    return `<div class="sheet"><h1>The Crimson Ledger</h1><p><em>Cut along the dashed lines. Each strip goes into its holder's envelope, under their 2.3 card. The candle in the margin orders the page: tallest first.</em></p>${strips.join('')}</div>`;
+    /* Two deliberate pages of strips, each with its own heading, so no page starts with stray strips. */
+    const half = Math.ceil(strips.length / 2);
+    const pages = [strips.slice(0, half), strips.slice(half)].filter((x) => x.length);
+    return pages.map((list, i) => `<div class="sheet"><h1>The Crimson Ledger${pages.length > 1 ? ` <small>· page ${i + 1} of ${pages.length}</small>` : ''}</h1><p><em>Cut along the dashed lines. Each strip goes into its holder's envelope, under their 2.3 card. The candle in the margin orders the page: tallest first.</em></p>${list.join('')}</div>`).join('');
   }
 
   /* Stage 3.4: the letter to lock in the box, and the host's setup notes. */
@@ -195,7 +198,11 @@
     const killers = data.killerIds.map((id) => charById(id)).map((c) => `<div class="gs-block"><h3>${c.symbol} ${esc(c.name)}</h3><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul></div>`).join('');
     const sentences = ['3.1', '3.2'].map((sid) => ['delilah', 'victor'].map((team) => { const ts = logic.teamSentence(data, roster, team, sid); return `<li><strong>${sid} ${teamLabel(team)}:</strong> ${esc(ts.sentence)} → the ${esc(ts.picture)} envelope</li>`; }).join('')).join('');
     const alibis = data.characters.map((c) => `<li><strong>${c.symbol} ${esc(c.short)}:</strong> “${esc(c.cards['3.3'].alibi)}”${c.cards['3.3'].lie ? ` <strong>LIE.</strong> ${esc(c.cards['3.3'].lie)}` : ''}</li>`).join('');
-    const orphans = data.STAGE_IDS.map((sid) => logic.orphanedClues(data, roster, sid).map((o) => `<li><strong>${sid} · ${o.symbol} ${esc(o.name)} (${o.kind}):</strong> ${esc(o.text)}</li>`).join('')).join('');
+    /* One block per stage, so a page only ever breaks between stages, never inside one. */
+    const orphans = data.STAGE_IDS.map((sid) => {
+      const items = logic.orphanedClues(data, roster, sid);
+      return items.length ? `<div class="gs-block"><h3>Stage ${sid}</h3><ul>${items.map((o) => `<li><strong>${o.symbol} ${esc(o.name)} (${o.kind}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
+    }).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
       <div class="gs-block"><h2>Night-of checklist</h2>
@@ -215,7 +222,7 @@
       <div class="gs-block"><h2>Team sentences</h2><ul>${sentences}</ul></div>
       <h2>The killers and their orders</h2>${killers}
       <div class="gs-block"><h2>Alibis</h2><ul>${alibis}</ul></div>
-      <div class="gs-block"><h2>Absent guests (current roster): the ghost delivers these</h2><ul>${orphans || '<li>None. Everyone is present.</li>'}</ul></div>
+      <div class="gs-absent"><h2>Absent guests (current roster): the ghost delivers these</h2>${orphans || '<ul><li>None. Everyone is present.</li></ul>'}</div>
     </div>`;
   }
 
