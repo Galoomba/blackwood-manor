@@ -2,7 +2,7 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
-  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning } = root.BM.ui;
+  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
   const rootNode = document.getElementById('tv-root');
   const ov = document.getElementById('overlay');
@@ -19,6 +19,7 @@
   /* ---------- rendering ---------- */
   let renderedKey = null;
   let typedStage = null;
+  let quotedStage = null;
 
   function viewKey(s) {
     return [s.screen, s.stageIndex, s.phase, s.screen === 'vote' ? JSON.stringify(s.votes) : '', s.sound, s.voiceOver].join('|');
@@ -64,11 +65,13 @@
       narr,
       clue,
       s.phase === 'done' && stage.announcement ? narrationNode([stage.announcement], { instant: true }) : null,
+      s.phase === 'done' ? quoteNode(stage.quote) : null,
       el('div', { class: 'tv-timer' + (s.timerEnd ? '' : ' hidden') },
         el('div', { class: 'timer', id: 'timer' }, '--:--'),
         el('div', { class: 'timer-label' }, s.phase === 'search' ? (stage.searchOnly ? 'Hunt for the key' : 'Cards out') : s.phase === 'discussion' ? 'Discussion' : '')
       )
     );
+    if (s.phase === 'done' && stage.quote && quotedStage !== stage.id) { quotedStage = stage.id; sfx('whisper'); }
     if (!alreadyTyped) {
       typedStage = stage.id;
       const group = voice.stageGroup(stage.id);

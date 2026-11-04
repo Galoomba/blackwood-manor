@@ -78,6 +78,11 @@
     l.classList.remove('flash'); void l.offsetWidth; l.classList.add('flash');
   }
 
+  /* The closing quote shown when a stage's discussion ends: a hint of the theme, never a detail. */
+  function quoteNode(q) {
+    return q ? el('figure', { class: 'stage-quote' }, el('blockquote', {}, `\u201c${q.text}\u201d`), el('figcaption', {}, `\u2014 ${q.source}`)) : null;
+  }
+
   root.BM = root.BM || {};
-  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning };
+  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode };
 })(window);

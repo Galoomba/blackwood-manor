@@ -124,6 +124,14 @@ label { display: block; }
 .voice-row { margin: 8px 0 12px; }
 .voice-row .voice-toggle.muted { border-color: var(--ink-dim); color: var(--ink-dim); }
 .overlay .voice-row { justify-content: center; margin-top: 18px; }
+.stage-quote { margin: 22px auto 6px; max-width: 680px; text-align: center; animation: quote-in 2.4s ease both; }
+.stage-quote blockquote { margin: 0; font-family: 'IM Fell English', Georgia, serif; font-style: italic; font-size: 24px; line-height: 1.4; color: var(--ink); text-shadow: 0 0 18px rgba(180, 160, 255, 0.25); }
+.stage-quote figcaption { margin-top: 8px; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); }
+@keyframes quote-in { from { opacity: 0; transform: translateY(8px); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+@media (prefers-reduced-motion: reduce) { .stage-quote { animation: none; } }
+body.tv .stage-quote { max-width: 1200px; margin-top: 5vh; }
+body.tv .stage-quote blockquote { font-size: clamp(30px, 3.6vw, 56px); }
+body.tv .stage-quote figcaption { font-size: clamp(14px, 1.4vw, 22px); }
 .clue { border-left: 3px solid var(--blood); padding: 10px 16px; background: rgba(143,29,44,0.15); font-style: italic; font-size: 20px; margin-top: 16px; }
 .phase-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; justify-content: center; }
 .timer { font-family: var(--font-display); font-size: clamp(56px, 12vw, 120px); text-align: center; color: var(--ink); line-height: 1; margin: 10px 0; letter-spacing: 0.05em; }

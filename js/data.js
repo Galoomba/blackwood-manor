@@ -12,6 +12,7 @@
   const stages = [
     {
       id: '1.1', scene: 1, title: 'Who you are', kind: 'individual',
+      quote: { text: "Every mask is honest about one thing: that something lies beneath it.", source: "Blackwood family saying" },
       run: ["Introductions in character: public line and quirk only.", "Players keep their cards secret."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "Brother, I cannot see faces yet, only shapes. Make them tell me who they are. Each of them carries a lie they think is a costume. Let them find it. And brother: the glass that killed me was not the glass I was handed. The butler poured it. Someone else touched it." }],
       clue: 'The glass that killed me was not the glass I was handed.',
@@ -19,6 +20,7 @@
     },
     {
       id: '1.2', scene: 1, title: 'Why you came', kind: 'individual',
+      quote: { text: "Nobody crosses this threshold by accident. The house sends for those it owes.", source: "carved above the front door" },
       run: ["Each guest says why they came. Showing the invitation is optional."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "I wrote the letters that brought them. I told each of them a piece of the truth, enough to bring them. Ask them why they came, brother, and watch who lies. And know this: someone in this room was paid to be blind tonight. I do not know by whom. I only know the envelope was heavy." }],
       clue: 'Someone in this room was paid to be blind tonight.',
@@ -26,6 +28,7 @@
     },
     {
       id: '1.3', scene: 1, title: 'What you saw', kind: 'group',
+      quote: { text: "The eyes see everything. The tongue decides what to keep.", source: "written in the margin of an old account book" },
       run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
@@ -35,6 +38,7 @@
     },
     {
       id: '2.1', scene: 2, title: 'What you hide', kind: 'individual',
+      quote: { text: "A secret is a candle carried in a closed fist. Sooner or later it burns the hand that hides it.", source: "Nurse Ashgrove's recipe book" },
       run: ["The two killers learn the truth on this card.", "Expect the vampire and the cat to be accused. Let it run."],
       narration: [{ speaker: "Delilah's ghost (to the room)", text: "You can hear me now. All of you. Good; I am tired of whispering. My brother lies there with one hole in his neck. Not two. Not teeth. My brother fell by a needle, not a fang. Each of you hides something. Tonight it comes out. Go and find what you are." }],
       clue: 'My brother fell by a needle, not a fang.',
@@ -42,6 +46,7 @@
     },
     {
       id: '2.2', scene: 2, title: 'What you want', kind: 'individual',
+      quote: { text: "Two strangers become friends the moment they want the same silence.", source: "scratched into the cellar wall" },
       run: ["The killers get the secret sign.", "If Morgana asks a ghost for an apology, Victor gives one in front of everyone."],
       narration: [{ speaker: "Delilah's ghost", text: "Now I know what you hide. Tell me what you want, and I will tell you what I see. I see two hands did this, and they have not yet shaken. Two of you. Strangers. Looking for each other across this room right now." }],
       clue: 'Two hands did this, and they have not yet shaken.',
@@ -49,6 +54,7 @@
     },
     {
       id: '2.3', scene: 2, title: 'The torn pages', kind: 'team',
+      quote: { text: "Paper forgets nothing. It only waits to be read aloud.", source: "over the library door" },
       run: ["Every strip goes on the table in candle order and is read aloud. Hand over absent guests' strips.", "Press “The second ghost rises”. Victor stands beside Delilah.", "Press “Victor speaks”. The teams form."],
       narration: [{ speaker: "Delilah's ghost", text: "I tore the ledger into thirteen pieces and put one in each of your envelopes before you came. You have carried it all night without knowing. Find your piece. Lay it down. All of them, on the table, in order; the candle in the margin burns lower on each. Then read my grandfather's confession aloud, together. Two of the lines on that page name the ones you seek. They will tell you the lines mean something else." }],
       clue: 'Two lines on that page name the ones you seek.',
@@ -57,6 +63,7 @@
     },
     {
       id: '3.1', scene: 3, title: 'The weapon', kind: 'team',
+      quote: { text: "Death never arrives empty-handed. It always leaves something behind.", source: "Graves & Sons, est. 1702" },
       run: ["Each team says its words in order and names a picture.", "Hand over the picture envelope only if it is right; a wrong picture costs one minute.", "Stuck for 3 minutes? Whisper the sentence."],
       narration: [{ speaker: 'Both ghosts', text: "Find your words. Speak them in order. Go where the sentence sends you. What you find there is what killed us." }],
       clue: 'What killed us is still in this room.',
@@ -65,6 +72,7 @@
     },
     {
       id: '3.2', scene: 3, title: 'The witness', kind: 'team',
+      quote: { text: "The quietest thing in the room keeps the longest memory.", source: "an old saying from Thebes" },
       run: ["Same picture rule.", "Khamun and Edgar read the witness cards. The ghost reads for an absent reader."],
       narration: [{ speaker: 'Both ghosts', text: "Someone saw. Someone remembers. Find your words again. Go where the sentence sends you. Let the one named on the envelope read it, and let nobody interrupt." }],
       clue: 'The one who saw was never looked at.',
@@ -72,6 +80,7 @@
     },
     {
       id: '3.3', scene: 3, title: 'The alibis', kind: 'individual',
+      quote: { text: "The truth needs no rehearsal. Only a lie is word-perfect.", source: "from an inspector's notebook" },
       run: ["Everyone reads their alibi aloud, word for word."],
       narration: [{ speaker: 'Both ghosts', text: "Nearly done. Each of you, find your alibi and read it aloud, word for word, no additions. Then compare it with everything you have heard tonight. Every liar makes one mistake." }],
       clue: 'Every liar makes one mistake.',
@@ -79,6 +88,7 @@
     },
     {
       id: '3.4', scene: 3, title: 'The box', kind: 'group', searchOnly: true,
+      quote: { text: "What is locked away is never lost. It is only waiting for the right hand.", source: "engraved inside the lid" },
       run: ["Read the house rule: one try at the lock each, and the killers may not touch the true key.", "Press “Start the key hunt” (10 min).", "Box open? Press “The box is open”, then 2 minutes of last words.", "Otherwise press “The box stays shut”."],
       narration: [{ speaker: "Delilah's ghost", text: "One more thing before you name them. I left a letter, locked in a box, for whoever was left. The key is somewhere in this room, and so are a great many keys that open nothing. Each of you may try the lock once, and only once. Look where I would hide something, not where a thief would. And do not trust everyone who helps you look." }],
       clue: 'Something always comes out that never went in.',

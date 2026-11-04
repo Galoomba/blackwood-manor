@@ -23,6 +23,8 @@ Connect the TV to the laptop as a second display (HDMI or AirPlay, set to "exten
 
 Setup → Begin the night → read the prologue → "She is dead" → ten stages. Each stage: read the narration, "Cards out" (everyone takes the top card from their own envelope), start the discussion timer, next. The host panel on each stage shows the answer key and anything the ghost must deliver for absent guests. Then open the vote and press Reveal.
 
+When a stage's discussion ends, the TV and the laptop show a closing quote: a line from inside the story (the inscription over the door, the Inspector's notebook, the box lid) that hints at the stage without giving anything away.
+
 The foot of every card carries a whisper: one true detail about another guest, who is never named. A whisper about a guest who is absent tonight is left off the printed card.
 
 ## The box (stage 3.4)

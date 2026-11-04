@@ -2,7 +2,7 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
-  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning } = root.BM.ui;
+  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
 
   const $ = (sel) => document.querySelector(sel);
@@ -262,6 +262,7 @@
       );
     } else {
       label.textContent = 'Stage complete';
+      panel.append(quoteNode(stage.quote));
       if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }), voiceControls(`announce-${stage.id.replace('.', '-')}`));
       if (stage.setPieceAfter) {
         bar.append(el('button', { class: 'primary', onclick: () => playInterlude(stage.setPieceAfter) }, `▶ ${data.setPieces[stage.setPieceAfter].cue}`));

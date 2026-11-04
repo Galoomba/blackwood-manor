@@ -12,6 +12,7 @@ if (!data.stages || data.stages.length !== 10) fail('expected 10 stages');
   if (!st.narration || !st.narration.length) fail(`stage ${st.id} has no narration`);
   if (!st.clue) fail(`stage ${st.id} has no public clue`);
   if (!Array.isArray(st.run) || !st.run.length) fail(`stage ${st.id} has no host run-sheet lines`);
+  if (!st.quote || !st.quote.text || !st.quote.source) fail(`stage ${st.id} has no closing quote`);
   if (!['individual', 'group', 'team'].includes(st.kind)) fail(`stage ${st.id} kind invalid`);
 });
 
