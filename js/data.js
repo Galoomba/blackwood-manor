@@ -168,8 +168,8 @@
       sound: 'ghost',
       lines: [
         { speaker: "Victor's ghost", text: "Well. That was unpleasant. Delilah, you were right, and I am sorry, and I am also dead, so let us be efficient. Two murders, two teams. Those who came for my sister: stand with her. Those who came for me: stand with me. You will each receive one word. Alone your word is nothing. Together it is a place." },
-        { speaker: "Delilah's ghost", text: "Team Delilah: Vane, the cats, Khamun, Silas, Zora. With me." },
-        { speaker: "Victor's ghost", text: "Team Victor: Finch, Corvus, Edgar, Graves, Malachi, Krank. And Morgana: a Blackwood owes you an apology, and I mean to pay it in person. With me. Try not to die." }
+        { speaker: "Delilah's ghost", text: "Team Delilah: Brother Malachi, the cats, Khamun, Silas, Zora. With me." },
+        { speaker: "Victor's ghost", text: "Team Victor: Finch, Corvus, Edgar, Graves, Krank, and the Hunter, who came for a vampire and may settle for a murderer. And Morgana: a Blackwood owes you an apology, and I mean to pay it in person. With me. Try not to die." }
       ]
     },
     lastLetter: {
@@ -230,7 +230,7 @@
     {
       id: 'vane', index: 1, symbol: '🗡', name: 'Rosalind Vane, the Hunter', short: 'Vane',
       costume: 'Graveyard woman with the stake', image: 'assets/characters/vane.jpg',
-      team: 'delilah', optional: false, killer: false, witness: false,
+      team: 'victor', optional: false, killer: false, witness: false,
       intro: {
         text: 'You are Rosalind Vane, vampire hunter, third generation. You carry a stake and you are not shy about it.',
         act: 'Stare at Mr. Graves\'s teeth; check your reflection in everything.',
@@ -244,8 +244,8 @@
         '2.1': { text: 'Your stake is a chair leg. The real one is at home. You have never seen a vampire until tonight and you are terrified. If anyone asks, it is the finest hawthorn.' },
         '2.2': { text: 'Goal: before the night ends, make Mr. Graves admit aloud what he is. And find the ledger strip that holds number 41. It is your grandfather.' },
         '2.3': { text: 'Your ledger strip is number 5. Put it on the table and read it aloud. It is him.', ledger: 5 },
-        '3.1': { text: 'Team Delilah. You know poison from the lore: nightshade widens the eyes and darkens the lips. The doctor knew it at a glance. A bite does neither.', word: { index: 1, text: 'WHERE' } },
-        '3.2': { text: 'Team Delilah. Graves swore at the window that he loved Delilah like a daughter. You believe him and you hate it. Someone else brushed past you after the toast smelling of jasmine, and they clinked.', word: { index: 1, text: 'SEEK' } },
+        '3.1': { text: "Team Victor. You know the lore: a vampire leaves two marks, close together, and takes the blood. Victor has one mark and all his blood. Whatever killed him was not a vampire, and you hate to admit it.", word: { index: 6, text: 'NEVER' } },
+        '3.2': { text: "Team Victor. In the dark you stood at the window with Graves, stake raised. He never moved. But someone crossed the room from the study door in four quick steps, and as they passed you smelled ether. Say so.", word: { index: 6, text: 'BY' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was watching Graves, and he was nowhere near her glass. When Victor fell I was at the window, stake in hand, watching Graves again. He was beside me the whole time.' },
         '3.4': { text: "This evening, before the toast, you saw the lady alone, slipping something small into a tall black hat and smiling like a child hiding a present. You took it for a silver bullet. Say so." }
       }
@@ -299,7 +299,7 @@
     {
       id: 'malachi', index: 4, symbol: '⛧', name: 'Brother Malachi', short: 'Malachi',
       costume: 'Hooded cultist', image: 'assets/characters/malachi.jpg',
-      team: 'victor', optional: false, killer: false, witness: false,
+      team: 'delilah', optional: false, killer: false, witness: false,
       intro: {
         text: 'You are Brother Malachi, Grand Hierophant of the Order of the Crimson Seal.',
         act: 'Speak in prophecy; bow to objects; refer to "the Order" as if it were vast.',
@@ -313,8 +313,8 @@
         '2.1': { text: 'You hired the cat burglar. You signed the letter "A friend of the Order" and promised twenty gold you do not have. You have four shillings. If she finds out, stand behind the Inspector.' },
         '2.2': { text: 'Goal: recruit one new member to the Order before the vote. Anyone. Even the mummy. Also: your spare hood is missing from your bag. Someone took it last night. Find out who.' },
         '2.3': { text: 'Your ledger strip is number 7. Put it on the table and read it as scripture. Then understand: your grandfather dug for the undertaker in 1916 and founded the Order with his wages. The Crimson Seal began as a receipt.', ledger: 7 },
-        '3.1': { text: 'Team Victor. You know ritual: Victor was struck in the dark by someone who knew exactly where he stood, someone who had been close enough all evening to know his cologne.', word: { index: 6, text: 'NEVER' } },
-        '3.2': { text: 'Team Victor. Your missing hood. The Inspector described the figure who bribed him: jingling, and smelling of jasmine. You never jingle and you smell of incense. Someone wore your hood. Tell the room.', word: { index: 6, text: 'BY' } },
+        '3.1': { text: "Team Delilah. You blessed the wine before the toast, glass by glass: thirteen. When you passed the tray again, one glass at the front smelled sweet, like a perfume counter. You blessed that one twice, to be safe. Say so.", word: { index: 1, text: 'WHERE' } },
+        '3.2': { text: "Team Delilah. Your missing hood. The Inspector described the figure who bribed him: jingling, and smelling of jasmine. You never jingle and you smell of incense. Someone wore your hood. Tell the room.", word: { index: 1, text: 'SEEK' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was blessing the cheese. When the lights went out I was alone by the garden door, chanting to the hedge through the glass. Nobody was with me. Nobody is ever with me.' },
         '3.4': { text: "Your newsletter, issue four, says the sacred key rests \"in the vessel of the hare\". You made it up. Tonight it does not feel made up. Rabbits, hares: close enough. Proclaim it." }
       }
@@ -527,8 +527,8 @@
       '2.1': [{ about: 'morgana', text: "The Witch has been green for three days; it is paint. Ask her whether her herbs are as real as her skin." }],
       '2.2': [{ about: 'zora', text: "Someone brushed past you after the toast smelling of jasmine. The fortune teller dabs jasmine on her wrists; she says so herself. Ask her where she stood when the lady fell." }],
       '2.3': [{ about: 'graves', text: "Strip 2 has a note in the margin: 'I stopped.' Ask Mr. Graves what, exactly, he stopped, and whether he would say it to the ghost's face." }],
-      '3.1': [{ about: 'corvus', text: "Corvus poured the lady's glass into the plant; Graves saw it. Ask the plague doctor whether 'preserving a sample' usually involves soil." }],
-      '3.2': [{ about: 'khamun', text: "The mummy has been staring at one person for an hour. Follow his eyes and ask him why." }, { about: 'selene', text: "The cat keeps touching something in her glove. Ask her to turn it out." }],
+      '3.1': [{ about: 'krank', text: "The scientist keeps a syringe 'for emergencies'. She said so at dinner. Ask her whether tonight counted." }],
+      '3.2': [{ about: 'edgar', text: "Edgar flinches every time Krank laughs. Ask him why, and ask her to stop laughing long enough for him to answer." }, { about: 'corvus', text: "Corvus says he has seen that green before. Ask him on whom, and ask Dr. Krank to keep quiet while he answers." }],
       '3.3': [{ about: 'krank', text: "Listen to Dr. Krank's alibi, then to the Cultist's. If they do not match, say so before anyone else does." }],
       '3.4': [{ about: 'graves', text: "Mr. Graves wears a black hat. Ask him, politely, to take it off and show you inside. Then apologise." }]
     },
@@ -563,8 +563,8 @@
       '2.1': [{ about: 'finch', text: "The Inspector took an envelope at the gate last night; the fortune teller saw it. Ask him what was in it. He will not say. Ask again." }],
       '2.2': [{ about: 'finch', text: "Your spare hood is missing. Ask the Inspector what the hooded figure at the gate looked like, and how it sounded when it walked." }],
       '2.3': [{ about: 'graves', text: "Strip 7 says the buyer 'does not age'. Ask the undertaker his date of birth and whether he would like to see a mirror." }],
-      '3.1': [{ about: 'krank', text: "The scientist keeps a syringe 'for emergencies'. She said so at dinner. Ask her whether tonight counted." }],
-      '3.2': [{ about: 'edgar', text: "Edgar flinches every time Krank laughs. Ask him why, and ask her to stop laughing long enough for him to answer." }, { about: 'corvus', text: "Corvus says he has seen that green before. Ask him on whom, and ask Dr. Krank to keep quiet while he answers." }],
+      '3.1': [{ about: 'corvus', text: "Corvus poured the lady's glass into the plant; Graves saw it. Ask the plague doctor whether 'preserving a sample' usually involves soil." }],
+      '3.2': [{ about: 'khamun', text: "The mummy has been staring at one person for an hour. Follow his eyes and ask him why." }, { about: 'selene', text: "The cat keeps touching something in her glove. Ask her to turn it out." }],
       '3.3': [{ about: 'krank', text: "Dr. Krank will say she was by the garden door with you. You were alone. When she says it, let the silence sit, then read your alibi slowly." }],
       '3.4': [{ about: 'vane', text: "Ask the Hunter whether a sacred key may be guarded by a hare. She will not know. Nobody knows." }]
     },

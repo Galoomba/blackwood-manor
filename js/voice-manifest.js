@@ -385,13 +385,13 @@
     "krank-proof": {
       "src": "assets/voice/krank-proof.mp3",
       "voice": "George",
-      "hash": "88ba4ae8e88d",
-      "duration": 20.991,
+      "hash": "c7fbdbafaea0",
+      "duration": 22.43,
       "starts": [
         0,
-        5.236,
-        15.697,
-        18.831
+        4.458,
+        16.753,
+        20.294
       ]
     },
     "reveal-zora": {
@@ -633,23 +633,23 @@
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
       "voice": "Lyla",
-      "hash": "b626166dd2e7",
+      "hash": "f5ded8d07c43",
       "duration": 7.663,
       "starts": [
         0,
-        6.757
+        6.699
       ]
     },
     "set-victorReturns-2": {
       "src": "assets/voice/set-victorReturns-2.mp3",
       "voice": "Lance",
-      "hash": "e935892c3483",
-      "duration": 22.198,
+      "hash": "4d334cbe861c",
+      "duration": 23.684,
       "starts": [
         0,
-        8.777,
-        18.355,
-        19.691
+        12.632,
+        20.573,
+        21.908
       ]
     },
     "reveal-0": {

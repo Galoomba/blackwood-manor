@@ -212,14 +212,15 @@
       id: 'krank-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['krank'], killers: ['krank'],
       title: "Dr. Krank's mistakes",
       chips: [
-        { text: '£2,000 a month to the laboratory · Edgar' },
+        { text: '£2,000 a month to W.K. · Edgar' },
         { text: "'After midnight it ends' · Luna" },
         { text: 'One puncture, green residue · Corvus' },
         { text: 'Syringe marked K-7 · Team Victor' },
+        { text: 'Ether in the dark · Vane' },
         { text: 'Four steps and a kettle laugh · Graves' },
-        { text: "'In the garden with Malachi'", lie: true }
+        { text: "'By the garden door with Malachi'", lie: true }
       ],
-      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named her laboratory, the cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, and the undertaker heard four steps and a kettle. Then she said she was in the garden with Brother Malachi. Nobody is ever with Brother Malachi.'
+      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named W.K., the cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, the hunter smelled ether in the dark, and the undertaker heard four steps and a kettle. Then she said she was by the garden door with Brother Malachi. Nobody is ever with Brother Malachi.'
     },
 
     /* ---------- VIII. The reveal ---------- */
