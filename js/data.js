@@ -167,7 +167,7 @@
       title: 'Victor returns',
       sound: 'ghost',
       lines: [
-        { speaker: "Victor's ghost", text: "Well. That was unpleasant. Delilah, you were right, and I am sorry, and I am also dead, so let us be efficient. Two murders, two teams. Those who came for my sister: stand with her. Those who came for me: stand with me. You will each receive one word. Alone your word is nothing. Together it is a place." },
+        { speaker: "Victor's ghost", text: "Well. That was unpleasant. Delilah, you were right, and I am sorry, and I am also dead, so let us be efficient. Two murders, two teams. The ones my sister calls: stand with her. The ones I call: stand with me. You will each receive one word. Alone your word is nothing. Together it is a place." },
         { speaker: "Delilah's ghost", text: "Team Delilah: Brother Malachi, the cats, Khamun, Silas, Zora. With me." },
         { speaker: "Victor's ghost", text: "Team Victor: Finch, Corvus, Edgar, Graves, Krank, and the Hunter, who came for a vampire and may settle for a murderer. And Morgana: a Blackwood owes you an apology, and I mean to pay it in person. With me. Try not to die." }
       ]
@@ -405,8 +405,8 @@
         '2.1': { text: 'You know no spells. Your grandmother\'s book is a recipe book. Your green skin is stage paint that will not come off; you have had it three days.' },
         '2.2': { text: 'Goal: get an apology from a Blackwood. Both are dead; a ghost will do. Make one of them say sorry in front of everyone before the vote.' },
         '2.3': { text: 'Your ledger strip is number 3: your grandmother\'s note. Put it on the table and read it aloud. Slowly.', ledger: 3 },
-        '3.1': { text: 'Team Victor. You know herbs: nightshade is bitter, nobody drinks it unknowing unless the taste is covered. Jasmine oil covers bitter. Sage covers nothing. Say so.', word: { index: 1, text: 'FIND' } },
-        '3.2': { text: 'Team Victor. After the toast you brushed past someone who smelled of jasmine and whose bangles clinked. Someone wiped their rings when the lady fell: ask who saw it. And the cat keeps touching her glove. Put it together with your team.', word: { index: 1, text: 'FIND' } },
+        '3.1': { text: "Team Victor. You know herbs. The green at the edge of Victor's wound is no plant you have ever boiled: it smells of nothing that grows. Something made, not picked. Say so.", word: { index: 1, text: 'FIND' } },
+        '3.2': { text: "Team Victor. Someone will say the laugh in the dark was your cackle. It was not: you were at the fireplace holding a stranger's hand, and the laugh came from the study door, higher and pleased, like a kettle at the boil. Say so.", word: { index: 1, text: 'FIND' } },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace with my herbs. Madame Zora\'s chair beside me had been empty for a full minute before the toast. When Victor fell I was still there, and someone took my hand in the dark. I do not know whose.' },
         '3.4': { text: "Delilah borrowed your grandmother's recipe book last week. When she gave it back, one line in the margin was underlined in fresh ink: \"What the conjurer pulls out is never what went in.\" Read it aloud." }
       }
@@ -551,7 +551,7 @@
       '2.1': [{ about: 'vane', text: "You need the room looking at Graves. Ask the Hunter, loudly, whether a vampire could find a man in the dark by smell alone. She will say yes. Good." }],
       '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why. Keep the room on poison and glasses, never on needles." }],
       '2.3': [{ about: 'zora', text: "Strip 10 names a broker, Z. Ask Madame Zora what 'ten percent per soul' pays for these days. If she laughs, she may be more useful than she looks." }],
-      '3.1': [{ about: 'vane', text: "The Hunter is sure it was a vampire. Agree with her, loudly, and ask her to describe the bite she expects to find. The longer she talks, the better." }],
+      '3.1': [{ about: 'corvus', text: "The plague doctor offers everyone an injection. Ask him, loudly, how many syringes are in his bag, and whether one is missing." }],
       '3.2': [{ about: 'finch', text: "The Inspector took money to look the other way. Say so. A bribed policeman is a wonderful thing to discuss instead of a laugh." }],
       '3.3': [{ about: 'malachi', text: "The Cultist's alibi comes after yours. Before he reads it, ask him warmly whether he enjoyed your company by the garden door. Nod while he answers." }],
       '3.4': [{ about: 'graves', text: "Mr. Graves wears the only black hat on a head in this room. Ask him to turn it out, slowly." }]
@@ -600,7 +600,7 @@
       '2.2': [{ about: 'morgana', text: "The Witch is green. You have seen green people before; they had been dead for a week. Ask her whether she is quite well." }],
       '2.3': [{ about: 'zora', text: "Strip 9 says you were bought with cellar money. Strip 10 says a broker took ten percent. Ask Madame Zora whether her grandmother took ten percent of you." }],
       '3.1': [{ about: 'zora', text: "You know who touched the glass. Do not say the name yet. Ask the room instead who stood at the wine table before the toast, and count who answers too quickly." }],
-      '3.2': [{ about: 'vane', text: "After you read the witness card, the Hunter will still want it to be the vampire. Ask her whether a vampire wears five rings." }],
+      '3.2': [{ about: 'malachi', text: "After you read the witness card, ask Brother Malachi to bless your testimony. Then ask everyone at the table to show their hands." }],
       '3.3': [{ about: 'zora', text: "Zora will say she never left the fireplace. You watched her for a full minute at the wine table. Say, slowly: 'Furniture remembers.'" }],
       '3.4': [{ about: 'zora', text: "Madame Zora has said the mummy lies. Ask her what, exactly, she thinks you saw." }]
     },
@@ -611,8 +611,8 @@
       '2.1': [{ about: 'malachi', text: "The Cultist's Order has three members. Ask him to name them, and count on your fingers." }],
       '2.2': [{ about: 'zora', text: "Zora keeps talking about who smells of jasmine. Your herbs are sage. Ask her who else in this room wears jasmine, and watch where she looks." }],
       '2.3': [{ about: 'graves', text: "Strip 3 is your grandmother's; she counted the ones he let die. Ask the undertaker whether he counted too." }],
-      '3.1': [{ about: 'corvus', text: "Ask the plague doctor why a man who poured poison into a plant is so quiet while the plant is searched." }],
-      '3.2': [{ about: 'selene', text: "The cat has a handkerchief that smells of jasmine. Ask the room to pass it round and name the scent. Everyone who says 'sage' is lying." }],
+      '3.1': [{ about: 'corvus', text: "Ask the plague doctor what is in the syringes in his bag, and whether any of them is green." }],
+      '3.2': [{ about: 'krank', text: "Ask Dr. Krank to laugh, just once, for the room. Then cackle yourself. Let everyone compare." }],
       '3.3': [{ about: 'zora', text: "Zora will say she held your hand in the dark. The hand you held was ringed and shaking. Say so after she finishes." }],
       '3.4': [{ about: 'malachi', text: "Ask Brother Malachi what his scripture says about keys. He will have written something." }]
     },
@@ -636,7 +636,7 @@
       '2.2': [{ about: 'corvus', text: "The plague doctor poured the lady's glass into the plant. Ask him why a doctor hides evidence. If the plant is searched later, that was his doing." }],
       '2.3': [{ about: 'krank', text: "Strip 12 names W.K. and 'research'. Ask Dr. Krank, lightly, whether she laughs like that at her research too. If she laughs, she may be more useful than she looks." }],
       '3.1': [{ about: 'selene', text: "The cat was 'right behind' the lady when she fell. Say that is a confession. Ask her to turn out her gloves." }],
-      '3.2': [{ about: 'vane', text: "Ask the Hunter whether she trusts the testimony of a corpse. She wants a vampire; give her one." }],
+      '3.2': [{ about: 'malachi', text: "Ask Brother Malachi whether the Order trusts the testimony of furniture. He will want it to be a miracle; let him." }],
       '3.3': [{ about: 'finch', text: "The Inspector will say he was watching the window. Before your own alibi, ask him what the window showed. Keep him talking." }],
       '3.4': [{ about: 'khamun', text: "Remind everyone the mummy has lied before; the dead envy the living. Ask him to prove he saw anything at all." }, { about: 'vane', text: "Ask the Hunter whether she has searched under the sofa cushions. Vampires, you hear, keep their keys low." }]
     },

@@ -185,7 +185,7 @@
     {
       id: 'victor-returns', chapter: 'VI. Strangers by candlelight', layout: 'ghosts', scene: 3, effect: 'ghost', sfx: 'ghost', voice: 'victor',
       title: 'Victor returns',
-      text: 'Well. That was unpleasant. My sister was right, I was sorry, and I was also dead, so we split the room in two. Those who came for her stood with her. Those who came for me stood with me. One word each. Together, a place.'
+      text: 'Well. That was unpleasant. My sister was right, I was sorry, and I was also dead, so we split the room in two. She called her half of the room and I called mine. One word each. Together, a place.'
     },
 
     /* ---------- VII. How the truth came out ---------- */
