@@ -217,10 +217,10 @@
         { text: 'One puncture, green residue · Corvus' },
         { text: 'Syringe marked K-7 · Team Victor' },
         { text: 'Ether in the dark · Vane' },
-        { text: 'Four steps and a kettle laugh · Graves' },
+        { text: 'Four steps and a kettle laugh · Silas' },
         { text: "'By the garden door with Malachi'", lie: true }
       ],
-      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named W.K., the cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, the hunter smelled ether in the dark, and the undertaker heard four steps and a kettle. Then she said she was by the garden door with Brother Malachi. Nobody is ever with Brother Malachi.'
+      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named W.K., the cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, the hunter smelled ether in the dark, and the butler heard four steps and a kettle. Then she said she was by the garden door with Brother Malachi. Nobody is ever with Brother Malachi.'
     },
 
     /* ---------- VIII. The reveal ---------- */
