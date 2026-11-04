@@ -169,8 +169,12 @@
     </div>`;
   }
 
+  /* "Print everything": the whole pack in one job, host material first, the players' packs last. */
+  const EVERYTHING = ['runsheet', 'guide', 'box', 'envelopes', 'ledger', 'covers', 'all'];
+
   function build(kind, id, roster) {
     const presentIds = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
+    if (kind === 'everything') return EVERYTHING.map((k) => build(k, id, roster)).join('');
     if (kind === 'all') return data.characters.map((c) => characterPack(c, presentIds)).join('');
     if (kind === 'character') return characterPack(charById(id), presentIds);
     if (kind === 'covers') return covers();

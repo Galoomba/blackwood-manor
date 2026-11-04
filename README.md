@@ -9,7 +9,7 @@ Double-click `index.html`. No server, no install, works offline. Chrome or Edge 
 ## Prepare the night
 
 1. **Setup**: tick who is present, optionally type each player's real name, set timers.
-2. **Print pack**: print all character packs, the envelope covers, the team envelopes and witness cards, the ledger strips, the box letter, the host guide (answers and details) and the host run sheet (one page: what happens, in order, and which button to press). A4 portrait.
+2. **Print pack**: "Print everything" prints the whole pack in one go (about 75 pages, host material first), or print each part on its own: all character packs, the envelope covers, the team envelopes and witness cards, the ledger strips, the box letter, the host guide (answers and details) and the host run sheet (one page: what happens, in order, and which button to press). A4 portrait.
 3. Glue a cover on each of 17 C5 envelopes: one per guest with their portrait, and four pictures (plant, television, bookshelf, lamp) for the team stages.
 4. Set who is present before printing: the character packs leave out whispers and table talk about absent guests. Fill each guest's envelope with their own cards, face down, 1.1 on top, with their ledger strip under the 2.3 card. Put the team evidence and witness cards in the picture envelopes (the host guide lists which). Lay the 13 guest envelopes on the table (minus absent guests). Only the host opens the picture envelopes: a team names its picture, and a wrong one costs a minute.
 5. Set up the box: lock Delilah's letter inside, put the true key in the rabbit hat, and hide the fake keys anywhere in the room.
