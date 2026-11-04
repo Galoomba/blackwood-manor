@@ -77,7 +77,8 @@
     document.body.dataset.scene = sceneNum;
     if (!story.isShown() && !intro.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
     const speaking = voice.playing();
-    if (speaking && (!hostVoiceOn() || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
+    const allowed = /^quote-/.test(speaking || '') ? localSoundOn() : hostVoiceOn();
+    if (speaking && (!allowed || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
     window.scrollTo(0, 0);
   }
@@ -257,7 +258,7 @@
     } else if (s.phase === 'discussion') {
       label.textContent = 'Discussion';
       bar.append(
-        el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); if (stage.announcement && game.get().voiceOver) cueVoice(`announce-${stage.id.replace('.', '-')}`); } }, 'End discussion'),
+        el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); if (localSoundOn()) playClosing(stage); } }, 'End discussion'),
         el('button', { class: 'small', onclick: () => addMinute() }, '+1 min')
       );
     } else {
@@ -274,6 +275,17 @@
       }
     }
     panel.append(timerEl, label, bar);
+  }
+
+  /* When a discussion ends: Victor's announcement (if the stage has one and the ghost voice is on),
+     then the closing quote, which the narrator reads even with the ghost voice-over muted. The TV
+     window does the same by itself when it is open. */
+  function playClosing(stage) {
+    const id = stage.id.replace('.', '-');
+    voice.unlock();
+    const quote = () => { if (voice.duration(`quote-${id}`)) voice.play(`quote-${id}`); };
+    if (stage.announcement && hostVoiceOn() && voice.duration(`announce-${id}`)) voice.play(`announce-${id}`, quote);
+    else quote();
   }
 
   /* ---------- timers ---------- */

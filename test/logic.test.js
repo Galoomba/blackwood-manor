@@ -133,6 +133,7 @@ test('voiceLines voices the ghosts, the narrator and living Victor, and lines fo
   assert.ok(logic.voiceGroup(data, 'reveal').some((l) => l.voice === 'both'));
   for (const id of ['1-1', '1-2', '1-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'victor', `stage ${id} is read by Victor`);
   for (const id of ['2-1', '2-2', '2-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'delilah', `stage ${id} is Delilah's ghost`);
+  for (const st of data.stages) assert.deepEqual(logic.voiceGroup(data, `quote-${st.id.replace('.', '-')}`).map((l) => l.voice), ['narrator'], `${st.id} closing quote is narrated`);
   for (const group of ['set-prologue', 'set-sheIsDead', 'announce-1-3']) {
     assert.deepEqual(logic.voiceGroup(data, group).map((l) => l.voice), ['victor'], `${group}: living Victor is voiced`);
   }

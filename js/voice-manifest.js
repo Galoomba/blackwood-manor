@@ -1031,6 +1031,103 @@
         20.956,
         23.046
       ]
+    },
+    "quote-1-1-0": {
+      "src": "assets/voice/quote-1-1-0.mp3",
+      "voice": "George",
+      "hash": "bc852cb349a8",
+      "duration": 4.319,
+      "starts": [
+        0
+      ]
+    },
+    "quote-1-2-0": {
+      "src": "assets/voice/quote-1-2-0.mp3",
+      "voice": "George",
+      "hash": "e7b80be5a002",
+      "duration": 4.969,
+      "starts": [
+        0,
+        2.856
+      ]
+    },
+    "quote-1-3-0": {
+      "src": "assets/voice/quote-1-3-0.mp3",
+      "voice": "George",
+      "hash": "45755525c891",
+      "duration": 3.437,
+      "starts": [
+        0,
+        1.486
+      ]
+    },
+    "quote-2-1-0": {
+      "src": "assets/voice/quote-2-1-0.mp3",
+      "voice": "George",
+      "hash": "f9755244ed17",
+      "duration": 6.455,
+      "starts": [
+        0,
+        3.413
+      ]
+    },
+    "quote-2-2-0": {
+      "src": "assets/voice/quote-2-2-0.mp3",
+      "voice": "George",
+      "hash": "0472dd143430",
+      "duration": 3.669,
+      "starts": [
+        0
+      ]
+    },
+    "quote-2-3-0": {
+      "src": "assets/voice/quote-2-3-0.mp3",
+      "voice": "George",
+      "hash": "145d4cf8cb06",
+      "duration": 3.297,
+      "starts": [
+        0,
+        1.393
+      ]
+    },
+    "quote-3-1-0": {
+      "src": "assets/voice/quote-3-1-0.mp3",
+      "voice": "George",
+      "hash": "77b0c7556888",
+      "duration": 4.133,
+      "starts": [
+        0,
+        2.148
+      ]
+    },
+    "quote-3-2-0": {
+      "src": "assets/voice/quote-3-2-0.mp3",
+      "voice": "George",
+      "hash": "8ada8478ac6f",
+      "duration": 3.158,
+      "starts": [
+        0
+      ]
+    },
+    "quote-3-3-0": {
+      "src": "assets/voice/quote-3-3-0.mp3",
+      "voice": "George",
+      "hash": "ab0404375e2c",
+      "duration": 3.901,
+      "starts": [
+        0,
+        1.858
+      ]
+    },
+    "quote-3-4-0": {
+      "src": "assets/voice/quote-3-4-0.mp3",
+      "voice": "George",
+      "hash": "40b4b66f3583",
+      "duration": 4.644,
+      "starts": [
+        0,
+        2.357
+      ]
     }
   }
 }/* END */;

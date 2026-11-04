@@ -99,8 +99,9 @@
   }
 
   /* Every game line that has a voice-over, grouped by when it plays: 'stage-<id>' with the stage
-     narration, 'announce-<id>' with Victor's announcement at the end of a stage, 'set-<key>' with a
-     set piece, 'reveal' with the final reveal. */
+     narration, 'announce-<id>' with Victor's announcement at the end of a stage, 'quote-<id>' with
+     the closing quote (read by the narrator even when the ghost voice-over is muted), 'set-<key>'
+     with a set piece, 'reveal' with the final reveal. */
   function voiceLines(data) {
     const out = [];
     const add = (group, lines) => lines.forEach((line, i) => {
@@ -109,6 +110,7 @@
     });
     data.stages.forEach((st) => add(`stage-${st.id.replace('.', '-')}`, st.narration));
     data.stages.forEach((st) => { if (st.announcement) add(`announce-${st.id.replace('.', '-')}`, [st.announcement]); });
+    data.stages.forEach((st) => { if (st.quote) add(`quote-${st.id.replace('.', '-')}`, [{ speaker: 'Narrator', text: st.quote.text }]); });
     Object.keys(data.setPieces).forEach((key) => add(`set-${key}`, data.setPieces[key].lines));
     add('reveal', data.reveal.lines);
     return out;

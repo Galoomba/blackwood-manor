@@ -34,7 +34,8 @@
     document.body.dataset.scene = sceneNum;
     if (s.sound && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience();
     const speaking = voice.playing();
-    if (speaking && (!voiceOn() || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
+    const allowed = /^quote-/.test(speaking || '') ? s.sound : voiceOn();
+    if (speaking && (!allowed || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     clear(rootNode);
     if (s.screen === 'game') renderGame(s);
     else if (s.screen === 'vote') renderVote(s);
@@ -71,7 +72,15 @@
         el('div', { class: 'timer-label' }, s.phase === 'search' ? (stage.searchOnly ? 'Hunt for the key' : 'Cards out') : s.phase === 'discussion' ? 'Discussion' : '')
       )
     );
-    if (s.phase === 'done' && stage.quote && quotedStage !== stage.id) { quotedStage = stage.id; sfx('whisper'); }
+    if (s.phase === 'done' && stage.quote && quotedStage !== stage.id) {
+      quotedStage = stage.id;
+      sfx('whisper');
+      /* Victor's announcement (ghost voice on), then the closing quote (whenever sound is on). */
+      const id = stage.id.replace('.', '-');
+      const quote = () => { if (game.get().sound) voice.play(`quote-${id}`); };
+      if (stage.announcement && voiceOn() && voice.duration(`announce-${id}`)) voice.play(`announce-${id}`, quote);
+      else quote();
+    }
     if (!alreadyTyped) {
       typedStage = stage.id;
       const group = voice.stageGroup(stage.id);
