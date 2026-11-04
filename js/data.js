@@ -31,7 +31,7 @@
     {
       id: '1.3', scene: 1, title: 'What you saw', kind: 'group',
       quote: { text: "The eyes see everything. The tongue decides what to keep.", source: "written in the margin of an old account book" },
-      run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
+      run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. As the screen goes dark, Delilah's host switches off the room lights and Victor falls. Lights on again when the memorial appears, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
       hostNotes: "Every player must state their observation aloud. Absent characters' observations are in the host panel for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",
@@ -49,10 +49,10 @@
     {
       id: '2.2', scene: 2, title: 'What you want', kind: 'individual',
       quote: { text: "Two strangers become friends the moment they want the same silence.", source: "scratched into the cellar wall" },
-      run: ["The killers get the secret sign.", "If Morgana asks a ghost for an apology, Victor gives one in front of everyone."],
+      run: ["The killers get the secret sign.", "If Morgana asks a ghost for an apology: Victor gives it after he rises, in front of everyone, before the vote."],
       narration: [{ speaker: "Delilah's ghost", text: "Now I know what you hide. Tell me what you want, and I will tell you what I see. I see two hands did this, and they have not yet shaken. Two of you. Strangers. Looking for each other across this room right now." }],
       clue: 'Two hands did this, and they have not yet shaken.',
-      hostNotes: 'Both killers now hold the secret sign: "the candles burn low" / "the wax remembers", worked into what they say. Silas says the first half innocently all night. Innocents have personal goals to play. Morgana will ask a ghost for an apology: Victor (the host) should give her one in front of everyone before the vote.'
+      hostNotes: 'Both killers now hold the secret sign: "the candles burn low" / "the wax remembers", worked into what they say. Silas says the first half innocently all night. Innocents have personal goals to play. Morgana will ask a ghost for an apology. Victor is still the body now: he gives it after he rises (Scene 3), in front of everyone, before the vote.'
     },
     {
       id: '2.3', scene: 2, title: 'The torn pages', kind: 'group',
@@ -60,7 +60,7 @@
       run: ["Every strip goes on the table in candle order and is read aloud. Hand over absent guests' strips.", "Press “The second ghost rises”. Victor stands beside Delilah.", "Press “Victor speaks”. The teams form."],
       narration: [{ speaker: "Delilah's ghost", text: "I tore the ledger into thirteen pieces and put one in each of your envelopes before you came. You have carried it all night without knowing. Find your piece. Lay it down. All of them, on the table, in order; the candle in the margin burns lower on each. Then read my grandfather's confession aloud, together. Two of the lines on that page name the ones you seek. They will tell you the lines mean something else." }],
       clue: 'Two lines on that page name the ones you seek.',
-      hostNotes: "Enforce: every strip on the table, nobody keeps one. Absent characters' strips are \"found in the walls\" by the ghost; hand them over. Expect Krank to say W.K. means Wellington & Keyes, the village chemist (to point at Corvus), and Zora to say Z. means Zeke. Selene reads Delilah's note (strip 1) aloud.",
+      hostNotes: "Enforce: every strip on the table, nobody keeps one. For absent guests, the ghost hands over the strip from their envelope. Expect Krank to say W.K. means Wellington & Keyes, the village chemist (to point at Corvus), and Zora to say Z. means Zeke. Selene reads Delilah's note (strip 1) aloud.",
       setPieceAfter: 'twoGhosts'
     },
     {
@@ -69,7 +69,7 @@
       run: ["Each team says its words in order and names a picture.", "Hand over the picture envelope only if it is right; a wrong picture costs one minute.", "Stuck for 3 minutes? Whisper the sentence."],
       narration: [{ speaker: 'Both ghosts', text: "Find your words. Speak them in order. Go where the sentence sends you. What you find there is what killed us." }],
       clue: 'What killed us is still in this room.',
-      hostNotes: "Only the host opens the picture envelopes (six, two of them empty decoys: Clock and Mirror): a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp or Television) and Krank SHADE instead of FACE (the Lamp).",
+      hostNotes: "Only the host opens the picture envelopes (six, two of them empty decoys: Clock and Mirror): a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp, Television or Clock) and Krank SHADE instead of FACE (the Lamp).",
       setPieceBefore: 'victorReturns'
     },
     {
@@ -86,7 +86,7 @@
       run: ["Everyone reads their alibi aloud, word for word."],
       narration: [{ speaker: 'Both ghosts', text: "Nearly done. Each of you, find your alibi and read it aloud, word for word, no additions. Then compare it with everything you have heard tonight. Every liar makes one mistake." }],
       clue: 'Every liar makes one mistake.',
-      hostNotes: "Zora says she never left the fireplace; Silas (1.3) put her by the tray, Finch (3.2: someone from the fireplace, jingling), Luna (3.1, a ringed hand at the lady's glass) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was by the garden door with Malachi; Malachi's alibi says he was alone. Then go on to the box."
+      hostNotes: "Zora says she never left the fireplace; Silas (1.3) put her by the tray, Finch (3.2: someone from the fireplace, jingling), Luna (3.1, a ringed hand at the lady's glass) and the mummy's witness card put her at the wine table, and Morgana's alibi says her chair was empty. Krank says she was by the garden door with Malachi; Malachi's alibi says he was alone, Corvus heard the laugh from the study door, not the garden door, and Vane smelled ether from the study door. Then go on to the box."
     },
     {
       id: '3.4', scene: 3, title: 'The box', kind: 'group', searchOnly: true,
@@ -453,7 +453,7 @@
         '2.1': { text: 'You remember now. At the wine table you filled your own glass with nightshade, swapped it for the lady\'s, pushed hers to the back of the tray, then wiped your rings. You killed Delilah Blackwood to keep the cheques coming. YOU ARE A MURDERER. Keep it hidden. You dropped the vial in the plant after the doctor emptied the glass there; the handkerchief is in your sleeve, or was. The hooded figure at the gate was you, in the Cultist\'s stolen hood: you paid the Inspector to look away at midnight, when you meant to take the ledger.', sabotage: 'Tell the room you smelled jasmine on the cat woman when she brushed past the lady during the toast. It is even true.' },
         '2.2': { text: 'Goal: do not get caught. You did not kill Victor, so another killer is in this room, and an ally is worth more than a secret.', secretSign: true },
         '2.3': { text: 'Your ledger strip is number 10. Put it on the table; you must.', ledger: 10, sabotage: "Insist \"Z.\" is Zeke, Ezekiel's own nickname, and that \"still paid\" means the house still pays Zeke's heirs. Ask who in this room has Blackwood blood, and look at the butler, or the Witch." },
-        '3.1': { text: 'Team Delilah. You are investigating yourself.', word: { index: 3, text: 'GROWS' }, sabotage: "When you give your word, say GLOWS instead of GROWS: \"where green glows\" sends your team to the Lamp or the Television. If they find the vial anyway, say the plant is where the doctor poured the glass, so the vial must be his." },
+        '3.1': { text: 'Team Delilah. You are investigating yourself.', word: { index: 3, text: 'GROWS' }, sabotage: "When you give your word, say GLOWS instead of GROWS: \"where green glows\" sends your team to the Lamp, the Television or the Clock. If they find the vial anyway, say the plant is where the doctor poured the glass, so the vial must be his." },
         '3.2': { text: 'Team Delilah. The mummy has been staring at you for an hour. He saw.', word: { index: 6, text: 'BACKBONE' }, sabotage: 'Before the witness card is read, announce that you foresaw the witness would lie: "the dead envy the living". Then take off your rings and pocket them. Too late, probably.' },
         '3.3': { text: 'Alibi.', alibi: 'When Delilah fell I was at the fireplace. I never left it, not once, until she fell. When Victor fell I was holding the Witch\'s hand in the dark.', lie: 'You did leave the fireplace. The Inspector saw someone go, and the Witch saw your chair empty. This is your lie. Sell it.' },
         '3.4': { text: "You know where the true key is: in the rabbit hat, behind a little door at about waist height. You watched the lady hide it there this evening, before the toast, through the garden window. Her letter is in the box, and it all but names you. If the box opens before the vote, you are finished.", sabotage: "Foresee, loudly, that the key lies low: under the cushions, under the sofa, near the floor. Offer to fetch keys for others, and bring them the wrong ones. Lie as much as you like, but never touch, move or pocket the true key." }

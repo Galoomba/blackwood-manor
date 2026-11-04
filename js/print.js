@@ -119,7 +119,7 @@
     const kind = { individual: 'On your own', group: 'Find alone, solve together', team: 'Teams' };
     const before = row('Before', 'the guests arrive', [
       'Set who is present on the setup screen, then print.',
-      'Lay the guests\' envelopes on the table, 1.1 on top. Keep the six picture envelopes with you (Clock and Mirror stay empty).',
+      'Lay the guests\' envelopes on the table, 1.1 on top, and the six picture envelopes beside them, untouchable (Clock and Mirror stay empty).',
       'The box: letter locked inside. Put the true key in the rabbit hat, and the hat behind a small door at waist height. Hide the fake keys around the room.',
       'Laptop: open the site. TV: press "Open TV screen", click it once, press F.',
       'Hand out the intro sheets at the door. Optional: "Introduce the game".'
@@ -145,7 +145,8 @@
      what happens, the buttons, the notes and the answers, all drawn from the game data. */
   const KIND = { individual: 'On your own', group: 'Whole room', team: 'Teams' };
   const HOST_SPLIT = [
-    "Delilah's host dies at the toast and plays her ghost from then on. She runs the laptop all night: the buttons, the timers and the host panel.",
+    "Delilah's host dies at the toast and plays her ghost from then on. She runs the laptop all night: the buttons, the timers and the host panel. In Scene 1 her ghost is silent: only Victor hears her, and he reads her words. From Scene 2 everyone hears her.",
+    "The blackout after 1.3: when the screen goes dark, Delilah's host switches off the room lights for about four seconds while Victor falls, and switches them on again when the memorial appears.",
     'Victor\'s host performs the toast, "She is dead" and the midnight announcement (or lets the recordings speak them), falls in the blackout after 1.3, and stays down as the body through Scene 2.',
     'At "The second ghost rises" (after 2.3) Victor\'s host rises as his ghost. In Scene 3 each ghost stands with their own team and answers for it.',
     'The recorded voices speak for the ghosts and the narrator; the hosts act, point, sigh and react. Mute "Ghost voice-over" to speak the lines yourselves.'
@@ -153,7 +154,7 @@
   const TEAM_STEPS = [
     'Cards out: everyone takes their card. It shows their team word and its number, plus a personal clue to say aloud.',
     "Each team says its words aloud in number order. The team's ghost says the words of absent teammates (host panel).",
-    "The team names one of the six pictures to its ghost. Right: hand over that envelope. Wrong: shake your head, and the team waits one minute.",
+    "All six picture envelopes lie on the table, untouchable. The team names one to its own ghost; each ghost answers only for their own team. Right: hand over that envelope. Wrong (a decoy, or the other team's picture): shake your head, and the team waits one minute.",
     'Stuck for 3 minutes? The ghost whispers the full sentence. It also exposes the killer\'s wrong word.',
     'Press +1 min as needed, then "Start discussion" once both teams have their evidence. Each team shows the room what it found.',
     'Rules: everyone must say the word on their card; the killers may say it wrong. Nobody reads anyone else\'s card.'
@@ -201,7 +202,7 @@
       <ol>
         <li>Print all packs. Cut the cards. Glue a cover on each of the nineteen envelopes: thirteen guests and six pictures. The Clock and Mirror envelopes are decoys and stay empty.</li>
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
-        <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; keep the six picture envelopes by you, or on the table where nobody may touch them (Clock and Mirror are empty decoys), and hand one over only when a team names the right picture. A wrong picture costs a minute.</li>
+        <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; lay the six picture envelopes on the table where nobody may touch them (Clock and Mirror are empty decoys). In Scene 3 each ghost answers for their own team and hands over an envelope only when that team names its right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
         <li>Set who is present on the setup screen before printing the character packs. Remove absent guests' envelopes from the table.</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>

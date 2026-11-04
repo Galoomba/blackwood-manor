@@ -100,13 +100,13 @@
     "ledger": {
       "src": "assets/voice/ledger.mp3",
       "voice": "Lyla",
-      "hash": "944a241cf6aa",
-      "duration": 21.316,
+      "hash": "26c8f18d81ae",
+      "duration": 23.127,
       "starts": [
         0,
-        6.13,
-        8.417,
-        18.146
+        6.014,
+        8.707,
+        20.027
       ]
     },
     "midnight": {
@@ -330,15 +330,14 @@
     "needle": {
       "src": "assets/voice/needle.mp3",
       "voice": "George",
-      "hash": "de28c361ce4e",
-      "duration": 13.235,
+      "hash": "ff955697edad",
+      "duration": 13.653,
       "starts": [
         0,
-        2.183,
-        6.873,
-        9.242,
-        10.774,
-        11.958
+        2.113,
+        6.943,
+        9.079,
+        12.167
       ]
     },
     "sign": {
@@ -897,12 +896,13 @@
     "g-silas": {
       "src": "assets/voice/g-silas.mp3",
       "voice": "George",
-      "hash": "c3ef0037ee77",
-      "duration": 16.533,
+      "hash": "76587fc9d86f",
+      "duration": 20.62,
       "starts": [
         0,
-        3.587,
-        10.391
+        3.599,
+        10.136,
+        15.604
       ]
     },
     "master-falls": {

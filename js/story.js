@@ -47,7 +47,7 @@
     {
       id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['silas'],
       title: "Delilah's ledger",
-      text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and hid them all over the house, so that no single thief could ever take the whole truth. Then Delilah wrote her letters."
+      text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and slipped one into each guest's envelope, so that no single thief could ever take the whole truth. Then Delilah wrote her letters."
     },
     {
       id: 'midnight', chapter: 'II. The grandchildren', layout: 'ghosts', scene: 2, sfx: 'heartbeat', voice: 'narrator',
@@ -94,7 +94,7 @@
     {
       id: 'g-silas', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['silas'],
       title: 'Silas Thorne, the Butler',
-      text: "Silas set thirteen glasses and counted every one. He is Ezekiel's grandson through Nurse Ashgrove, and the true heir to the manor, which he never wanted. After the toast he watched Madame Zora wipe her rings with a handkerchief and tuck it into her sleeve."
+      text: "Silas set thirteen glasses and counted every one. He is Ezekiel's grandson through Nurse Ashgrove, and the true heir to the manor, which he never wanted. After the toast he found the lady's own glass, still full, at the back of the tray. And in the dark he heard four quick steps from the study, and a laugh like a kettle."
     },
     {
       id: 'g-corvus', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['corvus'],
@@ -166,9 +166,9 @@
       text: "When the light crept back, Victor Blackwood lay still on the floor of his own house. The master of Blackwood Manor had followed his sister within the hour. And now, for the first time that night, every guest in the room could hear her."
     },
     {
-      id: 'needle', chapter: 'V. The lights go out', layout: 'portrait', scene: 2, voice: 'narrator', people: ['graves'],
+      id: 'needle', chapter: 'V. The lights go out', layout: 'portrait', scene: 2, voice: 'narrator', people: ['vane'],
       title: 'Not a fang',
-      text: 'The whole room blamed the vampire. But there was one puncture on Victor\'s neck, not two, with a smear of green at the edge. A needle, not a fang. Mr. Graves said so. Nobody believed him. He said it anyway.'
+      text: 'The whole room blamed the vampire. But there was one puncture on Victor\'s neck, not two, with a smear of green at the edge. A needle, not a fang. The Hunter said so, and she had come here for a vampire. It cost her to say it.'
     },
 
     /* ---------- VI. Strangers ---------- */
