@@ -256,12 +256,12 @@
     } else if (s.phase === 'discussion') {
       label.textContent = 'Discussion';
       bar.append(
-        el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); } }, 'End discussion'),
+        el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); if (stage.announcement && game.get().voiceOver) cueVoice(`announce-${stage.id.replace('.', '-')}`); } }, 'End discussion'),
         el('button', { class: 'small', onclick: () => addMinute() }, '+1 min')
       );
     } else {
       label.textContent = 'Stage complete';
-      if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }));
+      if (stage.announcement) panel.append(narrationNode([stage.announcement], { instant: true }), voiceControls(`announce-${stage.id.replace('.', '-')}`));
       if (stage.setPieceAfter) {
         bar.append(el('button', { class: 'primary', onclick: () => playInterlude(stage.setPieceAfter) }, `▶ ${data.setPieces[stage.setPieceAfter].cue}`));
         if (stage.searchOnly) bar.append(el('button', { onclick: () => show('vote') }, 'The box stays shut: open the vote'));
@@ -419,10 +419,12 @@
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');
-      ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines, continueBtn('Begin Scene 1'));
+      ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines, voiceControls('set-sheIsDead'), continueBtn('Begin Scene 1'));
+      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-sheIsDead'); }, 1500);
     } else {
       ov.classList.add('ghostly');
-      ov.append(el('h1', {}, sp.title), lines, continueBtn(key === 'prologue' ? 'She is dead' : 'Continue'));
+      ov.append(el('h1', {}, sp.title), lines, voice.duration(`set-${key}`) ? voiceControls(`set-${key}`) : null, continueBtn(key === 'prologue' ? 'She is dead' : 'Continue'));
+      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play(`set-${key}`); }, 1500);
     }
   }
 

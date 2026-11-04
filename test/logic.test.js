@@ -121,18 +121,21 @@ test('every card has a table-talk line for any roster that keeps the required gu
   for (const c of data.characters) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(c.cards[sid], presentIds), `${c.id} ${sid}`);
 });
 
-test('voiceLines voices only the ghosts and the narrator, and lines for both ghosts are marked both', () => {
+test('voiceLines voices the ghosts, the narrator and living Victor, and lines for both ghosts are marked both', () => {
   const lines = logic.voiceLines(data);
   assert.ok(lines.length > 0);
   for (const l of lines) {
     assert.ok(['delilah', 'victor', 'both', 'narrator'].includes(l.voice), l.id);
-    assert.ok(!/^Victor \(|^Stage direction/.test(l.speaker), `${l.id} is not a living or stage line`);
+    assert.ok(!/^Stage direction/.test(l.speaker), `${l.id} is not a stage direction`);
   }
   assert.equal(new Set(lines.map((l) => l.id)).size, lines.length, 'ids are unique');
   for (const st of data.stages) assert.ok(logic.voiceGroup(data, `stage-${st.id.replace('.', '-')}`).length, `stage ${st.id} is voiced`);
   assert.ok(logic.voiceGroup(data, 'reveal').some((l) => l.voice === 'both'));
   for (const id of ['1-1', '1-2', '1-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'victor', `stage ${id} is read by Victor`);
   for (const id of ['2-1', '2-2', '2-3']) assert.equal(logic.voiceGroup(data, `stage-${id}`)[0].voice, 'delilah', `stage ${id} is Delilah's ghost`);
+  for (const group of ['set-prologue', 'set-sheIsDead', 'announce-1-3']) {
+    assert.deepEqual(logic.voiceGroup(data, group).map((l) => l.voice), ['victor'], `${group}: living Victor is voiced`);
+  }
 });
 
 test('an interlude separates the scenes: Victor dies after 1.3, both ghosts rise after 2.3', () => {

@@ -170,9 +170,11 @@
       ov.classList.add('blackout');
       sfx('toll');
       ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines);
+      setTimeout(() => { if (shownSetPiece) playVoice('set-sheIsDead'); }, 1500);
     } else {
       ov.classList.add('ghostly');
       ov.append(el('h1', {}, sp.title), lines);
+      setTimeout(() => { if (shownSetPiece) playVoice(`set-${key}`); }, 1500);
     }
   }
 

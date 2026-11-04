@@ -26,7 +26,7 @@
     },
     {
       id: '1.3', scene: 1, title: 'What you saw', kind: 'group',
-      run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Victor reads the midnight announcement aloud.", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
+      run: ["Everyone says their sighting aloud. Read absent guests' sightings from the host panel.", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. Victor falls in the dark, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
       hostNotes: "Every player must state their observation aloud. Absent characters' observations are listed below for the ghost to deliver. End the discussion with Victor's announcement, then press \"The lights go out\".",

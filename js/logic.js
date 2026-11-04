@@ -84,8 +84,8 @@
     return !r.about || (presentIds || []).includes(r.about) ? r : null;
   }
 
-  /* Which recorded voice reads a line: the ghosts are voiced, stage directions and living Victor
-     (played by the host in person) are not. 'both' is the two ghosts speaking together. */
+  /* Which recorded voice reads a line: the ghosts, the narrator and living Victor (the host can mute
+     the voice and say his lines in person); stage directions are not. 'both' is the two ghosts together. */
   function voiceForSpeaker(speaker) {
     if (/^Stage direction/.test(speaker)) return null;
     if (/^Both/.test(speaker)) return 'both';
@@ -94,11 +94,13 @@
     if (/^Delilah's ghost/.test(speaker)) return 'delilah';
     if (/^Victor's ghost/.test(speaker)) return 'victor';
     if (/^Narrator/.test(speaker)) return 'narrator';
+    if (/^Victor \(/.test(speaker)) return 'victor';
     return null;
   }
 
   /* Every game line that has a voice-over, grouped by when it plays: 'stage-<id>' with the stage
-     narration, 'set-<key>' with a set piece, 'reveal' with the final reveal. */
+     narration, 'announce-<id>' with Victor's announcement at the end of a stage, 'set-<key>' with a
+     set piece, 'reveal' with the final reveal. */
   function voiceLines(data) {
     const out = [];
     const add = (group, lines) => lines.forEach((line, i) => {
@@ -106,6 +108,7 @@
       if (voice) out.push({ id: `${group}-${i}`, group, voice, speaker: line.speaker, text: line.text });
     });
     data.stages.forEach((st) => add(`stage-${st.id.replace('.', '-')}`, st.narration));
+    data.stages.forEach((st) => { if (st.announcement) add(`announce-${st.id.replace('.', '-')}`, [st.announcement]); });
     Object.keys(data.setPieces).forEach((key) => add(`set-${key}`, data.setPieces[key].lines));
     add('reveal', data.reveal.lines);
     return out;

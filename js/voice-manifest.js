@@ -984,6 +984,53 @@
         106.463,
         108.286
       ]
+    },
+    "announce-1-3-0": {
+      "src": "assets/voice/announce-1-3-0.mp3",
+      "voice": "Lance",
+      "hash": "0f5adba01589",
+      "duration": 23.684,
+      "starts": [
+        0,
+        1.045,
+        3.471,
+        10.159,
+        19.621,
+        22.848
+      ]
+    },
+    "set-prologue-0": {
+      "src": "assets/voice/set-prologue-0.mp3",
+      "voice": "Lance",
+      "hash": "af0fb78d5dae",
+      "duration": 23.684,
+      "starts": [
+        0,
+        1.126,
+        2.322,
+        4.284,
+        6.362,
+        12.794,
+        15.081,
+        22.43
+      ]
+    },
+    "set-sheIsDead-0": {
+      "src": "assets/voice/set-sheIsDead-0.mp3",
+      "voice": "Lance",
+      "hash": "7a6cbfd867a6",
+      "duration": 23.684,
+      "starts": [
+        0,
+        2.717,
+        4.145,
+        6.072,
+        8.173,
+        10.159,
+        15.859,
+        20.956,
+        23.046
+      ]
     }
   }
 }/* END */;
