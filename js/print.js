@@ -3,9 +3,8 @@
   const logic = root.BM.logic;
 
   function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-  /* Every character symbol prints at one or two fixed sizes. Chrome fails to build a large PDF when the same
-     colour emoji is drawn at many different sizes, which the width-scaled card sheets would otherwise cause. */
-  const sym = (x) => `<span class="sym">${x}</span>`;
+  /* No emoji in print: colour emoji are bitmaps inside the font, and many printer drivers stop at
+     the first page that carries one. Guests are named in plain text instead. */
   function charById(id) { return data.characters.find((c) => c.id === id); }
   function stageTitle(i) { return `${data.STAGE_IDS[i]} ${data.stages[i].title}`; }
   function teamLabel(team) { return team === 'delilah' ? 'TEAM DELILAH' : 'TEAM VICTOR'; }
@@ -13,14 +12,14 @@
   function introSheet(c) {
     return `<div class="sheet intro">
       <img class="portrait" src="${c.image}" alt="">
-      <h1>${sym(c.symbol)} ${esc(c.name)}</h1>
+      <h1>${esc(c.name)}</h1>
       <p><em>${esc(c.costume)} · Blackwood Manor, All Hallows' Eve</em></p>
       <h2>Who you are</h2><p>${esc(c.intro.text)}</p>
       <h2>How to act</h2><p>${esc(c.intro.act)}</p>
       <h2>Your quirk, all night</h2><p>${esc(c.intro.quirk)}</p>
       <h2>Your public line (say it to everyone)</h2><div class="boxed">“${esc(c.intro.publicLine)}”</div>
       <div class="intro-rules"><h2>How the night works</h2>
-      <p>Every guest has an envelope on the table with their own picture on it. At each stage, take only the top card from <strong>your</strong> envelope (${sym(c.symbol)} ${esc(c.short)}) and check its stage number. Never look further down the pile, and never open anyone else's envelope. Read your cards privately unless the card says otherwise. Keep your cards; you will need them.</p>
+      <p>Every guest has an envelope on the table with their own picture on it. At each stage, take only the top card from <strong>your</strong> envelope (${esc(c.short)}) and check its stage number. Never look further down the pile, and never open anyone else's envelope. Read your cards privately unless the card says otherwise. Keep your cards; you will need them.</p>
       <p>The foot of every card carries a whisper: something true about another guest, who is never named. Work out who it is about, and use it. Most cards also carry <strong>table talk</strong>: a question to raise aloud in the discussion. Raise it.</p>
       <p>At the end, each guest stands and accuses two suspects out loud. The house wins only if both killers are clearly the top two.</p></div>
     </div>`;
@@ -32,7 +31,7 @@
     const sid = data.STAGE_IDS[i];
     const card = c.cards[sid];
     const parts = [];
-    parts.push(`<div class="head"><span>${sym(c.symbol)} ${esc(c.short)}</span><span>Stage ${esc(stageTitle(i))}</span></div>`);
+    parts.push(`<div class="head"><span>${esc(c.short)}</span><span>Stage ${esc(stageTitle(i))}</span></div>`);
     if (card.word) parts.push(`<div>Your team word is number <strong>${card.word.index}</strong>:</div><div class="word">${esc(card.word.text)}</div>`);
     if (card.alibi) parts.push(`<p>Read aloud, exactly:</p><p>“${esc(card.alibi)}”</p>`);
     else parts.push(`<p>${esc(card.text)}</p>`);
@@ -63,7 +62,7 @@
   /* Envelope covers: one per guest with their portrait (their cards go inside, top card first),
      and the six picture envelopes for the team stages (two of them empty decoys). */
   function covers() {
-    const guests = data.characters.map((c) => `<div class="cover"><img src="${c.image}" alt=""><div class="cv-name">${sym(c.symbol)} ${esc(c.short)}</div><div class="cv-note">${esc(c.costume)}</div><div class="cv-note">Blackwood Manor · All Hallows' Eve<br>Take only the top card, one stage at a time</div></div>`);
+    const guests = data.characters.map((c) => `<div class="cover"><img src="${c.image}" alt=""><div class="cv-name">${esc(c.short)}</div><div class="cv-note">${esc(c.costume)}</div><div class="cv-note">Blackwood Manor · All Hallows' Eve<br>Take only the top card, one stage at a time</div></div>`);
     const pictures = data.PICTURES.map((p) => `<div class="cover picture">${root.BM.art[p]}<div class="cv-note">Blackwood Manor · only the host opens this, when a team names it</div></div>`);
     const all = [...guests, ...pictures];
     const pages = [];
@@ -75,7 +74,7 @@
   function stocking() {
     return data.characters.map((c) => {
       const strip = data.ledger.find((x) => x.holder === c.id);
-      return `<li><strong>${sym(c.symbol)} ${esc(c.short)}:</strong> cards ${data.STAGE_IDS[0]} to ${data.STAGE_IDS[data.STAGE_IDS.length - 1]}, 1.1 on top${strip ? `, ledger strip ${strip.number} under the 2.3 card` : ''}</li>`;
+      return `<li><strong>${esc(c.short)}:</strong> cards ${data.STAGE_IDS[0]} to ${data.STAGE_IDS[data.STAGE_IDS.length - 1]}, 1.1 on top${strip ? `, ledger strip ${strip.number} under the 2.3 card` : ''}</li>`;
     }).join('');
   }
 
@@ -96,7 +95,7 @@
     const strips = data.ledger.map((s) => {
       const h = Math.max(2, 15 - s.number);
       const holder = charById(s.holder);
-      return `<div class="strip"><div class="margin"><div class="candle-ink" style="height:${h}mm"></div></div><div class="body">${esc(s.text)}<br><small>holder: ${sym(holder.symbol)} ${esc(holder.short)} (put in their envelope, under the 2.3 card)</small></div></div>`;
+      return `<div class="strip"><div class="margin"><div class="candle-ink" style="height:${h}mm"></div></div><div class="body">${esc(s.text)}<br><small>holder: ${esc(holder.short)} (put in their envelope, under the 2.3 card)</small></div></div>`;
     });
     /* Two deliberate pages of strips, each with its own heading, so no page starts with stray strips. */
     const half = Math.ceil(strips.length / 2);
@@ -209,9 +208,9 @@
 
   function guide(roster) {
     roster = roster || logic.buildRoster(data, { presentIds: data.characters.map((c) => c.id) });
-    const killers = data.killerIds.map((id) => charById(id)).map((c) => `<div class="gs-block"><h3>${sym(c.symbol)} ${esc(c.name)}</h3><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul></div>`).join('');
+    const killers = data.killerIds.map((id) => charById(id)).map((c) => `<div class="gs-block"><h3>${esc(c.name)}</h3><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul></div>`).join('');
     const sentences = ['3.1', '3.2'].map((sid) => ['delilah', 'victor'].map((team) => { const ts = logic.teamSentence(data, roster, team, sid); return `<li><strong>${sid} ${teamLabel(team)}:</strong> ${esc(ts.sentence)} → the ${esc(ts.picture)} envelope</li>`; }).join('')).join('');
-    const alibis = data.characters.map((c) => `<li><strong>${sym(c.symbol)} ${esc(c.short)}:</strong> “${esc(c.cards['3.3'].alibi)}”${c.cards['3.3'].lie ? ` <strong>LIE.</strong> ${esc(c.cards['3.3'].lie)}` : ''}</li>`).join('');
+    const alibis = data.characters.map((c) => `<li><strong>${esc(c.short)}:</strong> “${esc(c.cards['3.3'].alibi)}”${c.cards['3.3'].lie ? ` <strong>LIE.</strong> ${esc(c.cards['3.3'].lie)}` : ''}</li>`).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
       <div class="gs-block"><h2>Night-of checklist</h2>
@@ -274,7 +273,7 @@
         ? `<p>${esc(x.short)} was not ticked when this pack was printed, so no other card mentions them.</p>`
         : `${talk.length ? `<p><strong>Table talk on other cards that asks about ${esc(x.short)}</strong> (tell the guest when they take that card):</p><ul>${talk.join('')}</ul>` : ''}${whispers.length ? `<p><strong>Whispers that describe ${esc(x.short)}:</strong> ${whispers.join(' · ')}. They fit nobody tonight. If someone asks, the whisper is about a guest who could not come.</p>` : ''}`;
       return `<div class="sheet standin">
-        <h1>${sym(x.symbol)} If ${esc(x.name)} is absent</h1>
+        <h1>If ${esc(x.name)} is absent</h1>
         <p><em>Untick ${esc(x.short)} on the setup screen before the game. The laptop's host panel then shows these lines at each stage, and plays the ones marked <span class="tv">TV</span> in ${esc(x.short)}'s own voice. This sheet is the paper copy. Keep ${esc(x.short)}'s envelope: the ledger strip is used at 2.3.</em></p>
         <table>${lines}</table>
         <h2>Cards that mention ${esc(x.short)}</h2>${cards}
