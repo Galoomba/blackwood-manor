@@ -216,3 +216,23 @@ test('an absent guest\'s important clues carry a voiced group, in the first pers
   assert.ok(!logic.orphanedClues(data, r, '1.1').some((x) => x.group), 'introductions are not voiced');
   for (const c of data.characters) if (c.cards['3.3'].absentVoice) assert.equal(c.cards['3.3'].absentVoice, c.cards['3.3'].alibi, c.id);
 });
+
+test('cardFixes lists printed table talk and whispers about absent guests, with the line to use instead', () => {
+  const all = data.characters.map((c) => c.id);
+  assert.deepEqual(logic.cardFixes(data, all, '1.1'), []);
+  const without = all.filter((id) => id !== 'graves');
+  const fixes = logic.cardFixes(data, without, '1.1');
+  const finch = fixes.find((f) => f.kind === 'talk' && f.holder === 'finch');
+  assert.ok(finch, 'Finch\'s 1.1 table talk asks about Graves');
+  assert.equal(finch.about, 'graves');
+  assert.equal(finch.instead, (logic.talkFor(data.characters.find((c) => c.id === 'finch').cards['1.1'], without) || { text: null }).text);
+  for (const f of fixes) {
+    assert.equal(f.about, 'graves');
+    assert.notEqual(f.holder, 'graves');
+  }
+  for (const id of all) {
+    for (const sid of data.STAGE_IDS) {
+      for (const f of logic.cardFixes(data, all.filter((x) => x !== id), sid)) assert.equal(f.about, id);
+    }
+  }
+});

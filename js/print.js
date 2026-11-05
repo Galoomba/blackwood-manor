@@ -142,7 +142,7 @@
     const row = (head, sub, items) => `<tr><th>${head}${sub ? `<br><small>${esc(sub)}</small>` : ''}</th><td><ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></td></tr>`;
     const kind = { individual: 'On your own', group: 'Find alone, solve together', team: 'Teams' };
     const before = row('Before', 'the guests arrive', [
-      'Set who is present on the setup screen, then print. Props: see the host guide.',
+      'Tick everyone you expect on the setup screen, then print. Someone missing on the night: untick them, use their stand-in sheet. Props: see the host guide.',
       'Lay the guests\' envelopes on the table, 1.1 on top, and the six picture envelopes beside them, untouchable (Clock and Mirror stay empty).',
       'The box: letter locked inside. Put the true key in the rabbit hat, and the hat behind a small door at waist height. Hide the fake keys around the room.',
       'Laptop: open the site. TV: press "Open TV screen", click it once, press F.',
@@ -219,12 +219,6 @@
     const killers = data.killerIds.map((id) => charById(id)).map((c) => `<div class="gs-block"><h3>${sym(c.symbol)} ${esc(c.name)}</h3><ul>${data.STAGE_IDS.filter((sid) => c.cards[sid].sabotage || c.cards[sid].lie).map((sid) => `<li><strong>${sid}:</strong> ${esc(c.cards[sid].sabotage || c.cards[sid].lie)}</li>`).join('')}</ul></div>`).join('');
     const sentences = ['3.1', '3.2'].map((sid) => ['delilah', 'victor'].map((team) => { const ts = logic.teamSentence(data, roster, team, sid); return `<li><strong>${sid} ${teamLabel(team)}:</strong> ${esc(ts.sentence)} → the ${esc(ts.picture)} envelope</li>`; }).join('')).join('');
     const alibis = data.characters.map((c) => `<li><strong>${sym(c.symbol)} ${esc(c.short)}:</strong> “${esc(c.cards['3.3'].alibi)}”${c.cards['3.3'].lie ? ` <strong>LIE.</strong> ${esc(c.cards['3.3'].lie)}` : ''}</li>`).join('');
-    /* One block per stage, so a page only ever breaks between stages, never inside one. */
-    const orphans = data.STAGE_IDS.map((sid) => {
-      const items = logic.orphanedClues(data, roster, sid);
-      const by = items.length && items.every((o) => o.reader === items[0].reader) ? ` · ${esc(items[0].reader)} reads` : '';
-      return items.length ? `<div class="gs-block"><h3>Stage ${sid}${by}</h3><ul>${items.map((o) => `<li><strong>${sym(o.symbol)} ${esc(o.name)} (${o.kind}${o.number ? ` ${o.number}` : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${by ? '' : `, ${esc(o.reader)}`}${o.group ? ', voiced on the TV' : ''}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
-    }).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
       <div class="gs-block"><h2>Night-of checklist</h2>
@@ -233,7 +227,7 @@
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
         <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; lay the six picture envelopes on the table where nobody may touch them (Clock and Mirror are empty decoys). In Scene 3 each ghost answers for their own team and hands over an envelope only when that team names its right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
-        <li>Set who is present on the setup screen before printing. Stuff all thirteen guest envelopes, but lay only the present guests' envelopes on the table. Delilah's host keeps the absent guests' envelopes, for their ledger strips at 2.3 and for anyone who arrives late (give a latecomer their envelope and let them read the cards they missed).</li>
+        <li>Before printing, tick everyone you expect on the setup screen; the cards' table talk and whispers are chosen for them. Anyone who then does not come: untick them on the night and use their stand-in sheet. Stuff all thirteen guest envelopes, but lay only the present guests' envelopes on the table. Delilah's host keeps the absent guests' envelopes, for their ledger strips at 2.3 and for anyone who arrives late (give a latecomer their envelope and let them read the cards they missed).</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
         <li>Victor gives the toast. Delilah dies. Play.</li>
@@ -245,12 +239,58 @@
       <div class="gs-block"><h2>Team sentences</h2><ul>${sentences}</ul></div>
       <h2>The killers and their orders</h2>${killers}
       <div class="gs-block"><h2>Alibis</h2><ul>${alibis}</ul></div>
-      <div class="gs-absent"><h2>Absent guests (current roster): what to say for them, stage by stage</h2>${orphans || '<ul><li>None. Everyone is present.</li></ul>'}</div>
+      <div class="gs-block"><h2>Absent guests</h2><p>After this guide come the stand-in sheets: one for every guest except the killers, with what to say for them at each stage and which printed cards mention them. Pull out the sheets of whoever does not come, and untick them on the setup screen: the laptop shows the same lines and plays the important ones on the TV.</p></div>
     </div>`;
   }
 
+  /* One sheet per guest who could be absent (everyone but the killers): what to say for them at every
+     stage, and which printed cards mention them. Pull out the sheets of whoever does not come. */
+  function standins(roster) {
+    const printed = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
+    return data.characters.filter((c) => !c.killer).map((x) => {
+      const without = data.characters.map((c) => c.id).filter((id) => id !== x.id);
+      const r = logic.buildRoster(data, { presentIds: without });
+      const lines = data.STAGE_IDS.map((sid) => {
+        const items = logic.orphanedClues(data, r, sid);
+        if (!items.length) return '';
+        const said = items.map((o) => {
+          if (o.kind === 'word') return `Their team word: <strong>${esc(o.text)}</strong>, number ${o.index}.`;
+          if (o.kind === 'witness') return `<strong>Witness card</strong>, ${esc(o.reader)} reads it${o.group ? ' <span class="tv">TV</span>' : ''}.`;
+          return `${esc(o.text)}${o.group ? ' <span class="tv">TV</span>' : ''}`;
+        }).join(' ');
+        return `<tr><th>${sid}<br><small>${esc(items[0].reader)}</small></th><td>${said}</td></tr>`;
+      }).join('');
+      /* What the printed cards say about this guest: only lines printed while they were ticked. */
+      const wasTicked = printed.includes(x.id);
+      const talk = [];
+      const whispers = [];
+      if (wasTicked) {
+        const after = printed.filter((id) => id !== x.id);
+        data.STAGE_IDS.forEach((sid) => data.characters.filter((c) => printed.includes(c.id) && c.id !== x.id).forEach((c) => {
+          const card = c.cards[sid];
+          const t = logic.talkFor(card, printed);
+          if (t && t.about === x.id) {
+            const instead = logic.talkFor(card, after);
+            talk.push(`<li><strong>${sid} ${esc(c.short)}:</strong> ${instead ? `ask instead: “${esc(instead.text)}”` : 'skip it.'}</li>`);
+          }
+          const w = logic.rumourFor(card, printed);
+          if (w && w.about === x.id) whispers.push(`${sid} ${esc(c.short)}`);
+        }));
+      }
+      const cards = !wasTicked
+        ? `<p>${esc(x.short)} was not ticked when this pack was printed, so no other card mentions them.</p>`
+        : `${talk.length ? `<p><strong>Table talk on other cards that asks about ${esc(x.short)}</strong> (tell the guest when they take that card):</p><ul>${talk.join('')}</ul>` : ''}${whispers.length ? `<p><strong>Whispers that describe ${esc(x.short)}:</strong> ${whispers.join(' · ')}. They fit nobody tonight. If someone asks, the whisper is about a guest who could not come.</p>` : ''}`;
+      return `<div class="sheet standin">
+        <h1>${sym(x.symbol)} If ${esc(x.name)} is absent</h1>
+        <p><em>Untick ${esc(x.short)} on the setup screen before the game. The laptop's host panel then shows these lines at each stage, and plays the ones marked <span class="tv">TV</span> in ${esc(x.short)}'s own voice. This sheet is the paper copy. Keep ${esc(x.short)}'s envelope: the ledger strip is used at 2.3.</em></p>
+        <table>${lines}</table>
+        <h2>Cards that mention ${esc(x.short)}</h2>${cards}
+      </div>`;
+    }).join('');
+  }
+
   /* "Print everything": the whole pack in one job, host material first, the players' packs last. */
-  const EVERYTHING = ['runsheet', 'guide', 'box', 'envelopes', 'ledger', 'ballots', 'covers', 'all'];
+  const EVERYTHING = ['runsheet', 'guide', 'standins', 'box', 'envelopes', 'ledger', 'ballots', 'covers', 'all'];
 
   function build(kind, id, roster) {
     const presentIds = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
@@ -264,6 +304,7 @@
     if (kind === 'guide') return guide(roster);
     if (kind === 'runsheet') return runSheet();
     if (kind === 'ballots') return ballots(roster);
+    if (kind === 'standins') return standins(roster);
     return '';
   }
 

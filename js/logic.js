@@ -147,9 +147,30 @@
     return out;
   }
 
+  /* The printed cards carry table talk and a whisper chosen for the guests ticked when they were printed.
+     For guests absent tonight, per present guest's card at this stage: any table talk that may ask about an
+     absent guest, with the line to use instead (null: skip it), and any whisper that describes one. */
+  function cardFixes(data, presentIds, stageId) {
+    const present = new Set(presentIds);
+    const short = (id) => (data.characters.find((c) => c.id === id) || {}).short;
+    const out = [];
+    for (const c of data.characters) {
+      const card = c.cards[stageId];
+      if (!present.has(c.id) || !card) continue;
+      const now = talkFor(card, presentIds);
+      for (const t of card.talk || []) {
+        if (t === now) break;
+        out.push({ kind: 'talk', holder: c.id, holderName: c.short, about: t.about, aboutName: short(t.about), printed: t.text, instead: now ? now.text : null });
+      }
+      const r = card.rumour;
+      if (r && r.about && !present.has(r.about)) out.push({ kind: 'whisper', holder: c.id, holderName: c.short, about: r.about, aboutName: short(r.about), printed: r.text });
+    }
+    return out;
+  }
+
   function voiceGroup(data, group) { return voiceLines(data).filter((l) => l.group === group); }
 
-  const logic = { buildRoster, orphanedClues, teamSentence, tally, formatRemaining, talkFor, rumourFor, voiceLines, voiceGroup };
+  const logic = { buildRoster, orphanedClues, teamSentence, tally, formatRemaining, talkFor, rumourFor, cardFixes, voiceLines, voiceGroup };
 
   root.BM = root.BM || {};
   root.BM.logic = logic;

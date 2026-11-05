@@ -172,7 +172,7 @@
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Set who is present first: the character packs leave out whispers and table talk about absent guests. "Print everything" prints the whole pack in one go (about 79 pages): run sheet, host guide, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Tick everyone you expect first: the character packs leave out whispers and table talk about unticked guests. "Print everything" prints the whole pack in one go (about 94 pages): run sheet, host guide, a stand-in sheet for every guest who might not come, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
           el('button', { class: 'primary', onclick: () => root.BM.print.open('everything', null, game.roster()) }, 'Print everything'),
@@ -183,6 +183,7 @@
           el('button', { onclick: () => root.BM.print.open('box') }, "The box: Delilah's letter"),
           el('button', { onclick: () => root.BM.print.open('runsheet') }, 'Host run sheet'),
           el('button', { onclick: () => root.BM.print.open('ballots') }, 'Ballot slips'),
+          el('button', { onclick: () => root.BM.print.open('standins', null, game.roster()) }, 'Stand-in sheets for absent guests'),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
         )
       ),
@@ -414,6 +415,16 @@
       orphans.forEach((o) => details.append(el('div', { class: 'orphan' },
         o.group ? el('button', { class: 'small ghostly', style: 'margin-right:8px', title: 'Plays a bell, then shows this clue on the TV in their own words and voice', onclick: () => callAbsent(o) }, `\u25b6 ${o.kind === 'witness' ? 'Witness card' : 'Their voice'} on TV`) : null,
         el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${one ? '' : `, ${o.reader}`}): `), o.text)));
+    }
+    /* Printed table talk and whispers that point at a guest who did not come. */
+    const fixes = logic.cardFixes(data, roster.present.map((p) => p.id), stage.id);
+    if (fixes.length) {
+      details.append(el('h3', {}, 'Printed cards that mention absent guests'));
+      const ul = el('ul', {});
+      fixes.forEach((f) => ul.append(el('li', {}, el('strong', {}, `${f.holderName}: `), f.kind === 'talk'
+        ? `if the table talk asks about ${f.aboutName}, ${f.instead ? `ask instead: "${f.instead}"` : 'skip it.'}`
+        : `if the whisper reads "${f.printed}", it is about ${f.aboutName}, who is not here. If asked: it is about a guest who could not come.`)));
+      details.append(ul);
     }
     return el('div', { class: 'panel' }, details);
   }
