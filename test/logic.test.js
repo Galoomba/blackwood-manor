@@ -45,6 +45,15 @@ test('orphanedClues returns observation at 1.3, ledger at 2.3, alibi at 3.3', ()
   assert.deepEqual(logic.orphanedClues(data, r, '1.1'), []);
 });
 
+test('an absent guest\'s team clue is read by their team\'s ghost at 3.1 and 3.2', () => {
+  const r = logic.buildRoster(data, selectionWithout('finch'));
+  const at32 = logic.orphanedClues(data, r, '3.2').find((x) => x.kind === 'team clue');
+  assert.equal(at32.reader, "Victor's ghost");
+  assert.match(at32.text, /crystal ball/);
+  assert.ok(logic.orphanedClues(data, r, '3.1').some((x) => x.kind === 'team clue' && /needle/.test(x.text)));
+  assert.ok(!logic.orphanedClues(data, logic.buildRoster(data, selectionWithout()), '3.2').length, 'nothing when everyone is present');
+});
+
 test('teamSentence orders words and flags missing holders', () => {
   const r = logic.buildRoster(data, selectionWithout('luna'));
   const s = logic.teamSentence(data, r, 'delilah', '3.1');

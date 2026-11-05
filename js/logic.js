@@ -30,6 +30,9 @@
       if ((stageId === '3.1' || stageId === '3.2') && card.word) {
         out.push({ ...base, kind: 'word', index: card.word.index, text: card.word.text, team: c.team });
       }
+      if ((stageId === '3.1' || stageId === '3.2') && card.ghostClue) {
+        out.push({ ...base, kind: 'team clue', team: c.team, reader: c.team === 'delilah' ? "Delilah's ghost" : "Victor's ghost", text: card.ghostClue });
+      }
       if (stageId === '3.2' && c.witness) {
         const w = data.witnessCards[c.team];
         out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.ghostIntro ? `${w.ghostIntro} ${w.text}` : w.text });
