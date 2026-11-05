@@ -54,6 +54,7 @@
   const intro = root.BM.storyView.createPlayer({
     deck: root.BM.intro,
     key: 'blackwood-manor-intro-v1',
+    presentIds: () => game.get().presentIds,
     narrateOnStep: true,
     layer: document.getElementById('intro-layer'),
     controls: true,

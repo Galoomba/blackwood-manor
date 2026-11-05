@@ -89,14 +89,15 @@
       el('figcaption', {}, `${c.symbol} ${c.short}`));
   }
 
-  function drawSlide(slide, index) {
+  function drawSlide(slide, index, present) {
     const killers = new Set(slide.killers || []);
     const sentences = story.splitSentences(slide.text);
     const text = el('p', { class: 'story-text' }, sentences.flatMap((s, i) => [el('span', { class: 'sent', 'data-i': i }, s), ' ']));
     const head = el('div', { class: 'story-head' },
       el('div', { class: 'story-kicker' }, slide.kicker || slide.chapter),
       el('h1', { class: 'story-title' }, slide.title));
-    const people = (slide.people || []);
+    /* A presentOnly slide (the intro's cast) shows only the guests ticked on the setup screen. */
+    const people = (slide.people || []).filter((id) => !slide.presentOnly || !present || present.includes(id));
     let visual = null;
     if (slide.layout === 'portrait' || slide.layout === 'duo') {
       visual = el('div', { class: 'story-visual ' + slide.layout }, people.map((id, i) => portrait(id, killers.has(id), i)));
@@ -268,7 +269,7 @@
     function draw(st) {
       const slide = deck.slides[st.index];
       const stage = layer.querySelector('.story-stage');
-      drawn = drawSlide(slide, st.index);
+      drawn = drawSlide(slide, st.index, opts.presentIds ? opts.presentIds() : null);
       clear(stage).append(drawn.node);
       if (opts.finalAction && st.index === deck.slides.length - 1) {
         drawn.node.querySelector('.story-words').append(el('div', { class: 'story-final' },

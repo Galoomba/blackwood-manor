@@ -13,7 +13,7 @@
       text: 'Good evening, and thank you for coming. Victor and Delilah Blackwood have invited you for a toast, a dinner, and a confession at midnight. Before the doors are locked, here is how tonight works.'
     },
     {
-      id: 'intro-characters', chapter: 'Your character', layout: 'gallery', scene: 1, voice: 'narrator', people: ALL,
+      id: 'intro-characters', chapter: 'Your character', layout: 'gallery', scene: 1, voice: 'narrator', people: ALL, presentOnly: true,
       title: 'Tonight, you are someone else',
       text: 'Each of you has a character sheet. It tells you who you are, how to act, a quirk to keep up all night, and one line to say to everyone. Play it with conviction. The worse the accent, the better the evening.'
     },
