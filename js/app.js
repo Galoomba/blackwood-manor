@@ -63,8 +63,8 @@
     onHide: () => render(),
     finalAction: { label: 'Go to the home screen', run: () => show('title') }
   });
-  function openIntro() { audio.init(); intro.open({ index: 0, playing: false, onTv: game.tvConnected() }); }
-  function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Walk the group through how the night works, step by step, on the TV' }, 'Introduce the game'); }
+  function openIntro() { audio.init(); intro.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
+  function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
   /* ---------- navigation ---------- */
