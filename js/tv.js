@@ -69,7 +69,7 @@
       s.phase === 'done' ? quoteNode(stage.quote) : null,
       el('div', { class: 'tv-timer' + (s.timerEnd ? '' : ' hidden') },
         el('div', { class: 'timer', id: 'timer' }, '--:--'),
-        el('div', { class: 'timer-label' }, s.phase === 'search' ? (stage.searchOnly ? 'Hunt for the key' : 'Cards out') : s.phase === 'discussion' ? 'Discussion' : '')
+        el('div', { class: 'timer-label' }, s.phase === 'search' ? (stage.searchOnly ? 'Hunt for the key' : 'Cards out') : s.phase === 'discussion' ? 'Discussion' : s.phase === 'lastwords' ? 'Last words' : '')
       )
     );
     if (s.phase === 'done' && stage.quote && quotedStage !== stage.id) {
@@ -91,7 +91,7 @@
   }
 
   function renderVote(s) {
-    const result = logic.tally(s.votes, data.killerIds);
+    const result = logic.tally(s.votes, data.killerIds, game.roster().present.map((c) => c.id));
     const max = Math.max(1, ...Object.values(result.counts));
     const t = el('div', { class: 'tally' });
     result.ranked.forEach(([id, n]) => {
@@ -103,7 +103,7 @@
   }
 
   function renderResult(s) {
-    const result = logic.tally(s.votes, data.killerIds);
+    const result = logic.tally(s.votes, data.killerIds, game.roster().present.map((c) => c.id));
     append(rootNode, el('div', { class: 'tv-center' },
       el('h1', { class: 'result-title' }, result.houseWins ? data.reveal.houseWins : data.reveal.killersWin),
       el('p', { class: 'dim' }, data.reveal.farewell)
@@ -171,7 +171,7 @@
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines);
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, el('div', { class: 'team-call' }, ...['delilah', 'victor'].map((t) => el('div', {}, el('h3', {}, t === 'delilah' ? 'Team Delilah' : 'Team Victor'), el('p', {}, game.roster().teams[t].map((c) => `${c.symbol} ${displayName(c)}`).join(' · '))))));
       setTimeout(() => { if (shownSetPiece) playVoice('set-victorReturns'); }, 1500);
     } else if (key === 'lastLetter') {
       ov.classList.add('ghostly');

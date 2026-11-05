@@ -69,6 +69,7 @@
   /* ---------- navigation ---------- */
   function show(screen) { game.set({ screen }); render(); }
 
+  let lastPlace = null;
   function render() {
     const s = game.get();
     document.querySelectorAll('.screen').forEach((x) => x.classList.remove('active'));
@@ -80,7 +81,8 @@
     const allowed = /^quote-/.test(speaking || '') ? localSoundOn() : hostVoiceOn();
     if (speaking && (!allowed || (speaking.startsWith('stage-') && (s.screen !== 'game' || speaking !== voice.stageGroup(game.stage().id))))) voice.stop();
     ({ title: renderTitle, setup: renderSetup, print: renderPrint, game: renderGame, vote: renderVote, result: renderResult })[s.screen]();
-    window.scrollTo(0, 0);
+    const place = `${s.screen}|${s.stageIndex}`;
+    if (place !== lastPlace) { lastPlace = place; window.scrollTo(0, 0); }
   }
 
   function tvBar() {
@@ -180,6 +182,7 @@
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
           el('button', { onclick: () => root.BM.print.open('box') }, "The box: Delilah's letter"),
           el('button', { onclick: () => root.BM.print.open('runsheet') }, 'Host run sheet'),
+          el('button', { onclick: () => root.BM.print.open('ballots') }, 'Ballot slips'),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
         )
       ),
@@ -238,6 +241,10 @@
     resumeTimerIfRunning();
   }
 
+  /* Each stage carries its own card and discussion times; the setup screen's numbers are the fallback. */
+  function searchMinutes(stage, s) { return stage.searchOnly ? (s.huntMin || 10) : ((stage.minutes && stage.minutes.cards) || s.searchMin); }
+  function discussMinutes(stage, s) { return (stage.minutes && stage.minutes.discuss) || s.discussMin; }
+
   function buildPhasePanel(panel, stage, s) {
     clear(panel);
     const timerEl = el('div', { class: 'timer', id: 'timer' }, '--:--');
@@ -246,15 +253,20 @@
 
     if (s.phase === 'narration') {
       label.textContent = (s.voiceOver ? 'Let the ghost speak, then ' : 'Read the narration aloud, then ') + (stage.searchOnly ? 'start the key hunt' : 'send them to their envelopes');
-      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `${stage.searchOnly ? 'Start the key hunt' : 'Cards out'} (${stage.searchOnly ? (s.huntMin || 10) : s.searchMin} min)`));
+      bar.append(el('button', { class: 'primary', onclick: () => startPhase('search') }, `${stage.searchOnly ? 'Start the key hunt' : 'Cards out'} (${searchMinutes(stage, s)} min)`));
     } else if (s.phase === 'search') {
       label.textContent = stage.searchOnly ? 'Hunting for the key' : 'Reading cards';
       bar.append(
         stage.searchOnly
-          ? el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); } }, 'End the hunt')
-          : el('button', { class: 'primary', onclick: () => startPhase('discussion') }, `Start discussion (${s.discussMin} min)`),
+          ? el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); render(); if (localSoundOn()) playClosing(stage); } }, 'End the hunt')
+          : el('button', { class: 'primary', onclick: () => startPhase('discussion') }, `Start discussion (${discussMinutes(stage, s)} min)`),
         el('button', { class: 'small', onclick: () => addMinute() }, '+1 min')
       );
+      if (stage.searchOnly && stage.setPieceAfter) bar.append(el('button', { onclick: () => { stopTimer(); game.set({ phase: 'done', timerEnd: null, timerKind: null }); playInterlude(stage.setPieceAfter); } }, `▶ ${data.setPieces[stage.setPieceAfter].cue}`));
+    } else if (s.phase === 'lastwords') {
+      label.textContent = 'Last words, then the vote';
+      bar.append(el('button', { class: 'primary', onclick: () => { stopTimer(); game.set({ timerEnd: null, timerKind: null }); show('vote'); } }, 'Open the vote'),
+        el('button', { class: 'small', onclick: () => addMinute() }, '+1 min'));
     } else if (s.phase === 'discussion') {
       label.textContent = 'Discussion';
       bar.append(
@@ -275,6 +287,7 @@
       }
     }
     panel.append(timerEl, label, bar);
+    if ((stage.run || []).length) panel.append(el('details', { class: 'run', open: 'open' }, el('summary', {}, 'Run sheet for this stage'), el('ul', {}, ...stage.run.map((r) => el('li', {}, r)))));
   }
 
   /* When a discussion ends: Victor's announcement (if the stage has one and the ghost voice is on),
@@ -294,7 +307,7 @@
 
   function startPhase(kind) {
     const s = game.get();
-    const minutes = kind === 'search' ? (game.stage().searchOnly ? (s.huntMin || 10) : s.searchMin) : s.discussMin;
+    const minutes = kind === 'lastwords' ? 2 : kind === 'search' ? searchMinutes(game.stage(), s) : discussMinutes(game.stage(), s);
     game.set({ phase: kind, timerKind: kind, timerEnd: Date.now() + minutes * 60000 });
     render();
   }
@@ -322,9 +335,10 @@
   }
 
   /* ---------- host panel ---------- */
+  let hostPanelOpen = false;
   function buildHostPanel(stage, s, roster) {
     const idx = s.stageIndex;
-    const details = el('details', { class: 'host' }, el('summary', {}, 'Host only: answer key for this stage'));
+    const details = el('details', { class: 'host', open: hostPanelOpen ? 'open' : null, ontoggle: (e) => { hostPanelOpen = e.target.open; } }, el('summary', {}, 'Host only: answer key for this stage'));
     details.append(el('p', {}, stage.hostNotes));
 
     if (stage.id === '3.1' || stage.id === '3.2') {
@@ -333,7 +347,7 @@
         details.append(el('p', {}, el('strong', {}, `${teamLabel(team)}: `), `${ts.sentence} → the ${ts.picture} envelope (${data.teamEnvelopes[team][stage.id].title})`,
           ts.missing.length ? el('span', { class: 'dim' }, ` (ghost whispers: ${ts.missing.map((w) => `#${w.index} ${w.text}`).join(', ')})`) : null));
       }
-      if (stage.id === '3.1') details.append(el('p', { class: 'dim' }, "Killers' wrong words: Zora says TALKS for WALKS; Krank says DRINKS for BLINKS."));
+      if (stage.id === '3.1') details.append(el('p', { class: 'dim' }, "Killers' wrong words: " + data.killerIds.map(charById).map((c) => { const w = c.cards['3.1'].word; const m = /say (\w+) instead of (\w+)/.exec(c.cards['3.1'].sabotage || ''); return `${c.short} (#${w.index}) says ${m ? m[1] : '?'} for ${w.text}`; }).join('; ') + '.'));
     }
     if (stage.id === '3.2') {
       for (const team of ['delilah', 'victor']) {
@@ -368,8 +382,9 @@
 
     const orphans = logic.orphanedClues(data, roster, stage.id);
     if (orphans.length) {
-      details.append(el('h3', {}, 'Absent guests: the ghost delivers these'));
-      orphans.forEach((o) => details.append(el('div', { class: 'orphan' }, el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ' word #' + o.index : ''}): `), o.text)));
+      const one = orphans.every((o) => o.reader === orphans[0].reader) ? orphans[0].reader : null;
+      details.append(el('h3', {}, one ? `Absent guests: ${one} says this for them` : 'Absent guests: each team\'s ghost says this for them'));
+      orphans.forEach((o) => details.append(el('div', { class: 'orphan' }, el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${one ? '' : `, ${o.reader}`}): `), o.text)));
     }
     return el('div', { class: 'panel' }, details);
   }
@@ -394,13 +409,14 @@
     showSetPiece(key, () => {
       const next = data.setPieces[key].then;
       if (next) playInterlude(next);
+      else if (key === 'lastLetter') { game.set({ phase: 'lastwords', timerKind: 'lastwords', timerEnd: Date.now() + 2 * 60000 }); render(); }
       else if (game.get().stageIndex === data.stages.length - 1) show('vote');
       else { game.nextStage(); render(); }
     });
   }
 
   const INTERLUDE_BUTTON = { lightsOut: 'The ghost speaks', twoGhosts: 'Victor speaks' };
-  const INTERLUDE_CUE = { lightsOut: 'Victor: fall now', twoGhosts: 'Victor: rise and stand beside Delilah' };
+  const INTERLUDE_CUE = { lightsOut: 'Lights off now. Victor: fall.', twoGhosts: 'Victor: rise and stand beside Delilah' };
 
   function showSetPiece(key, onDone) {
     const sp = data.setPieces[key];
@@ -423,12 +439,12 @@
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
-      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, voiceControls('set-victorReturns'), continueBtn('Form the teams'));
+      ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, el('div', { class: 'team-call' }, ...['delilah', 'victor'].map((t) => el('div', {}, el('h3', {}, t === 'delilah' ? 'Team Delilah' : 'Team Victor'), el('p', {}, game.roster().teams[t].map((c) => `${c.symbol} ${displayName(c)}`).join(' · '))))), voiceControls('set-victorReturns'), continueBtn('Form the teams'));
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
     } else if (key === 'lastLetter') {
       ov.classList.add('ghostly');
       sfx('whisper');
-      ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines, voiceControls('set-lastLetter'), continueBtn('Open the vote'));
+      ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines, voiceControls('set-lastLetter'), continueBtn('Last words (2 min)'));
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-lastLetter'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
@@ -456,14 +472,14 @@
     roster.present.forEach((v) => {
       const picks = s.votes[v.id] || ['', ''];
       const s1 = options(picks[0]); const s2 = options(picks[1]);
-      const save = () => { const votes = Object.assign({}, game.get().votes, { [v.id]: [s1.value, s2.value] }); game.set({ votes }); renderTally(); };
+      const save = () => { if (s2.value && s2.value === s1.value) s2.value = ''; const votes = Object.assign({}, game.get().votes, { [v.id]: [s1.value, s2.value] }); game.set({ votes }); renderTally(); };
       s1.addEventListener('change', save); s2.addEventListener('change', save);
       grid.append(el('div', { class: 'voter' }, el('strong', {}, `${v.symbol} ${displayName(v)}`), el('div', { class: 'dim' }, 'accuses'), s1, s2));
     });
     append(node, 
       tvBar(),
       el('h2', {}, 'The accusation'),
-      el('p', { class: 'dim' }, 'Every guest names two suspects. The house wins only if both killers are the two most accused. The TV shows the tally as you enter it.'),
+      el('p', { class: 'dim' }, 'Every guest writes two different suspects on a ballot slip. Enter them here with the laptop turned away. The house wins only if both killers are the two most accused. The TV shows the tally as you enter it.'),
       el('div', { class: 'panel' }, grid),
       el('div', { class: 'panel' }, el('h3', {}, 'Tally'), el('div', { class: 'tally', id: 'tally' })),
       el('div', { class: 'row' },
@@ -477,17 +493,18 @@
   function renderTally() {
     const t = $('#tally'); if (!t) return;
     clear(t);
-    const result = logic.tally(game.get().votes, data.killerIds);
+    const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
     const max = Math.max(1, ...Object.values(result.counts));
     result.ranked.forEach(([id, n]) => {
       const c = charById(id);
       t.append(el('div', { class: 'bar' }, el('span', {}, `${c.symbol} ${c.short}`), el('div', { class: 'fill', style: `width:${(n / max) * 100}%` }), el('span', {}, n)));
     });
     if (!result.ranked.length) t.append(el('p', { class: 'dim' }, 'No accusations yet.'));
+    if (result.tie.length) t.append(el('p', { class: 'error' }, `Tie for second place: ${result.tie.map((id) => charById(id).short).join(', ')}. Give each 30 seconds to defend themselves, then everyone votes again between them only (change the second picks above).`));
   }
 
   function playReveal() {
-    const result = logic.tally(game.get().votes, data.killerIds);
+    const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
     game.set({ revealAt: Date.now() });
     const ov = $('#overlay');
     clear(ov);
@@ -508,7 +525,7 @@
   }
 
   function renderResult() {
-    const result = logic.tally(game.get().votes, data.killerIds);
+    const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
     const node = clear($('#screen-result'));
     append(node, 
       el('h1', { class: 'result-title center' }, result.houseWins ? data.reveal.houseWins : data.reveal.killersWin),

@@ -16,29 +16,32 @@
     };
   }
 
+  /* What the host or ghost says for each absent guest at a stage: the guest's stand-in line,
+     plus anything that has to be handed over (ledger strip, team word, witness card). */
+  const ABSENT_KIND = { '1.1': 'introduction', '1.2': 'why they came', '1.3': 'observation', '2.1': 'secret', '2.2': 'goal', '2.3': 'ledger', '3.1': 'team clue', '3.2': 'team clue', '3.3': 'alibi', '3.4': 'key hint' };
+  /* Who speaks for an absent guest: living Victor in Scene 1 (Delilah's ghost is not yet heard),
+     Delilah's ghost in Scene 2 (Victor lies dead), the guest's own team ghost in Scene 3. */
+  function readerFor(data, stageId, team) {
+    const scene = (data.stages.find((s) => s.id === stageId) || {}).scene;
+    if (scene === 1) return 'Victor';
+    if (scene === 2) return "Delilah's ghost";
+    return team === 'delilah' ? "Delilah's ghost" : "Victor's ghost";
+  }
   function orphanedClues(data, roster, stageId) {
     const out = [];
     for (const c of roster.missing) {
       const card = c.cards[stageId];
       if (!card) continue;
-      const base = { characterId: c.id, name: c.name, symbol: c.symbol };
-      if (stageId === '1.3') out.push({ ...base, kind: 'observation', text: card.text });
-      if (stageId === '2.3') {
-        const strip = data.ledger.find((s) => s.holder === c.id);
-        if (strip) out.push({ ...base, kind: 'ledger', number: strip.number, text: strip.text });
-      }
+      const base = { characterId: c.id, name: c.name, symbol: c.symbol, reader: readerFor(data, stageId, c.team) };
+      const strip = stageId === '2.3' ? data.ledger.find((s) => s.holder === c.id) : null;
+      if (card.absent) out.push({ ...base, kind: ABSENT_KIND[stageId], text: card.absent, ...(strip ? { number: strip.number, strip: strip.text } : {}) });
       if ((stageId === '3.1' || stageId === '3.2') && card.word) {
         out.push({ ...base, kind: 'word', index: card.word.index, text: card.word.text, team: c.team });
-      }
-      if ((stageId === '3.1' || stageId === '3.2') && card.ghostClue) {
-        out.push({ ...base, kind: 'team clue', team: c.team, reader: c.team === 'delilah' ? "Delilah's ghost" : "Victor's ghost", text: card.ghostClue });
       }
       if (stageId === '3.2' && c.witness) {
         const w = data.witnessCards[c.team];
         out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.ghostIntro ? `${w.ghostIntro} ${w.text}` : w.text });
       }
-      if (stageId === '3.3') out.push({ ...base, kind: 'alibi', text: card.alibi });
-      if (stageId === '3.4' && !c.killer) out.push({ ...base, kind: 'key hint', text: card.text });
     }
     return out;
   }
@@ -53,10 +56,15 @@
     return { words, sentence: words.map((w) => w.text).join(' '), picture: env.picture, missing: words.filter((w) => !w.present) };
   }
 
-  function tally(votes, killerIds) {
+  function tally(votes, killerIds, presentIds) {
+    /* Each voter counts once per suspect; votes from guests no longer present are ignored. */
     const counts = {};
-    for (const picks of Object.values(votes)) {
-      for (const s of picks || []) if (s) counts[s] = (counts[s] || 0) + 1;
+    for (const [voter, picks] of Object.entries(votes || {})) {
+      if (presentIds && !presentIds.includes(voter)) continue;
+      for (const s of new Set((picks || []).filter(Boolean))) {
+        if (presentIds && !presentIds.includes(s)) continue;
+        counts[s] = (counts[s] || 0) + 1;
+      }
     }
     const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
     const third = ranked[2] ? ranked[2][1] : -1;
@@ -64,7 +72,10 @@
     const houseWins = topTwo.length === 2 &&
       killerIds.every((k) => topTwo.some((e) => e[0] === k)) &&
       topTwo.every((e) => e[1] > third);
-    return { counts, ranked, houseWins };
+    /* A tie across the second place: the guests in it need a runoff before the reveal. */
+    const second = ranked[1] ? ranked[1][1] : -1;
+    const tie = second > 0 && second === third ? ranked.filter((e) => e[1] === second).map((e) => e[0]) : [];
+    return { counts, ranked, houseWins, tie };
   }
 
   function formatRemaining(remaining) {

@@ -17,13 +17,13 @@
     "ghost": {
       "src": "assets/voice/ghost.mp3",
       "voice": "Lyla",
-      "hash": "aac0c84e3597",
-      "duration": 15.743,
+      "hash": "a16d3aff06cb",
+      "duration": 14.35,
       "starts": [
         0,
-        1.904,
-        8.266,
-        11.923
+        1.73,
+        7.396,
+        11.25
       ]
     },
     "promise": {
@@ -75,13 +75,13 @@
     "retainer": {
       "src": "assets/voice/retainer.mp3",
       "voice": "George",
-      "hash": "051dbcb9f25a",
-      "duration": 12.771,
+      "hash": "6ba5eef55fa6",
+      "duration": 14.025,
       "starts": [
         0,
-        3.042,
-        9.451,
-        11.343
+        4.284,
+        10.484,
+        12.585
       ]
     },
     "lab": {
@@ -99,14 +99,14 @@
     },
     "ledger": {
       "src": "assets/voice/ledger.mp3",
-      "voice": "Lyla",
-      "hash": "26c8f18d81ae",
-      "duration": 23.127,
+      "voice": "George",
+      "hash": "4b66438d0304",
+      "duration": 18.344,
       "starts": [
         0,
-        6.014,
-        8.707,
-        20.027
+        5.666,
+        7.697,
+        16.498
       ]
     },
     "midnight": {
@@ -134,23 +134,24 @@
     "g-finch": {
       "src": "assets/voice/g-finch.mp3",
       "voice": "George",
-      "hash": "e4c0374a9b3e",
-      "duration": 18.948,
+      "hash": "a585a2273e12",
+      "duration": 19.737,
       "starts": [
         0,
-        3.262,
-        10.971
+        3.286,
+        10.577
       ]
     },
     "g-vane": {
       "src": "assets/voice/g-vane.mp3",
       "voice": "George",
-      "hash": "3f726ddc5114",
-      "duration": 19.04,
+      "hash": "3cbc289a1250",
+      "duration": 19.737,
       "starts": [
         0,
-        7.628,
-        9.706
+        7.605,
+        9.346,
+        14.408
       ]
     },
     "g-selene": {
@@ -168,13 +169,13 @@
     "g-luna": {
       "src": "assets/voice/g-luna.mp3",
       "voice": "George",
-      "hash": "b8ed1ce3e533",
-      "duration": 19.273,
+      "hash": "b0a1b0c9c2ed",
+      "duration": 21.455,
       "starts": [
         0,
-        3.982,
-        12.701,
-        14.594
+        3.994,
+        12.283,
+        16.974
       ]
     },
     "g-krank": {
@@ -230,13 +231,14 @@
     "g-morgana": {
       "src": "assets/voice/g-morgana.mp3",
       "voice": "George",
-      "hash": "7d67af10a25d",
-      "duration": 15.372,
+      "hash": "4fa977bd1196",
+      "duration": 30.325,
       "starts": [
         0,
-        5.596,
-        8.545,
-        10.159
+        5.712,
+        16.602,
+        22.698,
+        26.482
       ]
     },
     "g-edgar": {
@@ -278,40 +280,40 @@
     "gate": {
       "src": "assets/voice/gate.mp3",
       "voice": "George",
-      "hash": "a662260b76f1",
-      "duration": 19.18,
+      "hash": "2334cd0dd69f",
+      "duration": 18.158,
       "starts": [
         0,
-        11.413,
-        15.14,
-        16.951,
-        18.124
+        11.122,
+        15,
+        17.125
       ]
     },
     "glass": {
       "src": "assets/voice/glass.mp3",
       "voice": "George",
-      "hash": "380cbcd97ec3",
-      "duration": 22.802,
+      "hash": "e10b3f13a116",
+      "duration": 22.477,
       "starts": [
         0,
-        4.76,
-        7.639,
-        15.186,
-        17.02,
-        18.901
+        4.54,
+        7.488,
+        15.139,
+        16.846,
+        18.518
       ]
     },
     "fall": {
       "src": "assets/voice/fall.mp3",
       "voice": "George",
-      "hash": "5b9dbdcd6331",
-      "duration": 14.721,
+      "hash": "20b892dbdc99",
+      "duration": 17.322,
       "starts": [
         0,
-        3.901,
-        7.047,
-        11.413
+        3.738,
+        7.036,
+        9.404,
+        14.06
       ]
     },
     "dark": {
@@ -419,18 +421,18 @@
     "fates": {
       "src": "assets/voice/fates.mp3",
       "voice": "George",
-      "hash": "af807c213dcd",
-      "duration": 27.028,
+      "hash": "02fcc113eefc",
+      "duration": 29.675,
       "starts": [
         0,
-        3.181,
-        6.943,
-        11.25,
-        16.498,
-        18.135,
-        20.48,
-        22.733,
-        26.018
+        7.883,
+        9.95,
+        14.454,
+        19.516,
+        21.13,
+        23.278,
+        25.53,
+        28.7
       ]
     },
     "end": {
@@ -448,16 +450,16 @@
     "stage-1-1-0": {
       "src": "assets/voice/stage-1-1-0.mp3",
       "voice": "Lance",
-      "hash": "5c3da454ebc7",
+      "hash": "100896124803",
       "duration": 23.684,
       "starts": [
         0,
-        4.69,
-        7.477,
-        11.796,
-        13.618,
-        19.609,
-        21.792
+        4.725,
+        7.198,
+        11.505,
+        13.468,
+        19.238,
+        21.966
       ]
     },
     "stage-1-2-0": {
@@ -524,17 +526,16 @@
     "stage-2-3-0": {
       "src": "assets/voice/stage-2-3-0.mp3",
       "voice": "Lyla",
-      "hash": "ce94771216bb",
-      "duration": 31.951,
+      "hash": "48465ffe1937",
+      "duration": 30.697,
       "starts": [
         0,
-        6.432,
-        10.054,
-        11.807,
-        13.386,
-        20.027,
-        24.23,
-        28.41
+        6.269,
+        9.497,
+        11.262,
+        13.142,
+        19.714,
+        24.346
       ]
     },
     "stage-3-1-0.delilah": {
@@ -631,23 +632,23 @@
     "set-victorReturns-1": {
       "src": "assets/voice/set-victorReturns-1.mp3",
       "voice": "Lyla",
-      "hash": "13419422eb1e",
-      "duration": 7.802,
+      "hash": "900ac70cfc57",
+      "duration": 4.69,
       "starts": [
         0,
-        6.861
+        3.03
       ]
     },
     "set-victorReturns-2": {
       "src": "assets/voice/set-victorReturns-2.mp3",
       "voice": "Lance",
-      "hash": "34a0240440d7",
-      "duration": 23.684,
+      "hash": "184a79bf2ff4",
+      "duration": 18.204,
       "starts": [
         0,
-        13.073,
-        20.666,
-        22.001
+        3.738,
+        6.861,
+        16.033
       ]
     },
     "reveal-0": {
@@ -1127,6 +1128,49 @@
       "starts": [
         0,
         2.357
+      ]
+    },
+    "nurse": {
+      "src": "assets/voice/nurse.mp3",
+      "voice": "George",
+      "hash": "0c48ddb919d1",
+      "duration": 21.733,
+      "starts": [
+        0,
+        5.027,
+        7.094,
+        9.23,
+        14.466
+      ]
+    },
+    "witch-threads": {
+      "src": "assets/voice/witch-threads.mp3",
+      "voice": "George",
+      "hash": "648836149e4f",
+      "duration": 30.047,
+      "starts": [
+        0,
+        3.088,
+        9.741,
+        15.232,
+        17.647,
+        24.404,
+        27.725
+      ]
+    },
+    "apology": {
+      "src": "assets/voice/apology.mp3",
+      "voice": "Lance",
+      "hash": "62abefed933e",
+      "duration": 34.969,
+      "starts": [
+        0,
+        2.322,
+        11.796,
+        12.992,
+        16.66,
+        21.838,
+        31.231
       ]
     }
   }

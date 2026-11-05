@@ -27,6 +27,11 @@
       text: "The buyer was an undertaker of Graves and Sons, who came with a cart and never signed his name. The broker was a fortune teller called Madame Z., who found the dying and took ten percent of every soul. A nurse named Ashgrove counted the dead, said so out loud, and was thrown out as a witch."
     },
     {
+      id: 'nurse', chapter: 'I. The cellar, 1916', layout: 'duo', scene: 1, voice: 'narrator',
+      title: 'The nurse who counted', people: ['morgana', 'silas'],
+      text: "Nurse Ashgrove did the one thing nobody else in that cellar did: she counted. 'They are not dying,' she wrote. 'He is letting them die.' Ezekiel dismissed her for hysteria and witchcraft, and the village believed him. She left with a recipe book, a ruined name, and a secret she never told: a child of Ezekiel's own."
+    },
+    {
       id: 'escaped', chapter: 'I. The cellar, 1916', layout: 'gallery', scene: 1, voice: 'narrator',
       title: 'The ones who got away', people: ['corvus', 'graves', 'khamun'],
       text: "Number seventeen, a private named Daniel Cole, crawled out of the cellar with his face burned, and nobody chased him, because nobody would believe him. In 1918 the undertaker stopped coming and wrote 'forgive me' in the margin. In 1920 Ezekiel spent cellar money on an Egyptian sarcophagus. It was occupied."
@@ -35,7 +40,7 @@
       id: 'retainer', chapter: 'I. The cellar, 1916', layout: 'evidence', scene: 1, voice: 'narrator',
       title: 'Paid to forget',
       chips: [{ text: 'Retainer to Z.' }, { text: "Every All Hallows' Eve" }, { text: 'In perpetuity' }, { text: 'Still paid' }],
-      text: 'Ezekiel died, and the ledger went into a drawer. But every All Hallows\' Eve a cheque still went out to the Zoras, for discretion, forever. The family never asked why. They simply cashed it.'
+      text: 'Ezekiel died, and the ledger went into the cellar, behind the wine. But every All Hallows\' Eve a cheque still went out to the Zoras, for discretion, forever. The family never asked why. They simply cashed it.'
     },
 
     /* ---------- II. The grandchildren ---------- */
@@ -45,7 +50,7 @@
       text: 'A century later, Victor Blackwood paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, to find a cure for death. After two years she wanted a human subject. Two months ago Victor\'s accountant, Edgar Mills, died at his desk of a heart attack, with a kettle laugh in the next room, and she brought him back with a green serum called K-7. It worked. Mostly.'
     },
     {
-      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'delilah', people: ['silas'],
+      id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'narrator', people: ['silas'],
       title: "Delilah's ledger",
       text: "Delilah found her grandfather's ledger and asked the butler, Silas, whether he knew. Silas had always known. Together they tore it into thirteen pieces and slipped one into each guest's envelope, so that no single thief could ever take the whole truth. Then Delilah wrote her letters."
     },
@@ -64,12 +69,12 @@
     {
       id: 'g-finch', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['finch'],
       title: 'Inspector Ambrose Finch',
-      text: 'The Inspector came to guard a book he had never seen. The night before, a short, jingling figure in a borrowed hood paid him fifty pounds to look the other way, and he took it. But he also saw Madame Zora leave the fireplace and stand over the glasses for a full minute, and that one sentence broke her alibi.'
+      text: 'The Inspector came to guard a book he had never seen. The night before, a jingling figure in a borrowed hood paid him fifty pounds to look the other way, and he took it. But he also saw someone leave a chair by the fireplace and stand over the glasses for a full minute, jingling, and that one sentence broke Madame Zora\'s alibi.'
     },
     {
       id: 'g-vane', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['vane'],
       title: 'Rosalind Vane, the Hunter',
-      text: 'The Hunter came to hear her grandfather\'s name read aloud: Private Thomas Vane, number forty-one, sold for eight pounds. Her stake is a chair leg. She spent the whole night glaring at the undertaker, which made her his perfect alibi, and she smelled jasmine on someone shorter than her who clinked when they moved.'
+      text: 'The Hunter came to hear her grandfather\'s name read aloud: Private Thomas Vane, number forty-one, sold for eight pounds. Her stake is a chair leg. She spent the whole night glaring at the undertaker, which made her his perfect alibi. And in the dark she smelled ether on someone crossing from the study door in four quick steps.'
     },
     {
       id: 'g-selene', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['selene'],
@@ -79,7 +84,7 @@
     {
       id: 'g-luna', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['luna'],
       title: 'Luna Nocturne, the Second Cat',
-      text: "Luna is not really Selene's twin; they met in prison. She watched the hallway, and heard Victor tell Doctor Krank: after midnight it ends, the money, the lab, the poor man. Krank laughed like a kettle. From the doorway Luna also saw a ringed hand hover over the lady's glass."
+      text: "Luna is not really Selene's twin; they met in prison. She watched the hallway, and heard Victor tell someone: after midnight it ends, the money, the lab, the poor man. The other said nothing, but their shoes were wet with grass from the garden. From the doorway Luna also saw a ringed hand hover over the lady's glass."
     },
     {
       id: 'g-krank', chapter: 'III. The guests', layout: 'portrait', scene: 2, voice: 'narrator', people: ['krank'], killers: ['krank'],
@@ -109,7 +114,7 @@
     {
       id: 'g-morgana', chapter: 'III. The guests', layout: 'portrait', scene: 1, voice: 'narrator', people: ['morgana'],
       title: 'Morgana Ashgrove, the Witch',
-      text: 'The Witch came for an apology a century late; her grandmother was the nurse who counted the dead. Zora tried to pin the jasmine on her herbs. They were sage. Morgana knew the difference, and she knew that jasmine is what you use to hide something bitter.'
+      text: "The Witch came for an apology a century late; her grandmother was the nurse who counted the dead. Her curse is theatre and her herbs are sage, and when Zora pinned the jasmine on the cat, Morgana knew the difference, and knew that jasmine is what you use to hide something bitter. She noticed everything else too: Zora's empty chair, and Edgar flinching at Krank's touch. And in the dark a ringed, shaking hand took hers. It was Zora's: the one alibi the seer told true."
     },
     {
       id: 'g-edgar', chapter: 'III. The guests', layout: 'portrait', scene: 2, voice: 'narrator', people: ['edgar'],
@@ -131,22 +136,22 @@
     {
       id: 'gate', chapter: 'IV. The toast', layout: 'duo', scene: 1, sfx: 'whisper', voice: 'narrator', people: ['zora', 'finch'], killers: ['zora'],
       title: 'The night before',
-      text: "The night before the party, wearing the Cultist's stolen hood, Zora met the Inspector at the gate and paid him to look away at midnight, when she meant to snatch the ledger before it could be read. In the end she never needed him: the glass came first. The hood smelled of jasmine. The figure was short. It jingled."
+      text: "The night before the party, wearing the Cultist's stolen hood, Zora met the Inspector at the gate and paid him to look away at midnight, when she meant to snatch the ledger before it could be read. In the end she never needed him: the glass came first. The hood smelled of jasmine. It jingled."
     },
     {
       id: 'glass', chapter: 'IV. The toast', layout: 'duo', scene: 1, voice: 'narrator', people: ['zora', 'khamun'], killers: ['zora'],
       title: 'The glass',
-      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over the glasses. She emptied the nightshade into her own glass, set it where Delilah had put her own glass down, and wiped her rings. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
+      text: "Before the toast Zora left the fireplace to read the bottles' fortunes. For one full minute she stood over the glasses. She emptied the nightshade into her own glass, pushed Delilah's glass to the back of the tray and set the poisoned one in its place. The jasmine hid the taste. It did not hide the smell. In the corner the mummy saw everything, because nobody looks at furniture."
     },
     {
       id: 'fall', chapter: 'IV. The toast', layout: 'ghosts', ghosts: ['delilah'], scene: 1, sfx: 'death', effect: 'flash', voice: 'narrator',
       title: 'The fall',
-      text: 'Delilah raised her glass to her guests, drank, and fell. Dark lips and wide eyes: nightshade. The plague doctor poured her glass into the plant before anyone could stop him. And Madame Zora began to scream, just a little late.'
+      text: 'Delilah raised her glass to her guests, drank, and fell. Dark lips and wide eyes: nightshade. Zora wiped her rings with a handkerchief. The plague doctor poured her glass into the plant before anyone could stop him. And Madame Zora began to scream, just a little late.'
     },
     {
       id: 'ghost', chapter: 'IV. The toast', layout: 'ghosts', ghosts: ['delilah'], scene: 1, effect: 'ghost', sfx: 'ghost', voice: 'delilah',
       title: 'The ghost',
-      text: 'I did not leave. I stood beside my brother and whispered to him, piece by piece, and made them play my game. The glass that killed me was not the glass I was handed. And when I fell, I smelled jasmine.'
+      text: 'I did not leave. I stood beside my brother and whispered to him, piece by piece, and made them play my game. The glass that killed me was not the glass poured for me. And when I fell, I smelled jasmine.'
     },
 
     /* ---------- V. The second murder ---------- */
@@ -195,6 +200,17 @@
       text: 'I left one letter, locked in a box, for whoever was left. The killers knew where the key was and sent everyone searching high and low. It was in my brother\'s old conjuring hat, where something always comes out that never went in. In the letter I all but named the two who wanted me silent: the broker\'s granddaughter, wearing her grandmother\'s five rings, and the one who signs the laboratory bills W.K. and laughs when they are paid.'
     },
     {
+      id: 'witch-threads', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['morgana'],
+      title: "The Witch's threads",
+      chips: [
+        { text: "Zora's chair, empty for a minute · alibi" },
+        { text: 'Green that never grew · K-7' },
+        { text: "Edgar flinched at Krank's touch" },
+        { text: "'What the conjurer pulls out' · the key" }
+      ],
+      text: "The Witch held more threads than anyone knew. Her alibi broke Zora's: the chair beside her had stood empty for a full minute before the toast. Her nose broke Krank's: the green on Victor's neck was made, not picked. She saw Edgar flinch at Krank's touch. And her grandmother's recipe book, underlined in Delilah's fresh ink, pointed the house to the conjuring hat. A century ago an Ashgrove counted the dead. Tonight another one counted the lies."
+    },
+    {
       id: 'zora-proof', chapter: 'VII. How the truth came out', layout: 'evidence', scene: 3, voice: 'narrator', people: ['zora'], killers: ['zora'],
       title: "Madame Zora's mistakes",
       chips: [
@@ -235,9 +251,14 @@
       text: 'I paid you to cheat death, and you stopped Edgar\'s heart to prove you could, and brought back something that cannot sleep. I was going to read it all at midnight. So when the lights went out you crossed the room in four steps and gave me K-7, and you laughed, because you always laugh. Edgar heard you. Edgar always hears you.'
     },
     {
+      id: 'apology', chapter: 'VIII. The reveal', layout: 'portrait', scene: 3, effect: 'ghost', voice: 'victor', people: ['morgana'],
+      title: 'A century late',
+      text: "Morgana Ashgrove. Your grandmother counted the dead in my grandfather's cellar and said so out loud, and this house called her a witch for it. She was right. She was right about all of it, and I am sorry. I promised you that in person, and a ghost keeps his promises. And one thing she never told you: the butler who raised me is her grandson too. You have a cousin in this house."
+    },
+    {
       id: 'fates', chapter: 'VIII. The reveal', layout: 'gallery', scene: 3, voice: 'narrator', people: ['silas', 'morgana', 'graves', 'vane', 'corvus', 'khamun', 'edgar', 'finch', 'malachi', 'selene', 'luna'],
       title: 'What became of them',
-      text: 'Silas inherited the manor and fired nobody. Morgana got her apology, from a ghost, which counts. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
+      text: 'Silas inherited the manor, fired nobody, and gave his cousin Morgana the cellar, which she turned into a herb garden. Real herbs, this time. The Hunter never staked the undertaker; she brings him tea on Sundays. The plague doctor burned page six and took his mask off once, for the cat. Khamun kept the sofa. Edgar finally got a good ledger. Brother Malachi gained a fourth member. And Inspector Finch gave back the fifty pounds. Eventually.'
     },
     {
       id: 'end', chapter: 'VIII. The reveal', layout: 'title', scene: 0, sfx: 'toll', voice: 'narrator',

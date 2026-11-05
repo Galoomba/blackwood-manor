@@ -62,6 +62,7 @@
         memorial(),
         el('h1', { class: 'interlude-title' }, 'Scene 2'),
         el('h2', { class: 'interlude-sub' }, 'The Master Falls'),
+        o.cue ? el('p', { class: 'interlude-cue' }, 'Lights on again.') : null,
         o.lines);
       o.lines.classList.add('interlude-lines');
       o.onReady();
@@ -76,6 +77,7 @@
     o.sfx('whisper');
     later(o, 2400, () => {
       pair.append(ghostFigure('victor'));
+      if (o.cue) ov.append(el('p', { class: 'interlude-cue' }, o.cue));
       ov.classList.add('frost-on');
       o.sfx('ghost');
       flashLightning();

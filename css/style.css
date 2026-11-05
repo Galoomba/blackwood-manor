@@ -152,6 +152,11 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 .overlay > :first-child { margin-top: auto; }
 .overlay > :last-child { margin-bottom: auto; }
 .overlay.hidden { display: none; }
+.overlay .team-call { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 18px; max-width: 900px; }
+.overlay .team-call > div { flex: 1 1 280px; }
+.overlay .team-call p { font-size: 1.15em; line-height: 1.6; }
+.panel details.run { margin-top: 12px; }
+.panel details.run ul { margin: 6px 0 0 18px; }
 .overlay h1 { font-size: clamp(36px, 8vw, 90px); margin-bottom: 20px; animation: fade 2s ease; }
 .overlay .lines { max-width: 800px; font-size: 22px; }
 .overlay .lines .speaker { display: block; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-top: 18px; }
@@ -371,7 +376,7 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .strip .body { padding: 3mm 4mm; }
   .runsheet h1 { font-size: 22pt; }
   .runsheet .rs-loop { border: 2px solid #000; padding: 4pt 6pt; font-size: 10pt; }
-  .runsheet table { width: 100%; border-collapse: collapse; font-size: 9pt; line-height: 1.22; }
+  .runsheet table { width: 100%; border-collapse: collapse; font-size: 8.6pt; line-height: 1.2; }
   .runsheet th, .runsheet td { border: 1px solid #000; padding: 2pt 5pt; text-align: left; vertical-align: top; }
   .runsheet th { width: 30%; }
   .runsheet th small { font-weight: normal; font-style: italic; }
@@ -387,6 +392,9 @@ body.tv .story-text { font-size: clamp(22px, 2.5vw, 44px); }
   .guide h2 + .gs-block, .guide h2 + .gs-stage { break-before: avoid; page-break-before: avoid; }
   /* The absent guests' clues are a reference of their own: they start on a fresh page. */
   .guide .gs-absent { break-before: page; page-break-before: always; }
+  .ballots .slips { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .ballots .slip { border: 1px dashed #666; padding: 3.5mm 5mm; font-size: 10pt; break-inside: avoid; page-break-inside: avoid; }
+  .ballots .slip p { margin: 2mm 0; }
   .guide .gs-stage table th { width: 22%; }
   .guide table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6pt 0 12pt; }
   .guide th, .guide td { border: 1px solid #000; padding: 3pt 4pt; text-align: left; vertical-align: top; }

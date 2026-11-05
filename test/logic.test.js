@@ -35,20 +35,30 @@ test('orphanedClues moves an absent witness card to the ghost at 3.2', () => {
   assert.equal(word.text, 'HAVE');
 });
 
-test('orphanedClues returns observation at 1.3, ledger at 2.3, alibi at 3.3', () => {
+test('orphanedClues returns an introduction at 1.1, observation at 1.3, ledger at 2.3, alibi at 3.3', () => {
   const r = logic.buildRoster(data, selectionWithout('silas'));
   assert.equal(logic.orphanedClues(data, r, '1.3')[0].kind, 'observation');
   const ledger = logic.orphanedClues(data, r, '2.3')[0];
   assert.equal(ledger.kind, 'ledger');
   assert.equal(ledger.number, 8);
   assert.equal(logic.orphanedClues(data, r, '3.3')[0].kind, 'alibi');
-  assert.deepEqual(logic.orphanedClues(data, r, '1.1'), []);
+  assert.equal(logic.orphanedClues(data, r, '1.1')[0].kind, 'introduction');
 });
 
-test('an absent guest\'s team clue is read by their team\'s ghost at 3.1 and 3.2', () => {
+test('an absent guest has a stand-in line at every stage, read in the third person', () => {
   const r = logic.buildRoster(data, selectionWithout('finch'));
+  for (const sid of data.STAGE_IDS) {
+    const lines = logic.orphanedClues(data, r, sid).filter((x) => x.kind !== 'word');
+    assert.equal(lines.length, 1, `stage ${sid}`);
+  }
+  for (const c of data.characters.filter((x) => !x.killer)) {
+    for (const sid of data.STAGE_IDS) {
+      const t = c.cards[sid].absent;
+      assert.ok(t, `${c.id} ${sid} has a stand-in line`);
+      assert.ok(!/^You\b|\bSay (so|this|it)\b/.test(t), `${c.id} ${sid} stand-in is written for the host to read`);
+    }
+  }
   const at32 = logic.orphanedClues(data, r, '3.2').find((x) => x.kind === 'team clue');
-  assert.equal(at32.reader, "Victor's ghost");
   assert.match(at32.text, /crystal ball/);
   assert.ok(logic.orphanedClues(data, r, '3.1').some((x) => x.kind === 'team clue' && /needle/.test(x.text)));
   assert.ok(!logic.orphanedClues(data, logic.buildRoster(data, selectionWithout()), '3.2').length, 'nothing when everyone is present');
@@ -125,6 +135,11 @@ test('talkFor picks the first table-talk line whose subject is present', () => {
   assert.equal(logic.talkFor({}, ['edgar']), null);
 });
 
+test('every present card still has table talk when the Inspector stays home too', () => {
+  const presentIds = data.characters.filter((c) => !c.optional && c.id !== 'finch').map((c) => c.id);
+  for (const id of presentIds) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(data.characters.find((c) => c.id === id).cards[sid], presentIds), `${id} ${sid}`);
+});
+
 test('every card has a table-talk line for any roster that keeps the required guests', () => {
   const presentIds = data.characters.filter((c) => !c.optional).map((c) => c.id);
   for (const c of data.characters) for (const sid of data.STAGE_IDS) assert.ok(logic.talkFor(c.cards[sid], presentIds), `${c.id} ${sid}`);
@@ -180,4 +195,12 @@ test('Morgana stands with Team Victor, and each team sentence has one word per m
   assert.equal(logic.teamSentence(data, all, 'victor', '3.1').sentence, 'FIND THE GLASS FACE THAT NEVER BLINKS');
   assert.equal(logic.teamSentence(data, all, 'victor', '3.2').sentence, 'FIND A SUN THAT SLEEPS BY DAY');
   assert.equal(logic.teamSentence(data, all, 'delilah', '3.2').sentence, 'SEEK SPINES THAT HAVE NO BACKBONE');
+});
+
+test('tally counts a voter once per suspect, ignores absent voters and reports a tie for second place', () => {
+  const r = logic.tally({ a: ['zora', 'zora'], gone: ['krank', 'graves'] }, ['zora', 'krank'], ['a', 'zora', 'krank', 'graves']);
+  assert.deepEqual(r.counts, { zora: 1 });
+  const tie = logic.tally({ a: ['zora', 'krank'], b: ['zora', 'graves'] }, ['zora', 'krank']);
+  assert.deepEqual(tie.tie.sort(), ['graves', 'krank']);
+  assert.deepEqual(logic.tally({ a: ['zora', 'krank'], b: ['zora', 'krank'] }, ['zora', 'krank']).tie, []);
 });

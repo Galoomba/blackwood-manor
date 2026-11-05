@@ -94,7 +94,7 @@
 
   function ledger() {
     const strips = data.ledger.map((s) => {
-      const h = Math.max(2, 14 - s.number);
+      const h = Math.max(2, 15 - s.number);
       const holder = charById(s.holder);
       return `<div class="strip"><div class="margin"><div class="candle-ink" style="height:${h}mm"></div></div><div class="body">${esc(s.text)}<br><small>holder: ${sym(holder.symbol)} ${esc(holder.short)} (put in their envelope, under the 2.3 card)</small></div></div>`;
     });
@@ -119,12 +119,30 @@
     </div>`;
   }
 
+  /* Things to find before the night: nothing here is printed. */
+  const PROPS = [
+    'Nineteen envelopes: thirteen guests and six pictures.',
+    "Wine glasses on a tray for the toast, one of them Delilah's.",
+    "A small red book with every page torn out, in Delilah's bag at the toast: Selene steals it and shows the empty cover at 2.3.",
+    "A handkerchief dabbed with jasmine, one corner stained purple: in Selene's envelope, under her 3.2 card.",
+    'Optional evidence for the picture envelopes: a small brown vial (Plant) and a syringe marked K-7 (Television).',
+    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.',
+    'Pens for the ballot slips.'
+  ];
+
+  /* Ballot slips for the vote: each guest names two different suspects. */
+  function ballots(roster) {
+    const slip = '<div class="slip"><strong>Blackwood Manor · The accusation</strong><p>My name: ______________________</p><p>I accuse:</p><p>1. ___________________________</p><p>2. ___________________________</p><small>Two different names. The house wins only if both killers are the two most accused.</small></div>';
+    const pages = Math.max(1, Math.ceil(((roster && roster.present.length) || 8) / 8));
+    return Array.from({ length: pages }, () => `<div class="sheet ballots"><h1>Ballot slips</h1><p><em>Cut along the dashed lines. One per guest, handed out at the vote.</em></p><div class="slips">${Array(8).fill(slip).join('')}</div></div>`).join('');
+  }
+
   /* The host's run sheet: headlines and what has to happen, in order, on two pages. */
   function runSheet() {
     const row = (head, sub, items) => `<tr><th>${head}${sub ? `<br><small>${esc(sub)}</small>` : ''}</th><td><ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></td></tr>`;
     const kind = { individual: 'On your own', group: 'Find alone, solve together', team: 'Teams' };
     const before = row('Before', 'the guests arrive', [
-      'Set who is present on the setup screen, then print.',
+      'Set who is present on the setup screen, then print. Props: see the host guide.',
       'Lay the guests\' envelopes on the table, 1.1 on top, and the six picture envelopes beside them, untouchable (Clock and Mirror stay empty).',
       'The box: letter locked inside. Put the true key in the rabbit hat, and the hat behind a small door at waist height. Hide the fake keys around the room.',
       'Laptop: open the site. TV: press "Open TV screen", click it once, press F.',
@@ -132,13 +150,13 @@
     ]);
     const prologue = row('Prologue', 'The Toast', [
       'Press "Begin the night". Victor gives the toast from the screen.',
-      'Delilah drinks and falls. Corvus pronounces her dead.',
+      'Delilah drinks and falls. Corvus pronounces her dead (Victor does, if Corvus is absent).',
       'Press "She is dead". Victor sends everyone to their envelopes.'
     ]);
     const loop = '<p class="rs-loop"><strong>Every stage:</strong> the ghost speaks → <strong>Cards out</strong> (everyone takes the top card) → <strong>Start discussion</strong> → <strong>End discussion</strong> → <strong>Next stage</strong>. The host panel shows absent guests\' lines and the answers.</p>';
-    const rows = data.stages.map((st) => row(`${esc(st.id)} ${esc(st.title)}`, kind[st.kind], st.run || []));
+    const rows = data.stages.map((st) => row(`${esc(st.id)} ${esc(st.title)}`, `${kind[st.kind]}${st.minutes ? ` · ${st.minutes.cards} + ${st.minutes.discuss} min` : ''}`, st.run || []));
     const end = row('Vote', 'and reveal', [
-      'Everyone names two suspects in secret. Enter the votes.',
+      'Two different suspects per ballot slip. Enter them with the laptop turned away. A tie for second: 30 seconds of defence each, then vote again between them.',
       'Press "Reveal". The ghosts name the killers.',
       'Optional: "Tell the whole story".'
     ]);
@@ -161,7 +179,7 @@
     'Cards out: everyone takes their card. It shows their team word and its number, plus a personal clue to say aloud.',
     "Each team says its words aloud in number order. The team's ghost says the words of absent teammates (host panel).",
     "All six picture envelopes lie on the table, untouchable. The team names one to its own ghost; each ghost answers only for their own team. Right: hand over that envelope. Wrong (a decoy, or the other team's picture): shake your head, and the team waits one minute.",
-    'Stuck for 3 minutes? The ghost whispers the full sentence. It also exposes the killer\'s wrong word.',
+    'Stuck for 3 minutes? The ghost whispers the next wrong or missing word. Still stuck at 6 minutes? The whole sentence, which also exposes the killer\'s wrong word.',
     'Press +1 min as needed, then "Start discussion" once both teams have their evidence. Each team shows the room what it found.',
     'Rules: everyone must say the word on their card; the killers may say it wrong. Nobody reads anyone else\'s card.'
   ];
@@ -183,16 +201,16 @@
     const li = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
     const parts = [`<div class="gs-block"><h2>How the hosts split the night</h2>${li(HOST_SPLIT)}</div>`,
       `<h2>Stage by stage</h2>`,
-      `<div class="gs-stage"><h3>Prologue · The Toast</h3>${li(['Press "Begin the night". Victor gives the toast.', 'Delilah drinks and falls. Corvus pronounces her dead.', 'Press "She is dead". Victor sends everyone to their envelopes.'])}</div>`];
+      `<div class="gs-stage"><h3>Prologue · The Toast</h3>${li(['Press "Begin the night". Victor gives the toast.', 'Delilah drinks and falls. Corvus pronounces her dead (Victor does, if Corvus is absent).', 'Press "She is dead". Victor sends everyone to their envelopes.'])}</div>`];
     data.stages.forEach((st) => {
       let extra = '';
       if (st.id === '2.3') extra = `<p><strong>The ledger, in order:</strong> ${data.ledger.map((x) => `${x.number} ${esc(charById(x.holder).short)}`).join(' · ')}</p>`;
       if (st.id === '3.1') extra = `<p><strong>How a team round runs (3.1 and 3.2):</strong></p><ol>${TEAM_STEPS.map((t) => `<li>${esc(t)}</li>`).join('')}</ol>${teamTable('3.1')}`;
       if (st.id === '3.2') extra = teamTable('3.2') + `<p>Witness readers: ${['delilah', 'victor'].map((t) => `${esc(charById(data.witnessCards[t].reader).short)} (${teamLabel(t)}), or ${esc(data.witnessCards[t].ghost)}`).join('; ')}.</p>`;
       if (st.id === '3.4') extra = `<p><strong>Answer:</strong> the true key is in ${esc(data.box.hidingPlace)}, behind a small door at waist height. ${esc(data.box.rule)} ${data.killerIds.map((id) => `${esc(charById(id).short)}: ${esc(charById(id).cards['3.4'].sabotage.split('. ')[0])}.`).join(' ')}</p>`;
-      parts.push(`<div class="gs-stage"><h3>${esc(st.id)} ${esc(st.title)} · ${esc(KIND[st.kind] || st.kind)}</h3>${li(st.run || [])}<p><em>Notes:</em> ${esc(st.hostNotes)}</p>${extra}</div>`);
+      parts.push(`<div class="gs-stage"><h3>${esc(st.id)} ${esc(st.title)} · ${esc(KIND[st.kind] || st.kind)}${st.minutes ? ` · ${st.minutes.cards} + ${st.minutes.discuss} min` : ''}</h3>${li(st.run || [])}<p><em>Notes:</em> ${esc(st.hostNotes)}</p>${extra}</div>`);
     });
-    parts.push(`<div class="gs-stage"><h3>Vote and reveal</h3>${li(['Everyone names two suspects in secret. Enter the votes.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}</div>`);
+    parts.push(`<div class="gs-stage"><h3>Vote and reveal</h3>${li(['Everyone writes two different suspects on a ballot slip. Enter the votes with the laptop turned away.', 'Tie for second place? The tied guests get 30 seconds each to defend themselves, then everyone votes again between them.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}</div>`);
     return parts.join('');
   }
 
@@ -204,7 +222,8 @@
     /* One block per stage, so a page only ever breaks between stages, never inside one. */
     const orphans = data.STAGE_IDS.map((sid) => {
       const items = logic.orphanedClues(data, roster, sid);
-      return items.length ? `<div class="gs-block"><h3>Stage ${sid}</h3><ul>${items.map((o) => `<li><strong>${sym(o.symbol)} ${esc(o.name)} (${o.kind}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
+      const by = items.length && items.every((o) => o.reader === items[0].reader) ? ` · ${esc(items[0].reader)} reads` : '';
+      return items.length ? `<div class="gs-block"><h3>Stage ${sid}${by}</h3><ul>${items.map((o) => `<li><strong>${sym(o.symbol)} ${esc(o.name)} (${o.kind}${o.number ? ` ${o.number}` : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${by ? '' : `, ${esc(o.reader)}`}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
     }).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
@@ -214,23 +233,24 @@
         <li>Fill each guest's envelope with their own cards, face down, 1.1 on top and 3.4 at the bottom, and their ledger strip under the 2.3 card (list below).</li>
         <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; lay the six picture envelopes on the table where nobody may touch them (Clock and Mirror are empty decoys). In Scene 3 each ghost answers for their own team and hands over an envelope only when that team names its right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
-        <li>Set who is present on the setup screen before printing the character packs. Remove absent guests' envelopes from the table.</li>
+        <li>Set who is present on the setup screen before printing. Stuff all thirteen guest envelopes, but lay only the present guests' envelopes on the table. Delilah's host keeps the absent guests' envelopes, for their ledger strips at 2.3 and for anyone who arrives late (give a latecomer their envelope and let them read the cards they missed).</li>
         <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
         <li>Victor gives the toast. Delilah dies. Play.</li>
       </ol></div>
+      <div class="gs-block"><h2>Props</h2><ul>${PROPS.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
       ${stageByStage()}
       <div class="gs-block"><h2>What goes in each guest's envelope</h2><ul>${stocking()}</ul></div>
       <div class="gs-block"><h2>The box</h2><p>True key: ${esc(data.box.hidingPlace)}. ${esc(data.box.rule)}</p></div>
       <div class="gs-block"><h2>Team sentences</h2><ul>${sentences}</ul></div>
       <h2>The killers and their orders</h2>${killers}
       <div class="gs-block"><h2>Alibis</h2><ul>${alibis}</ul></div>
-      <div class="gs-absent"><h2>Absent guests (current roster): the ghost delivers these</h2>${orphans || '<ul><li>None. Everyone is present.</li></ul>'}</div>
+      <div class="gs-absent"><h2>Absent guests (current roster): what to say for them, stage by stage</h2>${orphans || '<ul><li>None. Everyone is present.</li></ul>'}</div>
     </div>`;
   }
 
   /* "Print everything": the whole pack in one job, host material first, the players' packs last. */
-  const EVERYTHING = ['runsheet', 'guide', 'box', 'envelopes', 'ledger', 'covers', 'all'];
+  const EVERYTHING = ['runsheet', 'guide', 'box', 'envelopes', 'ledger', 'ballots', 'covers', 'all'];
 
   function build(kind, id, roster) {
     const presentIds = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
@@ -243,6 +263,7 @@
     if (kind === 'ledger') return ledger();
     if (kind === 'guide') return guide(roster);
     if (kind === 'runsheet') return runSheet();
+    if (kind === 'ballots') return ballots(roster);
     return '';
   }
 
