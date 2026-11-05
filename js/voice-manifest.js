@@ -87,14 +87,16 @@
     "lab": {
       "src": "assets/voice/lab.mp3",
       "voice": "George",
-      "hash": "b59ac1d6c888",
-      "duration": 24.939,
+      "hash": "fda1cf21cc1c",
+      "duration": 27.214,
       "starts": [
         0,
-        9.207,
-        12.365,
-        23.313,
-        24.091
+        8.812,
+        11.958,
+        20.143,
+        21.989,
+        25.554,
+        26.343
       ]
     },
     "ledger": {
@@ -385,13 +387,13 @@
     "krank-proof": {
       "src": "assets/voice/krank-proof.mp3",
       "voice": "George",
-      "hash": "226c51dab14d",
-      "duration": 22.941,
+      "hash": "b3ba20bbad11",
+      "duration": 23.545,
       "starts": [
         0,
-        4.644,
-        16.939,
-        20.7
+        4.725,
+        17.612,
+        21.315
       ]
     },
     "reveal-zora": {

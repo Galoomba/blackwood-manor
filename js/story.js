@@ -47,7 +47,7 @@
     {
       id: 'lab', chapter: 'II. The grandchildren', layout: 'duo', scene: 2, voice: 'narrator',
       title: "Victor's laboratory", people: ['krank', 'edgar'],
-      text: 'A century later, Victor Blackwood paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, to find a cure for death. After two years she wanted a human subject. Two months ago Victor\'s accountant, Edgar Mills, died at his desk of a heart attack, with a kettle laugh in the next room, and she brought him back with a green serum called K-7. It worked. Mostly.'
+      text: 'A century later, Victor Blackwood paid Doctor Wilhelmina Krank two thousand pounds a month for a secret laboratory, to find a cure for death. After two years she wanted a human subject. Two months ago Victor\'s accountant, Edgar Mills, died at his desk when his heart stopped, with a kettle laugh in the next room. It had not stopped by itself. She brought him back with a green serum called K-7. It worked. Mostly.'
     },
     {
       id: 'ledger', chapter: 'II. The grandchildren', layout: 'portrait', scene: 2, voice: 'narrator', people: ['silas'],
@@ -236,7 +236,7 @@
         { text: 'Four steps and a kettle laugh · Silas' },
         { text: "'By the garden door with Malachi'", lie: true }
       ],
-      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named W.K., the cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, the hunter smelled ether in the dark, and the butler heard four steps and a kettle. Then she said she was by the garden door with Brother Malachi. Nobody is ever with Brother Malachi.'
+      text: 'Doctor Krank laughed at the wrong moments all night, and that was the problem. The ledger named W.K., the second cat heard Victor\'s threat, the doctor knew the green, the team found the syringe, the hunter smelled ether in the dark, and the butler heard four steps and a kettle. Then she said she was by the garden door with Brother Malachi. Nobody is ever with Brother Malachi.'
     },
 
     /* ---------- VIII. The reveal ---------- */

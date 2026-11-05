@@ -69,7 +69,7 @@
       run: ["Each team says its words in order and names a picture.", "Hand over the picture envelope only if it is right; a wrong picture costs one minute.", "Stuck for 3 minutes? Whisper the next wrong or missing word. Still stuck at 6 minutes? Whisper the whole sentence."],
       narration: [{ speaker: 'Both ghosts', text: "Find your words. Speak them in order. Go where the sentence sends you. What you find there is what killed us." }],
       clue: 'What killed us is still in this room.',
-      hostNotes: "Only the host opens the picture envelopes (six, two of them empty decoys: Clock and Mirror): a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the full sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp, Television or Clock) and Krank SHADE instead of FACE (the Lamp).",
+      hostNotes: "Only the host opens the picture envelopes (six, two of them empty decoys: Clock and Mirror): a team names its picture, and the host hands it over only if it is right. A wrong picture costs the team one minute. If a team is stuck for three minutes, the ghost whispers the next wrong or missing word; still stuck at six minutes, the whole sentence. Zora will say GLOWS instead of GROWS (sending her team to the Lamp, Television or Clock) and Krank SHADE instead of FACE (the Lamp).",
       setPieceBefore: 'victorReturns'
     },
     {
@@ -312,7 +312,7 @@
         '1.1': { absent: "Brother Malachi is not at the table tonight. He would have said: 'The Order has foreseen this night.' Then bowed to the furniture.", text: 'The Order has three members: you, your cousin, and a man named Keith who has stopped answering letters. You believe the Crimson Ledger is a holy text listing the Chosen. You have never seen it. You printed a newsletter about it anyway.' },
         '1.2': { absent: "Brother Malachi's invitation was one line: 'Your grandfather dug the graves. Come and hear whose.' He decided it meant the Order was finally recognised.", text: 'Delilah\'s invitation was one line: "Your grandfather dug the graves. Come and hear whose." You have decided this means the Order is finally recognised.' },
         '1.3': { absentVoice: "On my way in from the garden I saw the Witch sprinkle dried herbs over the fireplace. Sage, and burned toast. Not jasmine. Definitely not jasmine.", absent: "On his way in from the garden Brother Malachi saw the Witch sprinkle dried herbs over the fireplace. It smelled of sage and burned toast. Not jasmine. Definitely not jasmine.", text: 'On your way in from the garden you saw the Witch sprinkle dried herbs over the fireplace. It smelled of sage and burned toast. Not jasmine. Definitely not jasmine. Say this aloud.' },
-        '2.1': { absent: "If the Cat asks who hired her: it was Brother Malachi. He signed 'A friend of the Order' and promised twenty gold he does not have. He has four shillings.", text: 'You hired the cat burglar. You signed the letter "A friend of the Order" and promised twenty gold you do not have. You have four shillings. If she finds out, stand behind the Inspector.' },
+        '2.1': { absent: "If the Cat asks who hired her: it was Brother Malachi. He signed 'A friend of the Order' and promised twenty gold he does not have. He has four shillings.", text: 'You hired the cat burglar. You signed the letter "A friend of the Order" and promised twenty gold you do not have. You have four shillings. If she finds out, stand behind someone large.' },
         '2.2': { absent: "Brother Malachi's spare hood went missing from his bag last night. Someone borrowed it. He would very much like to know who.", text: 'Goal: recruit one new member to the Order before the vote. Anyone. Even the mummy. Also: your spare hood is missing from your bag. Someone took it last night. Find out who.' },
         '2.3': { absent: "Brother Malachi's strip is number 7. Read it as scripture. His grandfather dug for the undertaker in 1916 and founded the Order with the wages: the Crimson Seal began as a receipt.", text: 'Your ledger strip is number 7. Put it on the table and read it as scripture. Then understand: your grandfather dug for the undertaker in 1916 and founded the Order with his wages. The Crimson Seal began as a receipt.', ledger: 7 },
         '3.1': { absentVoice: "I blessed the wine before the toast, glass by glass. Thirteen. When I passed the tray again, one glass at the front smelled sweet, like a perfume counter. I blessed that one twice, to be safe.", absent: "Brother Malachi blessed the wine before the toast, glass by glass: thirteen. When he passed the tray again, one glass at the front smelled sweet, like a perfume counter. He blessed that one twice, to be safe.", text: "Team Delilah. You blessed the wine before the toast, glass by glass: thirteen. When you passed the tray again, one glass at the front smelled sweet, like a perfume counter. You blessed that one twice, to be safe. Say so.", word: { index: 1, text: 'WHERE' } },
@@ -555,7 +555,7 @@
       '2.3': [{ about: 'zora', text: "Strip 10 names a broker, Z. Ask Madame Zora what 'ten percent per soul' pays for these days. If she laughs, she may be more useful than she looks." }],
       '3.1': [{ about: 'corvus', text: "The plague doctor offers everyone an injection. Ask him, loudly, how many syringes are in his bag, and whether one is missing." }],
       '3.2': [{ about: 'finch', text: "The Inspector took money to look the other way. Say so. A bribed policeman is a wonderful thing to discuss instead of a laugh." }, { about: 'morgana', text: "Ask the Witch, kindly, exactly where she stood when the lights went out, and whether anyone can vouch for it." }],
-      '3.3': [{ about: 'malachi', text: "The Cultist's alibi comes after yours. Before he reads it, ask him warmly whether he enjoyed your company by the garden door. Nod while he answers." }],
+      '3.3': [{ about: 'malachi', text: "Before the Cultist reads his alibi, ask him warmly whether he enjoyed your company by the garden door. Nod while he answers." }],
       '3.4': [{ about: 'graves', text: "Mr. Graves wears the only black hat on a head in this room. Ask him to turn it out, slowly." }]
     },
     malachi: {
@@ -576,9 +576,9 @@
       '1.3': [{ about: 'morgana', text: "The Witch's name is Ashgrove. You know that name. Ask her where her grandmother worked, and watch what she does with her face." }],
       '2.1': [{ about: 'graves', text: "Mr. Graves came every All Hallows' Eve with a cart until 1918; your mother told you. Ask him what was in the cart." }],
       '2.2': [{ about: 'zora', text: "Madame Zora's handkerchief went into her sleeve after the toast. Ask her, in front of everyone, to show it. If the sleeve is empty, ask where it went." }],
-      '2.3': [{ about: 'finch', text: "Strip 11 says the retainer is still paid. Ask the Inspector, who is good with money, who signs cheques for a dead man." }],
+      '2.3': [{ about: 'finch', text: "Strip 11 says the retainer is still paid. Ask the Inspector, who is good with money, who signs cheques for a dead man." }, { about: 'zora', text: "Strip 11 says the retainer to Z. is still paid. Ask Madame Zora who signs her cheques now that the master is dead." }],
       '3.1': [{ about: 'edgar', text: "Say the wound is a needle. When Dr. Krank says 'vitamin', ask her which vitamin leaves a scar in the shape of a K." }, { about: 'krank', text: "Say the wound is a needle. Then ask Dr. Krank what K-7 stands for." }],
-      '3.2': [{ about: 'finch', text: "The Inspector was bribed to look away. Ask him what he thought he was being paid not to see." }],
+      '3.2': [{ about: 'finch', text: "The Inspector was bribed to look away. Ask him what he thought he was being paid not to see." }, { about: 'zora', text: "Madame Zora's handkerchief went into her sleeve after the toast. Ask her, in front of everyone, to show it." }],
       '3.3': [{ about: 'zora', text: "Zora's alibi will say the fireplace. You cleared the wine tray and know who stood there before you. Say her name when she finishes." }],
       '3.4': [{ about: 'morgana', text: "Tell Morgana what Master Victor's old trick was. She is family; she should hear it from you." }]
     },
@@ -589,14 +589,14 @@
       '2.1': [{ about: 'finch', text: "The Inspector was hired to guard a book and has not once asked where it is. Ask him why a guard is so relaxed." }, { about: 'vane', text: "The Hunter's stake is suspiciously light. Ask her what wood it is, then diagnose her with splinters." }],
       '2.2': [{ about: 'krank', text: "Ask Dr. Krank, as a colleague, what exactly she researches for Victor. Listen for the word 'heart'." }],
       '2.3': [{ about: 'graves', text: "Strip 7 names the buyer: an undertaker from 1702. Ask Mr. Graves whether he is his own great-grandfather." }],
-      '3.1': [{ about: 'zora', text: "Team Delilah found a vial in the plant. It was not there when you poured the glass in. Ask the fortune teller, who stood at that table, whether she saw anyone drop something." }],
+      '3.1': [{ about: 'zora', text: "When Team Delilah shows the vial from the plant: it was not there when you poured the glass in. Ask the fortune teller, who stood at that table, whether she saw anyone drop something." }],
       '3.2': [{ about: 'edgar', text: "Edgar is about to read the witness card. Before he does, ask Dr. Krank why she looks so nervous." }, { about: 'krank', text: "Dr. Krank wants nobody to mention the laugh. Mention the laugh. Ask her to do it again for the room." }],
       '3.3': [{ about: 'krank', text: "Krank's alibi says the garden door. The laugh you heard came from the study door. Say so the moment she finishes." }],
       '3.4': [{ about: 'zora', text: "Madame Zora keeps offering to try other people's keys. Ask her, as her physician, why her hands are shaking." }]
     },
     khamun: {
       '1.1': [{ about: 'selene', text: "You saw the cat woman come in through the window. Ask her, with great dignity, whether she climbs into every house or only the ones with gold in them." }],
-      '1.2': [{ about: 'finch', text: "The Inspector has squinted through his glass at everyone except the fortune teller. Ask him why she is exempt." }],
+      '1.2': [{ about: 'finch', text: "The Inspector has squinted through his glass at everyone except the fortune teller. Ask him why she is exempt." }, { about: 'zora', text: "The fortune teller has not once looked at your corner. Ask her, slowly, what she foresees for a mummy." }],
       '1.3': [{ about: 'silas', text: "The butler went down to the cellar crying at seven. Ask him what is down there. You know a crypt when you hear one." }, { about: 'graves', text: "The undertaker and you are the only guests who have been dead. Ask him how long, and watch him count." }],
       '2.1': [{ about: 'edgar', text: "The accountant walks like you do. Ask him, kindly, how long he has been dead." }, { about: 'krank', text: "Dr. Krank's laugh sounds like a kettle. Ask her what a kettle has to be so pleased about." }],
       '2.2': [{ about: 'morgana', text: "The Witch is green. You have seen green people before; they had been dead for a week. Ask her whether she is quite well." }],
@@ -625,7 +625,7 @@
       '2.1': [{ about: 'malachi', text: "The Cultist calls you 'the Risen'. Ask him what his Order would pay for a man who came back. Then ask the scientist what she was paid." }],
       '2.2': [{ about: 'corvus', text: "Dr. Corvus looked at your arm when you arrived. Ask him what he saw; doctors notice green." }],
       '2.3': [{ about: 'krank', text: "Strip 12 names the laboratory: W.K. Ask the room who W.K. could be. Write the initials down." }],
-      '3.1': [{ about: 'graves', text: "Mr. Graves says the wound is a needle, not a bite. Ask him how many needle marks an undertaker sees, and how many bites." }],
+      '3.1': [{ about: 'graves', text: "The mark on Victor's neck is a needle, not a bite. Ask Mr. Graves how many needle marks an undertaker sees, and how many bites." }],
       '3.2': [{ about: 'krank', text: "Before you read the witness card, Krank will call your memory a ruin. Ask her to tell the room the date you died. You know it. See if she does." }],
       '3.3': [{ about: 'krank', text: "Krank's alibi will say the garden door. The laugh in the dark came from the study door, and you know that laugh. Say: 'I heard you.'" }],
       '3.4': [{ about: 'krank', text: "Ask Dr. Krank why she is so keen on the lamp. Count how many times she laughs while she answers." }]
@@ -747,7 +747,7 @@
       { about: 'zora', text: "One guest has foretold the weather all evening, wrongly, and charged for it." },
       { about: 'malachi', text: "One guest bows to the furniture. The furniture has not yet bowed back." },
       { about: 'vane', text: "One guest has been staring at another guest's teeth all evening." },
-      { about: 'selene', text: "One guest came in through the pantry window at seven, and one more came in a minute later." },
+      { about: 'selene', text: "One guest came in through the pantry window at seven, gloves on, and has not taken them off since." },
       { about: 'graves', text: "One guest left this house with a cart every All Hallows' Eve from 1916 to 1918." },
       { about: 'finch', text: "One guest was hired by the dead lady and paid by somebody else." },
       { about: 'zora', text: "One guest has not once looked at the mummy tonight. She knows exactly where he is standing." },
@@ -786,7 +786,7 @@
       { about: 'malachi', text: "One guest is missing something from his bag, and it is the colour of the night." },
       { about: 'zora', text: "One guest's rings are new and expensive. Fortune telling, it seems, pays every year without fail." },
       { about: 'selene', text: "One guest confessed to a theft tonight and was thanked for it." },
-      { about: 'vane', text: "One guest knows nightshade from the old lore: wide eyes, dark lips, no bite marks." },
+      { about: 'vane', text: "One guest had never seen a vampire before tonight, and is terrified of the one she has found." },
       { about: 'silas', text: "One guest knows every footstep in this house, and heard some in the dark that did not belong." },
       { about: 'finch', text: "One guest's alibi says he watched the window. Ask what the window showed him." },
       { about: 'corvus', text: "One guest has promised to take his mask off once, for someone who asks kindly." }
@@ -798,7 +798,7 @@
       { about: 'selene', text: "One guest has a book in her coat. It is empty." },
       { about: 'krank', text: "One guest came in from the garden before the toast with grass on her shoes, and has not said why." },
       { about: 'finch', text: "One guest's bribe note puts a little circle over every i, and he has only just noticed." },
-      { about: 'morgana', text: "One guest knows that jasmine oil covers bitter things, and will say so." },
+      { about: 'morgana', text: "One guest waved sage over the glasses before the toast. Sage, not jasmine." },
       { about: 'corvus', text: "One guest says the vial was not in the plant when he poured the glass there. He would know; someone dropped it in afterwards." },
       { about: 'graves', text: "One guest stood beside the hunter at the window the whole time the lights were out." },
       { about: 'malachi', text: "One guest has worked out that someone wore his hood. He is still working out who." }

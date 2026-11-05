@@ -531,7 +531,8 @@
   }
 
   function renderTally() {
-    const t = $('#tally'); if (!t) return;
+    /* The vote and result screens each have a tally; fill the one on the screen showing now. */
+    const t = $(`#screen-${game.get().screen === 'result' ? 'result' : 'vote'} .tally`); if (!t) return;
     clear(t);
     const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
     const max = Math.max(1, ...Object.values(result.counts));

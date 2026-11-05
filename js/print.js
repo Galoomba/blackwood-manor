@@ -123,10 +123,11 @@
   const PROPS = [
     'Nineteen envelopes: thirteen guests and six pictures.',
     "Wine glasses on a tray for the toast, one of them Delilah's.",
-    "A small red book with every page torn out, in Delilah's bag at the toast: Selene steals it and shows the empty cover at 2.3.",
+    "A small red book with every page torn out: give it to Selene's player at the door to hide in her coat (her 1.2 card says she stole it from Delilah's bag at the toast); she shows the empty cover at 2.3.",
     "A handkerchief dabbed with jasmine, one corner stained purple: in Selene's envelope, under her 3.2 card.",
     'Optional evidence for the picture envelopes: a small brown vial (Plant) and a syringe marked K-7 (Television).',
-    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.'
+    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.',
+    'Optional: a K drawn on Edgar\'s forearm in eyeliner (his 3.1 card says to show it), and a scrap of paper for his sarcophagus receipt.'
   ];
 
   /* The host's run sheet: headlines and what has to happen, in order, on two pages. */
@@ -220,7 +221,7 @@
         <li>Put the team evidence and the witness cards in the picture envelopes (team sentences below). Lay the thirteen guest envelopes on the table; lay the six picture envelopes on the table where nobody may touch them (Clock and Mirror are empty decoys). In Scene 3 each ghost answers for their own team and hands over an envelope only when that team names its right picture. A wrong picture costs a minute.</li>
         <li>Set up the box: the letter locked inside, the true key in ${esc(data.box.hidingPlace)}, the hat behind a small door at waist height, fake keys hidden around the room.</li>
         <li>Before printing, tick everyone you expect on the setup screen; the cards' table talk and whispers are chosen for them. Anyone who then does not come: untick them on the night and use their stand-in sheet. Stuff all thirteen guest envelopes, but lay only the present guests' envelopes on the table. Delilah's host keeps the absent guests' envelopes, for their ledger strips at 2.3 and for anyone who arrives late (give a latecomer their envelope and let them read the cards they missed).</li>
-        <li>Hand each guest their intro sheet at the door. Nobody opens anything else.</li>
+        <li>Hand each guest their intro sheet at the door, and give Selene's player the red book to hide in her coat. Nobody opens anything else.</li>
         <li>Open the website, set the roster, test the sound.</li>
         <li>Victor gives the toast. Delilah dies. Play.</li>
       </ol></div>
