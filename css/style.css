@@ -152,6 +152,10 @@ details.host td, details.host th { border-bottom: 1px solid rgba(255,255,255,0.0
 .overlay > :first-child { margin-top: auto; }
 .overlay > :last-child { margin-bottom: auto; }
 .overlay.hidden { display: none; }
+.overlay .absent-call { max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: 10px; animation: fade 1.6s ease; }
+.overlay .absent-portrait { width: min(32vh, 260px); height: min(32vh, 260px); object-fit: cover; object-position: top; border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 40px rgba(160, 124, 240, 0.45); filter: saturate(0.85); }
+.overlay .absent-call h2 { margin: 6px 0 0; }
+.overlay .absent-text { font-size: clamp(20px, 2.6vw, 34px); line-height: 1.45; font-style: italic; margin: 8px 0 0; }
 .overlay .team-call { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 18px; max-width: 900px; }
 .overlay .team-call > div { flex: 1 1 280px; }
 .overlay .team-call p { font-size: 1.15em; line-height: 1.6; }

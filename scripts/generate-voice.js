@@ -37,7 +37,20 @@ const VOICES = {
      John eoNqkziQgzmLZeatERgP (calm, mysterious), Jasper Vayne ybjoxm7ASLDUFh2pC2eM (grim narrator). */
   victor: { id: 'agL69Vji082CshT65Tcy', name: 'Lance', settings: { stability: 0.3, similarity_boost: 0.85, style: 0.6, use_speaker_boost: true, speed: 0.85 },
     /* When both ghosts speak at once he must keep pace with Delilah. */
-    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.15 } }
+    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.15 } },
+
+  /* Absent guests speak their important clues on the TV in their own voices (killers are never absent). */
+  finch: { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.95 } },
+  vane: { id: 'Xb7hH8MSUJpSbSDYk0k2', name: 'Alice', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.45, use_speaker_boost: true, speed: 1.0 } },
+  selene: { id: 'pFZP5JQG7iQjIQuC4Bku', name: 'Lily', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.92 } },
+  malachi: { id: 'N2lVS1w4EtoT3dr4eOWO', name: 'Callum', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.95 } },
+  silas: { id: 'eoNqkziQgzmLZeatERgP', name: 'Noir', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.9 } },
+  corvus: { id: 'goT3UYdM9bhm0n2lmKQx', name: 'Edward', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.45, use_speaker_boost: true, speed: 0.85 } },
+  khamun: { id: 'ybjoxm7ASLDUFh2pC2eM', name: 'Jasper', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.5, use_speaker_boost: true, speed: 0.85 } },
+  morgana: { id: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.6, use_speaker_boost: true, speed: 0.95 } },
+  edgar: { id: 'bIHbv24MWmeRgasZH58o', name: 'Will', settings: { stability: 0.25, similarity_boost: 0.8, style: 0.4, use_speaker_boost: true, speed: 1.0 } },
+  graves: { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.88 } },
+  luna: { id: 'cgSgspJ2msm6clMCkdW9', name: 'Jessica', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.5, use_speaker_boost: true, speed: 0.95 } }
 };
 
 function readKey() {

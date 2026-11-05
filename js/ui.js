@@ -84,5 +84,14 @@
   }
 
   root.BM = root.BM || {};
-  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode };
+  /* An absent guest's clue, shown full screen in their own words while their voice plays. */
+  function absentMessage(c, text) {
+    return el('div', { class: 'absent-call' },
+      el('div', { class: 'scene-label' }, 'A message from an absent guest'),
+      el('img', { class: 'absent-portrait', src: c.image, alt: '' }),
+      el('h2', {}, `${c.symbol} ${c.name}`),
+      el('p', { class: 'absent-text' }, `\u201c${text}\u201d`));
+  }
+
+  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode, absentMessage };
 })(window);

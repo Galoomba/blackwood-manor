@@ -2,7 +2,7 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
-  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode } = root.BM.ui;
+  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode, absentMessage } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
   const rootNode = document.getElementById('tv-root');
   const ov = document.getElementById('overlay');
@@ -140,12 +140,34 @@
   let shownReveal = null;
   let shownSfx = null;
   let shownCue = null;
+  let shownAbsent = null;
+  let absentShowing = false;
+
+  /* The host pressed an absent guest's clue: a bell, their portrait and words, then their voice. */
+  function showAbsent(call) {
+    const c = charById(call.characterId);
+    if (!c) return;
+    clear(ov);
+    ov.className = 'overlay ghostly absent';
+    absentShowing = true;
+    ov.append(absentMessage(c, call.text));
+    sfx('bell');
+    const at = call.at;
+    const close = () => { if (shownAbsent === at && absentShowing) { absentShowing = false; ov.classList.add('hidden'); clear(ov); } };
+    setTimeout(() => {
+      if (shownAbsent !== at) return;
+      if (!(voiceOn() && voice.play(call.group, () => setTimeout(close, 2500)))) setTimeout(close, 20000);
+    }, 1400);
+  }
 
   function syncOverlays() {
     const s = game.get();
     const sp = s.setPiece;
-    if (sp && sp.at !== shownSetPiece) { shownSetPiece = sp.at; showSetPiece(sp.key); }
-    if (!sp && !s.revealAt && !ov.classList.contains('hidden')) { ov.classList.add('hidden'); clear(ov); }
+    const ac = s.absentCall;
+    if (ac && ac.at !== shownAbsent) { shownAbsent = ac.at; if (Date.now() - ac.at < 15000 && !sp) showAbsent(ac); }
+    if (!ac && absentShowing) { absentShowing = false; shownAbsent = null; if ((voice.playing() || '').startsWith('absent-')) voice.stop(); ov.classList.add('hidden'); clear(ov); }
+    if (sp && sp.at !== shownSetPiece) { absentShowing = false; shownSetPiece = sp.at; showSetPiece(sp.key); }
+    if (!sp && !s.revealAt && !absentShowing && !ov.classList.contains('hidden')) { ov.classList.add('hidden'); clear(ov); }
     const speaking = voice.playing();
     if (speaking && ((speaking.startsWith('set-') && !sp) || (speaking === 'reveal' && !s.revealAt))) voice.stop();
     if (s.voiceCue && s.voiceCue.at !== shownCue) { shownCue = s.voiceCue.at; if (Date.now() - s.voiceCue.at < 5000) playVoice(s.voiceCue.group); }

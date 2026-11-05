@@ -335,6 +335,31 @@
   }
 
   /* ---------- host panel ---------- */
+  /* An absent guest's important clue, in their own voice: on the TV window when one is open,
+     otherwise full screen here. */
+  function callAbsent(o) {
+    voice.unlock();
+    const call = { characterId: o.characterId, group: o.group, text: o.spoken, at: Date.now() };
+    game.set({ absentCall: call });
+    if (!game.tvConnected()) showAbsentHere(call);
+    else render();
+  }
+  function closeAbsent() {
+    if ((voice.playing() || '').startsWith('absent-')) voice.stop();
+    const ov = $('#overlay');
+    if (ov.classList.contains('absent')) { ov.classList.add('hidden'); clear(ov); ov.className = 'overlay hidden'; }
+    game.set({ absentCall: null });
+    render();
+  }
+  function showAbsentHere(call) {
+    const ov = $('#overlay');
+    clear(ov);
+    ov.className = 'overlay ghostly absent';
+    ov.append(root.BM.ui.absentMessage(charById(call.characterId), call.text), el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => closeAbsent() }, 'Close'));
+    sfx('bell');
+    setTimeout(() => { if (game.get().absentCall && game.get().absentCall.at === call.at && hostVoiceOn()) voice.play(call.group); }, 1400);
+  }
+
   let hostPanelOpen = false;
   function buildHostPanel(stage, s, roster) {
     const idx = s.stageIndex;
@@ -384,7 +409,11 @@
     if (orphans.length) {
       const one = orphans.every((o) => o.reader === orphans[0].reader) ? orphans[0].reader : null;
       details.append(el('h3', {}, one ? `Absent guests: ${one} says this for them` : 'Absent guests: each team\'s ghost says this for them'));
-      orphans.forEach((o) => details.append(el('div', { class: 'orphan' }, el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${one ? '' : `, ${o.reader}`}): `), o.text)));
+      const call = s.absentCall;
+      if (call && Date.now() - call.at < 120000) details.append(el('p', { class: 'row' }, el('span', { class: 'dim' }, `On screen: ${charById(call.characterId).short}'s message.`), el('button', { class: 'small', onclick: () => closeAbsent() }, 'Close it')));
+      orphans.forEach((o) => details.append(el('div', { class: 'orphan' },
+        o.group ? el('button', { class: 'small ghostly', style: 'margin-right:8px', title: 'Plays a bell, then shows this clue on the TV in their own words and voice', onclick: () => callAbsent(o) }, `\u25b6 ${o.kind === 'witness' ? 'Witness card' : 'Their voice'} on TV`) : null,
+        el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${one ? '' : `, ${o.reader}`}): `), o.text)));
     }
     return el('div', { class: 'panel' }, details);
   }

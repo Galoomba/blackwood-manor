@@ -1172,6 +1172,596 @@
         21.838,
         31.231
       ]
+    },
+    "absent-finch-1-3-0": {
+      "src": "assets/voice/absent-finch-1-3-0.mp3",
+      "voice": "Daniel",
+      "hash": "fe31b01aaf63",
+      "duration": 13.468,
+      "starts": [
+        0,
+        7.21
+      ]
+    },
+    "absent-finch-2-1-0": {
+      "src": "assets/voice/absent-finch-2-1-0.mp3",
+      "voice": "Daniel",
+      "hash": "c2b293fb9386",
+      "duration": 17.786,
+      "starts": [
+        0,
+        2.496,
+        12.179,
+        13.398
+      ]
+    },
+    "absent-finch-3-1-0": {
+      "src": "assets/voice/absent-finch-3-1-0.mp3",
+      "voice": "Daniel",
+      "hash": "d6809e833f15",
+      "duration": 9.938,
+      "starts": [
+        0,
+        2.81,
+        4.586,
+        5.759,
+        6.734,
+        8.998
+      ]
+    },
+    "absent-finch-3-2-0": {
+      "src": "assets/voice/absent-finch-3-2-0.mp3",
+      "voice": "Daniel",
+      "hash": "f0a475e0b043",
+      "duration": 25.031,
+      "starts": [
+        0,
+        1.8,
+        12.237,
+        15.314,
+        21.803,
+        23.974
+      ]
+    },
+    "absent-finch-3-4-0": {
+      "src": "assets/voice/absent-finch-3-4-0.mp3",
+      "voice": "Daniel",
+      "hash": "7304a01397b2",
+      "duration": 15.929,
+      "starts": [
+        0,
+        11.784
+      ]
+    },
+    "absent-vane-3-1-0": {
+      "src": "assets/voice/absent-vane-3-1-0.mp3",
+      "voice": "Alice",
+      "hash": "225668dd764b",
+      "duration": 14.954,
+      "starts": [
+        0,
+        1.138,
+        5.085,
+        7.999,
+        10.217,
+        11.68,
+        13.827
+      ]
+    },
+    "absent-vane-3-2-0": {
+      "src": "assets/voice/absent-vane-3-2-0.mp3",
+      "voice": "Alice",
+      "hash": "38a61da682b5",
+      "duration": 15.836,
+      "starts": [
+        0,
+        4.04,
+        5.468,
+        12.748,
+        14.501
+      ]
+    },
+    "absent-vane-3-4-0": {
+      "src": "assets/voice/absent-vane-3-4-0.mp3",
+      "voice": "Alice",
+      "hash": "1c208723fd88",
+      "duration": 10.774,
+      "starts": [
+        0,
+        8.8
+      ]
+    },
+    "absent-selene-3-1-0": {
+      "src": "assets/voice/absent-selene-3-1-0.mp3",
+      "voice": "Lily",
+      "hash": "6866c8bed5b5",
+      "duration": 13.421,
+      "starts": [
+        0,
+        1.428,
+        6.757,
+        8.464,
+        10.472,
+        12.33
+      ]
+    },
+    "absent-selene-3-2-0": {
+      "src": "assets/voice/absent-selene-3-2-0.mp3",
+      "voice": "Lily",
+      "hash": "4289e855aad8",
+      "duration": 17.694,
+      "starts": [
+        0,
+        2.694,
+        6.687,
+        9.009,
+        14.28,
+        16.672
+      ]
+    },
+    "absent-selene-3-4-0": {
+      "src": "assets/voice/absent-selene-3-4-0.mp3",
+      "voice": "Lily",
+      "hash": "c6c579ff0a6b",
+      "duration": 12.957,
+      "starts": [
+        0,
+        2.519,
+        7.918,
+        11.331
+      ]
+    },
+    "absent-malachi-1-3-0": {
+      "src": "assets/voice/absent-malachi-1-3-0.mp3",
+      "voice": "Callum",
+      "hash": "2783d5799699",
+      "duration": 12.817,
+      "starts": [
+        0,
+        5.898,
+        8.696,
+        10.472
+      ]
+    },
+    "absent-malachi-3-1-0": {
+      "src": "assets/voice/absent-malachi-3-1-0.mp3",
+      "voice": "Callum",
+      "hash": "5948a0693e58",
+      "duration": 18.762,
+      "starts": [
+        0,
+        4.354,
+        5.944,
+        12.423,
+        15.383,
+        17.624
+      ]
+    },
+    "absent-malachi-3-2-0": {
+      "src": "assets/voice/absent-malachi-3-2-0.mp3",
+      "voice": "Callum",
+      "hash": "381a295bbc6d",
+      "duration": 17.369,
+      "starts": [
+        0,
+        2.194,
+        8.603,
+        12.098,
+        13.909,
+        16.37
+      ]
+    },
+    "absent-malachi-3-3-0": {
+      "src": "assets/voice/absent-malachi-3-3-0.mp3",
+      "voice": "Callum",
+      "hash": "b3360bdbd44d",
+      "duration": 14.396,
+      "starts": [
+        0,
+        3.82,
+        10.704,
+        12.562
+      ]
+    },
+    "absent-malachi-3-4-0": {
+      "src": "assets/voice/absent-malachi-3-4-0.mp3",
+      "voice": "Callum",
+      "hash": "ef2c6f108eef",
+      "duration": 9.706,
+      "starts": [
+        0,
+        5.782,
+        7.094,
+        8.963
+      ]
+    },
+    "absent-silas-1-3-0": {
+      "src": "assets/voice/absent-silas-1-3-0.mp3",
+      "voice": "Noir",
+      "hash": "f3eed16e9130",
+      "duration": 17.136,
+      "starts": [
+        0,
+        7.384
+      ]
+    },
+    "absent-silas-3-1-0": {
+      "src": "assets/voice/absent-silas-3-1-0.mp3",
+      "voice": "Noir",
+      "hash": "84bc6d447dd8",
+      "duration": 23.127,
+      "starts": [
+        0,
+        2.775,
+        10.646,
+        12.875,
+        18.088,
+        21.838
+      ]
+    },
+    "absent-silas-3-2-0": {
+      "src": "assets/voice/absent-silas-3-2-0.mp3",
+      "voice": "Noir",
+      "hash": "8c2082838156",
+      "duration": 23.684,
+      "starts": [
+        0,
+        4.133,
+        12.109,
+        15.105,
+        18.46,
+        22.465
+      ]
+    },
+    "absent-silas-3-3-0": {
+      "src": "assets/voice/absent-silas-3-3-0.mp3",
+      "voice": "Noir",
+      "hash": "9fafa2bd4884",
+      "duration": 23.684,
+      "starts": [
+        0,
+        5.05,
+        12.458,
+        19.888
+      ]
+    },
+    "absent-silas-3-4-0": {
+      "src": "assets/voice/absent-silas-3-4-0.mp3",
+      "voice": "Noir",
+      "hash": "9ff63e556b04",
+      "duration": 13.328,
+      "starts": [
+        0,
+        9.903,
+        11.088
+      ]
+    },
+    "absent-corvus-1-3-0": {
+      "src": "assets/voice/absent-corvus-1-3-0.mp3",
+      "voice": "Edward",
+      "hash": "24a7c9155723",
+      "duration": 9.892,
+      "starts": [
+        0,
+        5.55,
+        7.012
+      ]
+    },
+    "absent-corvus-3-1-0": {
+      "src": "assets/voice/absent-corvus-3-1-0.mp3",
+      "voice": "Edward",
+      "hash": "e3d802f6f80a",
+      "duration": 20.155,
+      "starts": [
+        0,
+        2.612,
+        7.523,
+        15.464,
+        18.982
+      ]
+    },
+    "absent-corvus-3-2-0": {
+      "src": "assets/voice/absent-corvus-3-2-0.mp3",
+      "voice": "Edward",
+      "hash": "d88d4947be2b",
+      "duration": 20.341,
+      "starts": [
+        0,
+        6.374,
+        10.774,
+        12.446,
+        16.184,
+        19.168
+      ]
+    },
+    "absent-corvus-3-3-0": {
+      "src": "assets/voice/absent-corvus-3-3-0.mp3",
+      "voice": "Edward",
+      "hash": "49bab8e6dbc0",
+      "duration": 15.882,
+      "starts": [
+        0,
+        5.468
+      ]
+    },
+    "absent-corvus-3-4-0": {
+      "src": "assets/voice/absent-corvus-3-4-0.mp3",
+      "voice": "Edward",
+      "hash": "15595d9ae8ed",
+      "duration": 15.929,
+      "starts": [
+        0,
+        10.809,
+        12.666,
+        14.211
+      ]
+    },
+    "absent-khamun-3-4-0": {
+      "src": "assets/voice/absent-khamun-3-4-0.mp3",
+      "voice": "Jasper",
+      "hash": "b22edd3ef8d0",
+      "duration": 17.786,
+      "starts": [
+        0,
+        12.109,
+        13.433,
+        14.988
+      ]
+    },
+    "absent-khamun-witness-0": {
+      "src": "assets/voice/absent-khamun-witness-0.mp3",
+      "voice": "Jasper",
+      "hash": "b37c5eae7a94",
+      "duration": 41.424,
+      "starts": [
+        0,
+        6.803,
+        12.608,
+        20.758,
+        30.72,
+        36.873,
+        39.218
+      ]
+    },
+    "absent-morgana-1-3-0": {
+      "src": "assets/voice/absent-morgana-1-3-0.mp3",
+      "voice": "Laura",
+      "hash": "5cd6ea4667e3",
+      "duration": 9.102,
+      "starts": [
+        0,
+        6.42,
+        8.011
+      ]
+    },
+    "absent-morgana-3-1-0": {
+      "src": "assets/voice/absent-morgana-3-1-0.mp3",
+      "voice": "Laura",
+      "hash": "345d2a75c5dc",
+      "duration": 11.285,
+      "starts": [
+        0,
+        1.068,
+        4.435,
+        6.594,
+        8.615,
+        10.344
+      ]
+    },
+    "absent-morgana-3-2-0": {
+      "src": "assets/voice/absent-morgana-3-2-0.mp3",
+      "voice": "Laura",
+      "hash": "cb4d5142178e",
+      "duration": 14.582,
+      "starts": [
+        0,
+        2.926,
+        4.505,
+        12.005,
+        13.584
+      ]
+    },
+    "absent-morgana-3-3-0": {
+      "src": "assets/voice/absent-morgana-3-3-0.mp3",
+      "voice": "Laura",
+      "hash": "36c94aa46d46",
+      "duration": 20.851,
+      "starts": [
+        0,
+        3.622,
+        10.356,
+        15,
+        19.412
+      ]
+    },
+    "absent-morgana-3-4-0": {
+      "src": "assets/voice/absent-morgana-3-4-0.mp3",
+      "voice": "Laura",
+      "hash": "d5b1239f2557",
+      "duration": 10.31,
+      "starts": [
+        0,
+        2.995
+      ]
+    },
+    "absent-edgar-1-3-0": {
+      "src": "assets/voice/absent-edgar-1-3-0.mp3",
+      "voice": "Will",
+      "hash": "eca0d992ec6a",
+      "duration": 11.053,
+      "starts": [
+        0,
+        0.906,
+        2.473,
+        5.492,
+        8.847
+      ]
+    },
+    "absent-edgar-2-1-0": {
+      "src": "assets/voice/absent-edgar-2-1-0.mp3",
+      "voice": "Will",
+      "hash": "a3294d7bbe29",
+      "duration": 9.985,
+      "starts": [
+        0,
+        2.334,
+        7.744,
+        9.033
+      ]
+    },
+    "absent-edgar-3-1-0": {
+      "src": "assets/voice/absent-edgar-3-1-0.mp3",
+      "voice": "Will",
+      "hash": "a52bcc6040a8",
+      "duration": 8.591,
+      "starts": [
+        0,
+        2.868,
+        5.317,
+        7.442
+      ]
+    },
+    "absent-edgar-3-3-0": {
+      "src": "assets/voice/absent-edgar-3-3-0.mp3",
+      "voice": "Will",
+      "hash": "e2bf5699c6a6",
+      "duration": 11.099,
+      "starts": [
+        0,
+        2.914,
+        4.54,
+        8.58
+      ]
+    },
+    "absent-edgar-3-4-0": {
+      "src": "assets/voice/absent-edgar-3-4-0.mp3",
+      "voice": "Will",
+      "hash": "e5cf8eb3d915",
+      "duration": 10.449,
+      "starts": [
+        0,
+        1.138,
+        4.272,
+        7.291
+      ]
+    },
+    "absent-edgar-witness-0": {
+      "src": "assets/voice/absent-edgar-witness-0.mp3",
+      "voice": "Will",
+      "hash": "3bca1af31da0",
+      "duration": 32.926,
+      "starts": [
+        0,
+        2.624,
+        7.883,
+        12.04,
+        19.47,
+        21.165,
+        22.279,
+        26.389,
+        28.607,
+        30.627
+      ]
+    },
+    "absent-graves-1-3-0": {
+      "src": "assets/voice/absent-graves-1-3-0.mp3",
+      "voice": "Brian",
+      "hash": "92929db213c6",
+      "duration": 10.96,
+      "starts": [
+        0,
+        2.508,
+        8.986
+      ]
+    },
+    "absent-graves-3-1-0": {
+      "src": "assets/voice/absent-graves-3-1-0.mp3",
+      "voice": "Brian",
+      "hash": "6afbbfa08226",
+      "duration": 15.464,
+      "starts": [
+        0,
+        2.508,
+        6.896,
+        10.437,
+        11.726,
+        14.269
+      ]
+    },
+    "absent-graves-3-2-0": {
+      "src": "assets/voice/absent-graves-3-2-0.mp3",
+      "voice": "Brian",
+      "hash": "8590b8cfb73b",
+      "duration": 16.579,
+      "starts": [
+        0,
+        6.513,
+        9.752,
+        13.607,
+        15.406
+      ]
+    },
+    "absent-graves-3-4-0": {
+      "src": "assets/voice/absent-graves-3-4-0.mp3",
+      "voice": "Brian",
+      "hash": "1e51027bd924",
+      "duration": 13.189,
+      "starts": [
+        0,
+        9.578,
+        11.819
+      ]
+    },
+    "absent-luna-1-3-0": {
+      "src": "assets/voice/absent-luna-1-3-0.mp3",
+      "voice": "Jessica",
+      "hash": "1b8d4a945af0",
+      "duration": 17.043,
+      "starts": [
+        0,
+        7.117,
+        8.243,
+        11.041,
+        12.759,
+        14.768
+      ]
+    },
+    "absent-luna-3-1-0": {
+      "src": "assets/voice/absent-luna-3-1-0.mp3",
+      "voice": "Jessica",
+      "hash": "0ebb09857e63",
+      "duration": 20.573,
+      "starts": [
+        0,
+        1.66,
+        4.389,
+        15.209,
+        18.054,
+        19.563
+      ]
+    },
+    "absent-luna-3-2-0": {
+      "src": "assets/voice/absent-luna-3-2-0.mp3",
+      "voice": "Jessica",
+      "hash": "f03a0ae7c384",
+      "duration": 10.96,
+      "starts": [
+        0,
+        2.74,
+        4.934,
+        8.255,
+        9.996
+      ]
+    },
+    "absent-luna-3-4-0": {
+      "src": "assets/voice/absent-luna-3-4-0.mp3",
+      "voice": "Jessica",
+      "hash": "2e80f968ee98",
+      "duration": 8.591,
+      "starts": [
+        0,
+        5.573
+      ]
     }
   }
 }/* END */;

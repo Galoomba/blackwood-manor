@@ -27,6 +27,14 @@
     if (scene === 2) return "Delilah's ghost";
     return team === 'delilah' ? "Delilah's ghost" : "Victor's ghost";
   }
+  /* An absent guest's important clue, in their own words and voice, played on the TV: the
+     card's absentVoice line (plus their team word at 3.1 and 3.2), or their witness card. */
+  function absentGroup(characterId, stageId) { return `absent-${characterId}-${stageId.replace('.', '-')}`; }
+  function absentSpoken(c, stageId) {
+    const card = c.cards[stageId];
+    if (!card || !card.absentVoice) return null;
+    return card.word && (stageId === '3.1' || stageId === '3.2') ? `${card.absentVoice} My word is ${card.word.text}. Number ${card.word.index}.` : card.absentVoice;
+  }
   function orphanedClues(data, roster, stageId) {
     const out = [];
     for (const c of roster.missing) {
@@ -34,13 +42,14 @@
       if (!card) continue;
       const base = { characterId: c.id, name: c.name, symbol: c.symbol, reader: readerFor(data, stageId, c.team) };
       const strip = stageId === '2.3' ? data.ledger.find((s) => s.holder === c.id) : null;
-      if (card.absent) out.push({ ...base, kind: ABSENT_KIND[stageId], text: card.absent, ...(strip ? { number: strip.number, strip: strip.text } : {}) });
+      const spoken = absentSpoken(c, stageId);
+      if (card.absent) out.push({ ...base, kind: ABSENT_KIND[stageId], text: card.absent, ...(strip ? { number: strip.number, strip: strip.text } : {}), ...(spoken ? { group: absentGroup(c.id, stageId), spoken } : {}) });
       if ((stageId === '3.1' || stageId === '3.2') && card.word) {
         out.push({ ...base, kind: 'word', index: card.word.index, text: card.word.text, team: c.team });
       }
       if (stageId === '3.2' && c.witness) {
         const w = data.witnessCards[c.team];
-        out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.ghostIntro ? `${w.ghostIntro} ${w.text}` : w.text });
+        out.push({ ...base, kind: 'witness', reader: w.ghost, text: w.ghostIntro ? `${w.ghostIntro} ${w.text}` : w.text, group: `absent-${c.id}-witness`, spoken: w.text });
       }
     }
     return out;
@@ -127,6 +136,14 @@
     data.stages.forEach((st) => { if (st.quote) add(`quote-${st.id.replace('.', '-')}`, [{ speaker: 'Narrator', text: st.quote.text }]); });
     Object.keys(data.setPieces).forEach((key) => add(`set-${key}`, data.setPieces[key].lines));
     add('reveal', data.reveal.lines);
+    /* Absent guests' important clues, each in that guest's own voice. */
+    data.characters.forEach((c) => {
+      data.STAGE_IDS.forEach((sid) => {
+        const text = absentSpoken(c, sid);
+        if (text) out.push({ id: `${absentGroup(c.id, sid)}-0`, group: absentGroup(c.id, sid), voice: c.id, speaker: c.name, text });
+      });
+      if (c.witness) out.push({ id: `absent-${c.id}-witness-0`, group: `absent-${c.id}-witness`, voice: c.id, speaker: c.name, text: data.witnessCards[c.team].text });
+    });
     return out;
   }
 

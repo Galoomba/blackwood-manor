@@ -149,7 +149,8 @@ test('voiceLines voices the ghosts, the narrator and living Victor, and lines fo
   const lines = logic.voiceLines(data);
   assert.ok(lines.length > 0);
   for (const l of lines) {
-    assert.ok(['delilah', 'victor', 'both', 'narrator'].includes(l.voice), l.id);
+    if (l.group.startsWith('absent-')) assert.ok(data.characters.some((c) => c.id === l.voice && !c.killer), `${l.id} is an absent guest's own voice`);
+    else assert.ok(['delilah', 'victor', 'both', 'narrator'].includes(l.voice), l.id);
     assert.ok(!/^Stage direction/.test(l.speaker), `${l.id} is not a stage direction`);
   }
   assert.equal(new Set(lines.map((l) => l.id)).size, lines.length, 'ids are unique');
@@ -203,4 +204,15 @@ test('tally counts a voter once per suspect, ignores absent voters and reports a
   const tie = logic.tally({ a: ['zora', 'krank'], b: ['zora', 'graves'] }, ['zora', 'krank']);
   assert.deepEqual(tie.tie.sort(), ['graves', 'krank']);
   assert.deepEqual(logic.tally({ a: ['zora', 'krank'], b: ['zora', 'krank'] }, ['zora', 'krank']).tie, []);
+});
+
+test('an absent guest\'s important clues carry a voiced group, in the first person', () => {
+  const r = logic.buildRoster(data, selectionWithout('finch', 'khamun'));
+  const at32 = logic.orphanedClues(data, r, '3.2');
+  const finch = at32.find((x) => x.characterId === 'finch' && x.kind === 'team clue');
+  assert.equal(finch.group, 'absent-finch-3-2');
+  assert.match(finch.spoken, /^I remember now.*My word is A\. Number 2\.$/);
+  assert.equal(at32.find((x) => x.kind === 'witness').group, 'absent-khamun-witness');
+  assert.ok(!logic.orphanedClues(data, r, '1.1').some((x) => x.group), 'introductions are not voiced');
+  for (const c of data.characters) if (c.cards['3.3'].absentVoice) assert.equal(c.cards['3.3'].absentVoice, c.cards['3.3'].alibi, c.id);
 });

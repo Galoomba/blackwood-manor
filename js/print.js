@@ -223,7 +223,7 @@
     const orphans = data.STAGE_IDS.map((sid) => {
       const items = logic.orphanedClues(data, roster, sid);
       const by = items.length && items.every((o) => o.reader === items[0].reader) ? ` · ${esc(items[0].reader)} reads` : '';
-      return items.length ? `<div class="gs-block"><h3>Stage ${sid}${by}</h3><ul>${items.map((o) => `<li><strong>${sym(o.symbol)} ${esc(o.name)} (${o.kind}${o.number ? ` ${o.number}` : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${by ? '' : `, ${esc(o.reader)}`}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
+      return items.length ? `<div class="gs-block"><h3>Stage ${sid}${by}</h3><ul>${items.map((o) => `<li><strong>${sym(o.symbol)} ${esc(o.name)} (${o.kind}${o.number ? ` ${o.number}` : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${by ? '' : `, ${esc(o.reader)}`}${o.group ? ', voiced on the TV' : ''}):</strong> ${esc(o.text)}</li>`).join('')}</ul></div>` : '';
     }).join('');
     return `<div class="sheet guide">
       <h1>Host guide</h1>
