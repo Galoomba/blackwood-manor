@@ -72,8 +72,8 @@
     {
       id: 'intro-vote', chapter: 'The end', layout: 'evidence', scene: 3, voice: 'narrator',
       title: 'The accusation',
-      chips: [{ text: 'Name two suspects' }, { text: 'In secret' }, { text: 'Then the reveal' }],
-      text: 'At the end, each of you names two suspects in secret. If the guilty are clearly at the top of the list, the house wins. If not, the guilty walk free, and the rest of us will have to live with that. Briefly.'
+      chips: [{ text: 'Accuse two suspects' }, { text: 'Out loud' }, { text: 'Then the reveal' }],
+      text: 'At the end, each of you stands and accuses two suspects, out loud, in front of everyone. If the guilty are clearly at the top of the list, the house wins. If not, the guilty walk free, and the rest of us will have to live with that. Briefly.'
     },
     {
       id: 'intro-house-rules', chapter: 'The end', layout: 'evidence', scene: 3, voice: 'narrator',

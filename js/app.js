@@ -172,7 +172,7 @@
     for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
-      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Tick everyone you expect first: the character packs leave out whispers and table talk about unticked guests. "Print everything" prints the whole pack in one go (about 94 pages): run sheet, host guide, a stand-in sheet for every guest who might not come, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
+      el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Tick everyone you expect first: the character packs leave out whispers and table talk about unticked guests. "Print everything" prints the whole pack in one go (about 92 pages): run sheet, host guide, a stand-in sheet for every guest who might not come, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
           el('button', { class: 'primary', onclick: () => root.BM.print.open('everything', null, game.roster()) }, 'Print everything'),
@@ -182,7 +182,6 @@
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
           el('button', { onclick: () => root.BM.print.open('box') }, "The box: Delilah's letter"),
           el('button', { onclick: () => root.BM.print.open('runsheet') }, 'Host run sheet'),
-          el('button', { onclick: () => root.BM.print.open('ballots') }, 'Ballot slips'),
           el('button', { onclick: () => root.BM.print.open('standins', null, game.roster()) }, 'Stand-in sheets for absent guests'),
           el('button', { onclick: () => root.BM.print.open('guide', null, game.roster()) }, 'Host guide')
         )
@@ -519,7 +518,7 @@
     append(node, 
       tvBar(),
       el('h2', {}, 'The accusation'),
-      el('p', { class: 'dim' }, 'Every guest writes two different suspects on a ballot slip. Enter them here with the laptop turned away. The house wins only if both killers are the two most accused. The TV shows the tally as you enter it.'),
+      el('p', { class: 'dim' }, 'Go round the table: each guest stands and says "I accuse X and Y" (two different suspects, one reason). Enter each accusation as it is said; the TV tally grows with every one. The house wins only if both killers are the two most accused.'),
       el('div', { class: 'panel' }, grid),
       el('div', { class: 'panel' }, el('h3', {}, 'Tally'), el('div', { class: 'tally', id: 'tally' })),
       el('div', { class: 'row' },
@@ -540,7 +539,7 @@
       t.append(el('div', { class: 'bar' }, el('span', {}, `${c.symbol} ${c.short}`), el('div', { class: 'fill', style: `width:${(n / max) * 100}%` }), el('span', {}, n)));
     });
     if (!result.ranked.length) t.append(el('p', { class: 'dim' }, 'No accusations yet.'));
-    if (result.tie.length) t.append(el('p', { class: 'error' }, `Tie for second place: ${result.tie.map((id) => charById(id).short).join(', ')}. Give each 30 seconds to defend themselves, then everyone votes again between them only (change the second picks above).`));
+    if (result.tie.length) t.append(el('p', { class: 'error' }, `Tie for second place: ${result.tie.map((id) => charById(id).short).join(', ')}. Give each 30 seconds to defend themselves, then go round again, each guest naming one of them aloud (change the second picks above).`));
   }
 
   function playReveal() {

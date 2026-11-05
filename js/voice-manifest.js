@@ -834,13 +834,13 @@
     "intro-vote": {
       "src": "assets/voice/intro-vote.mp3",
       "voice": "George",
-      "hash": "2729a0ea6bf9",
-      "duration": 12.957,
+      "hash": "3f430bd0b27a",
+      "duration": 16.208,
       "starts": [
         0,
-        3.727,
-        7.488,
-        12.121
+        6.409,
+        10.542,
+        15.29
       ]
     },
     "intro-house-rules": {

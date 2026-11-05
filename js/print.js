@@ -22,7 +22,7 @@
       <div class="intro-rules"><h2>How the night works</h2>
       <p>Every guest has an envelope on the table with their own picture on it. At each stage, take only the top card from <strong>your</strong> envelope (${sym(c.symbol)} ${esc(c.short)}) and check its stage number. Never look further down the pile, and never open anyone else's envelope. Read your cards privately unless the card says otherwise. Keep your cards; you will need them.</p>
       <p>The foot of every card carries a whisper: something true about another guest, who is never named. Work out who it is about, and use it. Most cards also carry <strong>table talk</strong>: a question to raise aloud in the discussion. Raise it.</p>
-      <p>At the end, everyone names two suspects in secret. The house wins only if both killers are clearly the top two.</p></div>
+      <p>At the end, each guest stands and accuses two suspects out loud. The house wins only if both killers are clearly the top two.</p></div>
     </div>`;
   }
 
@@ -126,16 +126,8 @@
     "A small red book with every page torn out, in Delilah's bag at the toast: Selene steals it and shows the empty cover at 2.3.",
     "A handkerchief dabbed with jasmine, one corner stained purple: in Selene's envelope, under her 3.2 card.",
     'Optional evidence for the picture envelopes: a small brown vial (Plant) and a syringe marked K-7 (Television).',
-    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.',
-    'Pens for the ballot slips.'
+    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.'
   ];
-
-  /* Ballot slips for the vote: each guest names two different suspects. */
-  function ballots(roster) {
-    const slip = '<div class="slip"><strong>Blackwood Manor · The accusation</strong><p>My name: ______________________</p><p>I accuse:</p><p>1. ___________________________</p><p>2. ___________________________</p><small>Two different names. The house wins only if both killers are the two most accused.</small></div>';
-    const pages = Math.max(1, Math.ceil(((roster && roster.present.length) || 8) / 8));
-    return Array.from({ length: pages }, () => `<div class="sheet ballots"><h1>Ballot slips</h1><p><em>Cut along the dashed lines. One per guest, handed out at the vote.</em></p><div class="slips">${Array(8).fill(slip).join('')}</div></div>`).join('');
-  }
 
   /* The host's run sheet: headlines and what has to happen, in order, on two pages. */
   function runSheet() {
@@ -156,7 +148,7 @@
     const loop = '<p class="rs-loop"><strong>Every stage:</strong> the ghost speaks → <strong>Cards out</strong> (everyone takes the top card) → <strong>Start discussion</strong> → <strong>End discussion</strong> → <strong>Next stage</strong>. The host panel shows absent guests\' lines and the answers.</p>';
     const rows = data.stages.map((st) => row(`${esc(st.id)} ${esc(st.title)}`, `${kind[st.kind]}${st.minutes ? ` · ${st.minutes.cards} + ${st.minutes.discuss} min` : ''}`, st.run || []));
     const end = row('Vote', 'and reveal', [
-      'Two different suspects per ballot slip. Enter them with the laptop turned away. A tie for second: 30 seconds of defence each, then vote again between them.',
+      'Round the table: each guest stands and says "I accuse X and Y", two different names, with one reason. Enter each as it is said. A tie for second: 30 seconds of defence each, then each guest names one of them aloud.',
       'Press "Reveal". The ghosts name the killers.',
       'Optional: "Tell the whole story".'
     ]);
@@ -210,7 +202,7 @@
       if (st.id === '3.4') extra = `<p><strong>Answer:</strong> the true key is in ${esc(data.box.hidingPlace)}, behind a small door at waist height. ${esc(data.box.rule)} ${data.killerIds.map((id) => `${esc(charById(id).short)}: ${esc(charById(id).cards['3.4'].sabotage.split('. ')[0])}.`).join(' ')}</p>`;
       parts.push(`<div class="gs-stage"><h3>${esc(st.id)} ${esc(st.title)} · ${esc(KIND[st.kind] || st.kind)}${st.minutes ? ` · ${st.minutes.cards} + ${st.minutes.discuss} min` : ''}</h3>${li(st.run || [])}<p><em>Notes:</em> ${esc(st.hostNotes)}</p>${extra}</div>`);
     });
-    parts.push(`<div class="gs-stage"><h3>Vote and reveal</h3>${li(['Everyone writes two different suspects on a ballot slip. Enter the votes with the laptop turned away.', 'Tie for second place? The tied guests get 30 seconds each to defend themselves, then everyone votes again between them.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}</div>`);
+    parts.push(`<div class="gs-stage"><h3>Vote and reveal</h3>${li(['Go round the table. Each guest stands and says "I accuse X and Y": two different suspects, with one reason. The killers accuse too, and may lie. Enter each accusation on the laptop as it is said; the TV tally grows with every one.', 'Tie for second place? The tied guests get 30 seconds each to defend themselves, then go round again: each guest names one of the two aloud.', 'Press "Reveal". The ghosts name the killers.', 'Optional: "Tell the whole story".'])}</div>`);
     return parts.join('');
   }
 
@@ -290,7 +282,7 @@
   }
 
   /* "Print everything": the whole pack in one job, host material first, the players' packs last. */
-  const EVERYTHING = ['runsheet', 'guide', 'standins', 'box', 'envelopes', 'ledger', 'ballots', 'covers', 'all'];
+  const EVERYTHING = ['runsheet', 'guide', 'standins', 'box', 'envelopes', 'ledger', 'covers', 'all'];
 
   function build(kind, id, roster) {
     const presentIds = roster && roster.present ? roster.present.map((c) => c.id) : allPresent();
@@ -303,7 +295,6 @@
     if (kind === 'ledger') return ledger();
     if (kind === 'guide') return guide(roster);
     if (kind === 'runsheet') return runSheet();
-    if (kind === 'ballots') return ballots(roster);
     if (kind === 'standins') return standins(roster);
     return '';
   }
