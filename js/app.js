@@ -577,19 +577,25 @@
 
   function playReveal() {
     const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
-    game.set({ revealAt: Date.now() });
+    const at = Date.now();
+    game.set({ revealAt: at });
     lights.cue('reveal');
     const ov = $('#overlay');
+    const still = () => game.get().revealAt === at;   // false once the host has gone back
+    /* A way back at every moment, for a reveal pressed too early: the vote is kept. */
+    const leave = (to) => { voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show(to); };
+    const backBtn = () => el('button', { class: 'small', style: 'margin-top:16px', onclick: () => leave('vote') }, '◀ Back to the vote');
     clear(ov);
     ov.className = 'overlay blackout';
     const c = candles();
-    ov.append(c);
-    [0, 1, 2].forEach((i) => setTimeout(() => { c.children[i].style.visibility = 'hidden'; sfx('puff'); }, 1200 + i * 1100));
-    setTimeout(() => sfx('heartbeat'), 4600);
+    ov.append(c, backBtn());
+    [0, 1, 2].forEach((i) => setTimeout(() => { if (!still()) return; c.children[i].style.visibility = 'hidden'; sfx('puff'); }, 1200 + i * 1100));
+    setTimeout(() => { if (still()) sfx('heartbeat'); }, 4600);
     setTimeout(() => {
+      if (!still()) return;
       clear(ov);
       ov.append(root.BM.ui.revealNode(data.killerIds.map(charById), data.reveal.lines), voiceControls('reveal'),
-        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
+        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => leave('result') }, result.houseWins ? 'The house wins' : 'The killers walk free'), backBtn());
       sfx('ghost');
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('reveal'); }, 1200);
     }, 8600);
