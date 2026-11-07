@@ -52,6 +52,8 @@
     onHide: () => render()
   });
   function openStory() { audio.init(); story.open(); }
+  /* After the reveal the solution is out, so the story starts from the top, playing, on the TV when there is one. */
+  function tellStory() { audio.init(); story.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
 
   /* ---------- introduce the game to the group (spoiler-free; goes to the TV when one is open) ---------- */
   const intro = root.BM.storyView.createPlayer({
@@ -595,7 +597,10 @@
       if (!still()) return;
       clear(ov);
       ov.append(root.BM.ui.revealNode(data.killerIds.map(charById), data.reveal.lines), voiceControls('reveal'),
-        el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => leave('result') }, result.houseWins ? 'The house wins' : 'The killers walk free'), backBtn());
+        el('div', { class: 'row', style: 'justify-content:center;margin-top:24px' },
+          el('button', { class: 'primary', onclick: () => leave('result') }, result.houseWins ? 'The house wins' : 'The killers walk free'),
+          el('button', { onclick: () => { leave('result'); tellStory(); } }, 'Tell the whole story')),
+        backBtn());
       sfx('ghost');
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('reveal'); }, 1200);
     }, 8600);
@@ -610,7 +615,7 @@
       el('p', { class: 'center dim' }, data.reveal.farewell),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { onclick: () => show('vote') }, 'Back to the vote'),
-        storyButton('primary', 'Tell the whole story'),
+        el('button', { class: 'primary', onclick: tellStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, 'Tell the whole story'),
         el('button', { onclick: () => { if (confirm('Start a brand new night? This clears the roster and votes.')) { game.reset(); show('title'); } } }, 'New night')
       )
     );
