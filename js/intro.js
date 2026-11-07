@@ -36,9 +36,9 @@
     },
     {
       id: 'intro-riddles', chapter: 'Your cards', layout: 'evidence', scene: 1, voice: 'narrator',
-      title: 'A whisper on every card',
+      title: 'A whisper on the cards',
       chips: [{ text: 'True' }, { text: 'About another guest' }, { text: 'Never named' }],
-      text: 'The foot of every card carries a whisper. It is always true, it is always about another guest, and it never says who. Work out who it means, and decide what to do with it.'
+      text: 'Most cards end with a whisper. It is always true, it is always about another guest, and it never says who. Work out who it means, and decide what to do with it.'
     },
     {
       id: 'intro-search-rules', chapter: 'Your cards', layout: 'evidence', scene: 1, voice: 'narrator',

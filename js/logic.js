@@ -150,7 +150,10 @@
   /* The printed cards carry table talk and a whisper chosen for the guests ticked when they were printed.
      For guests absent tonight, per present guest's card at this stage: any table talk that may ask about an
      absent guest, with the line to use instead (null: skip it), and any whisper that describes one. */
-  function cardFixes(data, presentIds, stageId) {
+  /* Printed table talk and whispers that point at a guest who is not here tonight. With printedIds (the
+     roster the cards were printed for) only the lines actually on paper are listed; without it, every line
+     that might have been printed is, worded by the caller as "if the card reads…". */
+  function cardFixes(data, presentIds, stageId, printedIds) {
     const present = new Set(presentIds);
     const short = (id) => (data.characters.find((c) => c.id === id) || {}).short;
     const out = [];
@@ -158,11 +161,14 @@
       const card = c.cards[stageId];
       if (!present.has(c.id) || !card) continue;
       const now = talkFor(card, presentIds);
-      for (const t of card.talk || []) {
-        if (t === now) break;
-        out.push({ kind: 'talk', holder: c.id, holderName: c.short, about: t.about, aboutName: short(t.about), printed: t.text, instead: now ? now.text : null });
+      const push = (t) => out.push({ kind: 'talk', holder: c.id, holderName: c.short, about: t.about, aboutName: short(t.about), printed: t.text, instead: now ? now.text : null });
+      if (printedIds) {
+        const onPaper = talkFor(card, printedIds);
+        if (onPaper && onPaper !== now && onPaper.about && !present.has(onPaper.about)) push(onPaper);
+      } else {
+        for (const t of card.talk || []) { if (t === now) break; push(t); }
       }
-      const r = card.rumour;
+      const r = printedIds ? rumourFor(card, printedIds) : card.rumour;
       if (r && r.about && !present.has(r.about)) out.push({ kind: 'whisper', holder: c.id, holderName: c.short, about: r.about, aboutName: short(r.about), printed: r.text });
     }
     return out;

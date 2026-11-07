@@ -80,6 +80,10 @@
   function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
+  /* Printing guest cards records who they were printed for, so the host panel lists only the printed lines
+     that mention someone missing tonight. */
+  function printCards(kind, id, roster) { game.set({ printedIds: game.get().presentIds.slice() }); root.BM.print.open(kind, id, roster); }
+
   /* ---------- navigation ---------- */
   function show(screen) { if (screen !== 'game') stopTimer(); game.set({ screen }); render(); }
 
@@ -167,6 +171,9 @@
         tvBar()
       ),
       lights.panel(),
+      el('p', { class: 'dim' }, s.printedIds
+        ? `Cards printed without: ${data.characters.filter((c) => !s.printedIds.includes(c.id)).map((c) => c.short).join(', ') || 'nobody'}. Untick anyone else who does not come; the host panel then tells you which printed lines mention them.`
+        : 'Cards printed for: not recorded in this browser. Tick the guests the cards were printed for, then Print pack › Print everything (you can cancel the print), so the host panel knows which printed lines mention a missing guest.'),
       roster.errors.length ? el('p', { class: 'error' }, roster.errors.join(' ')) : null,
       roster.present.length < 6 ? el('p', { class: 'error' }, 'Fewer than six guests: the mystery will be thin. Consider adding characters.') : null,
       el('div', { class: 'row' },
@@ -190,14 +197,14 @@
   function renderPrint() {
     const node = clear($('#screen-print'));
     const list = el('div', { class: 'row' });
-    for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => root.BM.print.open('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
+    for (const c of data.characters) list.append(el('button', { class: 'small', onclick: () => printCards('character', c.id, game.roster()) }, `${c.symbol} ${c.short}`));
     append(node, 
       el('h2', {}, 'Print pack'),
       el('p', { class: 'dim' }, 'Each button opens the browser print dialog. Choose "Save as PDF" or print directly. Use A4, portrait, default margins, background graphics off. Tick everyone you expect first: the character packs leave out whispers and table talk about unticked guests. "Print everything" prints the whole pack in one go (about 92 pages): run sheet, host guide, a stand-in sheet for every guest who might not come, the box, team envelopes, ledger strips, covers, then the character packs. Envelope covers: one per guest with their portrait, plus six pictures for the team stages (two are empty decoys); glue each on a C5 envelope and lay them all on the table.'),
       el('div', { class: 'panel' },
         el('div', { class: 'row' },
-          el('button', { class: 'primary', onclick: () => root.BM.print.open('everything', null, game.roster()) }, 'Print everything'),
-          el('button', { onclick: () => root.BM.print.open('all', null, game.roster()) }, 'All character packs'),
+          el('button', { class: 'primary', onclick: () => printCards('everything', null, game.roster()) }, 'Print everything'),
+          el('button', { onclick: () => printCards('all', null, game.roster()) }, 'All character packs'),
           el('button', { onclick: () => root.BM.print.open('covers') }, 'Envelope covers'),
           el('button', { onclick: () => root.BM.print.open('envelopes') }, 'Team envelopes and witness cards'),
           el('button', { onclick: () => root.BM.print.open('ledger') }, 'Ledger strips'),
@@ -437,7 +444,7 @@
         el('strong', {}, `${o.symbol} ${o.name} (${o.kind}${o.number ? ' ' + o.number : ''}${o.index ? ` #${o.index}, ${teamLabel(o.team)}` : ''}${one ? '' : `, ${o.reader}`}): `), o.text)));
     }
     /* Printed table talk and whispers that point at a guest who did not come. */
-    const fixes = logic.cardFixes(data, roster.present.map((p) => p.id), stage.id);
+    const fixes = logic.cardFixes(data, roster.present.map((p) => p.id), stage.id, game.get().printedIds || null);
     if (fixes.length) {
       details.append(el('h3', {}, 'Printed cards that mention absent guests'));
       const ul = el('ul', {});

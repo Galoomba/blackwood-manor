@@ -34,7 +34,7 @@
       run: ["Everyone says their sighting aloud. Victor reads the absent guests' sightings (host panel or host guide).", "Press \u201cEnd discussion\u201d: Victor's midnight announcement plays (or Victor says it, with the voice muted).", "Press “The lights go out”. As the screen goes dark, Delilah's host switches off the room lights and Victor falls. Lights on again when the memorial appears, then press “The ghost speaks”."],
       narration: [{ speaker: "Delilah's ghost (Victor reads)", text: "They all saw something. None of them know it matters. Make them say it aloud, every one, and lay the pieces side by side. Brother, when I fell, I smelled jasmine. Over the wine. Under the wine. Jasmine." }],
       clue: 'Jasmine. I smelled jasmine when I fell.',
-      hostNotes: "Every player must state their observation aloud. Absent characters' observations are in the host panel and the host guide; Victor reads them, since Delilah's ghost is not heard yet. End the discussion with Victor's announcement, then press \"The lights go out\".",
+      hostNotes: "Every player must state their observation aloud. Absent characters' observations are in the host panel and the host guide; Victor reads them, since Delilah's ghost is not heard yet. End the discussion with Victor's announcement, then press \"The lights go out\". Guests will quiz Victor about W.K., the money he signed and who he argued with: he knows, and refuses. \"At midnight. Every page, every name. Not one minute before.\"",
       announcement: { speaker: 'Victor (alive, aloud)', text: "Enough. My sister died for a book. She tore its pages and hid them among you so that no one of you could steal the whole of it. At midnight I will find every page and read every line, and if it ruins the name of Blackwood then let it. Nobody leaves this house before then. Nobody." },
       setPieceAfter: 'lightsOut'
     },
@@ -52,7 +52,7 @@
       run: ["The killers get the secret sign.", "If Morgana asks a ghost for an apology: Victor gives it after he rises, in front of everyone, before the vote.", "Silas absent? Delilah's ghost drops \"the candles burn low\" once, idly, so the killers' sign has an innocent echo."],
       narration: [{ speaker: "Delilah's ghost", text: "Now I know what you hide. Tell me what you want, and I will tell you what I see. I see two hands did this, and they have not yet shaken. Two of you. Strangers. Looking for each other across this room right now." }],
       clue: 'Two hands did this, and they have not yet shaken.',
-      hostNotes: 'Both killers now hold the secret sign: "the candles burn low" / "the wax remembers", worked into what they say. Silas says the first half innocently all night. Innocents have personal goals to play. Morgana will ask a ghost for an apology. Victor is still the body now: he gives it after he rises (Scene 3), in front of everyone, before the vote.'
+      hostNotes: 'Both killers now hold the secret sign: "the candles burn low" / "the wax remembers", worked into what they say. The printed card does not tell them to answer: hand each killer the sign slip with this card (or whisper: "if you hear the candles burn low, answer the wax remembers"). Silas says the first half innocently all night. Innocents have personal goals to play. Morgana will ask a ghost for an apology. Victor is still the body now: he gives it after he rises (Scene 3), in front of everyone, before the vote.'
     },
     {
       minutes: { cards: 3, discuss: 10 }, id: '2.3', scene: 2, title: 'The torn pages', kind: 'group',
@@ -94,7 +94,7 @@
       run: ["Read the house rule: one try at the lock each, and the killers may not touch the true key.", "Press “Start the key hunt” (10 min).", "Box open? Press “The box is open”, then 2 minutes of last words.", "Otherwise press “The box stays shut”."],
       narration: [{ speaker: "Delilah's ghost", text: "One more thing before you name them. I left a letter, locked in a box, for whoever was left. The key is somewhere in this room, and so are a great many keys that open nothing. Each of you may try the lock once, and only once. Look where I would hide something, not where a thief would. And do not trust everyone who helps you look." }],
       clue: 'Something always comes out that never went in.',
-      hostNotes: "Before the night: hide the fake keys anywhere in the room, put the true key inside the rabbit hat and hide the hat behind a small door at about waist height (a cupboard, cabinet or sideboard: not high, not low, not under cushions), and lock Delilah's letter (print pack: The box) in the box. Each guest may try the lock once; count the tries out loud. Zora will send people low (cushions, under the sofa, the floor); Krank will send them high (the lamp, the shelves, the top of the cupboard) and call the hat 'far too obvious'. The killers may lie but may not touch, move or pocket the true key. When the box opens, press \"The box is open\" and Delilah reads her letter. If time runs out first, press \"The box stays shut\" and go to the vote.",
+      hostNotes: "Before the night: hide the fake keys anywhere in the room, put the true key inside the rabbit hat and hide the hat behind a small door at about waist height (a cupboard, cabinet or sideboard: not high, not low, not under cushions), and lock Delilah's letter (print pack: The box) in the box. Each guest may try the lock once; count the tries out loud. Zora will send people low (cushions, under the sofa, the floor); Krank will send them high (the lamp, the shelves, the top of the cupboard) and call the hat 'far too obvious'. The killers may lie but may not touch, move or pocket the true key. When the box opens, press \"The box is open\" and Delilah reads her letter. If time runs out first, press \"The box stays shut\" and go to the vote. Before the box, Victor's ghost turns to Morgana in front of everyone: \"Morgana Ashgrove. Your grandmother counted the dead in my grandfather's cellar and said so out loud, and this house called her a witch for it. She was right. She was right about all of it, and I am sorry. I promised you that in person, and a ghost keeps his promises.\" (Leave the cousin to Silas.)",
       setPieceAfter: 'lastLetter'
     }
   ];
@@ -203,7 +203,7 @@
     farewell: 'Blackwood Manor thanks you. Please return the mummy to the attic.'
   };
 
-  const SIGN = "Work the words \"the candles burn low\" into something you say to the room. If anyone works \"the wax remembers\" into their reply, they are your ally. Find them quietly. Lie for each other. (The butler fusses about candles all night; do not be fooled.)";
+  const SIGN = "Work the words \"the candles burn low\" into something you say to the room. If you hear someone else say it, answer with \"the wax remembers\". Whoever says one half to you and gets the other back is your ally. Find them quietly. Lie for each other. (The butler fusses about candles all night and never answers; do not be fooled.)";
 
   const characters = [
     {

@@ -766,12 +766,12 @@
     "intro-riddles": {
       "src": "assets/voice/intro-riddles.mp3",
       "voice": "George",
-      "hash": "7b8a4b6125c0",
-      "duration": 10.774,
+      "hash": "2a5720cf3f15",
+      "duration": 9.52,
       "starts": [
         0,
-        2.659,
-        7.802
+        2.067,
+        6.653
       ]
     },
     "intro-search-rules": {

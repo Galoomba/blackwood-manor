@@ -236,3 +236,21 @@ test('cardFixes lists printed table talk and whispers about absent guests, with 
     }
   }
 });
+
+test('cardFixes with the print roster lists only lines that are on paper', () => {
+  const all = data.characters.map((c) => c.id);
+  const printed = all.filter((id) => id !== 'finch' && id !== 'luna');
+  for (const sid of data.STAGE_IDS) {
+    assert.deepEqual(logic.cardFixes(data, printed, sid, printed), [], `nothing to fix at ${sid} when tonight matches the print`);
+  }
+  const tonight = printed.filter((id) => id !== 'graves');
+  for (const sid of data.STAGE_IDS) {
+    for (const f of logic.cardFixes(data, tonight, sid, printed)) {
+      assert.equal(f.about, 'graves', `${sid}: only the newly absent guest`);
+      const card = data.characters.find((c) => c.id === f.holder).cards[sid];
+      if (f.kind === 'talk') assert.equal(f.printed, logic.talkFor(card, printed).text);
+      else assert.equal(f.printed, logic.rumourFor(card, printed).text);
+    }
+  }
+  assert.ok(data.STAGE_IDS.some((sid) => logic.cardFixes(data, tonight, sid, printed).length), 'Graves is mentioned somewhere');
+});
