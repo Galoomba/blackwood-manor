@@ -3,11 +3,9 @@
      publishes the controls it is showing (buttons and selects, grouped by panel) and presses the
      ones the phone asks for. The laptop stays the only thing that runs the night: sound, the TV,
      lights and timers all happen here, whichever device pressed the button. */
-  /* Left off the phone: buttons that ask for confirmation on the laptop, open windows or print. The full
-     story's TV button asks first on the laptop (it shows the solution), so the phone asks instead and
-     the laptop skips its own question for that press. */
+  /* Left off the phone: buttons that ask for confirmation on the laptop, open windows or print. A press
+     the phone has already confirmed (an item with `ask`) skips the laptop's own question. */
   const SKIP = /^(Reset everything|New night|Open TV screen|Print|Trust the bridge)|Print pack|print/;
-  const STORY_TV_ASK = 'This shows the whole solution, both killers included, on the TV. Show it now?';
   let on = false, last = '', lastAt = 0, since = 0, primed = false, info = null;
   const hostId = Math.random().toString(36).slice(2, 10);
 
@@ -60,8 +58,7 @@
       if (!grp) { grp = { title: g, items: [] }; groups.push(grp); }
       grp.items.push(x.c.tagName === 'SELECT'
         ? { id, type: 'select', label: x.label, value: x.c.value, options: [...x.c.options].map((o) => ({ value: o.value, text: o.textContent })) }
-        : { id, type: 'button', label: x.label, primary: x.c.classList.contains('primary'),
-          ask: where === 'story' && x.label === 'Show on TV' && st.screen !== 'result' ? STORY_TV_ASK : undefined });
+        : { id, type: 'button', label: x.label, primary: x.c.classList.contains('primary') });
     });
     const timer = document.querySelector('.screen.active #timer');
     const ov = document.getElementById('overlay');

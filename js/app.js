@@ -48,11 +48,10 @@
     controls: true,
     isSpeaker: (st) => !(st.onTv && game.tvConnected()),
     soundOn: () => game.get().sound,
-    confirmTv: () => game.get().screen === 'result' || confirm('This shows the whole solution, both killers included, on the TV. Show it now?'),
     onHide: () => render()
   });
-  function openStory() { audio.init(); story.open(); }
-  /* After the reveal the solution is out, so the story starts from the top, playing, on the TV when there is one. */
+  /* The full story starts from the top, playing, on the TV when there is one (the host's choice: no
+     spoiler question, even before the reveal). */
   function tellStory() { audio.init(); story.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
 
   /* ---------- introduce the game to the group (spoiler-free; goes to the TV when one is open) ---------- */
@@ -80,7 +79,7 @@
   }
   function openIntro() { audio.init(); intro.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
   function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
-  function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
+  function storyButton(cls, label) { return el('button', { class: cls, onclick: tellStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
   /* Printing guest cards records who they were printed for, so the host panel lists only the printed lines
      that mention someone missing tonight. */
