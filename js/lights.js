@@ -96,7 +96,7 @@
     const s = load();
     const out = await call('GET', `/api/${s.user}/groups`);
     if (Array.isArray(out)) throw new Error(out[0] && out[0].error ? out[0].error.description : 'unexpected answer');
-    return Object.entries(out).filter(([, g]) => g.type === 'Room' || g.type === 'Zone')
+    return Object.entries(out).filter(([, g]) => (g.type === 'Room' || g.type === 'Zone') && g.lights.length)
       .map(([id, g]) => ({ id, name: `${g.name} (${g.lights.length} light${g.lights.length === 1 ? '' : 's'})` }));
   }
 
