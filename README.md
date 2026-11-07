@@ -62,6 +62,12 @@ To re-record after changing the story text or a voice, put `ELEVENLABS_API_KEY=.
 
 It contains every spoiler, so it stays on the laptop until you press "Show on TV". The TV then shows it full screen and speaks it, and the laptop becomes the remote. Click the TV window once beforehand so the browser allows it to speak. On a phone, start the voice by tapping Play: phones only allow speech that begins with a tap, and an iPhone on silent may stay quiet. Without a voice it still plays with timed captions.
 
+## Room lights (Philips Hue, optional)
+
+The game can set Hue lights at the big moments: warm for the toast, a red flash when Delilah dies, a blackout when Victor falls and moonlight when her ghost speaks, violet when Victor rises, candlelight for the box and the last letter, red for the vote, candles out and red for the reveal, then house lights. The lightning button flashes them too.
+
+Open the game from the laptop (`python3 -m http.server 8801`, then http://localhost:8801): the public link cannot reach devices at home. On the setup screen, under **Room lights**: type the bridge's IP address (Hue app › Settings › Bridges), press **Trust the bridge** and accept the browser's certificate warning once, press the round button on the bridge and then **Connect**, choose the room, and tick **Game controls the lights**. Each look has a test button. The settings stay in that browser only. Only the host window drives the lights.
+
 ## Sound effects
 
 The soundboard effects (bell, thunder, heartbeat, tick, whisper, scream, puff, death, ghost, toll) are recorded with ElevenLabs sound generation and live in `assets/sfx`. Each one is described in words at the top of `scripts/generate-sfx.js`. To change one, edit its description and run `npm run sfx`; to get a new take of the same description, run `npm run sfx -- --force --only toll`. If a clip is missing, the browser's own synthesised version plays instead. The background ambience is still synthesised.

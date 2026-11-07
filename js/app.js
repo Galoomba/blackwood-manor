@@ -3,6 +3,8 @@
   const logic = root.BM.logic;
   const audio = root.BM.audio;
   const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode } = root.BM.ui;
+  const lights = root.BM.lights;
+  const SET_PIECE_LIGHTS = { prologue: 'toast', sheIsDead: 'dead', lightsOut: 'lightsOut', twoGhosts: 'twoGhosts', lastLetter: 'lastLetter' };
   const game = root.BM.createGame(data, logic, root.localStorage);
 
   const $ = (sel) => document.querySelector(sel);
@@ -84,6 +86,12 @@
     $('#screen-' + s.screen).classList.add('active');
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
+    /* Room lights follow the stage and screen, but never cut into a set piece, the reveal or last words. */
+    if (!s.setPiece && !s.revealAt && s.phase !== 'lastwords') {
+      if (s.screen === 'game') lights.stageCue(game.stage().id);
+      else if (s.screen === 'vote') lights.screenCue('vote');
+      else if (s.screen === 'result') lights.screenCue('house');
+    }
     if (!story.isShown() && !intro.isShown()) { if (localSoundOn() && sceneNum) audio.startAmbience(sceneNum); else audio.stopAmbience(); }
     const speaking = voice.playing();
     const allowed = /^quote-/.test(speaking || '') ? localSoundOn() : hostVoiceOn();
@@ -154,6 +162,7 @@
         el('p', { class: 'dim', style: 'margin-top:12px' }, 'Two screens: press "Open TV screen", drag that window onto the TV and press F for fullscreen. It shows only what the room may see and follows this window automatically.'),
         tvBar()
       ),
+      lights.panel(),
       roster.errors.length ? el('p', { class: 'error' }, roster.errors.join(' ')) : null,
       roster.present.length < 6 ? el('p', { class: 'error' }, 'Fewer than six guests: the mystery will be thin. Consider adding characters.') : null,
       el('div', { class: 'row' },
@@ -440,13 +449,14 @@
     const board = el('div', { class: 'soundboard' });
     for (const name of audio.names) board.append(el('button', { class: 'small', onclick: () => triggerSound(name) }, name));
     board.append(el('button', { class: 'small', onclick: () => triggerSound('lightning') }, 'lightning'));
+    if (lights.configured()) board.append(el('button', { class: 'small', title: 'Hue lights back to normal', onclick: () => lights.cue('house') }, 'house lights'));
     return el('div', { class: 'panel' }, el('details', { class: 'host' }, el('summary', {}, 'Soundboard (plays on the TV window when it is open)'), board));
   }
 
   /* A soundboard press is broadcast through state so the TV window plays it; locally only if no TV. */
   function triggerSound(name) {
     game.set({ sfx: { name, at: Date.now() } });
-    if (name === 'lightning') { flashLightning(); sfx('thunder'); }
+    if (name === 'lightning') { flashLightning(); sfx('thunder'); lights.flash(); }
     else sfx(name);
   }
 
@@ -472,6 +482,7 @@
     ov.className = 'overlay';
     const at = Date.now();
     game.set({ setPiece: { key, at } });
+    if (SET_PIECE_LIGHTS[key]) lights.cue(SET_PIECE_LIGHTS[key]);
     const lines = linesNode(sp.lines);
     const done = () => { if ((voice.playing() || '').startsWith('set-')) voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ setPiece: null }); if (onDone) onDone(); };
     const continueBtn = (label) => el('button', { class: 'primary', style: 'margin-top:24px', onclick: done }, label || 'Continue');
@@ -554,6 +565,7 @@
   function playReveal() {
     const result = logic.tally(game.get().votes, data.killerIds, game.roster().present.map((c) => c.id));
     game.set({ revealAt: Date.now() });
+    lights.cue('reveal');
     const ov = $('#overlay');
     clear(ov);
     ov.className = 'overlay blackout';
