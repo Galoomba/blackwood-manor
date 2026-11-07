@@ -131,11 +131,16 @@
       .map(([id, g]) => ({ id, lights: g.lights, name: `${g.name} (${g.lights.length} light${g.lights.length === 1 ? '' : 's'})` }));
   }
 
-  /* The settings panel on the setup screen. */
+  /* The settings panel on the setup screen: built once per page and re-attached on every render,
+     so a half-typed address survives; a newer draw supersedes one still waiting on the bridge. */
+  let panelNode = null;
+  let drawId = 0;
   function panel() {
+    if (panelNode) return panelNode;
     const { el, clear, append } = root.BM.ui;
     const node = el('div', { class: 'panel lights-panel' });
     const draw = async () => {
+      const my = ++drawId;
       const s = load();
       clear(node);
       const msg = el('p', { class: 'dim lights-status' }, status);
@@ -163,10 +168,11 @@
         const select = el('select', { onchange: (e) => { const r = found.find((x) => x.id === e.target.value); save({ group: e.target.value, lightIds: r ? r.lights : [] }); draw(); } }, el('option', { value: '' }, 'Choose the party room…'));
         try {
           found = await rooms();
+          if (my !== drawId) return;
           found.forEach((r) => select.append(el('option', { value: r.id, selected: String(s.group) === r.id ? 'selected' : null }, r.name)));
           const mine = found.find((r) => r.id === String(s.group));
           if (mine) save({ lightIds: mine.lights });
-        } catch (e) { say(e instanceof TypeError ? unreachable : `Bridge said: ${e.message}. Connect again.`); }
+        } catch (e) { if (my !== drawId) return; say(e instanceof TypeError ? unreachable : `Bridge said: ${e.message}. Connect again.`); }
         append(node, el('div', { class: 'row' },
           el('label', { class: 'grow' }, '4. Room or zone the game controls', select),
           el('label', {}, el('input', { type: 'checkbox', checked: s.enabled ? 'checked' : null, disabled: ready(s) ? null : 'disabled', onchange: (e) => { save({ enabled: e.target.checked }); draw(); } }), ' 5. Game controls the lights')
@@ -181,6 +187,7 @@
       append(node, msg);
     };
     draw();
+    panelNode = node;
     return node;
   }
 

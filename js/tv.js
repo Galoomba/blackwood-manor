@@ -187,28 +187,28 @@
     clear(ov);
     ov.className = 'overlay';
     const lines = linesNode(sp.lines, { hideDirections: true });
+    const at = shownSetPiece;
     if (root.BM.interlude.has(key)) {
-      const at = shownSetPiece;
       root.BM.interlude.play(ov, key, { lines, sfx, alive: () => shownSetPiece === at, onReady: () => {}, voice: () => playVoice(`set-${key}`) });
     } else if (key === 'victorReturns') {
       ov.classList.add('ghostly');
       sfx('ghost');
       ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, el('div', { class: 'team-call' }, ...['delilah', 'victor'].map((t) => el('div', {}, el('h3', {}, t === 'delilah' ? 'Team Delilah' : 'Team Victor'), el('p', {}, game.roster().teams[t].map((c) => `${c.symbol} ${displayName(c)}`).join(' · '))))));
-      setTimeout(() => { if (shownSetPiece) playVoice('set-victorReturns'); }, 1500);
+      setTimeout(() => { if (shownSetPiece === at) playVoice('set-victorReturns'); }, 1500);
     } else if (key === 'lastLetter') {
       ov.classList.add('ghostly');
       sfx('whisper');
       ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines);
-      setTimeout(() => { if (shownSetPiece) playVoice('set-lastLetter'); }, 1500);
+      setTimeout(() => { if (shownSetPiece === at) playVoice('set-lastLetter'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');
       ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines);
-      setTimeout(() => { if (shownSetPiece) playVoice('set-sheIsDead'); }, 1500);
+      setTimeout(() => { if (shownSetPiece === at) playVoice('set-sheIsDead'); }, 1500);
     } else {
       ov.classList.add('ghostly');
       ov.append(el('h1', {}, sp.title), lines);
-      setTimeout(() => { if (shownSetPiece) playVoice(`set-${key}`); }, 1500);
+      setTimeout(() => { if (shownSetPiece === at) playVoice(`set-${key}`); }, 1500);
     }
   }
 

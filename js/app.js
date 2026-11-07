@@ -70,15 +70,18 @@
      A host tab that was once the TV tab keeps its name, and would load the TV over itself: clear it. */
   if (root.name === 'blackwood-tv') root.name = '';
   function openTvWindow() {
-    const w = root.open('tv.html', 'blackwood-tv', 'popup,width=1280,height=720');
-    if (w) w.focus();
+    /* Open by name only, so pressing the button again focuses a running TV instead of reloading it. */
+    const w = root.open('', 'blackwood-tv', 'popup,width=1280,height=720');
+    if (!w) return;
+    try { if (!/tv\.html/.test(w.location.href)) w.location.href = new URL('tv.html', root.location.href).href; } catch (e) { /* not ours: leave it */ }
+    w.focus();
   }
   function openIntro() { audio.init(); intro.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
   function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
   /* ---------- navigation ---------- */
-  function show(screen) { game.set({ screen }); render(); }
+  function show(screen) { if (screen !== 'game') stopTimer(); game.set({ screen }); render(); }
 
   let lastPlace = null;
   function render() {
@@ -88,8 +91,8 @@
     const sceneNum = s.screen === 'game' ? game.stage().scene : (s.screen === 'vote' || s.screen === 'result') ? 3 : 0;
     document.body.dataset.scene = sceneNum;
     /* Room lights follow the stage and screen, but never cut into a set piece, the reveal or last words. */
-    if (!s.setPiece && !s.revealAt && s.phase !== 'lastwords') {
-      if (s.screen === 'game') lights.stageCue(game.stage().id);
+    if (!s.setPiece && !s.revealAt && !story.isShown()) {
+      if (s.screen === 'game') { if (s.phase === 'lastwords') lights.screenCue('lastLetter'); else lights.stageCue(game.stage().id); }
       else if (s.screen === 'vote') lights.screenCue('vote');
       else if (s.screen === 'result') lights.screenCue('house');
     }
@@ -499,21 +502,21 @@
       ov.classList.add('ghostly');
       sfx('ghost');
       ov.append(el('div', {}, el('div', { class: 'ghost-shape' }), el('div', { class: 'ghost-shape violet' })), el('h1', {}, 'Victor returns'), el('h2', {}, 'Two murders, two teams'), lines, el('div', { class: 'team-call' }, ...['delilah', 'victor'].map((t) => el('div', {}, el('h3', {}, t === 'delilah' ? 'Team Delilah' : 'Team Victor'), el('p', {}, game.roster().teams[t].map((c) => `${c.symbol} ${displayName(c)}`).join(' · '))))), voiceControls('set-victorReturns'), continueBtn('Form the teams'));
-      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
+      setTimeout(() => { if ((game.get().setPiece || {}).at === at && hostVoiceOn()) voice.play('set-victorReturns'); }, 1500);
     } else if (key === 'lastLetter') {
       ov.classList.add('ghostly');
       sfx('whisper');
       ov.append(el('div', { class: 'ghost-shape' }), el('h1', {}, sp.title), el('h2', {}, 'To be opened if I die tonight'), lines, voiceControls('set-lastLetter'), continueBtn('Last words (2 min)'));
-      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-lastLetter'); }, 1500);
+      setTimeout(() => { if ((game.get().setPiece || {}).at === at && hostVoiceOn()) voice.play('set-lastLetter'); }, 1500);
     } else if (key === 'sheIsDead') {
       ov.classList.add('blackout');
       sfx('toll');
       ov.append(el('h1', {}, 'She is dead'), el('h2', {}, 'Scene 1: The Toast'), lines, voiceControls('set-sheIsDead'), continueBtn('Begin Scene 1'));
-      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('set-sheIsDead'); }, 1500);
+      setTimeout(() => { if ((game.get().setPiece || {}).at === at && hostVoiceOn()) voice.play('set-sheIsDead'); }, 1500);
     } else {
       ov.classList.add('ghostly');
       ov.append(el('h1', {}, sp.title), lines, voice.duration(`set-${key}`) ? voiceControls(`set-${key}`) : null, continueBtn(key === 'prologue' ? 'She is dead' : 'Continue'));
-      setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play(`set-${key}`); }, 1500);
+      setTimeout(() => { if ((game.get().setPiece || {}).at === at && hostVoiceOn()) voice.play(`set-${key}`); }, 1500);
     }
   }
 
@@ -602,6 +605,8 @@
   }
 
   /* ---------- boot ---------- */
+  /* A reload in the middle of a set piece or the reveal loses its overlay here; clear it for the TV and lights too. */
+  if (game.get().setPiece || game.get().revealAt) game.set({ setPiece: null, revealAt: null });
   audio.setEnabled(game.get().sound);
   document.addEventListener('pointerdown', () => { audio.init(); voice.unlock(); }, { once: true });
   /* Keep the TV indicator fresh and hand ambience over when a TV window appears or disappears. */
