@@ -206,7 +206,7 @@
 
   function configured() { const s = load(); return ready(s) && Boolean(s.enabled); }
 
-  const api = { CUES, cueForStage, cue, stageCue, screenCue, flash, storySlide, panel, configured, KEY };
+  const api = { CUES, cueForStage, cue, stageCue, screenCue, flash, storySlide, panel, configured, configure: save, KEY };
   root.BM = root.BM || {};
   root.BM.lights = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

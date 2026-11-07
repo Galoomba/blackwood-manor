@@ -612,6 +612,20 @@
   }
 
   /* ---------- boot ---------- */
+  /* A one-time setup link (only on this laptop): http://localhost:8801/#preset=<url-encoded JSON> with
+     { game: {presentIds, printedIds, sound, …}, lights: {bridge, user, group, lightIds, enabled} }.
+     It is applied once and removed from the address bar. */
+  if (/^(localhost|127\.0\.0\.1)$/.test(root.location.hostname) && root.location.hash.startsWith('#preset=')) {
+    try {
+      const preset = JSON.parse(decodeURIComponent(root.location.hash.slice(8)));
+      const allowed = ['presentIds', 'printedIds', 'names', 'sound', 'voiceOver', 'searchMin', 'discussMin', 'huntMin', 'screen'];
+      const patch = {};
+      allowed.forEach((k) => { if (preset.game && preset.game[k] !== undefined) patch[k] = preset.game[k]; });
+      game.set(patch);
+      if (preset.lights) lights.configure(preset.lights);
+    } catch (e) { /* a broken link changes nothing */ }
+    root.history.replaceState(null, '', root.location.pathname + root.location.search);
+  }
   /* A reload in the middle of a set piece or the reveal loses its overlay here; clear it for the TV and lights too. */
   if (game.get().setPiece || game.get().revealAt) game.set({ setPiece: null, revealAt: null });
   audio.setEnabled(game.get().sound);
