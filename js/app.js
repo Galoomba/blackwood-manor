@@ -79,6 +79,8 @@
   }
   function openIntro() { audio.init(); intro.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
   function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
+  /* Every screen past the title has a way home; the title's "Resume the night" leads back in. */
+  function homeButton() { return el('button', { class: 'small', onclick: () => show('title') }, '⌂ Home'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: tellStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
 
   /* Printing guest cards records who they were printed for, so the host panel lists only the printed lines
@@ -183,6 +185,7 @@
         introButton(''),
         storyButton('', 'The full story'),
         el('button', { class: 'primary', disabled: roster.errors.length ? 'disabled' : null, onclick: () => beginNight() }, s.prologueDone ? 'Return to the game' : 'Begin the night'),
+        homeButton(),
         el('button', { class: 'small', onclick: () => { if (confirm('Forget this night and start over?')) { game.reset(); show('title'); } } }, 'Reset everything')
       )
     );
@@ -256,7 +259,8 @@
         el('button', { class: 'small', onclick: () => { stopTimer(); game.prevStage(); render(); } }, '◀ Previous stage'),
         el('button', { class: 'small', onclick: () => show('setup') }, 'Setup'),
         el('button', { class: 'small', onclick: () => show('vote') }, 'Go to vote'),
-        storyButton('small', 'Full story')
+        storyButton('small', 'Full story'),
+        homeButton()
       )
     );
 
@@ -556,7 +560,8 @@
       el('div', { class: 'panel' }, el('h3', {}, 'Tally'), el('div', { class: 'tally', id: 'tally' })),
       el('div', { class: 'row' },
         el('button', { class: 'primary', onclick: () => playReveal() }, '▶ Reveal the killers'),
-        el('button', { class: 'small', onclick: () => show('game') }, 'Back to the game')
+        el('button', { class: 'small', onclick: () => show('game') }, 'Back to the game'),
+        homeButton()
       )
     );
     renderTally();
@@ -614,6 +619,7 @@
       el('p', { class: 'center dim' }, data.reveal.farewell),
       el('div', { class: 'row', style: 'justify-content:center' },
         el('button', { onclick: () => show('vote') }, 'Back to the vote'),
+        homeButton(),
         el('button', { class: 'primary', onclick: tellStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, 'Tell the whole story'),
         el('button', { onclick: () => { if (confirm('Start a brand new night? This clears the roster and votes.')) { game.reset(); show('title'); } } }, 'New night')
       )
