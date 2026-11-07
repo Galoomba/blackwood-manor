@@ -30,6 +30,19 @@
   label { display: block; font-size: 15px; margin: 0 0 4px; color: var(--dim); }
   select { width: 100%; font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
   .empty, .error { color: var(--dim); padding: 20px 0; text-align: center; }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+  .tabs button { min-height: 40px; padding: 8px; font-size: 16px; }
+  .tabs button.on { border-color: var(--gold); color: var(--gold); background: #2a1a12; }
+  .hidden { display: none !important; }
+  details.note { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 0 0 10px; }
+  details.note details.note { background: #120a0c; margin-top: 8px; }
+  details.note > summary { color: var(--gold); font-size: 16px; cursor: pointer; }
+  .note p { margin: 8px 0; }
+  .note h3 { font-size: 15px; color: var(--dim); text-transform: uppercase; letter-spacing: .06em; font-weight: normal; margin: 12px 0 4px; }
+  .note ul, .note ol { padding-left: 20px; margin: 6px 0; }
+  .note li { margin: 5px 0; }
+  .cue { border-color: var(--blood); }
+  .cue > summary { color: #ff8a8a; }
   .error { color: #f88; }
 </style>
 </head>
@@ -40,14 +53,56 @@
   <div class="meta" id="meta"></div>
   <div class="timer" id="timer"></div>
   <div class="tally" id="tally"></div>
+  <div class="tabs hidden" id="lights"><button id="lights-off">Lights off</button><button id="lights-house">House lights</button></div>
+  <div class="tabs"><button id="tab-controls" class="on">Controls</button><button id="tab-notes">Host notes</button></div>
 </header>
 <main id="main"><p class="empty">Waiting for the laptop…</p></main>
+<div id="notes" class="hidden"><p class="empty">No host notes on this screen.</p></div>
 <script>
 (function () {
   const code = new URLSearchParams(location.search).get('k') || '';
   const $ = (id) => document.getElementById(id);
   const PHASE = { narration: 'Narration', search: 'Reading cards', discussion: 'Discussion', done: 'Stage complete', lastwords: 'Last words' };
-  let lastGroups = '', busy = false;
+  let lastGroups = '', lastNotes = '', busy = false;
+  const openState = {};
+  let tab = 'controls';
+  try { tab = localStorage.getItem('bm-remote-tab') || 'controls'; } catch (e) { /* default */ }
+  function showTab(t) {
+    tab = t;
+    $('main').classList.toggle('hidden', t !== 'controls'); $('notes').classList.toggle('hidden', t !== 'notes');
+    $('tab-controls').classList.toggle('on', t === 'controls'); $('tab-notes').classList.toggle('on', t === 'notes');
+    try { localStorage.setItem('bm-remote-tab', t); } catch (e) { /* fine */ }
+  }
+  $('lights-off').addEventListener('click', (e) => send({ id: -1, label: 'lights:off' }, null, e.currentTarget));
+  $('lights-house').addEventListener('click', (e) => send({ id: -2, label: 'lights:house' }, null, e.currentTarget));
+  $('tab-controls').addEventListener('click', () => showTab('controls'));
+  $('tab-notes').addEventListener('click', () => showTab('notes'));
+  showTab(tab);
+  function section(sec, path) {
+    const key = path + '/' + sec.title;
+    const isCue = sec.title === 'Cue now';
+    const d = el('details', { class: 'note' + (isCue ? ' cue' : ''), open: (key in openState ? openState[key] : sec.open) ? 'open' : null },
+      el('summary', {}, sec.title || 'Notes'));
+    d.addEventListener('toggle', () => { openState[key] = d.open; });
+    const line = (x) => [x.b ? el('strong', {}, x.b + ' ') : null, x.t];
+    sec.blocks.forEach((b) => {
+      if (b.k === 'sub') d.append(section(b.section, key));
+      else if (b.k === 'h') d.append(el('h3', {}, b.t));
+      else if (b.k === 'list') d.append(el(b.ordered ? 'ol' : 'ul', {}, b.items.map((i) => el('li', {}, line(i)))));
+      else d.append(el('p', {}, line(b)));
+    });
+    return d;
+  }
+  function renderNotes(notes) {
+    const j = JSON.stringify(notes || []);
+    $('tab-notes').textContent = (notes || []).some((n) => n.title === 'Cue now') ? 'Host notes •' : 'Host notes';
+    if (j === lastNotes) return;
+    lastNotes = j;
+    const box = $('notes');
+    box.textContent = '';
+    if (!notes || !notes.length) { box.append(el('p', { class: 'empty' }, 'No host notes on this screen.')); return; }
+    notes.forEach((n) => box.append(section(n, '')));
+  }
 
   function el(tag, attrs, ...kids) {
     const n = document.createElement(tag);
@@ -69,6 +124,8 @@
     $('meta').textContent = [s.scene ? `Scene ${s.scene}` : '', s.screen === 'game' ? PHASE[s.phase] || '' : '', s.detail].filter(Boolean).join(' · ');
     $('timer').textContent = s.timer && s.timer !== '--:--' ? s.timer : '';
     $('tally').textContent = s.tally || '';
+    $('lights').classList.toggle('hidden', !s.lights);
+    renderNotes(s.notes);
     const groups = JSON.stringify(s.groups);
     if (groups === lastGroups || (document.activeElement && document.activeElement.tagName === 'SELECT')) return;
     lastGroups = groups;

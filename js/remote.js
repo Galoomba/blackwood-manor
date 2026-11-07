@@ -63,8 +63,49 @@
       : where === 'intro' ? 'Introducing the game' : where === 'story' ? 'The full story'
       : st.screen === 'game' ? `${stage.id} ${stage.title}` : ({ title: 'Title', setup: 'Setup', print: 'Print', vote: 'The accusation', result: 'The result' })[st.screen] || '';
     const where2 = where === 'intro' || where === 'story' ? (document.querySelector(`#${where === 'intro' ? 'intro' : 'story'}-layer .story-where`) || {}).textContent || '' : '';
-    return { heading, screen: st.screen, phase: st.phase || '', scene: st.screen === 'game' ? stage.scene : null,
+    return { heading, lights: root.BM.lights.connected(), notes: notes(st), screen: st.screen, phase: st.phase || '', scene: st.screen === 'game' ? stage.scene : null,
       timer: timer ? timer.textContent : '', detail: where2, tally: st.screen === 'vote' || st.screen === 'result' ? ((document.querySelector('.screen.active .tally') || {}).innerText || '').replace(/\n+/g, ' · ') : '', groups };
+  }
+
+  /* The host instructions on screen, as plain text blocks: the run sheet, the host-only answer key
+     (with its nested lists), the stage narration, and any cue shown in an interlude. */
+  function textOf(n) {
+    const c = n.cloneNode(true);
+    c.querySelectorAll('button, select, summary, details').forEach((x) => x.remove());
+    const strong = c.querySelector('strong');
+    const b = strong ? strong.textContent.trim() : '';
+    if (strong) strong.remove();
+    return { b, t: c.textContent.replace(/\s+/g, ' ').trim() };
+  }
+  function serialize(det) {
+    const sum = det.querySelector(':scope > summary');
+    const out = { title: sum ? sum.textContent.trim() : '', blocks: [] };
+    for (const ch of det.children) {
+      if (ch.tagName === 'SUMMARY') continue;
+      if (ch.tagName === 'DETAILS') out.blocks.push({ k: 'sub', section: serialize(ch) });
+      else if (/^H[2-4]$/.test(ch.tagName)) out.blocks.push({ k: 'h', t: ch.textContent.trim() });
+      else if (ch.tagName === 'UL' || ch.tagName === 'OL') out.blocks.push({ k: 'list', ordered: ch.tagName === 'OL', items: [...ch.children].map(textOf).filter((x) => x.b || x.t) });
+      else { const x = textOf(ch); if (x.b || x.t) out.blocks.push({ k: 'p', b: x.b, t: x.t }); }
+    }
+    return out;
+  }
+  function notes(st) {
+    const out = [];
+    const ov = document.getElementById('overlay');
+    if (ov && !ov.classList.contains('hidden')) ov.querySelectorAll('.interlude-cue').forEach((c) => out.push({ title: 'Cue now', open: true, blocks: [{ k: 'p', b: '', t: c.textContent.trim() }] }));
+    const scr = document.querySelector('.screen.active');
+    if (st.screen === 'game' && scr) {
+      const run = scr.querySelector('details.run');
+      if (run) out.push(Object.assign(serialize(run), { open: true }));
+      const stage = root.BM.data.stages[st.stageIndex || 0];
+      if ((stage.narration || []).length) out.push({ title: 'Narration', blocks: stage.narration.map((l) => ({ k: 'p', b: `${l.speaker}: `, t: l.text })).concat(stage.clue ? [{ k: 'p', b: 'Clue on screen: ', t: stage.clue }] : []) });
+      const host = scr.querySelector('details.host');
+      if (host) out.push(serialize(host));
+    } else if (scr) {
+      const intro = [...scr.querySelectorAll(':scope > p.dim')].map((p) => ({ k: 'p', b: '', t: p.textContent.trim() })).filter((x) => x.t);
+      if (intro.length) out.push({ title: 'On the laptop', open: true, blocks: intro });
+    }
+    return out;
   }
 
   async function publish() {
@@ -74,7 +115,10 @@
     last = body; lastAt = Date.now();
     try { await root.fetch(`/remote/state?host=${hostId}`, { method: 'POST', body }); } catch (e) { last = ''; }
   }
+  /* Presses with a negative id are the phone's own buttons, available on every screen. */
+  const SPECIAL = { 'lights:off': () => root.BM.lights.cue('off', true), 'lights:house': () => root.BM.lights.cue('house', true) };
   function press(cmd) {
+    if (cmd.id < 0) { if (SPECIAL[cmd.label]) SPECIAL[cmd.label](); return; }
     const { list } = controls();
     const x = (list[cmd.id] && list[cmd.id].label === cmd.label) ? list[cmd.id] : list.find((y) => y.label === cmd.label);
     if (!x) return;

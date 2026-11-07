@@ -30,6 +30,7 @@
     vote:      { label: 'The vote (low red)',          steps: [{ at: 0, state: look({ xy: RED, bri: 70, transitiontime: 30 }) }] },
     reveal:    { label: 'The reveal: candles out, then red', steps: [{ at: 1200, state: look({ bri: 120, transitiontime: 5 }) }, { at: 2300, state: look({ bri: 45, transitiontime: 5 }) }, { at: 3400, state: { on: false, transitiontime: 5 } }, { at: 8600, state: look({ xy: RED, bri: 254, transitiontime: 0 }) }] },
     house:     { label: 'House lights (normal)',       steps: [{ at: 0, state: look({ ct: 366, bri: 254, transitiontime: 40 }) }] },
+    off:       { label: 'Lights off',                  steps: [{ at: 0, state: { on: false, transitiontime: 10 } }] },
     /* The full story's slide effects (story.js: flash, flicker, ghost). */
     storyFlicker: { story: true, steps: [...flicker(0), { at: 2600, state: look({ xy: MOON, bri: 40, transitiontime: 20 }) }] },
     storyGhost:   { story: true, steps: [{ at: 0, state: look({ xy: MOON, bri: 150, transitiontime: 15 }) }] }
@@ -205,8 +206,9 @@
   }
 
   function configured() { const s = load(); return ready(s) && Boolean(s.enabled); }
+  function connected() { return ready(load()); }
 
-  const api = { CUES, cueForStage, cue, stageCue, screenCue, flash, storySlide, panel, configured, configure: save, KEY };
+  const api = { CUES, cueForStage, cue, stageCue, screenCue, flash, storySlide, panel, configured, configure: save, connected, KEY };
   root.BM = root.BM || {};
   root.BM.lights = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

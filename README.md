@@ -70,7 +70,7 @@ Start the game on the laptop by double-clicking **Start Blackwood Manor.command*
 
 ## Phone remote
 
-Started with **Start Blackwood Manor.command** (or `npm start`), the setup screen shows a QR code. Scan it with a phone on the same Wi-Fi: the phone shows the stage, the timer and every button the laptop is showing at that moment (stage controls, set pieces, the intro and story slides, the soundboard, the accusations), and pressing one presses it on the laptop. Use the phone and the laptop together; the laptop still runs the sound, the TV and the lights, so nothing plays twice. The link carries a code that changes each time the server starts. If macOS asks whether node may accept incoming connections, allow it.
+Started with **Start Blackwood Manor.command** (or `npm start`), the setup screen shows a QR code. Scan it with a phone on the same Wi-Fi: the phone shows the stage, the timer and every button the laptop is showing at that moment (stage controls, set pieces, the intro and story slides, the soundboard, the accusations), and pressing one presses it on the laptop. A **Host notes** tab shows the run sheet, the narration and the host-only answer key for the stage, and any cue an interlude is showing. **Lights off** and **House lights** are always at the top when the Hue lights are connected (the soundboard has them too). Use the phone and the laptop together; the laptop still runs the sound, the TV and the lights, so nothing plays twice. The link carries a code that changes each time the server starts. If macOS asks whether node may accept incoming connections, allow it.
 
 ## Sound effects
 

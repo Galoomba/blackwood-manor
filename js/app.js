@@ -461,7 +461,8 @@
     const board = el('div', { class: 'soundboard' });
     for (const name of audio.names) board.append(el('button', { class: 'small', onclick: () => triggerSound(name) }, name));
     board.append(el('button', { class: 'small', onclick: () => triggerSound('lightning') }, 'lightning'));
-    if (lights.configured()) board.append(el('button', { class: 'small', title: 'Hue lights back to normal', onclick: () => lights.cue('house') }, 'house lights'));
+    if (lights.connected()) board.append(el('button', { class: 'small', title: 'Hue lights back to normal', onclick: () => lights.cue('house', true) }, 'house lights'),
+      el('button', { class: 'small', title: 'Switch the Hue lights off', onclick: () => lights.cue('off', true) }, 'lights off'));
     return el('div', { class: 'panel' }, el('details', { class: 'host' }, el('summary', {}, 'Soundboard (plays on the TV window when it is open)'), board));
   }
 
