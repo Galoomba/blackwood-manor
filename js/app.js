@@ -63,6 +63,13 @@
     onHide: () => render(),
     finalAction: { label: 'Go to the home screen', run: () => show('title') }
   });
+  /* The TV screen gets its own window (not a tab), so it can be dragged to the TV and made full screen.
+     A host tab that was once the TV tab keeps its name, and would load the TV over itself: clear it. */
+  if (root.name === 'blackwood-tv') root.name = '';
+  function openTvWindow() {
+    const w = root.open('tv.html', 'blackwood-tv', 'popup,width=1280,height=720');
+    if (w) w.focus();
+  }
   function openIntro() { audio.init(); intro.open({ index: 0, playing: true, onTv: game.tvConnected() }); }
   function introButton(cls) { return el('button', { class: cls, onclick: openIntro, title: 'Play the group through how the night works on the TV; the slides move on by themselves (space pauses)' }, 'Introduce the game'); }
   function storyButton(cls, label) { return el('button', { class: cls, onclick: openStory, title: 'Every secret, told from the cellar to the reveal, with narration' }, label || 'The full story'); }
@@ -91,7 +98,7 @@
     return el('div', { class: 'tvbar' },
       el('span', { class: 'tvdot' + (connected ? ' on' : '') }),
       el('span', { class: 'dim' }, connected ? 'TV screen connected. Sound plays on the TV window.' : 'No TV screen open. Sound plays here.'),
-      el('button', { class: 'small', onclick: () => root.open('tv.html', 'blackwood-tv') }, 'Open TV screen')
+      el('button', { class: 'small', title: 'Opens in its own window: drag it to the TV and make it full screen', onclick: openTvWindow }, 'Open TV screen')
     );
   }
 
