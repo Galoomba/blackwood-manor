@@ -34,6 +34,10 @@ test('the local server serves the game, guards the remote with its code and pass
   assert.ok(sent.ok);
   const got = await (await fetch(`${base}/remote/cmd?since=${first.seq}&host=a`)).json();
   assert.deepEqual(got.cmds.map((c) => [c.id, c.label]), [[3, 'Cards out (2 min)']]);
+  assert.equal(got.cmds[0].confirmed, false, 'a plain press is not pre-confirmed');
+  await fetch(`${base}/remote/cmd?k=424242`, { method: 'POST', body: JSON.stringify({ id: 5, label: 'Show on TV', confirmed: true }) });
+  const asked = await (await fetch(`${base}/remote/cmd?since=${got.seq}&host=a`)).json();
+  assert.equal(asked.cmds.pop().confirmed, true, 'a press the phone already confirmed says so');
   assert.deepEqual((await (await fetch(`${base}/remote/cmd?since=${first.seq}&host=b`)).json()).cmds, [], 'only the holding tab gets presses');
   assert.equal((await fetch(`${base}/remote/cmd?k=424242`, { method: 'POST', body: '{"id":"x"}' })).status, 400);
   assert.equal((await fetch(`${base}/hue/8.8.8.8/api`)).status, 400, 'only home-network bridges');

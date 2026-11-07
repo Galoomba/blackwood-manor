@@ -53,7 +53,7 @@ function remote(req, res, url) {
   if (p === '/remote/state' && req.method === 'GET') return json(res, 200, { snapshot, age: snapshot ? Date.now() - snapshotAt : null });
   if (p === '/remote/cmd' && req.method === 'POST') return readBody(req, 4000, (b) => {
     if (!b || typeof b.id !== 'number' || typeof b.label !== 'string') return json(res, 400, { error: 'bad press' });
-    const cmd = { seq: ++cmdSeq, at: Date.now(), id: b.id, label: b.label.slice(0, 200), value: b.value == null ? null : String(b.value).slice(0, 100) };
+    const cmd = { seq: ++cmdSeq, at: Date.now(), id: b.id, label: b.label.slice(0, 200), value: b.value == null ? null : String(b.value).slice(0, 100), confirmed: b.confirmed === true };
     cmds.push(cmd); cmds = cmds.filter((c) => Date.now() - c.at < 30000).slice(-50);
     json(res, 200, { ok: true, seq: cmd.seq });
   });

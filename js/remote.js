@@ -4,9 +4,10 @@
      ones the phone asks for. The laptop stays the only thing that runs the night: sound, the TV,
      lights and timers all happen here, whichever device pressed the button. */
   /* Left off the phone: buttons that ask for confirmation on the laptop, open windows or print. The full
-     story's TV button asks first (it shows the solution), so only the intro's goes to the phone. */
+     story's TV button asks first on the laptop (it shows the solution), so the phone asks instead and
+     the laptop skips its own question for that press. */
   const SKIP = /^(Reset everything|New night|Open TV screen|Print|Trust the bridge)|Print pack|print/;
-  const SKIP_STORY = /^(Show on TV|Stop showing on TV)/;
+  const STORY_TV_ASK = 'This shows the whole solution, both killers included, on the TV. Show it now?';
   let on = false, last = '', lastAt = 0, since = 0, primed = false, info = null;
   const hostId = Math.random().toString(36).slice(2, 10);
 
@@ -42,7 +43,7 @@
     const list = [...node.querySelectorAll('button, select')]
       .filter((c) => !c.disabled && !c.closest('.hidden') && !c.closest('.lights-panel'))
       .map((c) => ({ c, label: labelOf(c) }))
-      .filter((x) => x.label && !SKIP.test(x.label) && !(where === 'story' && SKIP_STORY.test(x.label)));
+      .filter((x) => x.label && !SKIP.test(x.label));
     return { where, list };
   }
 
@@ -59,7 +60,8 @@
       if (!grp) { grp = { title: g, items: [] }; groups.push(grp); }
       grp.items.push(x.c.tagName === 'SELECT'
         ? { id, type: 'select', label: x.label, value: x.c.value, options: [...x.c.options].map((o) => ({ value: o.value, text: o.textContent })) }
-        : { id, type: 'button', label: x.label, primary: x.c.classList.contains('primary') });
+        : { id, type: 'button', label: x.label, primary: x.c.classList.contains('primary'),
+          ask: where === 'story' && x.label === 'Show on TV' && st.screen !== 'result' ? STORY_TV_ASK : undefined });
     });
     const timer = document.querySelector('.screen.active #timer');
     const ov = document.getElementById('overlay');
@@ -127,7 +129,11 @@
     const x = (list[cmd.id] && list[cmd.id].label === cmd.label) ? list[cmd.id] : list.find((y) => y.label === cmd.label);
     if (!x) return;
     if (x.c.tagName === 'SELECT') { x.c.value = cmd.value == null ? '' : cmd.value; x.c.dispatchEvent(new Event('change', { bubbles: true })); }
-    else x.c.click();
+    else if (cmd.confirmed) {   // the phone already asked; don't leave a question waiting on the laptop
+      const ask = root.confirm;
+      root.confirm = () => true;
+      try { x.c.click(); } finally { root.confirm = ask; }
+    } else x.c.click();
   }
   async function poll() {
     try {
