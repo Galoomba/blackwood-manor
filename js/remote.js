@@ -3,7 +3,10 @@
      publishes the controls it is showing (buttons and selects, grouped by panel) and presses the
      ones the phone asks for. The laptop stays the only thing that runs the night: sound, the TV,
      lights and timers all happen here, whichever device pressed the button. */
-  const SKIP = /^(Reset everything|New night|Open TV screen|Print|Trust the bridge|✕ Close|Show on TV|Stop showing on TV)|Print pack|print/;
+  /* Left off the phone: buttons that ask for confirmation on the laptop, open windows or print. The full
+     story's TV button asks first (it shows the solution), so only the intro's goes to the phone. */
+  const SKIP = /^(Reset everything|New night|Open TV screen|Print|Trust the bridge)|Print pack|print/;
+  const SKIP_STORY = /^(Show on TV|Stop showing on TV)/;
   let on = false, last = '', lastAt = 0, since = 0, primed = false, info = null;
   const hostId = Math.random().toString(36).slice(2, 10);
 
@@ -38,7 +41,7 @@
     const list = [...node.querySelectorAll('button, select')]
       .filter((c) => !c.disabled && !c.closest('.hidden') && !c.closest('.lights-panel'))
       .map((c) => ({ c, label: labelOf(c) }))
-      .filter((x) => x.label && !SKIP.test(x.label));
+      .filter((x) => x.label && !SKIP.test(x.label) && !(where === 'story' && SKIP_STORY.test(x.label)));
     return { where, list };
   }
 
