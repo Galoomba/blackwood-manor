@@ -48,9 +48,19 @@
     try { root.localStorage.setItem(KEY, JSON.stringify(next)); } catch (e) { /* lights simply stay manual */ }
     return next;
   }
-  function base(s) {
-    const host = String(s.bridge || '').trim().replace(/\/+$/, '');
-    return /^https?:\/\//.test(host) ? host : `https://${host}`;
+  /* Started with `npm start` (scripts/serve.js), the game's own server relays to the bridge, so the
+     browser needs no certificate exception and no permission for the home network. */
+  let relay = null;
+  async function relayOn() {
+    if (relay !== null) return relay;
+    try { const r = await root.fetch('/hue/ping', { cache: 'no-store' }); relay = r.ok && (await r.text()) === 'blackwood-hue-relay'; } catch (e) { relay = false; }
+    return relay;
+  }
+  function host(s) { return String(s.bridge || '').trim().replace(/\/+$/, ''); }
+  async function base(s) {
+    const h = host(s);
+    if (/^https?:\/\//.test(h)) return h;
+    return (await relayOn()) ? `/hue/${h}` : `https://${h}`;
   }
   function ready(s) { return Boolean(s.bridge && s.user && s.group != null && s.group !== ''); }
 
@@ -60,7 +70,7 @@
 
   async function call(method, path, body) {
     const s = load();
-    const res = await root.fetch(`${base(s)}${path}`, { method, body: body ? JSON.stringify(body) : undefined });
+    const res = await root.fetch(`${await base(s)}${path}`, { method, body: body ? JSON.stringify(body) : undefined });
     return res.json();
   }
   const unreachable = 'Cannot reach the bridge. Open "Trust the bridge" and accept the warning, and check this laptop is on the home Wi-Fi.';
@@ -147,20 +157,23 @@
       onStatus = (t) => { msg.textContent = t; };
       const say = setStatus;
       const local = /^(localhost|127\.0\.0\.1)$/.test(root.location.hostname);
+      const relayed = await relayOn();
+      if (my !== drawId) return;
       append(node,
         el('h3', {}, 'Room lights (Philips Hue)'),
         el('p', { class: 'dim' }, 'The game can set your Hue lights at the big moments: the toast, the deaths, the ghosts, the box and the reveal. Optional: without it, nothing changes.'),
-        local ? null : el('p', { class: 'error' }, 'Lights need the game opened from this laptop: http://localhost:8801. The public link cannot talk to devices at home.'),
+        local ? null : el('p', { class: 'error' }, 'Lights need the game opened from this laptop: start it with "Start Blackwood Manor" (or npm start), which opens http://localhost:8801. The public link cannot talk to devices at home.'),
+        local && !relayed ? el('p', { class: 'error' }, 'This page is served without the lights relay. Close it, start the game with "Start Blackwood Manor" (or npm start) and use the page it opens; then no certificate or browser permission is needed.') : null,
         el('div', { class: 'row' },
           el('label', { class: 'grow' }, '1. Bridge address (in the Hue app: Settings › Bridges › ⓘ › IP address)',
             el('input', { type: 'text', placeholder: '192.168.x.x', value: s.bridge || '', onchange: (e) => { save({ bridge: e.target.value.trim(), user: null, group: null }); setStatus(''); draw(); } })),
-          el('button', { class: 'small', disabled: s.bridge ? null : 'disabled', title: 'Opens the bridge once, so this browser trusts its certificate',
-            onclick: () => root.open(`${base(s)}/api/config`, '_blank') }, '2. Trust the bridge')
+          relayed ? null : el('button', { class: 'small', disabled: s.bridge ? null : 'disabled', title: 'Opens the bridge once, so this browser trusts its certificate',
+            onclick: () => root.open(`https://${host(s)}/api/config`, '_blank') }, '2. Trust the bridge')
         ),
-        el('p', { class: 'dim' }, '2. Trust the bridge opens a tab. If the browser warns that the connection is not private, choose Advanced › Proceed (or Show details › visit this website). A line starting {"name":"Hue Bridge" means it worked: close that tab.'),
+        relayed ? null : el('p', { class: 'dim' }, '2. Trust the bridge opens a tab. If the browser warns that the connection is not private, choose Advanced › Proceed (or Show details › visit this website). A line starting {"name":"Hue Bridge" means it worked: close that tab.'),
         el('div', { class: 'row' },
           el('button', { disabled: s.bridge ? null : 'disabled', onclick: async () => { say('Connecting…'); const r = await connect(); say(r.ok ? 'Connected.' : r.text); if (r.ok) draw(); } },
-            s.user ? '3. Connected ✓ (connect again)' : '3. Press the bridge button, then Connect')
+            s.user ? 'Connected ✓ (connect again)' : (relayed ? '2. Press the bridge button, then Connect' : '3. Press the bridge button, then Connect'))
         )
       );
       if (s.user) {
@@ -174,14 +187,14 @@
           if (mine) save({ lightIds: mine.lights });
         } catch (e) { if (my !== drawId) return; say(e instanceof TypeError ? unreachable : `Bridge said: ${e.message}. Connect again.`); }
         append(node, el('div', { class: 'row' },
-          el('label', { class: 'grow' }, '4. Room or zone the game controls', select),
-          el('label', {}, el('input', { type: 'checkbox', checked: s.enabled ? 'checked' : null, disabled: ready(s) ? null : 'disabled', onchange: (e) => { save({ enabled: e.target.checked }); draw(); } }), ' 5. Game controls the lights')
+          el('label', { class: 'grow' }, 'Room or zone the game controls', select),
+          el('label', {}, el('input', { type: 'checkbox', checked: s.enabled ? 'checked' : null, disabled: ready(s) ? null : 'disabled', onchange: (e) => { save({ enabled: e.target.checked }); draw(); } }), ' Game controls the lights')
         ));
         if (ready(s)) {
           const tests = el('div', { class: 'row lights-tests' });
           Object.entries(CUES).filter(([, c]) => !c.story).forEach(([name, c]) => tests.append(el('button', { class: 'small', title: 'Try this look now', onclick: () => cue(name, true) }, c.label)));
           tests.append(el('button', { class: 'small', title: 'Lightning flash, then back', onclick: () => flash(true) }, 'Lightning'));
-          append(node, el('p', { class: 'dim' }, 'Try each look (works even with 5 unticked):'), tests);
+          append(node, el('p', { class: 'dim' }, 'Try each look (works even when the box above is unticked):'), tests);
         }
       }
       append(node, msg);
