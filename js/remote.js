@@ -31,6 +31,7 @@
     if (c.tagName === 'BUTTON') return c.textContent.trim().replace(/\s+/g, ' ');
     const voter = c.closest('.voter');
     if (voter) { const both = [...voter.querySelectorAll('select')]; return `${voter.querySelector('strong').textContent.trim()} accuses (${both.indexOf(c) + 1})`; }
+    if (c.closest('.story-controls')) return 'Chapter';
     const l = c.closest('label');
     return l ? l.textContent.trim().split('\n')[0] : 'Choice';
   }
