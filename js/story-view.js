@@ -270,6 +270,7 @@
       const slide = deck.slides[st.index];
       const stage = layer.querySelector('.story-stage');
       drawn = drawSlide(slide, st.index, opts.presentIds ? opts.presentIds() : null);
+      if (opts.onSlide) opts.onSlide(slide);
       clear(stage).append(drawn.node);
       if (opts.finalAction && st.index === deck.slides.length - 1) {
         drawn.node.querySelector('.story-words').append(el('div', { class: 'story-final' },

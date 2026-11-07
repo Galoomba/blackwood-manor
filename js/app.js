@@ -44,6 +44,7 @@
   /* ---------- the full story theatre ---------- */
   const story = root.BM.storyView.createPlayer({
     layer: document.getElementById('story-layer'),
+    onSlide: (slide) => lights.storySlide(slide),
     controls: true,
     isSpeaker: (st) => !(st.onTv && game.tvConnected()),
     soundOn: () => game.get().sound,

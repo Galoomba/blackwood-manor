@@ -64,7 +64,7 @@ It contains every spoiler, so it stays on the laptop until you press "Show on TV
 
 ## Room lights (Philips Hue, optional)
 
-The game can set Hue lights at the big moments: warm for the toast, a red flash when Delilah dies, a blackout when Victor falls and moonlight when her ghost speaks, violet when Victor rises, candlelight for the box and the last letter, red for the vote, candles out and red for the reveal, then house lights. The lightning button flashes them too.
+The game can set Hue lights at the big moments: warm for the toast, a red flash when Delilah dies, a blackout when Victor falls and moonlight when her ghost speaks, violet when Victor rises, candlelight for the box and the last letter, red for the vote, candles out and red for the reveal, then house lights. The on-screen effects play on the bulbs too: lightning (the soundboard button and Victor rising) is a double white flash, the blackout dims with the candles and then flickers red in step with the screen, and the full story's lightning, flicker and ghost slides light the room the same way.
 
 Open the game from the laptop (`python3 -m http.server 8801`, then http://localhost:8801): the public link cannot reach devices at home. On the setup screen, under **Room lights**: type the bridge's IP address (Hue app › Settings › Bridges), press **Trust the bridge** and accept the browser's certificate warning once, press the round button on the bridge and then **Connect**, choose the room, and tick **Game controls the lights**. Each look has a test button. The settings stay in that browser only. Only the host window drives the lights.
 
