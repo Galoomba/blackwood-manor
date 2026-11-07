@@ -171,6 +171,7 @@
         tvBar()
       ),
       lights.panel(),
+      root.BM.remote.panel(),
       el('p', { class: 'dim' }, s.printedIds
         ? `Cards printed without: ${data.characters.filter((c) => !s.printedIds.includes(c.id)).map((c) => c.short).join(', ') || 'nobody'}. Untick anyone else who does not come; the host panel then tells you which printed lines mention them.`
         : 'Cards printed for: not recorded in this browser. Tick the guests the cards were printed for, then Print pack › Print everything (you can cancel the print), so the host panel knows which printed lines mention a missing guest.'),
@@ -628,6 +629,7 @@
   }
   /* A reload in the middle of a set piece or the reveal loses its overlay here; clear it for the TV and lights too. */
   if (game.get().setPiece || game.get().revealAt) game.set({ setPiece: null, revealAt: null });
+  root.BM.remote.start();
   audio.setEnabled(game.get().sound);
   document.addEventListener('pointerdown', () => { audio.init(); voice.unlock(); }, { once: true });
   /* Keep the TV indicator fresh and hand ambience over when a TV window appears or disappears. */

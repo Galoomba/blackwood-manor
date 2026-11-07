@@ -442,3 +442,5 @@ body.tv .ghost-shape { width: 200px; height: 260px; border-radius: 100px 100px 1
 .tv-hint.fade { opacity: 0; pointer-events: none; }
 body.tv .clue.reveal-later { opacity: 0; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s ease; }
 body.tv .clue.reveal-later.shown { opacity: 1; transform: none; }
+.remote-qr { display: inline-block; background: #fff; padding: 10px; border-radius: 6px; line-height: 0; }
+.remote-panel code { word-break: break-all; font-size: 15px; }

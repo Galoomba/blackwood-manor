@@ -68,6 +68,10 @@ The game can set Hue lights at the big moments: warm for the toast, a red flash 
 
 Start the game on the laptop by double-clicking **Start Blackwood Manor.command** (or `npm start`); it opens http://localhost:8801 and relays the light commands to the bridge, so no browser certificate or network permission is needed. Keep its Terminal window open. The public link cannot reach devices at home. On the setup screen, under **Room lights**: type the bridge's IP address (Hue app › Settings › Bridges), press the round button on the bridge and then **Connect**, choose the room, and tick **Game controls the lights**. Each look has a test button. The settings stay in that browser only. Only the host window drives the lights.
 
+## Phone remote
+
+Started with **Start Blackwood Manor.command** (or `npm start`), the setup screen shows a QR code. Scan it with a phone on the same Wi-Fi: the phone shows the stage, the timer and every button the laptop is showing at that moment (stage controls, set pieces, the intro and story slides, the soundboard, the accusations), and pressing one presses it on the laptop. Use the phone and the laptop together; the laptop still runs the sound, the TV and the lights, so nothing plays twice. The link carries a code that changes each time the server starts. If macOS asks whether node may accept incoming connections, allow it.
+
 ## Sound effects
 
 The soundboard effects (bell, thunder, heartbeat, tick, whisper, scream, puff, death, ghost, toll) are recorded with ElevenLabs sound generation and live in `assets/sfx`. Each one is described in words at the top of `scripts/generate-sfx.js`. To change one, edit its description and run `npm run sfx`; to get a new take of the same description, run `npm run sfx -- --force --only toll`. If a clip is missing, the browser's own synthesised version plays instead. The background ambience is still synthesised.
