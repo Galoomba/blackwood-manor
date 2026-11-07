@@ -588,9 +588,7 @@
     setTimeout(() => sfx('heartbeat'), 4600);
     setTimeout(() => {
       clear(ov);
-      const portraits = el('div', { class: 'reveal-portraits' });
-      data.killerIds.forEach((id) => portraits.append(el('img', { src: charById(id).image, alt: charById(id).name })));
-      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines), voiceControls('reveal'),
+      ov.append(root.BM.ui.revealNode(data.killerIds.map(charById), data.reveal.lines), voiceControls('reveal'),
         el('button', { class: 'primary', style: 'margin-top:24px', onclick: () => { voice.stop(); ov.classList.add('hidden'); clear(ov); game.set({ revealAt: null }); show('result'); } }, result.houseWins ? 'The house wins' : 'The killers walk free'));
       sfx('ghost');
       setTimeout(() => { if (!ov.classList.contains('hidden') && hostVoiceOn()) voice.play('reveal'); }, 1200);

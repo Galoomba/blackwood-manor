@@ -93,5 +93,12 @@
       el('p', { class: 'absent-text' }, `\u201c${text}\u201d`));
   }
 
-  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode, absentMessage };
+  /* The reveal: one column per killer (portrait, name, then the ghost's accusation), and the closing line under both. */
+  function revealNode(killers, lines) {
+    const cols = el('div', { class: 'reveal-cols' }, killers.map((c, i) => el('div', { class: 'reveal-col' },
+      el('img', { src: c.image, alt: c.name }), el('h2', {}, c.name), lines[i] ? linesNode([lines[i]]) : null)));
+    return el('div', { class: 'reveal' }, el('h1', {}, 'The killers'), cols, linesNode(lines.slice(killers.length)));
+  }
+
+  root.BM.ui = { el, clear, append, typewrite, narrationNode, linesNode, revealNode, candles, flashLightning, quoteNode, absentMessage };
 })(window);

@@ -2,7 +2,7 @@
   const data = root.BM.data;
   const logic = root.BM.logic;
   const audio = root.BM.audio;
-  const { el, clear, append, typewrite, narrationNode, linesNode, candles, flashLightning, quoteNode, absentMessage } = root.BM.ui;
+  const { el, clear, append, typewrite, narrationNode, linesNode, revealNode, candles, flashLightning, quoteNode, absentMessage } = root.BM.ui;
   const game = root.BM.createGame(data, logic, root.localStorage);
   const rootNode = document.getElementById('tv-root');
   const ov = document.getElementById('overlay');
@@ -222,9 +222,7 @@
     setTimeout(() => {
       if (!shownReveal) return;
       clear(ov);
-      const portraits = el('div', { class: 'reveal-portraits' });
-      data.killerIds.forEach((id) => portraits.append(el('img', { src: charById(id).image, alt: charById(id).name })));
-      ov.append(el('h1', {}, data.killerIds.map((id) => charById(id).name).join(' & ')), portraits, linesNode(data.reveal.lines));
+      ov.append(revealNode(data.killerIds.map(charById), data.reveal.lines));
       sfx('ghost');
       setTimeout(() => { if (shownReveal) playVoice('reveal'); }, 1200);
     }, 8600);
@@ -235,6 +233,18 @@
     if (game.reload()) { render(); syncOverlays(); }
   }
   window.addEventListener('storage', sync);
+
+  /* Long screens (the reveal, the last letter) shrink their text until they fit the TV, rather than
+     running off the bottom where nobody can scroll. */
+  function fitOverlay() {
+    ov.style.setProperty('--fit', '1');
+    for (let f = 1; ov.scrollHeight > ov.clientHeight + 2 && f > 0.4; ) { f -= 0.05; ov.style.setProperty('--fit', f.toFixed(2)); }
+  }
+  let fitQueued = false;
+  const queueFit = () => { if (!fitQueued) { fitQueued = true; requestAnimationFrame(() => { fitQueued = false; fitOverlay(); }); } };
+  new MutationObserver(queueFit).observe(ov, { childList: true });
+  window.addEventListener('resize', queueFit);
+  if (document.fonts) document.fonts.ready.then(queueFit);
   setInterval(sync, 500);
   setInterval(() => game.markTvSeen(), 2000);
   game.markTvSeen();
