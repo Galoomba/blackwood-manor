@@ -417,7 +417,8 @@
     if (stage.id === '2.3') {
       const ol = el('ol', {});
       data.ledger.forEach((strip) => ol.append(el('li', {}, el('strong', {}, `${charById(strip.holder).short}: `), strip.text)));
-      details.append(el('h3', {}, 'The ledger in order'), ol);
+      details.append(el('h3', {}, 'The ledger in order'), ol,
+        el('button', { class: 'ghostly', title: 'Shows every strip on the TV while the narrator reads the whole ledger', onclick: () => showSetPiece('ledger') }, '📖 Read the ledger aloud'));
     }
     if (stage.id === '3.3') {
       const ul = el('ul', {});

@@ -128,8 +128,8 @@
   function voiceLines(data) {
     const out = [];
     const add = (group, lines) => lines.forEach((line, i) => {
-      const voice = voiceForSpeaker(line.speaker);
-      if (voice) out.push({ id: `${group}-${i}`, group, voice, speaker: line.speaker, text: line.text });
+      const voice = line.voice || voiceForSpeaker(line.speaker);
+      if (voice) out.push({ id: `${group}-${i}`, group, voice, speaker: line.speaker, text: line.say || line.text });
     });
     data.stages.forEach((st) => add(`stage-${st.id.replace('.', '-')}`, st.narration));
     data.stages.forEach((st) => { if (st.announcement) add(`announce-${st.id.replace('.', '-')}`, [st.announcement]); });

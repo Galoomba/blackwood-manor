@@ -1765,6 +1765,182 @@
         0,
         5.573
       ]
+    },
+    "set-ledger-0": {
+      "src": "assets/voice/set-ledger-0.mp3",
+      "voice": "George",
+      "hash": "e391f51f38a3",
+      "duration": 13.886,
+      "starts": [
+        0,
+        0.836,
+        10.391,
+        13.166
+      ]
+    },
+    "set-ledger-1": {
+      "src": "assets/voice/set-ledger-1.mp3",
+      "voice": "George",
+      "hash": "941c282e9b2f",
+      "duration": 12.91,
+      "starts": [
+        0,
+        1.103,
+        4.145,
+        5.48,
+        6.583,
+        10.112,
+        11.041
+      ]
+    },
+    "set-ledger-2": {
+      "src": "assets/voice/set-ledger-2.mp3",
+      "voice": "George",
+      "hash": "4e4e142c1341",
+      "duration": 8.824,
+      "starts": [
+        0,
+        1.324,
+        5.317,
+        7.291
+      ]
+    },
+    "set-ledger-3": {
+      "src": "assets/voice/set-ledger-3.mp3",
+      "voice": "George",
+      "hash": "d4b8d5c2d1c1",
+      "duration": 9.613,
+      "starts": [
+        0,
+        1.115,
+        3.413,
+        6.258,
+        8.684
+      ]
+    },
+    "set-ledger-4": {
+      "src": "assets/voice/set-ledger-4.mp3",
+      "voice": "George",
+      "hash": "a79b2ed1ec18",
+      "duration": 8.777,
+      "starts": [
+        0,
+        1.057,
+        2.136,
+        2.879,
+        3.611,
+        4.296,
+        4.714,
+        6.397
+      ]
+    },
+    "set-ledger-5": {
+      "src": "assets/voice/set-ledger-5.mp3",
+      "voice": "George",
+      "hash": "3c263b2aeb35",
+      "duration": 10.31,
+      "starts": [
+        0,
+        1.091,
+        1.997,
+        2.659,
+        3.402,
+        4.122,
+        4.748,
+        5.666,
+        6.722,
+        9.358
+      ]
+    },
+    "set-ledger-6": {
+      "src": "assets/voice/set-ledger-6.mp3",
+      "voice": "George",
+      "hash": "b6285b70815b",
+      "duration": 9.985,
+      "starts": [
+        0,
+        1.324,
+        6.502,
+        7.767,
+        8.812
+      ]
+    },
+    "set-ledger-7": {
+      "src": "assets/voice/set-ledger-7.mp3",
+      "voice": "George",
+      "hash": "4f7e1a5e6da8",
+      "duration": 10.263,
+      "starts": [
+        0,
+        1.161,
+        1.788,
+        6.583,
+        9.369
+      ]
+    },
+    "set-ledger-8": {
+      "src": "assets/voice/set-ledger-8.mp3",
+      "voice": "George",
+      "hash": "c296586b6235",
+      "duration": 9.056,
+      "starts": [
+        0,
+        1.115,
+        5.84,
+        8.127
+      ]
+    },
+    "set-ledger-9": {
+      "src": "assets/voice/set-ledger-9.mp3",
+      "voice": "George",
+      "hash": "9f7ae9b9268a",
+      "duration": 10.17,
+      "starts": [
+        0,
+        1.405,
+        2.856,
+        4.505,
+        6.223,
+        8.986
+      ]
+    },
+    "set-ledger-10": {
+      "src": "assets/voice/set-ledger-10.mp3",
+      "voice": "George",
+      "hash": "b8d95332727f",
+      "duration": 10.031,
+      "starts": [
+        0,
+        1.428,
+        7.407,
+        8.998
+      ]
+    },
+    "set-ledger-11": {
+      "src": "assets/voice/set-ledger-11.mp3",
+      "voice": "George",
+      "hash": "4dc2190e5361",
+      "duration": 10.403,
+      "starts": [
+        0,
+        1.265,
+        6.246,
+        8.29,
+        9.276
+      ]
+    },
+    "set-ledger-12": {
+      "src": "assets/voice/set-ledger-12.mp3",
+      "voice": "George",
+      "hash": "af75047840fe",
+      "duration": 12.817,
+      "starts": [
+        0,
+        1.289,
+        5.515,
+        9.834,
+        11.482
+      ]
     }
   }
 }/* END */;

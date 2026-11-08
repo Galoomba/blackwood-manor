@@ -192,6 +192,29 @@
     letter: { title: "Delilah's last letter", outside: 'To be opened if I die tonight', text: "To whoever opens this box, if I am dead. Brother, if you are reading it too, I was right to be afraid, and I am sorry I was right. A month ago I found grandfather's ledger in the cellar, behind the wine Silas never lets anyone touch. Seventeen souls in a single month, sold at midnight for eight pounds each. I wrote to everyone this house owes: the soldiers' grandchildren, the nurse's family, the undertaker who bought them, even our own physician, whose number I found in the cellar roll. I tore the pages so that no single thief could take the whole truth. Two people will want me silent. The first is the broker's granddaughter. Her grandmother found the dying for ours, and wore five rings to do it; I have seen them in the photograph in the cellar, and I have seen them again since. When the cheques stop, she loses everything. The second is whoever runs the laboratory you pay for, Victor: the one who signs the bills W.K. and laughs when they are paid. The poor man in your books did not come back by accident, and his heart did not stop by itself. If I am dead, it was one of them. If you are dead too, it was the other. Honour the true will; Silas has waited thirty years. Burn the ledger once every name has been read aloud. And Victor: the key was in your conjuring hat, where something always comes out that never went in. You never learned how the rabbit got in. I did. Delilah." }
   };
 
+  /* The whole ledger read aloud by the narrator, for the host's button at 2.3. The TV shows each strip as
+     printed; the narrator says it with the abbreviations and sums spelled out. */
+  const LEDGER_SAY = [
+    "Strip one. A note in Delilah's hand, tucked in the cover: I tore the pages and put one in each guest's envelope, so that no one thief could take the whole truth. Only all of you together can read it. D.",
+    "Strip two. Terms: L. G. collects the lost at midnight. Payment in gold. No questions. And later, in another hand, in the margin: I stopped. Forgive me. L. G., nineteen eighteen.",
+    "Strip three. Nurse Ashgrove's note, folded in the roll: They are not dying. He is letting them die. God forgive me, I counted.",
+    "Strip four. Cellar roll, nineteen sixteen. Lost this month: seventeen souls. Received: one hundred and thirty-six pounds. E. B.",
+    "Strip five. Forty-one. Private T. Vane. Lung wound. Lost. Sold, eight pounds. Collected by L. G., at midnight.",
+    "Strip six. Seventeen. Private D. Cole. Burns. Lost. Not collected. Escaped. Do not pursue; nobody will believe him. E. B.",
+    "Strip seven. Buyer: L. G., undertaker, Graves and Sons, established seventeen-oh-two. Collects at midnight. Does not sign. Does not age.",
+    "Strip eight. Nurse M. Ashgrove, dismissed, nineteen seventeen, for hysteria and witchcraft. Her allegations are not to be repeated. E. B.",
+    "Strip nine. Purchases, nineteen twenty: one sarcophagus, Theban, occupied. Four hundred pounds from the cellar account. E. B.",
+    "Strip ten. Broker: Z. Finds the dying. Ten percent per soul. Paid in perpetuity, for discretion. E. B.",
+    "Strip eleven. Retainer to Z.: paid every All Hallows' Eve, in perpetuity, for services of discretion. Still paid. V. B.",
+    "Strip twelve. W. K.: two thousand pounds monthly from the estate account, for research. Subject: E. M., deceased. Returned. V. B.",
+    "Strip thirteen. A private note, V. B., last week: Delilah is right. At midnight I read it all: grandfather's cellar, the broker, my laboratory. Then I end it. God help me, Edgar."
+  ];
+  setPieces.ledger = {
+    title: 'The Blackwood ledger',
+    cue: 'Read the ledger aloud',
+    lines: ledger.map((s, i) => ({ speaker: `Strip ${s.number}`, voice: 'narrator', text: s.text, say: LEDGER_SAY[i] }))
+  };
+
   const reveal = {
     lines: [
       { speaker: "Delilah's ghost", text: "Madame Zora. Your grandmother found the dying for mine, and every year since, this house has paid you to forget it. I was going to stop the cheques. So you read my glass's fortune and swapped it for one full of nightshade, and your jasmine hid the taste but not the smell, and a mummy you never looked at watched you wipe your rings." },
