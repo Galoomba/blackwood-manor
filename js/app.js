@@ -629,13 +629,15 @@
 
   /* ---------- boot ---------- */
   /* A one-time setup link (only on this laptop): http://localhost:8801/#preset=<url-encoded JSON> with
-     { game: {presentIds, printedIds, sound, …}, lights: {bridge, user, group, lightIds, enabled} }.
+     { fresh, game: {presentIds, printedIds, sound, …}, lights: {bridge, user, group, lightIds, enabled} }.
      It is applied once and removed from the address bar. */
   if (/^(localhost|127\.0\.0\.1)$/.test(root.location.hostname) && root.location.hash.startsWith('#preset=')) {
     try {
       const preset = JSON.parse(decodeURIComponent(root.location.hash.slice(8)));
       const allowed = ['presentIds', 'printedIds', 'names', 'sound', 'voiceOver', 'searchMin', 'discussMin', 'huntMin', 'screen'];
       const patch = {};
+      /* fresh: start the night over (stage, votes, timers) but keep the guest list, the print record and settings. */
+      if (preset.fresh) { const was = game.get(); game.reset(); allowed.forEach((k) => { if (k !== 'screen' && was[k] !== undefined) patch[k] = was[k]; }); }
       allowed.forEach((k) => { if (preset.game && preset.game[k] !== undefined) patch[k] = preset.game[k]; });
       game.set(patch);
       if (preset.lights) lights.configure(preset.lights);
