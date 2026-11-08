@@ -949,15 +949,16 @@
     "stage-3-4-0": {
       "src": "assets/voice/stage-3-4-0.mp3",
       "voice": "Lyla",
-      "hash": "734630d4b1ae",
-      "duration": 26.146,
+      "hash": "507baac90f68",
+      "duration": 35.202,
       "starts": [
         0,
-        2.473,
-        7.605,
-        13.084,
-        17.786,
-        23.069
+        2.392,
+        14.884,
+        16.115,
+        22.535,
+        27.643,
+        31.904
       ]
     },
     "set-lastLetter-1": {

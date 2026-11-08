@@ -125,7 +125,7 @@
     "A small red book with every page torn out: give it to Selene's player at the door to hide in her coat (her 1.2 card says she stole it from Delilah's bag at the toast); she shows the empty cover at 2.3.",
     "A handkerchief dabbed with jasmine, one corner stained purple: in Selene's envelope, under her 3.2 card.",
     'Optional evidence for the picture envelopes: a small brown vial (Plant) and a syringe marked K-7 (Television).',
-    'A small box that locks, its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.',
+    'A small box that locks (hidden inside the envelope table), its true key, three to five fake keys, and a black conjuring hat (not the undertaker\'s top hat) behind a small door at waist height.',
     'Optional: a K drawn on Edgar\'s forearm in eyeliner (his 3.1 card says to show it), and a scrap of paper for his sarcophagus receipt.'
   ];
 
