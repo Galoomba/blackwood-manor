@@ -1,0 +1,161 @@
+#!/usr/bin/env node
+/* Records the voice-over with ElevenLabs, one MP3 per full-story slide and per ghost line in the
+   game (stage narration, Victor's return, the reveal; lines the ghosts say together get one clip
+   per ghost, played at once), and writes
+   js/voice-manifest.js with each clip's length and sentence start times so the player can light
+   each sentence as it is spoken. Slides whose text and voice have not changed are skipped.
+
+   Needs ELEVENLABS_API_KEY in .env.local (git-ignored) with the "Text to Speech" permission.
+
+   node scripts/generate-voice.js                 record everything that changed
+   node scripts/generate-voice.js --dry-run       show what would be recorded and how many characters
+   node scripts/generate-voice.js --only open,g-zora   record just these slides
+   node scripts/generate-voice.js --force         record again even if unchanged */
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const data = require('../js/data.js');
+const logic = require('../js/logic.js');
+const story = require('../js/story.js');
+const intro = require('../js/intro.js');
+
+const ROOT = path.join(__dirname, '..');
+const OUT_DIR = path.join(ROOT, 'assets', 'voice');
+const MANIFEST = path.join(ROOT, 'js', 'voice-manifest.js');
+const MODEL = 'eleven_multilingual_v2';
+
+/* Premade ElevenLabs voices. Swap an id here and run again to re-record only that role's slides. */
+const VOICES = {
+  narrator: { id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.95 } },
+  /* Lyla, a young Victorian Englishwoman from the voice library, gloomy and quiet. Unsteady and slow so
+     she sounds grieving and haunted: a ghost mourning her brother. Was Lily pFZP5JQG7iQjIQuC4Bku. */
+  delilah: { id: 'gcgATH9maP3HG8oRh9Pn', name: 'Lyla', settings: { stability: 0.25, similarity_boost: 0.8, style: 0.7, use_speaker_boost: true, speed: 0.85 },
+    /* When both ghosts speak at once she slows further so Victor can keep pace. */
+    chorus: { stability: 0.25, similarity_boost: 0.8, style: 0.7, use_speaker_boost: true, speed: 0.75 } },
+  /* Lance Blackwood, a sinister aristocrat from the voice library: slow, unsteady and stylised so the
+     ghost sounds dark and otherworldly. Alternatives tried: Edward goT3UYdM9bhm0n2lmKQx (dark, low),
+     John eoNqkziQgzmLZeatERgP (calm, mysterious), Jasper Vayne ybjoxm7ASLDUFh2pC2eM (grim narrator). */
+  victor: { id: 'agL69Vji082CshT65Tcy', name: 'Lance', settings: { stability: 0.3, similarity_boost: 0.85, style: 0.6, use_speaker_boost: true, speed: 0.85 },
+    /* When both ghosts speak at once he must keep pace with Delilah. */
+    chorus: { stability: 0.45, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true, speed: 1.15 } },
+
+  /* Absent guests speak their important clues on the TV in their own voices (killers are never absent). */
+  finch: { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.95 } },
+  vane: { id: 'Xb7hH8MSUJpSbSDYk0k2', name: 'Alice', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.45, use_speaker_boost: true, speed: 1.0 } },
+  selene: { id: 'pFZP5JQG7iQjIQuC4Bku', name: 'Lily', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.92 } },
+  malachi: { id: 'N2lVS1w4EtoT3dr4eOWO', name: 'Callum', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: 0.95 } },
+  silas: { id: 'eoNqkziQgzmLZeatERgP', name: 'Noir', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.9 } },
+  corvus: { id: 'goT3UYdM9bhm0n2lmKQx', name: 'Edward', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.45, use_speaker_boost: true, speed: 0.85 } },
+  khamun: { id: 'ybjoxm7ASLDUFh2pC2eM', name: 'Jasper', settings: { stability: 0.45, similarity_boost: 0.8, style: 0.5, use_speaker_boost: true, speed: 0.85 } },
+  morgana: { id: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura', settings: { stability: 0.35, similarity_boost: 0.8, style: 0.6, use_speaker_boost: true, speed: 0.95 } },
+  edgar: { id: 'bIHbv24MWmeRgasZH58o', name: 'Will', settings: { stability: 0.25, similarity_boost: 0.8, style: 0.4, use_speaker_boost: true, speed: 1.0 } },
+  graves: { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', settings: { stability: 0.5, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true, speed: 0.88 } },
+  luna: { id: 'cgSgspJ2msm6clMCkdW9', name: 'Jessica', settings: { stability: 0.4, similarity_boost: 0.8, style: 0.5, use_speaker_boost: true, speed: 0.95 } }
+};
+
+function readKey() {
+  if (process.env.ELEVENLABS_API_KEY) return process.env.ELEVENLABS_API_KEY.trim();
+  const file = path.join(ROOT, '.env.local');
+  if (fs.existsSync(file)) {
+    const m = fs.readFileSync(file, 'utf8').match(/^ELEVENLABS_API_KEY=(.+)$/m);
+    if (m) return m[1].trim();
+  }
+  return null;
+}
+
+function readManifest() {
+  if (!fs.existsSync(MANIFEST)) return { model: MODEL, clips: {} };
+  const src = fs.readFileSync(MANIFEST, 'utf8');
+  const m = src.match(/\/\* DATA \*\/([\s\S]*)\/\* END \*\//);
+  return m ? JSON.parse(m[1]) : { model: MODEL, clips: {} };
+}
+
+function writeManifest(manifest) {
+  const body = JSON.stringify(manifest, null, 2);
+  fs.writeFileSync(MANIFEST, `/* Generated by scripts/generate-voice.js: recorded voice-over clips for the full story. */
+(function (root) {
+  const manifest = /* DATA */${body}/* END */;
+  root.BM = root.BM || {};
+  root.BM.voice = manifest;
+  if (typeof module !== 'undefined' && module.exports) module.exports = manifest;
+})(typeof window !== 'undefined' ? window : globalThis);
+`);
+}
+
+function settingsFor(item) { const v = VOICES[item.voice]; return item.chorus && v.chorus ? v.chorus : v.settings; }
+
+function hashFor(slide) {
+  const v = VOICES[slide.voice];
+  return crypto.createHash('sha1').update(JSON.stringify([MODEL, v.id, settingsFor(slide), slide.text])).digest('hex').slice(0, 12);
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function record(key, slide) {
+  const v = VOICES[slide.voice];
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${v.id}/with-timestamps?output_format=mp3_44100_128`, {
+      method: 'POST',
+      headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: slide.text, model_id: MODEL, voice_settings: settingsFor(slide) })
+    });
+    if (res.ok) return res.json();
+    const body = await res.text();
+    if ((res.status === 429 || res.status >= 500) && attempt < 4) { await sleep(2000 * attempt); continue; }
+    let detail = body;
+    try { detail = JSON.parse(body).detail; detail = detail.message || JSON.stringify(detail); } catch (e) { /* plain text */ }
+    throw new Error(`ElevenLabs ${res.status} on clip "${slide.id}": ${detail}`);
+  }
+  throw new Error(`ElevenLabs kept failing on clip "${slide.id}"`);
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const dry = args.includes('--dry-run');
+  const force = args.includes('--force');
+  const onlyArg = args[args.indexOf('--only') + 1];
+  const only = args.includes('--only') && onlyArg ? new Set(onlyArg.split(',')) : null;
+
+  const manifest = readManifest();
+  manifest.model = MODEL;
+  const items = [
+    ...story.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
+    ...intro.slides.map((s) => ({ id: s.id, voice: s.voice, text: s.text })),
+    ...logic.voiceLines(data).flatMap((l) => (l.voice === 'both'
+      ? ['delilah', 'victor'].map((v) => ({ id: `${l.id}.${v}`, voice: v, text: l.text, chorus: true }))
+      : [{ id: l.id, voice: l.voice, text: l.text }]))
+  ];
+  const todo = items.filter((s) => {
+    if (only && !only.has(s.id)) return false;
+    const have = manifest.clips[s.id];
+    return force || !have || have.hash !== hashFor(s) || !fs.existsSync(path.join(ROOT, have.src));
+  });
+  const chars = todo.reduce((a, s) => a + s.text.length, 0);
+  console.log(`${todo.length} of ${items.length} clips to record, ${chars} characters.`);
+  todo.forEach((s) => console.log(`  ${s.id.padEnd(16)} ${VOICES[s.voice].name.padEnd(7)} ${s.text.length} chars`));
+  if (dry || !todo.length) return;
+
+  const key = readKey();
+  if (!key) { console.error('No ELEVENLABS_API_KEY in the environment or in .env.local.'); process.exit(1); }
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+
+  for (const slide of todo) {
+    const out = await record(key, slide);
+    const file = path.join(OUT_DIR, `${slide.id}.mp3`);
+    fs.writeFileSync(file, Buffer.from(out.audio_base64, 'base64'));
+    const align = out.alignment;
+    const sentences = story.splitSentences(slide.text);
+    manifest.clips[slide.id] = {
+      src: `assets/voice/${slide.id}.mp3`,
+      voice: VOICES[slide.voice].name,
+      hash: hashFor(slide),
+      duration: Math.round(align.character_end_times_seconds[align.character_end_times_seconds.length - 1] * 1000) / 1000,
+      starts: story.sentenceStarts(slide.text, sentences, align)
+    };
+    writeManifest(manifest);  // after every clip, so an interrupted run keeps what it recorded
+    console.log(`  recorded ${slide.id} (${manifest.clips[slide.id].duration}s)`);
+  }
+  console.log('Done. Commit assets/voice and js/voice-manifest.js to publish.');
+}
+
+main().catch((e) => { console.error(e.message); process.exit(1); });

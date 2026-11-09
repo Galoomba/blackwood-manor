@@ -1,0 +1,12 @@
+{
+  "name": "blackwood-manor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blackwood Manor murder night host website",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node --test 'test/*.test.js' && node scripts/check-content.js",
+    "voice": "node scripts/generate-voice.js",
+    "sfx": "node scripts/generate-sfx.js"
+  }
+}
