@@ -94,6 +94,24 @@ The letter all but names both killers, so they have every reason to keep the box
   - `sabotage`: killers only;
   - `secretSign`: at 2.2, killers only.
 
+## Language level
+
+Interview question 8b sets one level for everything guests read or hear: cards, table talk, whispers, the torn document, team words, witness cards, alibis, the box letter, the narration and set pieces (and so the voice-over), `story.js` and `intro.js`. Host material (run sheet, host notes) is always plain.
+
+| Level | Words | Sentences | Style |
+|---|---|---|---|
+| Very easy | Common everyday words (CEFR A2). No idioms, no phrasal verbs that have a hidden meaning. | One idea each, about 8–12 words. | Say exactly what happens. Name things the same way every time ("the glass", never "the goblet" later). |
+| Easy, with theme words | Everyday words (CEFR B1), plus at most 5–8 theme words for the whole game (such as "speakeasy", "bootlegger"), each explained the first time it appears. | Mostly under 15 words. | Atmosphere from the situation, not from the vocabulary. |
+| Rich period | Old-fashioned and literary words are welcome ("a bequest", "most grievously"). | Long and rhythmic where it suits the speaker. | The Blackwood example is the model. |
+| Everyday modern | Natural native English, idioms allowed. | Natural. | No period style. |
+
+At every level:
+
+- **Clues must survive the level.** A clue that rests on a rare word ("bitter almonds", "laudanum") needs its meaning on the card, or a plainer clue, at the two easy levels.
+- **Team words** at 3.1 and 3.2 are simple words that are easy to say aloud and spell. The riddle sentence can stay playful.
+- **Spoken lines** (narration, `absentVoice`) are written to be heard once: at the easy levels avoid names and numbers piling up in one sentence.
+- Keep each character's voice through the level: a gangster and a vicar still sound different in easy English, through what they say rather than rare words.
+
 ## Clue rules
 
 1. **Two sources for every clue that matters.** Cover every optional guest with a backup source. If there isn't one, give the guest an `absentVoice` so the clue still plays.
@@ -134,11 +152,11 @@ node scripts/playtest-pack.js <game> 3.4 --as <innocent-id> > <scratchpad>/pack-
 
 Feed it one stage at a time, so the playtester can't read ahead: build a pack per stage (`1.1`, `1.2`, … `3.4`) and give the subagent all ten files, telling it to open them strictly in order and answer before opening the next. Prompt:
 
-> You are a guest at a murder-mystery party, playing <name>. Two of the guests are murderers; they killed <A> and <B>. Open the files in order, one stage at a time. After each, before opening the next, write: your top two suspects, a confidence from 0 to 100% for each, the evidence, and anything that confused you or seemed to contradict itself. Do not guess from story-telling conventions ("the least likely person"); reason only from what was said. Never open a later file early.
+> You are a guest at a murder-mystery party, playing <name>. You read English at <level: A2 / B1 / fluent> level. Two of the guests are murderers; they killed <A> and <B>. Open the files in order, one stage at a time. After each, before opening the next, write: your top two suspects, a confidence from 0 to 100% for each, the evidence, and anything that confused you or seemed to contradict itself. Do not guess from story-telling conventions ("the least likely person"); reason only from what was said. List every word or sentence that would be hard to understand at your reading level. Never open a later file early.
 
 Don't tell the playtester the difficulty, the killers, or that you wrote the story.
 
-Compare against the target row. Adjust the knobs and run again. Note each round in the story bible.
+Compare against the target row, and fix every hard word the playtesters list. Adjust the knobs and run again. Note each round in the story bible.
 
 Blackwood needed three rounds:
 

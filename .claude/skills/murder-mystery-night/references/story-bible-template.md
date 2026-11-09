@@ -3,7 +3,7 @@
 Write `<game>/docs/story-bible.md` with these headings, in this order. It is the single source of truth: every card is written from it, and every card is checked against it. Keep it in plain prose and tables.
 
 ## Brief
-One line per interview answer (theme, tone, guests, characters, hosts and pronouns, difficulty, length, language, voice, lights, props, location, party date).
+One line per interview answer (theme, tone, guests, characters, hosts and pronouns, difficulty, length, language, language level, voice, lights, props, location, party date). At the "easy, with theme words" level, also list the chosen theme words and the plain explanation each gets on first use.
 
 ## Open items
 Every answer still missing, the default you built with, and who owes it (for example "Party date: not given. Assumed none; print deadline unknown. Ask at hand-over.").

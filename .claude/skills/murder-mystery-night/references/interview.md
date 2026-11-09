@@ -118,6 +118,17 @@ Ask only if it isn't obvious from the conversation.
 
 ElevenLabs `eleven_multilingual_v2` speaks most languages. Choose voices native to that language.
 
+## 8b. Language level
+
+"How easy should the English be? Guests read their cards aloud, often in a noisy room." Options:
+
+- **Easy English with a few theme words** (Recommended when English isn't everyone's first language): everyday words and short sentences, plus a handful of period or theme words that are explained the first time.
+- **Very easy English**: the simplest words and the shortest sentences, no idioms. Best for beginners, younger players or a very mixed group.
+- **Rich period English, like Blackwood Manor**: old-fashioned, literary words and longer sentences for atmosphere. Best when everyone reads English easily.
+- **Everyday modern English**: natural native-speaker English, idioms allowed, no period style.
+
+For another language, ask the same question about that language. The level applies to everything a guest reads or hears; the host's run sheet and notes stay plain. See story-format.md › Language level.
+
 ## 9. Voice-over
 
 "Should the narrator and the ghosts speak aloud?" Options:

@@ -44,6 +44,7 @@ It is all built on a proven engine (Blackwood Manor, played 2026-11-08). **The e
    - Check the bible against every rule in `story-format.md`, then show the user a short summary. Don't wait for approval unless they asked to review.
 3. **Scaffold.** Run `scripts/new-game.sh <dir> "<Title>" <slug> <ghostA-id>:<FirstName> <ghostB-id>:<FirstName>`. Ids are lowercase letters; names are one-word first names (they end up in speaker labels such as "Rosa's ghost").
 4. **Write the story into the engine.**
+   - Write every player-facing line at the chosen language level (story-format.md › Language level).
    - Rewrite `js/data.js`, `js/story.js` and `js/intro.js`, following `data-schema.md`. `data.js` runs to about 100 KB: write it in parts. First write the file with everything except the characters and `tableTalk`/`rumours`, with empty arrays and objects. Then add one character at a time with Edit, then each character's table talk and whispers. Run `node scripts/check-content.js` after each part.
    - Fix every code hook in `code-hooks.md`.
    - Rewrite the tests that name Blackwood characters, keeping what each test checks.
@@ -81,5 +82,5 @@ It is all built on a proven engine (Blackwood Manor, played 2026-11-08). **The e
 - You are about to ask several questions at once, or asking something the code or the web answers.
 - `leftovers.sh` still lists Blackwood names, or a test was deleted rather than rewritten.
 - A clue has a single source, or a killer is identified before the stage the difficulty allows.
-- You copied something from the example that `KNOWN-FAULTS.md` lists.
+- You copied something from the example that `KNOWN-FAULTS.md` lists, or copied its rich period wording when the user chose easy English.
 - You did not open the generated site in a browser, or you are declaring it done with the voice-over unrecorded when the user chose voice.
